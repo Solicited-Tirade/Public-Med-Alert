@@ -145,6 +145,123 @@ section[data-vis].sf-off:hover{opacity:.55}
 [data-ss=F] .sh-n{font:700 .75rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em;opacity:.7}
 [data-ss=F] .sh-n::before{content:'SEC '}
 [data-ss=F] .sh-sep{display:none}
+
+/* ---------- role-change markers between sections ---------- */
+.rt{display:flex;flex-direction:column;align-items:center;margin:4px 0}
+.rt-arrow{width:24px;height:56px}
+.rt-arrow svg{width:100%;height:100%;display:block}
+.rt-arrow:last-child svg{animation:rtb 1.8s ease-in-out infinite}
+@keyframes rtb{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.rt-box{position:relative;width:min(100%,640px);padding:16px 20px 18px 24px;border-radius:0;border:1px solid rgb(var(--tr)/.55);
+ background:linear-gradient(90deg,rgb(var(--fr)/.10),rgb(var(--tr)/.10)),#101824;box-shadow:0 14px 34px rgb(0 0 0/.35)}
+.rt-box::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--fc),var(--tc))}
+.rt-k{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;font:700 11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase}
+.rt-chg{color:#111827;background:#FACA15;padding:3px 7px}
+.rt-from{color:var(--fc);opacity:.85}
+.rt-to-arrow{color:#9CA3AF}
+.rt-to{color:var(--tc)}
+.rt-t{margin:10px 0 0;font:700 1.55rem/1.1 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.02em;color:#fff}
+.rt-d{margin:6px 0 0;font-size:.875rem;line-height:1.5;color:#cbd5e1}
+.rt-b{margin-top:12px;padding:6px 12px;border-radius:0;border:1px solid rgb(var(--tr)/.6);background:rgb(var(--tr)/.12);color:#fff;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;cursor:pointer}
+.rt-b:hover{background:rgb(var(--tr)/.25)}
+[data-ss=F] .secs{gap:20px}
+@media(prefers-reduced-motion:reduce){.rt-arrow:last-child svg{animation:none}}
+
+/* ---------- bottom role bar ---------- */
+body{padding-bottom:50px}
+#rbar{position:fixed;left:0;right:0;bottom:0;z-index:52;height:50px;display:flex;align-items:center;gap:14px;padding:0 16px;
+ background:linear-gradient(0deg,#0b111b,#0f1724);border-top:2px solid var(--rc,#E5E7EB);box-shadow:0 -10px 30px rgb(0 0 0/.45),0 -2px 18px rgb(var(--rcr,229 231 235)/.25)}
+#rbar .rb-lab{font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em;color:#9CA3AF;text-transform:uppercase;white-space:nowrap}
+#rb-cur{display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;cursor:pointer;border:1px solid rgb(var(--rcr,229 231 235)/.55);background:rgb(var(--rcr,229 231 235)/.10);color:var(--rc,#E5E7EB);
+ font:700 1.2rem/1 Mohave,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 0 10px rgb(var(--rcr,229 231 235)/.85)}
+#rb-cur:hover,#rb-cur[aria-expanded=true]{background:rgb(var(--rcr,229 231 235)/.2)}
+#rb-cur .rb-em{font-size:1.1rem;text-shadow:none}
+#rb-cur .rb-caret{font-size:.7rem;opacity:.8;transition:transform .2s ease}
+#rb-cur[aria-expanded=true] .rb-caret{transform:rotate(180deg)}
+#rbar .rb-info{margin-left:auto;font-size:.8rem;color:#9CA3AF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#rbar .rb-info b{color:var(--rc,#E5E7EB);font-weight:600}
+#rb-list{position:absolute;left:16px;bottom:58px;min-width:250px;padding:6px;background:#0d1522;border:1px solid #334155;box-shadow:0 -16px 40px rgb(0 0 0/.55)}
+#rb-list[hidden]{display:none}
+#rb-list p{margin:4px 8px 6px;font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em;color:#6B7280;text-transform:uppercase}
+#rb-list button{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border:0;border-left:3px solid transparent;background:none;cursor:pointer;text-align:left;
+ color:var(--c);font:700 1.15rem/1 Mohave,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 0 10px var(--c);opacity:0;transform:translateY(10px);animation:rbup .22s ease forwards}
+#rb-list button small{margin-left:auto;font:500 11px/1 Inter,sans-serif;letter-spacing:0;text-transform:none;color:#9CA3AF;text-shadow:none}
+#rb-list button:hover,#rb-list button:focus-visible{background:rgb(255 255 255/.05);border-left-color:var(--c);outline:none}
+#rb-list button.on{border-left-color:var(--c);background:rgb(255 255 255/.06)}
+@keyframes rbup{to{opacity:1;transform:none}}
+/* sections: glow what this role can see, fade what it can't */
+html[data-role]:not([data-role=all]) section[data-vis]{transition:opacity .35s ease,box-shadow .35s ease,filter .35s ease}
+html[data-role]:not([data-role=all]) section[data-vis].sf-off{opacity:1;filter:none}
+html[data-role]:not([data-role=all]) section[data-vis]:not(.dim){box-shadow:0 0 0 2px var(--rc),0 0 46px rgb(var(--rcr)/.35)}
+html[data-role]:not([data-role=all]) section[data-vis].dim{opacity:.35;filter:saturate(.4)}
+/* lift floating bits above the bar */
+.g-pill{bottom:66px}.toast{bottom:66px}.g-jump.down{bottom:66px}
+@media(max-width:640px){#rbar .rb-lab{display:none}#rbar .rb-info{font-size:.72rem}#rb-list{left:8px;right:8px;min-width:0}}
+@media(prefers-reduced-motion:reduce){#rb-list button{animation:none;opacity:1;transform:none}}
+
+/* ---------- public export ---------- */
+.tx{border:1px solid #374151;background:#111a27}
+.tx-sum{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px;cursor:pointer;list-style:none}
+.tx-sum::-webkit-details-marker{display:none}
+.tx-chev{width:18px;height:18px;flex:0 0 auto;transition:transform .2s ease;color:#22D3EE}
+.tx[open]:not(.closing) .tx-chev{transform:rotate(90deg)}
+.tx-hint{margin-left:auto;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280}
+.tx-in{padding:2px 16px 0}
+.tx-body.anim{overflow:hidden}
+.tx-close{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;padding:10px;border-top:1px solid #374151;background:rgb(34 211 238/.06);color:#67E8F9;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.tx-close:hover{background:rgb(34 211 238/.14)}
+.tx-up{transform:rotate(-90deg)}
+.pv-note{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border:1px solid rgb(118 169 250/.35);border-left:4px solid #76A9FA;background:rgb(38 61 85/.55)}
+.pv-ic{display:flex;align-items:center;justify-content:center;width:38px;height:38px;flex:0 0 auto;background:rgb(118 169 250/.15);color:#A4CAFE}
+.pv-h{margin:0;font:700 1.15rem/1.2 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.03em;color:#fff}
+.pv-p{margin:4px 0 0;font-size:.875rem;line-height:1.55;color:#d1d5db}
+.share{padding:16px 18px;border:1px solid #374151;background:#111a27}
+.acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;padding:14px 18px;border:1px solid rgb(49 196 141/.35);border-left:4px solid #31C48D;background:rgb(5 122 85/.10)}
+.acts-l{margin:0;font:700 1.15rem/1.2 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.03em;color:#fff}
+.thx{position:relative;display:inline-flex;align-items:center;gap:8px;padding:.6rem 1.1rem;border-radius:.5rem;border:1px solid #2c5278;background:#2c5278;color:#fff;font-size:.875rem;font-weight:600;cursor:pointer;transition:background .25s ease,border-color .25s ease,box-shadow .25s ease}
+.thx:hover{background:#2c5278e6}
+.thx.on{background:#057A55;border-color:#31C48D;box-shadow:0 0 0 3px rgb(49 196 141/.25),0 0 22px rgb(49 196 141/.45)}
+.thx.on:hover{background:#046c4b}
+.thx-ic{display:inline-flex;flex:0 0 auto;width:20px;height:20px;transform-origin:50% 60%}
+.thx-ic svg{width:100%;height:100%}
+.thx.on .thx-ic svg{fill:rgb(255 255 255/.25)}
+.thx-n{padding:2px 7px;border-radius:99px;background:rgb(0 0 0/.25);font-variant-numeric:tabular-nums}
+.thx-ic.thx-pop{animation:thxpop .6s cubic-bezier(.2,1.6,.4,1)}
+.thx-ic.thx-drop{animation:thxdrop .45s ease}
+@keyframes thxpop{0%{transform:none}35%{transform:translateY(-3px) rotate(-16deg) scale(1.15)}65%{transform:rotate(5deg)}100%{transform:none}}
+@keyframes thxdrop{0%{transform:none}40%{transform:rotate(-25deg) translateY(2px) scale(.9)}100%{transform:none}}
+.thx-spark,.thx-frown{position:fixed;z-index:90;pointer-events:none;font-size:15px;font-weight:800;color:#31C48D;text-shadow:0 0 8px rgb(49 196 141/.8)}
+.thx-frown{font-size:30px;text-shadow:none;filter:drop-shadow(0 4px 8px rgb(0 0 0/.5))}
+.ms-bar{margin-top:14px;height:4px;background:#374151;overflow:hidden}
+.ms-fill{display:block;height:100%;width:0;background:linear-gradient(90deg,#FACA15,#F59E0B);box-shadow:0 0 8px rgb(245 158 11/.6);animation:msfill 6s linear forwards}
+#ms-box:hover .ms-fill,#ms-box.ms-paused .ms-fill{animation-play-state:paused}
+@keyframes msfill{from{width:0}to{width:100%}}
+.ms-txt{animation:msin .45s ease}
+@keyframes msin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.join{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;min-height:140px;padding:26px 30px;border:1px solid rgb(240 82 82/.45);border-left:4px solid #E02424;
+ background:radial-gradient(600px 220px at 0% 0%,rgb(224 36 36/.30),transparent 70%),radial-gradient(500px 200px at 100% 100%,rgb(127 29 29/.35),transparent 70%),#1a1116}
+.join-ic{display:flex;align-items:center;justify-content:center;width:68px;height:68px;background:rgb(224 36 36/.14);border:1px solid rgb(240 82 82/.45);color:#F05252}
+.join-ic .join-star{width:40px;height:40px;filter:drop-shadow(0 0 10px rgb(240 82 82/.7))}
+.join-h{margin:0;font:700 2rem/1.05 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.02em;color:#fff}
+.join-p{margin:6px 0 0;color:#e5d0d3}
+.join-cta{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:#E02424;color:#fff;font-weight:700;text-decoration:none;white-space:nowrap;box-shadow:0 10px 24px rgb(224 36 36/.35)}
+.join-cta:hover{background:#C81E1E}
+@media(max-width:700px){.join{grid-template-columns:minmax(0,1fr);text-align:left;gap:16px;padding:20px 18px}.join-h{font-size:1.55rem}.join-cta{justify-self:stretch;justify-content:center;white-space:normal;text-align:center}.tx-hint{margin-left:0;width:100%}}
+@media(prefers-reduced-motion:reduce){.thx-ic.thx-pop,.thx-ic.thx-drop,.ms-txt{animation:none}}
+
+/* ---------- join banner: slot-machine headline ---------- */
+.join-reel{position:relative;height:var(--reel-h,auto);overflow:hidden}
+.join-reel .reel-track{display:block;will-change:transform}
+.join-reel .rl{display:block;text-wrap:balance}
+.join-reel .reel-i,.join-reel .reel-m{letter-spacing:.02em}
+.join-reel .reel-i{display:flex;flex-direction:column;justify-content:flex-end;height:var(--reel-h,auto)}
+.join-reel.spin{-webkit-mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
+.join-reel .reel-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.join-reel .reel-m{position:absolute;left:0;right:0;top:0;visibility:hidden;pointer-events:none}
+.join-ic.land{animation:jrland .55s cubic-bezier(.2,1.6,.4,1)}
+.join-ic.land .join-star{filter:drop-shadow(0 0 16px rgb(248 113 113/.95))}
+@keyframes jrland{0%{transform:none}40%{transform:scale(1.14) rotate(30deg)}100%{transform:none}}
+@media(prefers-reduced-motion:reduce){.join-ic.land{animation:none}}
 </style>
 </head>
 <body>
@@ -250,26 +367,31 @@ section[data-vis].sf-off:hover{opacity:.55}
 <div class="sec-body" id="b-client"></div>
 </section>
 
+<div class="rt" role="note" aria-label="Changing roles: Client to Team lead" style="--fc:#31C48D;--fr:49 196 141;--tc:#3F83F8;--tr:63 131 248"><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g-client-notify" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#31C48D"/><stop offset="1" stop-color="#3F83F8"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g-client-notify)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rt-box"><p class="rt-k"><span class="rt-chg">Changing roles</span><span class="rt-from">🛟 Client</span><span class="rt-to-arrow" aria-hidden="true">→</span><span class="rt-to">📣 Team lead</span></p><p class="rt-t">This is what the team lead will see</p><p class="rt-d">The client has submitted. Now you are the attending team lead, getting the Discord ping for a rescue you led.</p><button type="button" class="rt-b" data-act="view" data-v="tl">View as team lead only</button></div><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g2-client-notify" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#31C48D"/><stop offset="1" stop-color="#3F83F8"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g2-client-notify)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
 <section id="notify" data-vis="tl">
 <div class="sec-head"></div>
 <div class="sec-body" id="b-notify"></div>
 </section>
 
+<div class="rt" role="note" aria-label="Changing roles: Team lead to Crew" style="--fc:#3F83F8;--fr:63 131 248;--tc:#F59E0B;--tr:245 158 11"><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g-notify-crew" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3F83F8"/><stop offset="1" stop-color="#F59E0B"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g-notify-crew)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rt-box"><p class="rt-k"><span class="rt-chg">Changing roles</span><span class="rt-from">📣 Team lead</span><span class="rt-to-arrow" aria-hidden="true">→</span><span class="rt-to">🧑‍🚀 Crew</span></p><p class="rt-t">This is what the crew will see</p><p class="rt-d">Everyone else on the mission is notified too. As crew you can advise the team lead, but you don’t decide.</p><button type="button" class="rt-b" data-act="view" data-v="crew">View as crew only</button></div><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g2-notify-crew" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3F83F8"/><stop offset="1" stop-color="#F59E0B"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g2-notify-crew)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
 <section id="crew" data-vis="crew tl">
 <div class="sec-head"></div>
 <div class="sec-body" id="b-crew"></div>
 </section>
 
+<div class="rt" role="note" aria-label="Changing roles: Crew to Team lead" style="--fc:#F59E0B;--fr:245 158 11;--tc:#A78BFA;--tr:167 139 250"><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g-crew-review" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F59E0B"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g-crew-review)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rt-box"><p class="rt-k"><span class="rt-chg">Changing roles</span><span class="rt-from">🧑‍🚀 Crew</span><span class="rt-to-arrow" aria-hidden="true">→</span><span class="rt-to">🎖️ Team lead</span></p><p class="rt-t">Back to the team lead: this is the review screen</p><p class="rt-d">Crew advice is in. As the team lead you check the transcript, redact what’s needed and make the call.</p><button type="button" class="rt-b" data-act="view" data-v="tl">View as team lead only</button></div><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g2-crew-review" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F59E0B"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g2-crew-review)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
 <section id="review" data-vis="tl staff">
 <div class="sec-head"></div>
 <div class="sec-body relative" id="b-review"></div>
 </section>
 
+<div class="rt" role="note" aria-label="Changing roles: Team lead to Staff" style="--fc:#A78BFA;--fr:167 139 250;--tc:#F05252;--tr:240 82 82"><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g-review-staff" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#F05252"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g-review-staff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rt-box"><p class="rt-k"><span class="rt-chg">Changing roles</span><span class="rt-from">🎖️ Team lead</span><span class="rt-to-arrow" aria-hidden="true">→</span><span class="rt-to">🛡️ Staff</span></p><p class="rt-t">This is what staff and leadership will see</p><p class="rt-d">Above the team lead: the review queue, escalations and takedowns, the audit trail and abuse controls.</p><button type="button" class="rt-b" data-act="view" data-v="staff">View as staff only</button></div><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g2-review-staff" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#F05252"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g2-review-staff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
 <section id="staff" data-vis="staff">
 <div class="sec-head"></div>
 <div class="sec-body" id="b-staff"></div>
 </section>
 
+<div class="rt" role="note" aria-label="Changing roles: Staff to Public" style="--fc:#F05252;--fr:240 82 82;--tc:#22D3EE;--tr:34 211 238"><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g-staff-export" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F05252"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g-staff-export)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rt-box"><p class="rt-k"><span class="rt-chg">Changing roles</span><span class="rt-from">🛡️ Staff</span><span class="rt-to-arrow" aria-hidden="true">→</span><span class="rt-to">🌐 Public</span></p><p class="rt-t">This is what the public will see</p><p class="rt-d">Once approved, anyone with the link sees this record. Crew appear only by role.</p><button type="button" class="rt-b" data-act="view" data-v="public">View as public only</button></div><div class="rt-arrow"><svg viewBox="0 0 24 56" aria-hidden="true"><defs><linearGradient id="g2-staff-export" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F05252"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><path d="M12 2v46M4 40l8 10 8-10" fill="none" stroke="url(#g2-staff-export)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
 <section id="export" data-vis="public client crew tl staff">
 <div class="sec-head"></div>
 <div class="sec-body" id="b-export"></div>
@@ -667,13 +789,11 @@ ${o.tl.map(([a,b,c])=>`<div class="grid grid-cols-12 border-b px-3 py-3 dark:bor
 <div class="grid grid-cols-12 px-3 py-3 font-semibold"><div class="col-span-5">Total</div><div class="col-span-4"></div><div class="col-span-3 text-right">${o.total}</div></div></div>
 <p class="mb-2 mt-8 font-Mohave text-2xl font-semibold uppercase">Responding crew (${S.crew.length})</p>
 <div class="flex flex-wrap gap-2">${Object.entries(counts).map(([r,n])=>`<span class="${ROLE}">${r}${n>1?' ×'+n:''}</span>`).join('')}</div>
-<details open class="mt-8"><summary class="cursor-pointer font-Mohave text-2xl font-semibold uppercase">Communication transcript (${S.msgs.filter(m=>!m.hidden).length})</summary><div class="mt-2 text-sm">${pubMsgs}</div></details>
-<p class="mt-6 flex items-start gap-2 rounded-lg bg-primary-600 p-4 text-sm text-gray-300">${ic('lock','mt-0.5 size-4')}<span>Crew names are replaced with their roles to protect our members' privacy. Text in gray italic brackets was removed by a reviewer and replaced with a category.</span></p>
-<div class="mt-6 grid gap-4 md:grid-cols-2">
-<div><p class="mb-2 ${LBL} text-sm">Share card preview (Discord)</p><div class="flex gap-3 rounded-lg bg-gray-700 p-3" style="border-left:4px solid ${o.tone==='ok'?'#31C48D':'#9CA3AF'}"><div class="min-w-0 flex-1"><p class="text-xs ${MU}">Medrunner</p><p class="font-semibold text-blue-300">Alert: Agile Snail · ${o.short}</p><p class="mt-1 text-xs text-gray-300">Verified rescue record · ${o.stats[0][1]} ${o.stats[0][0]}${S.rating?` · ${'★'.repeat(S.rating)}`:''}</p></div><svg viewBox="0 0 79 117" style="width:36px;height:52px" class="shrink-0 text-white"><use href="#logo-mark"/></svg></div></div>
-<div class="flex flex-col gap-3"><div class="flex flex-wrap items-center gap-3"><button data-act="thanks" class="${S.thanked?BTN2:BTN}">${ic('heart')}${S.thanked?'Thanked':'Thank the crew'} · ${S.thanks}</button><button data-act="copy" class="${BTN2}">${ic('copy')}Copy link</button></div>
-<div class="rounded-lg border border-gray-200 p-3 text-sm dark:border-gray-700"><p class="flex items-center gap-2 font-semibold">${ic('rocket','size-4 text-blue-300')}Want to fly with Medrunner?</p><p class="mt-1 text-xs ${MU}">Join as a responder and be part of rescues like this one.</p><a href="https://www.medrunner.space" target="_blank" rel="noopener" class="lnk mt-1 inline-block text-xs">Learn how to join</a></div></div></div>
+<details id="pub-tx" class="tx mt-8"${TXO?' open':''}><summary class="tx-sum">${ic('chev','tx-chev h-4 w-4')}<span class="font-Mohave text-2xl font-semibold uppercase">Communication transcript (${S.msgs.filter(m=>!m.hidden).length})</span><span class="tx-hint">${TXO?'Click to collapse':'Click to expand, or keep scrolling'}</span></summary><div class="tx-body"><div class="tx-in"><div class="pv-note"><span class="pv-ic">${ic('lock','size-5')}</span><div><p class="pv-h">How this record protects people</p><p class="pv-p">Crew names are replaced with their roles to protect our members' privacy. Text in gray italic brackets was removed by a reviewer and replaced with a category.</p></div></div><div class="mt-3 text-sm">${pubMsgs}</div></div><button type="button" class="tx-close" data-act="txClose">${ic('chev','tx-up h-3.5 w-3.5')}Collapse transcript</button></div></details>
+<div class="share mt-6"><p class="mb-2 ${LBL} text-sm">Share card preview (Discord)</p><div class="flex gap-3 rounded-lg bg-gray-700 p-3" style="border-left:4px solid ${o.tone==='ok'?'#31C48D':'#9CA3AF'}"><div class="min-w-0 flex-1"><p class="text-xs ${MU}">Medrunner</p><p class="font-semibold text-blue-300">Alert: Agile Snail · ${o.short}</p><p class="mt-1 text-xs text-gray-300">Verified rescue record · ${o.stats[0][1]} ${o.stats[0][0]}${S.rating?` · ${'★'.repeat(S.rating)}`:''}</p></div><svg viewBox="0 0 79 117" style="width:36px;height:52px" class="shrink-0 text-white"><use href="#logo-mark"/></svg></div></div>
+<div class="acts mt-6"><p class="acts-l">Support the crew</p><div class="flex flex-wrap items-center gap-3"><button data-act="thanks" class="thx${S.thanked?' on':''}" aria-pressed="${S.thanked}"><span class="thx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/><path d="M7 11l4-7a2 2 0 0 1 3 1.7V9h5a2 2 0 0 1 2 2.3l-1.4 7A2 2 0 0 1 17.6 20H7"/></svg></span><span class="thx-l">${S.thanked?'Thanked':'Thank the crew'}</span><span class="thx-n">${S.thanks}</span></button><button data-act="copy" class="${BTN2}">${ic('copy')}Copy link</button></div></div>
 ${msHTML()}
+<div class="join mt-8"><span class="join-ic"><svg class="join-star" viewBox="12.9 12.1 52.7 55.5" aria-hidden="true"><path fill="currentColor" d="M50.8781 39.8715L64.5213 47.7794C65.1715 48.1567 65.3969 48.9979 65.0211 49.6508L60.5637 57.4002C60.1879 58.0529 59.3497 58.2791 58.6993 57.902L45.0563 49.9941V65.806C45.0563 66.5606 44.4437 67.1755 43.6919 67.1755H34.777C34.0252 67.1755 33.4127 66.5606 33.4127 65.806V49.9941L19.7695 57.902C19.1193 58.2791 18.2812 58.0529 17.9054 57.4002L13.4478 49.6508C13.072 48.9979 13.2975 48.1567 13.9477 47.7794L27.5909 39.8715L13.9477 31.9635C13.2975 31.5862 13.072 30.7449 13.4478 30.0922L17.9054 22.3428C18.2812 21.6901 19.1193 21.4636 19.7695 21.841L33.4127 29.7489V13.9369C33.4127 13.1823 34.0252 12.5673 34.777 12.5673H43.6919C44.4437 12.5673 45.0563 13.1823 45.0563 13.9369V29.7489L58.6993 21.841C59.3497 21.4636 60.1879 21.6901 60.5637 22.3428L65.0211 30.0922C65.3969 30.7449 65.1715 31.5862 64.5213 31.9635L50.8781 39.8715Z"/></svg></span><div class="join-tx"><p class="join-h join-reel" style="${(window.__jr&&__jr.style())||''}"><span class="reel-sr">${(window.__jr&&__jr.text())||'Be the reason someone makes it home'}</span><span class="reel-track" aria-hidden="true">${(window.__jr&&__jr.item())||'<span class="reel-i"><span class="rl">Be the reason</span><span class="rl">someone makes it home</span></span>'}</span></p><p class="join-p">Join Medrunner as a responder and help save lives, just like this one.</p></div><a class="join-cta" href="https://www.medrunner.space" target="_blank" rel="noopener">Become a responder <span aria-hidden="true">→</span></a></div>
 <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 text-sm dark:border-gray-700">${emergBtn('Need a rescue? Report an emergency')}${live?`<button data-act="takedown" class="lnk text-xs">Request a takedown</button>`:`<span class="text-xs ${MU}">Takedown requests open once published.</span>`}</div>
 </div>`}
 
@@ -688,10 +808,11 @@ const MILESTONES=[
 {c:'tl',t:'has brought the whole crew home on more than 1,500 missions.'},
 {c:null,t:'This crew has completed over 500 rescues together.'},
 {c:null,t:'Medrunner crews answered more than 10,000 calls for help this year.'}];
-function msHTML(){const list=MILESTONES;const i=S.ms%list.length,m=list[i];
-return `<div class="mt-8 rounded-lg border border-gray-200 p-4 dark:border-gray-700"><div class="flex flex-wrap items-center justify-between gap-2"><p class="flex items-center gap-2 font-Mohave text-2xl font-semibold uppercase">${ic('trophy','size-5 text-yellow-400')}Crew milestones</p><button data-act="cycleMs" class="${SM}">${ic('refresh','h-3.5 w-3.5')}Cycle · ${i+1} of ${list.length}</button></div>
-<p class="mt-3 flex flex-wrap items-center gap-2 text-lg">${m.c?`<span class="${ROLE}">[${esc(roleOf(m.c))}]</span>`:`<span class="${CLI}">Medrunner</span>`}<span>${m.t}</span></p>
-<p class="mt-2 text-xs ${MU}">Sample stats. Shown by role only, never by name.</p></div>`}
+let MSA=0,TXO=false,TXU=false;
+function msHTML(){const list=MILESTONES;const i=(S.ms+MSA)%list.length,m=list[i];
+return `<div id="ms-box" class="mt-8 rounded-lg border border-gray-200 p-4 dark:border-gray-700"><div class="flex flex-wrap items-center justify-between gap-2"><p class="flex items-center gap-2 font-Mohave text-2xl font-semibold uppercase">${ic('trophy','size-5 text-yellow-400')}Crew milestones</p><button data-act="cycleMs" class="${SM}">${ic('refresh','h-3.5 w-3.5')}Cycle · ${i+1} of ${list.length}</button></div>
+<p class="ms-txt mt-3 flex flex-wrap items-center gap-2 text-lg">${m.c?`<span class="${ROLE}">[${esc(roleOf(m.c))}]</span>`:`<span class="${CLI}">Medrunner</span>`}<span>${m.t}</span></p>
+<div class="ms-bar" title="Next milestone"><i class="ms-fill"></i></div><p class="mt-2 text-xs ${MU}">Sample stats. Shown by role only, never by name. Hover to pause.</p></div>`}
 
 function stageText(){return {request:'Waiting for the client',declined:'Declined by client',crew:S.crewClosed?'In review':'Crew advisories open',review:S.reviewer==='pool'?'In review (leadership pool)':'In review',escalated:'Escalated to staff',published:'Published',rejected:'Rejected',withheld:'Withheld',takendown:'Taken down'}[S.stage]}
 function rStepper(){const steps=['Client request','Crew advisories','Team lead review','Published'];
@@ -706,7 +827,7 @@ function rRole(){const el=$('#rolebar');if(S.view==='all'){el.innerHTML=`<p clas
 const vl=VIEWS.find(x=>x[0]===S.view)[1];
 el.innerHTML=`<div class="flex flex-wrap items-center gap-2 border-t pt-3 text-xs dark:border-gray-700"><span class="rounded bg-primary-600 px-2 py-0.5 font-semibold text-white">Viewing as ${vl}</span><span class="${MU}">Jump to a starting point:</span>${(PRESETS[S.view]||[]).map(([l],i)=>`<button data-act="preset" data-i="${i}" class="${SM}">${l}</button>`).join('')}</div>
 ${seedNote?`<div class="mt-2 flex flex-wrap items-center gap-2 rounded-lg border border-yellow-300 px-3 py-2 text-xs text-yellow-400">${ic('info','h-3.5 w-3.5')}<span>${esc(seedNote)}</span>${undoSnap?`<button data-act="undoSeed" class="lnk">Undo</button>`:''}<button data-act="dismissSeed" class="ml-auto cursor-pointer ${MU}" aria-label="Dismiss">${ic('x','h-3.5 w-3.5')}</button></div>`:''}`}
-function rViews(){rRole();$('#views').innerHTML=VIEWS.map(([k,l],i)=>`<button data-act="view" data-v="${k}" class="cursor-pointer border border-gray-300 px-2.5 py-1.5 text-xs font-medium dark:border-gray-600 ${i===0?'rounded-l-lg':''} ${i===VIEWS.length-1?'rounded-r-lg':''} ${S.view===k?'bg-primary-600 text-white dark:bg-primary-400':MU}">${l}</button>`).join('');
+function rViews(){rRole();window.__rolebar&&window.__rolebar(S.view);$('#views').innerHTML=VIEWS.map(([k,l],i)=>`<button data-act="view" data-v="${k}" class="cursor-pointer border border-gray-300 px-2.5 py-1.5 text-xs font-medium dark:border-gray-600 ${i===0?'rounded-l-lg':''} ${i===VIEWS.length-1?'rounded-r-lg':''} ${S.view===k?'bg-primary-600 text-white dark:bg-primary-400':MU}">${l}</button>`).join('');
 document.querySelectorAll('section[data-vis]').forEach(sec=>{const vis=sec.dataset.vis.split(' ');const dim=S.view!=='all'&&!vis.includes(S.view);sec.classList.toggle('dim',dim);const c=SEC[sec.id];
  sec.querySelector('.dim-who').textContent=`Hidden from ${VNAME[S.view]||''}`;
  const body=sec.querySelector('.sec-body');let wrap=body.parentElement;if(!wrap.classList.contains('sec-wrap')){wrap=document.createElement('div');wrap.className='sec-wrap';body.before(wrap);wrap.append(body);const v=document.createElement('div');v.className='veil';v.setAttribute('role','note');wrap.append(v)}
@@ -810,7 +931,15 @@ ban:()=>{const v=$('#banIn').value.trim();if(!v||S.bans.includes(v))return;S.ban
 unban:a=>{const v=a.dataset.v;S.bans=S.bans.filter(b=>b!==v);S.msgs.forEach(m=>{m.segs=m.segs.map(s=>s.k==='s'&&s.ban===v?{k:'t',v:s.o}:s);norm(m)});log(actor.staff,'Removed from ban list',v);render()},
 rotw:()=>{S.rotw=!S.rotw;log(actor.staff,S.rotw?'Featured as Rescue of the week':'Removed Rescue of the week');render()},
 cycleMs:()=>{S.ms++;render()},
-thanks:()=>{if(S.thanked)return;S.thanked=true;S.thanks++;log('Public viewer','Thanked the crew');render()},
+thanks:a=>{const on=!S.thanked;S.thanked=on;S.thanks+=on?1:-1;log('Public viewer',on?'Thanked the crew':'Took back their thanks');
+ a.classList.toggle('on',on);a.setAttribute('aria-pressed',on);a.querySelector('.thx-l').textContent=on?'Thanked':'Thank the crew';a.querySelector('.thx-n').textContent=S.thanks;
+ const ic2=a.querySelector('.thx-ic');ic2.classList.remove('thx-pop','thx-drop');void ic2.offsetWidth;ic2.classList.add(on?'thx-pop':'thx-drop');
+ const r=a.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top-6,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(on){if(!still)for(let k=0;k<7;k++){const p=document.createElement('span');p.className='thx-spark';p.textContent='+';p.style.left=cx+'px';p.style.top=cy+'px';document.body.appendChild(p);
+   const ang=-Math.PI/2+(k-3)*0.38,d=28+Math.random()*22;p.animate([{transform:'translate(-50%,-50%) scale(.6)',opacity:1},{transform:`translate(calc(-50% + ${Math.cos(ang)*d}px),calc(-50% + ${Math.sin(ang)*d}px)) scale(1.1)`,opacity:0}],{duration:700+k*40,easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish=()=>p.remove()}}
+ else{const f=document.createElement('span');f.className='thx-frown';f.textContent='😢';f.style.left=(r.left-18)+'px';f.style.top=(r.top+r.height/2)+'px';document.body.appendChild(f);
+   f.animate(still?[{opacity:1},{opacity:0}]:[{transform:'translate(-50%,-50%) rotate(0)',opacity:1},{transform:'translate(-50%,-50%) translateY(10px) rotate(-10deg)',opacity:1,offset:.25},{transform:'translate(-50%,-50%) translateY(40px) rotate(14deg)',opacity:1,offset:.6},{transform:'translate(-50%,-50%) translateY(90px) rotate(32deg)',opacity:0}],{duration:1300,easing:'cubic-bezier(.5,0,.75,0)'}).onfinish=()=>f.remove()}},
+txClose:()=>{const d=$('#pub-tx');if(!d)return;TXU=true;txAnim(d,false);d.querySelector('summary').scrollIntoView({block:'center',behavior:'smooth'})},
 copy:()=>{const u='https://medrunner.space/exports/agile-snail';try{navigator.clipboard.writeText(u).catch(()=>{})}catch(e){}toast('Link copied (sample URL)')},
 takedown:()=>openModal(`<p class="${H}">Request a takedown</p><label class="mt-3 block text-sm font-medium">Who's asking?<select id="tw" class="${FIELD} cursor-pointer"><option value="client">The client (ItchyMastadon)</option>${S.crew.map(c=>`<option value="${c.id}">${esc(c.name)} (${esc(c.role)})</option>`).join('')}<option value="other">Someone else mentioned</option></select></label><label class="mt-3 block text-sm font-medium">Reason (required)<textarea id="tr" rows="3" class="${FIELD}"></textarea></label>${actions('Send to staff',BTNR)}`,r=>wire(r,()=>{const why=r.querySelector('#tr').value.trim();if(!why)return'A reason is required.';const w=r.querySelector('#tw').value;const name=w==='client'?'ItchyMastadon (client)':w==='other'?'Someone mentioned':actor.crew(w);S.desk.push({id:S.deskId++,type:'takedown',by:w,name,reason:why,status:'open'});log(name,'Requested a takedown',why);toast('Takedown request sent to staff')}))
 };
@@ -856,6 +985,22 @@ wire(P,()=>{const v=c.value,role=v.startsWith('role:'),l=role?v.slice(5):v,note=
  else{const m=S.msgs[mi],s=m.segs[si];m.segs.splice(si,1,{k:'t',v:s.v.slice(0,a)},mk(s.v.slice(a,b)),{k:'t',v:s.v.slice(b)});norm(m)}
  getSelection().removeAllRanges();log(actor.tl,all?`Redacted all ${count} mentions`:'Redacted text',`${txt} → [${l}]${note?' · '+note:''}`)})})}
 
+function txHint(){const d=$('#pub-tx');if(d)d.querySelector('.tx-hint').textContent=d.open?'Click to collapse':'Click to expand, or keep scrolling'}
+function txAnim(d,open){const b=d.querySelector('.tx-body');if(!b)return;
+ const cur=d._a?b.getBoundingClientRect().height:null;if(d._a){d._a.onfinish=null;d._a.cancel();d._a=null}
+ if(open)d.open=true;else if(!d.open)return;
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){if(!open)d.open=false;return}
+ const full=b.scrollHeight,from=cur??(open?0:full),to=open?full:0,dur=Math.max(260,Math.min(620,Math.abs(to-from)*.45));
+ b.classList.add('anim');d.classList.toggle('closing',!open);
+ const a=d._a=b.animate([{height:from+'px',opacity:open?(cur==null?0:1):1},{height:to+'px',opacity:open?1:0}],{duration:dur,easing:open?'cubic-bezier(.2,.7,.2,1)':'cubic-bezier(.4,0,.2,1)'});
+ a.onfinish=()=>{d._a=null;b.classList.remove('anim');d.classList.remove('closing');if(!open)d.open=false}}
+document.addEventListener('click',e=>{const sm=e.target.closest&&e.target.closest('#pub-tx>summary');if(!sm)return;e.preventDefault();const d=sm.parentElement;TXU=true;txAnim(d,!d.open||d.classList.contains('closing'))});
+document.addEventListener('toggle',e=>{if(e.target.id!=='pub-tx')return;TXO=e.target.open;if(!e.target.dataset.auto)TXU=true;delete e.target.dataset.auto;txHint()},true);
+let txLastY=scrollY;
+addEventListener('scroll',()=>{const y=scrollY,down=y>txLastY;txLastY=y;if(TXU||!down)return;const d=$('#pub-tx');if(!d||d.open)return;
+ const t=d.querySelector('summary').getBoundingClientRect().top;if(t<innerHeight*.55){d.dataset.auto=1;txAnim(d,true)}},{passive:true});
+document.addEventListener('animationend',e=>{if(!e.target.classList||!e.target.classList.contains('ms-fill'))return;MSA++;const b=$('#ms-box');if(b)b.outerHTML=msHTML()});
+setInterval(()=>{const b=$('#ms-box');if(!b)return;const r=b.getBoundingClientRect();b.classList.toggle('ms-paused',r.bottom<0||r.top>innerHeight)},500);
 const STEPS=[
 {center:1,title:'Welcome to the playground',body:''},
 {t:()=>document.querySelector('.note-callout'),top:1,title:'Read this first',body:'Everything here is a showcase of ideas, not a final design. Not every feature can or should be built.'},
@@ -991,6 +1136,76 @@ function f(){raf=0;const H=ch();S.forEach(s=>{const h=s.querySelector('.sec-head
  S.forEach(s=>{const r=s.getBoundingClientRect();const d=(r.top<=y&&r.bottom>=y)?0:Math.min(Math.abs(r.top-y),Math.abs(r.bottom-y));if(d<bd){bd=d;best=s}});
  S.forEach(s=>{s.classList.toggle('sf-on',s===best);s.classList.toggle('sf-off',s!==best)})}
 addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(f)},{passive:true});addEventListener('resize',f);setInterval(f,600);f()})();
+</script>
+
+<div id="rbar" role="region" aria-label="Current role">
+<span class="rb-lab">Viewing as</span>
+<button id="rb-cur" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="rb-list" title="Change role"><span class="rb-em"></span><span class="rb-name"></span><span class="rb-caret" aria-hidden="true">▲</span></button>
+<span class="rb-info"></span>
+<div id="rb-list" hidden><p>Change role</p></div>
+</div>
+<script>
+(()=>{
+const R={all:['👁️','Everything','#E5E7EB','229 231 235','The whole workflow'],client:['🛟','Client','#31C48D','49 196 141','The rescued player'],tl:['📣','Team lead','#3F83F8','63 131 248','Led the rescue, reviews'],
+ crew:['🧑‍🚀','Crew','#F59E0B','245 158 11','Advises the team lead'],staff:['🛡️','Staff','#F05252','240 82 82','Oversight and takedowns'],public:['🌐','Public','#22D3EE','34 211 238','Anyone with the link']};
+const bar=document.getElementById('rbar'),cur=document.getElementById('rb-cur'),list=document.getElementById('rb-list'),info=bar.querySelector('.rb-info'),H=document.documentElement;
+let now='all';
+Object.entries(R).forEach(([k,[e,n,c,,d]])=>{const b=document.createElement('button');b.type='button';b.dataset.act='view';b.dataset.v=k;b.style.setProperty('--c',c);
+ b.innerHTML=`<span aria-hidden="true">${e}</span>${n}<small>${d}</small>`;list.appendChild(b)});
+function setOpen(o){list.hidden=!o;cur.setAttribute('aria-expanded',o);if(o){const bs=[...list.querySelectorAll('button')].reverse();bs.forEach((b,i)=>{b.style.animationDelay=(i*35)+'ms';b.style.animation='none';void b.offsetWidth;b.style.animation=''});
+ (list.querySelector('button.on')||list.querySelector('button')).focus({preventScroll:true})}}
+cur.addEventListener('click',e=>{e.stopPropagation();setOpen(list.hidden)});
+list.addEventListener('click',e=>{if(e.target.closest('button'))setTimeout(()=>setOpen(false),0)});
+document.addEventListener('click',e=>{if(!list.hidden&&!bar.contains(e.target))setOpen(false)});
+document.addEventListener('keydown',e=>{if(list.hidden)return;if(e.key==='Escape'){setOpen(false);cur.focus()}
+ if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();const bs=[...list.querySelectorAll('button')],i=bs.indexOf(document.activeElement);bs[(i+(e.key==='ArrowDown'?1:-1)+bs.length)%bs.length].focus()}});
+window.__rolebar=v=>{now=v||'all';const [e,n,c,r]=R[now]||R.all;H.dataset.role=now;H.style.setProperty('--rc',c);H.style.setProperty('--rcr',r);
+ cur.querySelector('.rb-em').textContent=e;cur.querySelector('.rb-name').textContent=n;
+ const secs=[...document.querySelectorAll('section[data-vis]')],vis=now==='all'?secs.length:secs.filter(s=>s.dataset.vis.split(' ').includes(now)).length;
+ info.innerHTML=now==='all'?'Showing every section. Pick a role to see only what they see.':`<b>${n}</b> can see <b>${vis}</b> of ${secs.length} sections`;
+ list.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===now))};
+window.__rolebar(now);
+})();
+</script>
+
+<script>
+(()=>{
+const L=[["Be the reason", "someone makes it home"], ["Be the one", "who answers the call"], ["Someone’s still waiting on a rescue.", "Be the crew that comes."], ["Every rescue starts", "with someone who clicked “Accept”"], ["Turn someone’s bad day in the ’verse", "into their best story"], ["Fly toward the trouble", "everyone else flies away from"], ["When someone goes down,", "be the one who shows up"], ["Somewhere out there,", "someone’s counting on you"], ["One alert. One crew.", "One more life saved."], ["The next record", "could be yours to write"], ["Be someone’s", "second chance"], ["Behind every rescue", "is a crew that chose to respond"], ["No one gets left behind,", "not on our watch"]],SPIN=1500,DWELL=4200,FILL=7,MIN=.75,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur=0,bag=[],busy=false,hover=false,fit={w:0,fs:'',h:'',per:null};
+const html=k=>L[k].map(t=>`<span class="rl">${t}</span>`).join(''),text=k=>L[k].join(' '),item=k=>`<span class="reel-i"${fit.per?` style="font-size:${fit.per[k]}px"`:''}>${html(k)}</span>`;
+const pick=()=>{if(!bag.length){bag=L.map((_,i)=>i).filter(i=>i!==cur);for(let i=bag.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[bag[i],bag[j]]=[bag[j],bag[i]]}}return bag.pop()};
+const el=()=>document.querySelector('.join-reel');
+// every line on exactly two rows. Desktop: one shared size, shrunk (to 75% at most) until the widest half fits.
+// Phone: each line gets its own size, as big as it can be while both its halves fit.
+function size(r,force){const w=r.clientWidth;if(!w||(!force&&w===fit.w&&r.style.fontSize))return;
+ r.style.fontSize='';r.style.removeProperty('--reel-h');const base=parseFloat(getComputedStyle(r).fontSize),phone=matchMedia('(max-width:700px)').matches;
+ const m=document.createElement('span');m.className='reel-m';m.style.whiteSpace='nowrap';m.style.right='auto';r.appendChild(m);
+ const wk=L.map(l=>Math.max(...l.map(t=>{m.textContent=t;return m.offsetWidth})));
+ const room=w-3,fs=phone?base:Math.max(base*MIN,Math.min(base,base*room/Math.max(...wk)));
+ const per=phone?wk.map(x=>+Math.min(base,base*room/x).toFixed(1)):null;r.style.fontSize=fs.toFixed(1)+'px';
+ m.style.whiteSpace='';m.style.right='';m.style.display='block';let h=0;
+ L.forEach((_,k)=>{m.style.fontSize=per?per[k]+'px':'';m.innerHTML=html(k);h=Math.max(h,m.offsetHeight)});m.remove();h+=Math.ceil(fs*.15);
+ r.style.setProperty('--reel-h',h+'px');fit={w,fs:r.style.fontSize,h:h+'px',per};
+ const tr=r.querySelector('.reel-track');if(tr&&!busy)tr.innerHTML=item(cur)}
+function onScreen(r){const b=r.getBoundingClientRect();return b.bottom>0&&b.top<innerHeight&&b.width>0}
+function land(r){const ic=r.closest('.join')?.querySelector('.join-ic');if(!ic)return;ic.classList.remove('land');void ic.offsetWidth;ic.classList.add('land')}
+function spin(){const r=el();if(!r||busy||hover||document.hidden||!onScreen(r))return;size(r);
+ const to=pick(),tr=r.querySelector('.reel-track'),sr=r.querySelector('.reel-sr'),h=r.offsetHeight;
+ const seq=[cur];for(let i=0;i<FILL;i++){let k;do{k=Math.random()*L.length|0}while(k===seq[seq.length-1]||k===to);seq.push(k)}seq.push(to);
+ cur=to;sr.textContent=text(to);
+ if(still){tr.innerHTML=item(to);tr.animate([{opacity:0},{opacity:1}],{duration:400});return}
+ busy=true;tr.innerHTML=seq.map(item).join('');r.classList.add('spin');
+ const a=tr.animate([{transform:'translateY(0)',filter:'blur(0)'},{filter:'blur(2.5px)',offset:.18},{filter:'blur(1.5px)',offset:.6},{transform:`translateY(${-(seq.length-1)*h}px)`,filter:'blur(0)'}],
+  {duration:SPIN,easing:'cubic-bezier(.3,.05,.2,1.12)'});
+ a.onfinish=a.oncancel=()=>{busy=false;if(!tr.isConnected)return;r.classList.remove('spin');tr.innerHTML=item(cur);land(r)}}
+window.__jr={text:()=>text(cur),item:(k=cur)=>item(k),n:L.length,style:()=>fit.fs?`font-size:${fit.fs};--reel-h:${fit.h}`:''};
+setInterval(spin,SPIN+DWELL);
+const refit=()=>{const r=el();if(r)size(r,true)};
+addEventListener('resize',refit);document.fonts&&document.fonts.ready.then(refit);
+new MutationObserver(()=>{const r=el();if(r&&(!r.style.fontSize||r.clientWidth!==fit.w))size(r,true)}).observe(document.body,{childList:true,subtree:true});
+document.addEventListener('mouseover',e=>{hover=!!e.target.closest?.('.join')});
+refit();
+})();
 </script>
 </body>
 </html>

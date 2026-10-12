@@ -294,6 +294,27 @@ section.sf-on .sh-hit,html[data-role]:not([data-role=all]) section[data-vis]:not
 /* every section tab is the same length: the widest title (Team lead notification), or the full width on narrow screens */
 [data-ss=F] .sh-t{min-width:min(410px,calc(100% + 32px))}
 .sec-head.stuck .sh-t{min-width:0!important}
+
+/* ---------- public export: the carve-out the public sees ---------- */
+#b-export .pubview{position:relative;padding-left:calc(1.5rem + 46px);border:2px solid #22D3EE;box-shadow:0 0 0 5px rgb(34 211 238/.12),0 0 46px rgb(34 211 238/.28)}
+.pv-strip{position:absolute;left:0;top:0;bottom:0;width:44px;display:flex;flex-direction:column;align-items:center;padding-top:14px;gap:10px;
+ background:linear-gradient(180deg,#22D3EE,#0891B2);color:#042f37;border-radius:.4rem 0 0 .4rem}
+.pv-strip>svg{width:22px;height:22px;flex:0 0 auto}
+.pv-strip-in{position:sticky;top:42vh;display:flex;align-items:center;gap:10px;writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.pv-strip-in b{font:700 1.2rem/1 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.14em}
+.pv-strip-in small{font:600 11px/1 Inter,sans-serif;letter-spacing:.04em;opacity:.8}
+@media(max-width:640px){#b-export .pubview{padding-left:calc(1rem + 36px)}.pv-strip{width:34px}.pv-strip-in b{font-size:1rem}.pv-strip-in small{display:none}#b-export .pubview .grid-cols-3{grid-template-columns:repeat(auto-fit,minmax(104px,1fr))}#b-export .pubview .grid-cols-3 .text-3xl{font-size:1.6rem}#rb-cur{font-size:1rem}}
+#rb-cur{white-space:nowrap}
+/* everything around it is playground context: faded until you point at it */
+.noise,#export>.sec-intro,#export .sh-row>.rounded{opacity:.4;transition:opacity .25s ease}
+.noise:hover,.noise:focus-within,#export>.sec-intro:hover,#export>.sec-intro:focus-within,#export .sh-row>.rounded:hover{opacity:1}
+
+/* milestones title line also carries the crew kudos */
+.ms-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.ms-acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-left:auto}
+.ms-kl{font:700 1rem/1 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#31C48D}
+.ms-sep{width:1px;height:24px;background:#374151}
+@media(max-width:640px){.ms-acts{margin-left:0;gap:6px}.ms-sep{display:none}.ms-kl{flex-basis:100%}.ms-hs{display:none}#ms-box{padding:12px}#ms-box .thx{padding:.45rem .6rem;gap:6px}#ms-box .ms-acts>button{padding-left:.55rem;padding-right:.55rem}}
 </style>
 </head>
 <body>
@@ -429,7 +450,7 @@ section.sf-on .sh-hit,html[data-role]:not([data-role=all]) section[data-vis]:not
 <div class="sec-body" id="b-export"></div>
 </section>
 
-<div class="note-callout rounded-lg p-4 text-sm text-gray-300"><p class="flex items-center gap-2 font-semibold text-yellow-400"><svg class="size-4 shrink-0"><use href="#i-alert"/></svg>Reminder</p><p class="mt-1">This is a showcase of possibilities, not a final design or an exhaustive list. Everything here is in development, and not every feature can or should be built.</p></div>
+<div class="note-callout noise rounded-lg p-4 text-sm text-gray-300"><p class="flex items-center gap-2 font-semibold text-yellow-400"><svg class="size-4 shrink-0"><use href="#i-alert"/></svg>Reminder</p><p class="mt-1">This is a showcase of possibilities, not a final design or an exhaustive list. Everything here is in development, and not every feature can or should be built.</p></div>
 
 </div>
 </div>
@@ -808,8 +829,8 @@ const o=S.out,crewRoles=S.crew.map(c=>c.role.replace(/ \d$/,''));
 const counts={};crewRoles.forEach(r=>counts[r]=(counts[r]||0)+1);
 const pubMsgs=S.msgs.map((m,i)=>msgRow(m,i,'pub',false)).join('');
 const toneHero=o.tone==='ok'?'text-green-400':o.tone==='died'?'text-gray-300':'text-gray-400';
-return `${S.preview&&!live?`<div class="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-yellow-300 p-3 text-sm text-yellow-400"><span class="flex items-center gap-2">${ic('eye')}Preview, not published. This is what the page would look like right now.</span><button data-act="unpreview" class="${SM}">Close preview</button></div>`:''}
-<div class="${CARD}">
+return `${S.preview&&!live?`<div class="noise mb-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-yellow-300 p-3 text-sm text-yellow-400"><span class="flex items-center gap-2">${ic('eye')}Preview, not published. This is what the page would look like right now.</span><button data-act="unpreview" class="${SM}">Close preview</button></div>`:''}
+<div class="${CARD} pubview" aria-label="What the public sees"><div class="pv-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="pv-strip-in"><b>What the public sees</b><small>The part that matters most</small></span></div>
 <div class="flex flex-wrap items-start justify-between gap-4"><div><p class="font-Mohave text-4xl font-bold">Alert: Agile Snail</p><p class="font-Mohave text-lg ${MU}">Made public by: ItchyMastadon</p></div>
 <div class="flex flex-wrap gap-2">${S.rotw?`<span class="inline-flex items-center gap-1 rounded bg-yellow-300/20 px-2.5 py-0.5 text-xs font-medium text-yellow-400">${ic('trophy','h-3.5 w-3.5')}Rescue of the week</span>`:''}<span class="inline-flex items-center gap-1 whitespace-nowrap rounded bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800">${ic('shield-check','h-3.5 w-3.5')}Verified</span></div></div>
 <div class="mt-8 grid grid-cols-3 gap-4"><div><p class="font-Mohave text-3xl font-bold ${toneHero}">${o.short}</p><p class="font-Mohave text-lg ${MU}">Outcome</p></div>${o.stats.filter((_,i)=>i!==1).map(([v,l])=>`<div><p class="font-Mohave text-3xl font-bold">${v}</p><p class="font-Mohave text-lg ${MU}">${l}</p></div>`).join('')}</div>
@@ -821,13 +842,11 @@ ${o.tl.map(([a,b,c])=>`<div class="grid grid-cols-12 border-b px-3 py-3 dark:bor
 <div class="grid grid-cols-12 px-3 py-3 font-semibold"><div class="col-span-5">Total</div><div class="col-span-4"></div><div class="col-span-3 text-right">${o.total}</div></div></div>
 <p class="mb-2 mt-8 font-Mohave text-2xl font-semibold uppercase">Responding crew (${S.crew.length})</p>
 <div class="flex flex-wrap gap-2">${Object.entries(counts).map(([r,n])=>`<span class="${ROLE}">${r}${n>1?' ×'+n:''}</span>`).join('')}</div>
-<details id="pub-tx" class="tx mt-8"${TXO?' open':''}><summary class="tx-sum">${ic('chev','tx-chev h-4 w-4')}<span class="font-Mohave text-2xl font-semibold uppercase">Communication transcript (${S.msgs.filter(m=>!m.hidden).length})</span><span class="tx-hint">${TXO?'Click to collapse':'Click to expand, or keep scrolling'}</span></summary><div class="tx-body"><div class="tx-in"><div class="pv-note"><span class="pv-ic">${ic('lock','size-5')}</span><div><p class="pv-h">How this record protects people</p><p class="pv-p">Crew names are replaced with their roles to protect our members' privacy. Text in gray italic brackets was removed by a reviewer and replaced with a category.</p></div></div><div class="mt-3 text-sm">${pubMsgs}</div></div><button type="button" class="tx-close" data-act="txClose">${ic('chev','tx-up h-3.5 w-3.5')}Collapse transcript</button></div></details>
-<div class="share mt-6"><p class="mb-2 ${LBL} text-sm">Share card preview (Discord)</p><div class="flex gap-3 rounded-lg bg-gray-700 p-3" style="border-left:4px solid ${o.tone==='ok'?'#31C48D':'#9CA3AF'}"><div class="min-w-0 flex-1"><p class="text-xs ${MU}">Medrunner</p><p class="font-semibold text-blue-300">Alert: Agile Snail · ${o.short}</p><p class="mt-1 text-xs text-gray-300">Verified rescue record · ${o.stats[0][1]} ${o.stats[0][0]}${S.rating?` · ${'★'.repeat(S.rating)}`:''}</p></div><svg viewBox="0 0 79 117" style="width:36px;height:52px" class="shrink-0 text-white"><use href="#logo-mark"/></svg></div></div>
-<div class="acts mt-6"><p class="acts-l">Support the crew</p><div class="flex flex-wrap items-center gap-3"><button data-act="thanks" class="thx${S.thanked?' on':''}" aria-pressed="${S.thanked}"><span class="thx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/><path d="M7 11l4-7a2 2 0 0 1 3 1.7V9h5a2 2 0 0 1 2 2.3l-1.4 7A2 2 0 0 1 17.6 20H7"/></svg></span><span class="thx-l">${S.thanked?'Thanked':'Thank the crew'}</span><span class="thx-n">${S.thanks}</span></button><button data-act="copy" class="${BTN2}">${ic('copy')}Copy link</button></div></div>
-${msHTML()}
+<details id="pub-tx" class="tx mt-8"${TXO?' open':''}><summary class="tx-sum">${ic('chev','tx-chev h-4 w-4')}<span class="font-Mohave text-2xl font-semibold uppercase">Communication transcript (${S.msgs.filter(m=>!m.hidden).length})</span><span class="tx-hint">${TXO?'Click to collapse':'Click to expand'}</span></summary><div class="tx-body"><div class="tx-in"><div class="pv-note"><span class="pv-ic">${ic('lock','size-5')}</span><div><p class="pv-h">How this record protects people</p><p class="pv-p">Crew names are replaced with their roles to protect our members' privacy. Text in gray italic brackets was removed by a reviewer and replaced with a category.</p></div></div><div class="mt-3 text-sm">${pubMsgs}</div></div><button type="button" class="tx-close" data-act="txClose">${ic('chev','tx-up h-3.5 w-3.5')}Collapse transcript</button></div></details>
 <div class="join mt-8"><span class="join-ic"><svg class="join-star" viewBox="12.9 12.1 52.7 55.5" aria-hidden="true"><path fill="currentColor" d="M50.8781 39.8715L64.5213 47.7794C65.1715 48.1567 65.3969 48.9979 65.0211 49.6508L60.5637 57.4002C60.1879 58.0529 59.3497 58.2791 58.6993 57.902L45.0563 49.9941V65.806C45.0563 66.5606 44.4437 67.1755 43.6919 67.1755H34.777C34.0252 67.1755 33.4127 66.5606 33.4127 65.806V49.9941L19.7695 57.902C19.1193 58.2791 18.2812 58.0529 17.9054 57.4002L13.4478 49.6508C13.072 48.9979 13.2975 48.1567 13.9477 47.7794L27.5909 39.8715L13.9477 31.9635C13.2975 31.5862 13.072 30.7449 13.4478 30.0922L17.9054 22.3428C18.2812 21.6901 19.1193 21.4636 19.7695 21.841L33.4127 29.7489V13.9369C33.4127 13.1823 34.0252 12.5673 34.777 12.5673H43.6919C44.4437 12.5673 45.0563 13.1823 45.0563 13.9369V29.7489L58.6993 21.841C59.3497 21.4636 60.1879 21.6901 60.5637 22.3428L65.0211 30.0922C65.3969 30.7449 65.1715 31.5862 64.5213 31.9635L50.8781 39.8715Z"/></svg></span><div class="join-tx"><p class="join-h join-reel" style="${(window.__jr&&__jr.style())||''}"><span class="reel-sr">${(window.__jr&&__jr.text())||'Be the reason someone makes it home'}</span><span class="reel-track" aria-hidden="true">${(window.__jr&&__jr.item())||'<span class="reel-i"><span class="rl">Be the reason</span><span class="rl">someone makes it home</span></span>'}</span></p><p class="join-p">Join Medrunner as a responder and help save lives, just like this one.</p></div><a class="join-cta" href="https://www.medrunner.space" target="_blank" rel="noopener">Become a responder <span aria-hidden="true">→</span></a></div>
+${msHTML()}
 <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 text-sm dark:border-gray-700">${emergBtn('Need a rescue? Report an emergency')}${live?`<button data-act="takedown" class="lnk text-xs">Request a takedown</button>`:`<span class="text-xs ${MU}">Takedown requests open once published.</span>`}</div>
-</div>`}
+</div><div class="share noise mt-6"><p class="mb-2 ${LBL} text-sm">Share card preview (Discord) · how the link looks when posted, not part of the page</p><div class="flex gap-3 rounded-lg bg-gray-700 p-3" style="border-left:4px solid ${o.tone==='ok'?'#31C48D':'#9CA3AF'}"><div class="min-w-0 flex-1"><p class="text-xs ${MU}">Medrunner</p><p class="font-semibold text-blue-300">Alert: Agile Snail · ${o.short}</p><p class="mt-1 text-xs text-gray-300">Verified rescue record · ${o.stats[0][1]} ${o.stats[0][0]}${S.rating?` · ${'★'.repeat(S.rating)}`:''}</p></div><svg viewBox="0 0 79 117" style="width:36px;height:52px" class="shrink-0 text-white"><use href="#logo-mark"/></svg></div></div>`}
 
 const MILESTONES=[
 {c:'pilot',t:'has flown rescue ships on more than 430 Medrunner missions.'},
@@ -842,9 +861,9 @@ const MILESTONES=[
 {c:null,t:'Medrunner crews answered more than 10,000 calls for help this year.'}];
 let MSA=0,TXO=false,TXU=false;
 function msHTML(){const list=MILESTONES;const i=(S.ms+MSA)%list.length,m=list[i];
-return `<div id="ms-box" class="mt-8 rounded-lg border border-gray-200 p-4 dark:border-gray-700"><div class="flex flex-wrap items-center justify-between gap-2"><p class="flex items-center gap-2 font-Mohave text-2xl font-semibold uppercase">${ic('trophy','size-5 text-yellow-400')}Crew milestones</p><button data-act="cycleMs" class="${SM}">${ic('refresh','h-3.5 w-3.5')}Cycle · ${i+1} of ${list.length}</button></div>
+return `<div id="ms-box" class="mt-8 rounded-lg border border-gray-200 p-4 dark:border-gray-700"><div class="ms-head"><p class="flex items-center gap-2 font-Mohave text-2xl font-semibold uppercase">${ic('trophy','size-5 text-yellow-400')}Crew milestones</p><div class="ms-acts"><span class="ms-kl">Kudos the crew</span><button data-act="thanks" class="thx${S.thanked?' on':''}" aria-pressed="${S.thanked}" aria-label="${S.thanked?'Thanked the crew':'Thank the crew'}" title="${S.thanked?'Thanked the crew':'Thank the crew'}"><span class="thx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/><path d="M7 11l4-7a2 2 0 0 1 3 1.7V9h5a2 2 0 0 1 2 2.3l-1.4 7A2 2 0 0 1 17.6 20H7"/></svg></span><span class="thx-n">${S.thanks}</span></button><button data-act="copy" class="${BTN2}" aria-label="Copy link">${ic('copy')}<span class="ms-hs">Copy link</span></button><span class="ms-sep" aria-hidden="true"></span><button data-act="cycleMs" class="${SM}" aria-label="Next milestone (${i+1} of ${list.length})">${ic('refresh','h-3.5 w-3.5')}<span class="ms-hs">Cycle · ${i+1} of ${list.length}</span></button></div></div>
 <p class="ms-txt mt-3 flex flex-wrap items-center gap-2 text-lg">${m.c?`<span class="${ROLE}">[${esc(roleOf(m.c))}]</span>`:`<span class="${CLI}">Medrunner</span>`}<span>${m.t}</span></p>
-<div class="ms-bar" title="Next milestone"><i class="ms-fill"></i></div><p class="mt-2 text-xs ${MU}">Sample stats. Shown by role only, never by name. Hover to pause.</p></div>`}
+<div class="ms-bar" title="Next milestone"><i class="ms-fill"></i></div><p class="noise mt-2 text-xs ${MU}">Sample stats. Shown by role only, never by name. Hover to pause.</p></div>`}
 
 function stageText(){return {request:'Waiting for the client',declined:'Declined by client',crew:S.crewClosed?'In review':'Crew advisories open',review:S.reviewer==='pool'?'In review (leadership pool)':'In review',escalated:'Escalated to staff',published:'Published',rejected:'Rejected',withheld:'Withheld',takendown:'Taken down'}[S.stage]}
 function rStepper(){const steps=['Client request','Crew advisories','Team lead review','Published'];
@@ -964,7 +983,7 @@ unban:a=>{const v=a.dataset.v;S.bans=S.bans.filter(b=>b!==v);S.msgs.forEach(m=>{
 rotw:()=>{S.rotw=!S.rotw;log(actor.staff,S.rotw?'Featured as Rescue of the week':'Removed Rescue of the week');render()},
 cycleMs:()=>{S.ms++;render()},
 thanks:a=>{const on=!S.thanked;S.thanked=on;S.thanks+=on?1:-1;log('Public viewer',on?'Thanked the crew':'Took back their thanks');
- a.classList.toggle('on',on);a.setAttribute('aria-pressed',on);a.querySelector('.thx-l').textContent=on?'Thanked':'Thank the crew';a.querySelector('.thx-n').textContent=S.thanks;
+ a.classList.toggle('on',on);a.setAttribute('aria-pressed',on);a.setAttribute('aria-label',on?'Thanked the crew':'Thank the crew');a.title=on?'Thanked the crew':'Thank the crew';a.querySelector('.thx-n').textContent=S.thanks;
  const ic2=a.querySelector('.thx-ic');ic2.classList.remove('thx-pop','thx-drop');void ic2.offsetWidth;ic2.classList.add(on?'thx-pop':'thx-drop');
  const r=a.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top-6,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
  if(on){if(!still)for(let k=0;k<7;k++){const p=document.createElement('span');p.className='thx-spark';p.textContent='+';p.style.left=cx+'px';p.style.top=cy+'px';document.body.appendChild(p);
@@ -1017,7 +1036,7 @@ wire(P,()=>{const v=c.value,role=v.startsWith('role:'),l=role?v.slice(5):v,note=
  else{const m=S.msgs[mi],s=m.segs[si];m.segs.splice(si,1,{k:'t',v:s.v.slice(0,a)},mk(s.v.slice(a,b)),{k:'t',v:s.v.slice(b)});norm(m)}
  getSelection().removeAllRanges();log(actor.tl,all?`Redacted all ${count} mentions`:'Redacted text',`${txt} → [${l}]${note?' · '+note:''}`)})})}
 
-function txHint(){const d=$('#pub-tx');if(d)d.querySelector('.tx-hint').textContent=d.open?'Click to collapse':'Click to expand, or keep scrolling'}
+function txHint(){const d=$('#pub-tx');if(d)d.querySelector('.tx-hint').textContent=d.open?'Click to collapse':'Click to expand'}
 function txAnim(d,open){const b=d.querySelector('.tx-body');if(!b)return;
  const cur=d._a?b.getBoundingClientRect().height:null;if(d._a){d._a.onfinish=null;d._a.cancel();d._a=null}
  if(open)d.open=true;else if(!d.open)return;
@@ -1028,9 +1047,6 @@ function txAnim(d,open){const b=d.querySelector('.tx-body');if(!b)return;
  a.onfinish=()=>{d._a=null;b.classList.remove('anim');d.classList.remove('closing');if(!open)d.open=false}}
 document.addEventListener('click',e=>{const sm=e.target.closest&&e.target.closest('#pub-tx>summary');if(!sm)return;e.preventDefault();const d=sm.parentElement;TXU=true;txAnim(d,!d.open||d.classList.contains('closing'))});
 document.addEventListener('toggle',e=>{if(e.target.id!=='pub-tx')return;TXO=e.target.open;if(!e.target.dataset.auto)TXU=true;delete e.target.dataset.auto;txHint()},true);
-let txLastY=scrollY;
-addEventListener('scroll',()=>{const y=scrollY,down=y>txLastY;txLastY=y;if(TXU||!down||(G.on&&!G.min))return;const d=$('#pub-tx');if(!d||d.open)return;
- const t=d.querySelector('summary').getBoundingClientRect().top;if(t<innerHeight*.55){d.dataset.auto=1;txAnim(d,true)}},{passive:true});
 document.addEventListener('animationend',e=>{if(!e.target.classList||!e.target.classList.contains('ms-fill'))return;MSA++;const b=$('#ms-box');if(b)b.outerHTML=msHTML()});
 setInterval(()=>{const b=$('#ms-box');if(!b)return;const r=b.getBoundingClientRect();b.classList.toggle('ms-paused',r.bottom<0||r.top>innerHeight)},500);
 const STEPS=[

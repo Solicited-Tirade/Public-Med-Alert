@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Public Med Alert Pitch</title>
+<style>
+:root{--bg:#0d141f;--ink:#e6e9ee;--mut:#7d8896;--dim:#3a4554;--line:rgba(255,255,255,.07);--acc:#F59E0B;--blue:#76A9FA;--rail:78px;--u:12px;--cond:'Arial Narrow','Helvetica Neue',Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:-1;opacity:0;transition:opacity 1.1s ease}
+.bg.on{opacity:1}
+#top{position:fixed;left:0;right:var(--rail);top:0;z-index:25;display:flex;align-items:flex-start;justify-content:space-between;padding:16px 22px;background:linear-gradient(var(--bg) 30%,rgba(13,20,31,0));pointer-events:none}
+#top .brand{display:flex;align-items:center;gap:10px;pointer-events:auto}
+#top .brand svg{width:132px;height:35px;color:#fff}
+#now{text-align:right}
+#nowK{font:600 11px/1 var(--mono);letter-spacing:.22em;color:var(--mut);text-transform:uppercase;min-height:11px}
+#nowT{position:relative;margin:6px 0 0;height:40px;font:800 38px/40px var(--cond);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+#nowT .c{display:inline-block;will-change:transform,opacity}
+#nowT .old{position:absolute;right:0;top:0}
+#rail{position:fixed;top:0;right:0;bottom:0;width:var(--rail);z-index:30;border-left:1px solid var(--line);background:linear-gradient(90deg,rgba(13,20,31,.2),rgba(13,20,31,.75));overflow:hidden;cursor:pointer;user-select:none}
+#fly{position:fixed;inset:0;z-index:40;pointer-events:none}
+#fly .f{position:fixed;font:800 38px/40px var(--cond);letter-spacing:.08em;text-transform:uppercase;color:#f3f4f6;transform-origin:center center;will-change:transform,opacity}
+main{padding-right:var(--rail)}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:18vh 7vw 10vh}
+.kick{font:600 12px/1 var(--mono);letter-spacing:.24em;color:var(--acc);text-transform:uppercase}
+h1{margin:.6rem 0 0;font:800 clamp(44px,8vw,104px)/.95 var(--cond);letter-spacing:.02em;text-transform:uppercase}
+.lead{max-width:640px;margin-top:1.4rem;color:#b9c1cc;font-size:1.1rem}
+.hint{margin-top:3rem;display:flex;align-items:center;gap:10px;font:12px/1 var(--mono);letter-spacing:.2em;color:var(--mut);text-transform:uppercase}
+.hint i{display:block;width:1px;height:42px;background:linear-gradient(var(--blue),transparent);animation:drip 1.6s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(.2);transform-origin:bottom}}
+.sec{position:relative;min-height:120vh;padding:16vh 7vw 12vh;border-top:1px solid var(--line)}
+.cap{position:absolute;right:7vw;top:14px;font:11px/1 var(--mono);letter-spacing:.24em;color:var(--mut);text-transform:uppercase}
+.big{position:absolute;right:6vw;top:10vh;font:800 clamp(120px,22vw,300px)/1 var(--cond);color:rgba(255,255,255,.03);pointer-events:none}
+h2{margin:.6rem 0 0;font:800 clamp(34px,5.5vw,68px)/1 var(--cond);letter-spacing:.03em;text-transform:uppercase}
+.sec p{max-width:620px;color:#b9c1cc}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:2.2rem;max-width:900px}
+.card{border:1px solid var(--line);border-radius:10px;padding:18px;background:rgba(255,255,255,.02)}
+.card b{display:block;font:700 12px/1 var(--mono);letter-spacing:.15em;color:var(--acc);text-transform:uppercase}
+.card>span{display:block;margin-top:.6rem;color:#cbd2db;font-size:.95rem}
+.bars{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.bars i{display:block;height:6px;border-radius:9px;background:rgba(255,255,255,.08)}
+.chip{display:inline-block;margin:4px 6px 0 0;padding:2px 10px;border:1px solid #d97706;border-radius:5px;font-size:.75rem;color:#f59e0b}
+.cat{display:inline-block;margin:4px 6px 0 0;padding:2px 10px;border:1px solid #6b7280;border-radius:5px;font-size:.75rem;font-style:italic;color:#9ca3af}
+footer{padding:8vh 7vw 14vh;border-top:1px solid var(--line);color:var(--mut);font:12px/1.6 var(--mono);letter-spacing:.08em}
+@media(max-width:700px){:root{--rail:54px;--u:10px}#nowT{font-size:26px;height:30px;line-height:30px}#fly .f{font-size:26px;line-height:30px}#top .brand svg{width:96px;height:26px}.cap{display:none}}
+@media(prefers-reduced-motion:reduce){.bg,.lab,.lab .ch{transition:none}.hint i{animation:none}}
+
+html{scroll-snap-type:y proximity}
+.slide{min-height:100vh;display:flex;align-items:center;padding:96px 6vw 7vh;scroll-snap-align:start}
+.slide.hero{padding-top:110px}
+.sl{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:4vw;align-items:center;width:100%;max-width:1320px;position:relative;z-index:1}
+.sl.one{grid-template-columns:minmax(0,1fr);max-width:1000px}
+.copy h2{margin:.5rem 0 0}
+.copy .lead{margin-top:1.2rem}
+.pts{list-style:none;margin:1.6rem 0 0;padding:0;display:flex;flex-direction:column;gap:.75rem;max-width:560px}
+.pts li{position:relative;padding-left:1.6rem;color:#c7cfd9}
+.pts li::before{content:'';position:absolute;left:0;top:.62em;width:.6rem;height:.6rem;border-radius:2px;background:#31C48D;box-shadow:0 0 10px rgba(49,196,141,.6)}
+.pts b,.steps b{color:#fff}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:2rem}
+.cards.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{padding:20px}
+.card>span{line-height:1.55}
+.flow{list-style:none;counter-reset:f;margin:1.8rem 0 0;padding:0;display:flex;flex-direction:column;gap:10px;max-width:520px}
+.flow li{counter-increment:f;display:flex;align-items:center;gap:14px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02)}
+.flow li::before{content:counter(f,decimal-leading-zero);font:700 12px/1 var(--mono);color:#31C48D;min-width:22px}
+.flow b{font:800 18px/1 var(--cond);letter-spacing:.04em;text-transform:uppercase;min-width:150px}
+.flow span{color:#9aa4b1;font-size:.92rem}
+.steps{margin:1.6rem 0 0;padding-left:1.3rem;display:flex;flex-direction:column;gap:.7rem;color:#c7cfd9;max-width:560px}
+.steps code{font:600 .85em var(--mono);color:#a7f3d0;background:rgba(49,196,141,.1);padding:1px 6px;border-radius:4px}
+.note{margin-top:1.6rem;max-width:560px;padding:12px 16px;border-left:4px solid #F59E0B;background:rgba(245,158,11,.08);border-radius:8px;color:#d1d5db;font-size:.92rem}
+.note b{color:#FACA15}
+.fine{margin-top:1rem;font:12px/1.5 var(--mono);color:var(--mut)}
+.shot{margin:0;position:relative}
+.shot img{display:block;width:100%;height:auto;max-height:72vh;object-fit:contain;object-position:top;border-radius:12px;border:1px solid #2b3442;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(49,196,141,.08);cursor:zoom-in;background:#0b1018;transition:transform .25s ease}
+.shot img:hover{transform:translateY(-3px)}
+.shot figcaption{margin-top:10px;display:flex;gap:10px;align-items:center;font:12px/1.4 var(--mono);color:#9aa4b1}
+.shot figcaption span{padding:2px 7px;border-radius:4px;background:rgba(49,196,141,.12);color:#6ee7b7;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.slide .big{top:auto;bottom:6vh}
+#lb{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:4vh 4vw;background:rgba(3,7,12,.88);cursor:zoom-out}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:92vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.lab{font-size:11px}
+@media(max-width:1000px){.sl{grid-template-columns:minmax(0,1fr)}.cards.three{grid-template-columns:minmax(0,1fr)}.shot img{max-height:none}}
+@media(max-width:700px){.cards{grid-template-columns:minmax(0,1fr)}.flow b{min-width:0;font-size:15px}.slide{padding:84px 5vw 6vh}}
+</style>
+<style>
+#rail{position:fixed;top:0;right:0;bottom:0;width:var(--rail);z-index:30;border-left:1px solid var(--line);background:linear-gradient(90deg,rgba(13,20,31,.25),rgba(13,20,31,.8));overflow:hidden;cursor:pointer;user-select:none}
+#rail svg.base{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+:root{--rail:96px}
+.lab{position:absolute;left:8px;writing-mode:vertical-rl;transform:rotate(180deg);font:800 13px/1 var(--cond);letter-spacing:.2em;text-transform:uppercase;color:var(--dim);transition:color .12s ease;white-space:nowrap}
+.lab .ch{display:inline-block;transition:opacity .5s ease}
+.lab.on{color:#f3f4f6}.lab.lift .ch{opacity:.12}
+.v-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(49,196,141,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(49,196,141,.08) 1px,transparent 1px),linear-gradient(rgba(49,196,141,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(49,196,141,.035) 1px,transparent 1px);background-size:24px 24px,24px 24px,6px 6px,6px 6px}
+.lab.done{color:rgba(49,196,141,.5)}.lab.on{color:#31C48D;text-shadow:0 0 10px rgba(49,196,141,.6)}
+.v-read{position:absolute;left:8px;right:8px;bottom:14px;border:1px solid rgba(49,196,141,.45);border-radius:6px;padding:6px 6px 5px;background:rgba(6,20,16,.85);text-align:center;font-family:var(--mono)}
+.v-read small{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.12em;color:rgba(49,196,141,.75)}
+.v-read b{display:block;margin-top:2px;font:700 22px/1 var(--mono);color:#31C48D;text-shadow:0 0 12px rgba(49,196,141,.55)}
+.v-read .st{margin-top:3px;font:8.5px/1.2 var(--mono);letter-spacing:.08em;text-align:center;color:rgba(167,243,208,.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-dot{width:6px;height:6px;border-radius:9px;background:#31C48D;display:inline-block;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+@media(max-width:700px){:root{--rail:64px}.lab{font-size:11px;left:5px}.v-read{left:4px;right:4px}.v-read b{font-size:15px}.v-read small,.v-read .st{display:none}}
+@media(prefers-reduced-motion:reduce){.wave,
+.v-dot{animation:none}}
+</style>
+<style>
+/* ---------- galleries ---------- */
+.menu-link{margin-left:14px;padding:5px 11px;border:1px solid rgba(255,255,255,.14);border-radius:999px;font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#cbd2db;text-decoration:none;background:rgba(13,20,31,.6)}
+.menu-link:hover{color:#fff;border-color:#31C48D}
+.gal .stage{position:relative;border-radius:12px;overflow:hidden;border:1px solid #2b3442;background:#0b1018;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(49,196,141,.08);cursor:zoom-in}
+.gal .stage img,.gal .stage video{display:block;width:100%;height:auto;max-height:58vh;object-fit:contain;object-position:top;border:0;border-radius:0;box-shadow:none;background:#0b1018}
+.shot.gal img:hover{transform:none}
+.gal figcaption em{font-style:normal;flex:1;min-width:0}
+.gal figcaption .tg{white-space:nowrap}
+.gal figcaption .ct{font:600 11px/1 var(--mono);color:#6b7685}
+.thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.th{position:relative;flex:0 0 auto;width:92px;height:62px;padding:0;border-radius:7px;overflow:hidden;border:1px solid #2b3442;background:#0b1018;cursor:pointer;opacity:.55;transition:opacity .15s ease,border-color .15s ease,transform .15s ease}
+.th img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;border:0;border-radius:0;box-shadow:none;max-height:none}
+.th:hover{opacity:.9;transform:translateY(-2px)}
+.th.on{opacity:1;border-color:#31C48D;box-shadow:0 0 0 2px rgba(49,196,141,.35)}
+.th:focus-visible{outline:2px solid #76A9FA;outline-offset:2px}
+.pl{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:rgba(13,20,31,.75);border:1px solid rgba(255,255,255,.5)}
+.pl::after{content:'';position:absolute;left:10px;top:7px;border:6px solid transparent;border-left:9px solid #fff;border-right:0}
+.stage .live{position:absolute;left:10px;top:10px;padding:3px 8px;border-radius:4px;background:rgba(13,20,31,.8);font:700 10px/1 var(--mono);letter-spacing:.14em;color:#6ee7b7;text-transform:uppercase;pointer-events:none}
+.stage .live::before{content:'';display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#31C48D;vertical-align:1px;animation:blink 1s steps(2) infinite}
+.strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:2rem}
+.mini{margin:0}
+.mini .th{width:100%;height:auto;aspect-ratio:16/10;opacity:1}
+.mini .th:hover{border-color:#31C48D}
+.mini figcaption{margin-top:8px;font:12px/1.4 var(--mono);color:#9aa4b1}
+.cta{display:inline-flex;align-items:center;gap:8px;margin-top:1.4rem;padding:12px 20px;border-radius:10px;background:#F59E0B;color:#111827;font:800 16px/1 var(--cond);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 10px 30px rgba(245,158,11,.25)}
+.cta:hover{background:#FACA15}
+.intro-cta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:1.4rem}
+.intro-cta .cta{margin-top:0}
+.intro-cta>span{font-size:.85rem;color:#9aa4b1}
+#lb{flex-direction:column;gap:12px}
+#lb .lbm img,#lb .lbm video{max-width:100%;max-height:82vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.7);display:block}
+#lb .lbm{position:relative;max-width:min(1400px,92vw);cursor:default}
+#lb .lbc{display:flex;align-items:center;gap:14px;font:12px/1.4 var(--mono);color:#cbd2db}
+#lb .lbn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(13,20,31,.8);color:#fff;font-size:18px;cursor:pointer}
+#lb .lbn:hover{border-color:#31C48D}
+@media(max-width:1000px){.gal .stage img,.gal .stage video{max-height:none}}
+@media(max-width:700px){.strip{grid-template-columns:minmax(0,1fr)}.th{width:72px;height:50px}.menu-link{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="logo" viewBox="0 0 439 117"><path fill-rule="evenodd" clip-rule="evenodd" d="M78.4648 39.3849C78.4648 17.6305 60.9017 0 39.2344 0C17.5669 0 0 17.6305 0 39.3849L8.29863 102.301C8.5354 104.108 9.83584 105.598 11.591 106.074L36.9943 112.963C38.46 113.359 40.0048 113.359 41.4743 112.963L66.8777 106.074C68.6329 105.598 69.9294 104.108 70.1699 102.301L78.4686 39.3849H78.4648ZM17.1685 89.8508V72.8467H20.7991L24.9709 84.6498L29.1429 72.8467H32.7735V89.8508H28.9925V82.575L26.2714 89.8508H23.6705L20.9494 82.575V89.8508H17.1685ZM46.5668 75.9061V72.8463V72.8425H37.1895V89.8468H46.5668V86.787H41.2749V82.3653H45.7512V79.3055H41.2749V75.9061H46.5668ZM50.1035 89.8506V72.8463H55.6999C57.4137 72.8463 58.7742 73.2311 59.7816 73.9971C60.7889 74.763 61.2925 75.778 61.2925 77.0418V85.659C61.2925 86.9153 60.7889 87.9265 59.7816 88.696C58.7742 89.4657 57.4137 89.8506 55.6999 89.8506H50.1035ZM54.1852 86.7908H55.6961C56.1811 86.7908 56.5531 86.6853 56.8162 86.4776C57.0793 86.2701 57.2108 85.9948 57.2108 85.6553V77.038C57.2108 76.6985 57.0793 76.4229 56.8162 76.2155C56.5531 76.008 56.1811 75.9023 55.6961 75.9023H54.1852V86.787V86.7908ZM17.1685 90.8507V100.339H19.2769V97.0494H20.0587C20.3105 97.0494 20.5022 97.106 20.6375 97.223C20.7728 97.34 20.8404 97.4946 20.8404 97.6833V100.339H22.949V97.6833C22.949 97.3173 22.8248 97.0041 22.5768 96.7477C22.4593 96.6243 22.3175 96.5158 22.1514 96.4217C22.3395 96.2682 22.4964 96.0928 22.622 95.8949C22.8399 95.5516 22.949 95.1592 22.949 94.7103V93.1899C22.949 92.4881 22.6895 91.9221 22.1671 91.4921C21.6485 91.0657 20.9456 90.8507 20.0587 90.8507H17.1685ZM20.0587 95.3441H19.2769V95.3404V92.556H20.0587C20.3105 92.556 20.5022 92.6126 20.6375 92.7296C20.7728 92.8464 20.8404 93.0012 20.8404 93.1899V94.7103C20.8404 94.9027 20.7728 95.0535 20.6375 95.1705C20.5022 95.2875 20.3067 95.3441 20.0587 95.3441ZM30.7443 90.8503V98.2037C30.7443 98.9055 30.485 99.4675 29.9626 99.9015C29.4402 100.332 28.7373 100.547 27.854 100.547C26.9708 100.547 26.2717 100.332 25.7493 99.9015C25.2269 99.4713 24.9639 98.9055 24.9639 98.2037V90.8503H27.0723V98.2037C27.0723 98.3924 27.14 98.547 27.2753 98.664C27.4106 98.781 27.6022 98.8374 27.854 98.8374C28.1057 98.8374 28.2975 98.781 28.4328 98.664C28.5681 98.547 28.6357 98.3962 28.6357 98.2037V90.8503H30.7443ZM32.9463 90.8503V100.343H34.9008V95.4869L37.0092 100.339H38.5726V90.8465H36.6183V95.7027L34.5097 90.8503H32.9463ZM40.8501 100.343V90.8503H42.4137L44.5221 95.7026V90.8465H46.4766V100.339H44.913L42.8046 95.4869V100.343H40.8501ZM53.5956 92.5595V90.8503H48.7546V100.343H53.5956V98.6337H50.8632V96.1663H53.1747V94.4572H50.8632V92.5595H53.5956ZM55.4255 100.339V90.8503H58.3156C59.2027 90.8503 59.9056 91.0655 60.4242 91.4917C60.9466 91.9219 61.2059 92.4879 61.2059 93.1895V94.71C61.2059 95.159 61.097 95.5514 60.8789 95.8947C60.7533 96.0925 60.5965 96.2678 60.4085 96.4213C60.5746 96.5154 60.7165 96.6239 60.8339 96.7473C61.0819 97.0039 61.2059 97.317 61.2059 97.6831V100.339H59.0975V97.6831C59.0975 97.4944 59.0298 97.3396 58.8945 97.2228C58.7592 97.1058 58.5674 97.0492 58.3156 97.0492H57.5339V100.339H55.4255ZM57.5339 95.3439H58.3156C58.5637 95.3439 58.7592 95.2873 58.8945 95.1703C59.0298 95.0533 59.0975 94.9025 59.0975 94.71V93.1895C59.0975 93.001 59.0298 92.8462 58.8945 92.7292C58.7592 92.6124 58.5674 92.5558 58.3156 92.5558H57.5339V95.3402V95.3439ZM50.8781 39.8715L64.5213 47.7794C65.1715 48.1567 65.3969 48.9979 65.0211 49.6508L60.5637 57.4002C60.1879 58.0529 59.3497 58.2791 58.6993 57.902L45.0563 49.9941V65.806C45.0563 66.5606 44.4437 67.1755 43.6919 67.1755H34.777C34.0252 67.1755 33.4127 66.5606 33.4127 65.806V49.9941L19.7695 57.902C19.1193 58.2791 18.2812 58.0529 17.9054 57.4002L13.4478 49.6508C13.072 48.9979 13.2975 48.1567 13.9477 47.7794L27.5909 39.8715L13.9477 31.9635C13.2975 31.5862 13.072 30.7449 13.4478 30.0922L17.9054 22.3428C18.2812 21.6901 19.1193 21.4636 19.7695 21.841L33.4127 29.7489V13.9369C33.4127 13.1823 34.0252 12.5673 34.777 12.5673H43.6919C44.4437 12.5673 45.0563 13.1823 45.0563 13.9369V29.7489L58.6993 21.841C59.3497 21.4636 60.1879 21.6901 60.5637 22.3428L65.0211 30.0922C65.3969 30.7449 65.1715 31.5862 64.5213 31.9635L50.8781 39.8715Z" fill="white"/>
+<path d="M107.134 86.5909V29.998H116.154L127.73 73.8387H125.325L136.901 29.998H145.921V86.5909H136.525V57.8417L137.728 58.0682L129.76 86.5909H123.296L115.328 58.0682L116.53 57.8417V86.5909H107.134Z" fill="white"/>
+<path d="M180.195 29.998V40.1847H167.04V51.5034H178.165V61.6899H167.04V76.4042H180.195V86.5909H156.892V29.998H180.195Z" fill="white"/>
+<path d="M188.989 86.5909V29.998H202.896C207.154 29.998 210.536 31.2733 213.043 33.8274C215.551 36.3818 216.801 39.7585 216.801 43.9575V72.6313C216.801 76.8078 215.551 80.177 213.043 82.7426C210.536 85.3081 207.154 86.5909 202.896 86.5909H188.989ZM199.137 76.4042H202.896C204.098 76.4042 205.027 76.0571 205.677 75.3666C206.327 74.6761 206.654 73.7631 206.654 72.6313V43.9575C206.654 42.8258 206.327 41.9128 205.677 41.2223C205.027 40.532 204.098 40.1847 202.896 40.1847H199.137V76.4042Z" fill="white"/>
+<path d="M226.649 86.5909V29.998H240.555C244.813 29.998 248.197 31.2733 250.702 33.8274C253.21 36.3818 254.462 39.7585 254.462 43.9575V53.0125C254.462 55.6799 253.935 58.0304 252.883 60.0676C251.831 62.1051 250.328 63.7537 248.372 65.0102L247.622 61.6899C249.801 62.4709 251.484 63.6255 252.676 65.1611C253.868 66.6967 254.462 68.5566 254.462 70.7449V86.5909H244.313V70.7449C244.313 69.6129 243.987 68.6999 243.337 68.0096C242.686 67.3191 241.758 66.9721 240.555 66.9721H236.797V86.5909H226.649ZM236.797 56.7853H240.555C241.758 56.7853 242.686 56.4383 243.337 55.7478C243.987 55.0573 244.313 54.1443 244.313 53.0125V43.9575C244.313 42.8258 243.987 41.9128 243.337 41.2223C242.686 40.532 241.758 40.1847 240.555 40.1847H236.797V56.7853Z" fill="white"/>
+<path d="M291.971 29.998V73.8387C291.971 78.0152 290.718 81.3844 288.213 83.9498C285.705 86.5155 282.322 87.7983 278.064 87.7983C273.806 87.7983 270.454 86.5155 267.936 83.9498C265.416 81.3844 264.157 78.0152 264.157 73.8387V29.998H274.306V73.8387C274.306 74.9705 274.632 75.8835 275.283 76.574C275.933 77.2643 276.862 77.6116 278.064 77.6116C279.266 77.6116 280.195 77.2643 280.845 76.574C281.496 75.8835 281.822 74.9705 281.822 73.8387V29.998H291.971Z" fill="white"/>
+<path d="M302.569 86.5909V29.998H310.087L322.94 66.6702L320.234 66.7456V29.998H329.63V86.5909H322.114L309.259 49.9187L311.965 49.8433V86.5909H302.569Z" fill="white"/>
+<path d="M340.604 86.5909V29.998H348.123L360.975 66.6702L358.269 66.7456V29.998H367.665V86.5909H360.149L347.294 49.9187L350 49.8433V86.5909H340.604Z" fill="white"/>
+<path d="M401.943 29.998V40.1847H388.789V51.5034H399.912V61.6899H388.789V76.4042H401.943V86.5909H378.64V29.998H401.943Z" fill="white"/>
+<path d="M410.732 86.5909V29.998H424.639C428.897 29.998 432.28 31.2733 434.788 33.8274C437.295 36.3818 438.546 39.7585 438.546 43.9575V53.0125C438.546 55.6799 438.019 58.0304 436.967 60.0676C435.915 62.1051 434.411 63.7537 432.456 65.0102L431.705 61.6899C433.884 62.4709 435.57 63.6255 436.76 65.1611C437.952 66.6967 438.546 68.5566 438.546 70.7449V86.5909H428.397V70.7449C428.397 69.6129 428.071 68.6999 427.42 68.0096C426.77 67.3191 425.841 66.9721 424.639 66.9721H420.881V86.5909H410.732ZM420.881 56.7853H424.639C425.841 56.7853 426.77 56.4383 427.42 55.7478C428.071 55.0573 428.397 54.1443 428.397 53.0125V43.9575C428.397 42.8258 428.071 41.9128 427.42 41.2223C426.77 40.532 425.841 40.1847 424.639 40.1847H420.881V56.7853Z" fill="white"/></symbol></svg>
+<div class="bg" style="background:radial-gradient(1100px 700px at 25% 15%,#1d3446 0%,transparent 60%),radial-gradient(900px 600px at 80% 95%,#16283a 0%,transparent 60%)"></div>
+<div class="bg" style="background:radial-gradient(1100px 700px at 30% 20%,#1f3a2c 0%,transparent 60%),radial-gradient(900px 600px at 75% 90%,#173126 0%,transparent 60%)"></div>
+<div class="bg" style="background:radial-gradient(1100px 700px at 30% 20%,#25324f 0%,transparent 60%),radial-gradient(900px 600px at 75% 90%,#1c2540 0%,transparent 60%)"></div>
+<div class="bg" style="background:radial-gradient(1100px 700px at 30% 20%,#3a2f1a 0%,transparent 60%),radial-gradient(900px 600px at 75% 90%,#2c2414 0%,transparent 60%)"></div>
+<div class="bg" style="background:radial-gradient(1100px 700px at 30% 20%,#3a2030 0%,transparent 60%),radial-gradient(900px 600px at 75% 90%,#2a1824 0%,transparent 60%)"></div>
+<div class="bg" style="background:radial-gradient(1100px 700px at 30% 20%,#1d3a3c 0%,transparent 60%),radial-gradient(900px 600px at 75% 90%,#15292c 0%,transparent 60%)"></div>
+<div class="bg" style="background:radial-gradient(1100px 700px at 30% 20%,#273046 0%,transparent 60%),radial-gradient(900px 600px at 75% 90%,#1a2132 0%,transparent 60%)"></div>
+
+<div id="top">
+<div class="brand"><svg viewBox="0 0 439 117" role="img" aria-label="Medrunner"><use href="#logo"/></svg><a class="menu-link" href="index.html" title="Back to the start menu"><span aria-hidden="true">←</span> Menu</a></div>
+<div id="now" aria-live="polite"><div id="nowK"></div><div id="nowT"></div></div>
+</div>
+
+<aside id="rail" aria-label="Page position"></aside>
+<div id="fly"></div>
+
+<main>
+<section class="sec slide hero" data-label="Intro" data-name="Public mission exports">
+<div class="sl"><div class="copy"><p class="kick">Pitch · Medrunner leadership &amp; dev team</p>
+<h1>Public<br>mission<br>exports</h1>
+<p class="lead">Let rescued clients share a verified, privacy-safe record of their rescue, reviewed by the team lead who was there.</p>
+<div class="note"><b>Showcase, not a spec.</b> Everything in this deck comes from an interactive playground. Not every feature will, or should, be built.</div>
+<div class="intro-cta"><a class="cta" href="playground.html">Skip to the playground <span aria-hidden="true">→</span></a><span>Rather try it first? The deck will be here when you get back.</span></div>
+<div class="hint"><i></i>Scroll, use the arrow keys, or click the monitor</div></div>
+<figure class="shot gal"><div class="stage"><img src="media/shots/deck-intro-record.webp" alt="A finished public record" loading="lazy"></div><figcaption><span class="tg">Playground screenshot</span><em>A finished public record</em><b class="ct">1 / 3</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="img" data-src="media/shots/deck-intro-record.webp" data-cap="A finished public record" aria-label="Show: A finished public record"><img src="media/shots/deck-intro-record.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/menu.webp" data-cap="Start menu: pick the deck or the playground" aria-label="Show: Start menu: pick the deck or the playground"><img src="media/shots/menu.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/live-overview.webp" data-cap="The playground at a glance" aria-label="Show: The playground at a glance"><img src="media/shots/live-overview.webp" alt="" loading="lazy"></button></div></figure></div></section>
+<section class="sec slide" data-label="Why" data-name="The problem">
+<span class="big">02</span>
+<div class="sl one"><div class="copy"><p class="kick">The problem</p><h2>Rescues happen out of sight</h2><div class="cards"><div class="card"><b>Leaky sharing</b><span>Clients already post clips and screenshots, with names, handles and locations left in.</span></div><div class="card"><b>No verified record</b><span>There is no trusted source for what actually happened on a rescue.</span></div><div class="card"><b>Crew exposure</b><span>Members can be identified by someone else's post, without a say.</span></div><div class="card"><b>Unseen good work</b><span>Great rescues go unnoticed. A verified record shows what Medrunner does.</span></div></div><div class="strip gal"><figure class="mini"><button type="button" class="th" data-i="0" data-type="img" data-src="media/shots/client-live-warnings.webp" data-cap="Handles and links are flagged before they leak" aria-label="Show: Handles and links are flagged before they leak"><img src="media/shots/client-live-warnings.webp" alt="" loading="lazy"></button><figcaption>Handles and links are flagged before they leak</figcaption></figure><figure class="mini"><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/tl-side-by-side.webp" data-cap="Crew names become roles" aria-label="Show: Crew names become roles"><img src="media/shots/tl-side-by-side.webp" alt="" loading="lazy"></button><figcaption>Crew names become roles</figcaption></figure><figure class="mini"><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/live-milestones.webp" data-cap="Good work gets seen" aria-label="Show: Good work gets seen"><img src="media/shots/live-milestones.webp" alt="" loading="lazy"></button><figcaption>Good work gets seen</figcaption></figure></div></div></div>
+</section>
+<section class="sec slide" data-label="Idea" data-name="The idea">
+<span class="big">03</span>
+<div class="sl one"><div class="copy"><p class="kick">The idea</p><h2>An opt-in record, reviewed before it goes public</h2><div class="cards three"><div class="card"><b>01 · Consent</b><span>Nothing is published unless the client opts in. They control their own messages.</span></div><div class="card"><b>02 · Review</b><span>The attending team lead checks everything. Crew can advise. Staff oversee.</span></div><div class="card"><b>03 · Privacy</b><span>Crew appear only by role. Sensitive details are detected and redacted. Takedowns stay possible.</span></div></div><div class="strip gal"><figure class="mini"><button type="button" class="th" data-i="0" data-type="img" data-src="media/shots/live-consent.webp" data-cap="01 · The client opts in" aria-label="Show: 01 · The client opts in"><img src="media/shots/live-consent.webp" alt="" loading="lazy"></button><figcaption>01 · The client opts in</figcaption></figure><figure class="mini"><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/live-advisory.webp" data-cap="02 · The team lead reviews" aria-label="Show: 02 · The team lead reviews"><img src="media/shots/live-advisory.webp" alt="" loading="lazy"></button><figcaption>02 · The team lead reviews</figcaption></figure><figure class="mini"><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/tl-public-view.webp" data-cap="03 · Public, by role only" aria-label="Show: 03 · Public, by role only"><img src="media/shots/tl-public-view.webp" alt="" loading="lazy"></button><figcaption>03 · Public, by role only</figcaption></figure></div></div></div>
+</section>
+<section class="sec slide" data-label="Flow" data-name="How it works">
+<span class="big">04</span>
+<div class="sl"><div class="copy"><p class="kick">How it works</p><h2>Six steps from discharge to public record</h2><ol class="flow"><li><b>Client request</b><span>Opt in after discharge</span></li><li><b>Team lead ping</b><span>72h Discord window</span></li><li><b>Crew advisories</b><span>Suggestions only</span></li><li><b>Review</b><span>Redact and decide</span></li><li><b>Staff</b><span>Escalations and takedowns</span></li><li><b>Public record</b><span>Verified, by role</span></li></ol></div><figure class="shot gal"><div class="stage"><video poster="media/clips/flow-poster.jpg" muted loop playsinline preload="metadata" aria-label="Client submits, and the team lead is pinged"><source src="media/clips/flow.webm" type="video/webm"><source src="media/clips/flow.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>Client submits, and the team lead is pinged</em><b class="ct">1 / 4</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/flow.mp4" data-cap="Client submits, and the team lead is pinged" aria-label="Show: Client submits, and the team lead is pinged"><img src="media/clips/flow-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-flow-ping.webp" data-cap="The team lead&#x27;s Discord ping" aria-label="Show: The team lead&#x27;s Discord ping"><img src="media/shots/deck-flow-ping.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/tl-fast-forward.webp" data-cap="Role view with starting points" aria-label="Show: Role view with starting points"><img src="media/shots/tl-fast-forward.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/tl-leadership-pool.webp" data-cap="Deadline passed: moved to the leadership pool" aria-label="Show: Deadline passed: moved to the leadership pool"><img src="media/shots/tl-leadership-pool.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+<section class="sec slide" data-label="Client" data-name="Client request">
+<span class="big">05</span>
+<div class="sl"><div class="copy"><p class="kick">Step 1 · Client</p><h2>The client decides</h2><ul class="pts"><li>Rate the crew and hand out up to three kudos.</li><li>Optional testimonial, with live warnings for handles, links and locations.</li><li>Hide any of their own messages, with one or more reasons.</li><li>Agree that their RSI handle is shown, then submit.</li></ul></div><figure class="shot gal"><div class="stage"><video poster="media/clips/client-poster.jpg" muted loop playsinline preload="metadata" aria-label="Rating, kudos and live warnings while typing"><source src="media/clips/client.webm" type="video/webm"><source src="media/clips/client.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>Rating, kudos and live warnings while typing</em><b class="ct">1 / 5</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/client.mp4" data-cap="Rating, kudos and live warnings while typing" aria-label="Show: Rating, kudos and live warnings while typing"><img src="media/clips/client-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-client-form.webp" data-cap="The client request form" aria-label="Show: The client request form"><img src="media/shots/deck-client-form.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/live-hide-popout.webp" data-cap="Hiding a message, with reasons" aria-label="Show: Hiding a message, with reasons"><img src="media/shots/live-hide-popout.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/client-consent-error.webp" data-cap="Consent is required before submitting" aria-label="Show: Consent is required before submitting"><img src="media/shots/client-consent-error.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="4" data-type="img" data-src="media/shots/client-emergency.webp" data-cap="Emergency button opens the portal form" aria-label="Show: Emergency button opens the portal form"><img src="media/shots/client-emergency.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+<section class="sec slide" data-label="Crew" data-name="Crew advisories">
+<span class="big">06</span>
+<div class="sl"><div class="copy"><p class="kick">Step 3 · Crew</p><h2>Crew advise, the team lead decides</h2><ul class="pts"><li>Same tools as the team lead: highlight text to suggest a redaction.</li><li>Suggest hiding a whole message, with reasons.</li><li>Advise withholding the mission, or leave a note.</li><li>Nothing changes until the team lead accepts it.</li></ul></div><figure class="shot gal"><div class="stage"><video poster="media/clips/crew-poster.jpg" muted loop playsinline preload="metadata" aria-label="Highlight to suggest a redaction"><source src="media/clips/crew.webm" type="video/webm"><source src="media/clips/crew.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>Highlight to suggest a redaction</em><b class="ct">1 / 5</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/crew.mp4" data-cap="Highlight to suggest a redaction" aria-label="Show: Highlight to suggest a redaction"><img src="media/clips/crew-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-crew-cutlass.webp" data-cap="Suggesting a redaction for &quot;Cutlass&quot;" aria-label="Show: Suggesting a redaction for &quot;Cutlass&quot;"><img src="media/shots/deck-crew-cutlass.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/crew-suggest-hide.webp" data-cap="Suggesting a message is hidden" aria-label="Show: Suggesting a message is hidden"><img src="media/shots/crew-suggest-hide.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/crew-withhold.webp" data-cap="Advising the mission is withheld" aria-label="Show: Advising the mission is withheld"><img src="media/shots/crew-withhold.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="4" data-type="img" data-src="media/shots/crew-advisories.webp" data-cap="The crew advisory view" aria-label="Show: The crew advisory view"><img src="media/shots/crew-advisories.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+<section class="sec slide" data-label="Lead" data-name="Review and redact">
+<span class="big">07</span>
+<div class="sl"><div class="copy"><p class="kick">Step 4 · Team lead</p><h2>Review and redact</h2><ul class="pts"><li>Auto-detected suggestions: nicknames, Discord usernames, links, banned names.</li><li>Crew advisories in one panel, each with Accept or Decline.</li><li>Highlight to redact, including every mention at once.</li><li>Approve, reject, send back or escalate. Every action is logged.</li></ul></div><figure class="shot gal"><div class="stage"><video poster="media/clips/lead-poster.jpg" muted loop playsinline preload="metadata" aria-label="Accept suggestions, redact, compare views"><source src="media/clips/lead.webm" type="video/webm"><source src="media/clips/lead.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>Accept suggestions, redact, compare views</em><b class="ct">1 / 5</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/lead.mp4" data-cap="Accept suggestions, redact, compare views" aria-label="Show: Accept suggestions, redact, compare views"><img src="media/clips/lead-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-lead-review.webp" data-cap="The team lead review screen" aria-label="Show: The team lead review screen"><img src="media/shots/deck-lead-review.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/tl-redact-popout.webp" data-cap="The redact pop-out" aria-label="Show: The redact pop-out"><img src="media/shots/tl-redact-popout.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/tl-approve-blocked.webp" data-cap="Approval blocked until suggestions are checked" aria-label="Show: Approval blocked until suggestions are checked"><img src="media/shots/tl-approve-blocked.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="4" data-type="img" data-src="media/shots/tl-reject.webp" data-cap="Rejecting: the client only sees the category" aria-label="Show: Rejecting: the client only sees the category"><img src="media/shots/tl-reject.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+<section class="sec slide" data-label="Staff" data-name="Staff oversight">
+<span class="big">08</span>
+<div class="sl"><div class="copy"><p class="kick">Step 5 · Staff</p><h2>Oversight built in</h2><ul class="pts"><li>Review queue shows time left on each export and what is in the leadership pool.</li><li>Escalation and takedown desk. Every decision needs a reason.</li><li>Audit trail of every hide, redaction and decision.</li><li>Abuse controls: pause export rights, ban list for auto-detection.</li></ul></div><figure class="shot gal"><div class="stage"><video poster="media/clips/staff-poster.jpg" muted loop playsinline preload="metadata" aria-label="Settle an escalation, add to the ban list"><source src="media/clips/staff.webm" type="video/webm"><source src="media/clips/staff.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>Settle an escalation, add to the ban list</em><b class="ct">1 / 5</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/staff.mp4" data-cap="Settle an escalation, add to the ban list" aria-label="Show: Settle an escalation, add to the ban list"><img src="media/clips/staff-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-staff-desk.webp" data-cap="Queue, escalation desk and audit trail" aria-label="Show: Queue, escalation desk and audit trail"><img src="media/shots/deck-staff-desk.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/staff-needs-reason.webp" data-cap="Every decision needs a reason" aria-label="Show: Every decision needs a reason"><img src="media/shots/staff-needs-reason.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/staff-repeat-offender.webp" data-cap="Repeat-offender warning and abuse controls" aria-label="Show: Repeat-offender warning and abuse controls"><img src="media/shots/staff-repeat-offender.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="4" data-type="img" data-src="media/shots/staff-event-log.webp" data-cap="Full event log, downloadable as JSON" aria-label="Show: Full event log, downloadable as JSON"><img src="media/shots/staff-event-log.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+<section class="sec slide" data-label="Public" data-name="Public record">
+<span class="big">09</span>
+<div class="sl"><div class="copy"><p class="kick">Step 6 · Public</p><h2>The public record</h2><ul class="pts"><li>Outcome-aware design, including a respectful card for bad outcomes.</li><li>Crew shown by role, redactions shown as categories.</li><li>Kudos, testimonial and positive crew milestones.</li><li>Share card, takedown link, and an emergency button to the portal.</li></ul></div><figure class="shot gal"><div class="stage"><video poster="media/clips/public-poster.jpg" muted loop playsinline preload="metadata" aria-label="Scroll the record, thank the crew, cycle milestones"><source src="media/clips/public.webm" type="video/webm"><source src="media/clips/public.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>Scroll the record, thank the crew, cycle milestones</em><b class="ct">1 / 5</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/public.mp4" data-cap="Scroll the record, thank the crew, cycle milestones" aria-label="Show: Scroll the record, thank the crew, cycle milestones"><img src="media/clips/public-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-public-transcript.webp" data-cap="Redacted transcript and share card" aria-label="Show: Redacted transcript and share card"><img src="media/shots/deck-public-transcript.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/public-bad-outcome.webp" data-cap="A respectful card for bad outcomes" aria-label="Show: A respectful card for bad outcomes"><img src="media/shots/public-bad-outcome.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/public-takedown-modal.webp" data-cap="Anyone named can request a takedown" aria-label="Show: Anyone named can request a takedown"><img src="media/shots/public-takedown-modal.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="4" data-type="img" data-src="media/shots/public-taken-down.webp" data-cap="What the link shows after a takedown" aria-label="Show: What the link shows after a takedown"><img src="media/shots/public-taken-down.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+<section class="sec slide" data-label="Safe" data-name="Privacy and safety">
+<span class="big">10</span>
+<div class="sl"><div class="copy"><p class="kick">Privacy and safety</p><h2>Safe by default</h2><ul class="pts"><li><b>Consent first:</b> the client opts in and can hide their own messages.</li><li><b>Roles, not names:</b> crew are swapped for roles automatically.</li><li><b>Auto-detection:</b> Discord usernames, links, hab locations, profanity.</li><li><b>Reasons everywhere:</b> every redaction, hide and decision is explained.</li><li><b>Time-boxed:</b> 72h review, then the leadership pool.</li><li><b>Reversible:</b> takedown requests at any time, decided by staff.</li></ul></div><figure class="shot gal"><div class="stage"><video poster="media/clips/safe-poster.jpg" muted loop playsinline preload="metadata" aria-label="Switching roles: hidden sections are veiled"><source src="media/clips/safe.webm" type="video/webm"><source src="media/clips/safe.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>Switching roles: hidden sections are veiled</em><b class="ct">1 / 4</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/safe.mp4" data-cap="Switching roles: hidden sections are veiled" aria-label="Show: Switching roles: hidden sections are veiled"><img src="media/clips/safe-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-safe-roles.webp" data-cap="Each role only sees what it should" aria-label="Show: Each role only sees what it should"><img src="media/shots/deck-safe-roles.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/safe-veil.webp" data-cap="Why a section is hidden from the client" aria-label="Show: Why a section is hidden from the client"><img src="media/shots/safe-veil.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/tl-public-view.webp" data-cap="The public view of the transcript" aria-label="Show: The public view of the transcript"><img src="media/shots/tl-public-view.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+<section class="sec slide" data-label="Build" data-name="For the dev team">
+<span class="big">11</span>
+<div class="sl one"><div class="copy"><p class="kick">For the dev team</p><h2>What it would take</h2><div class="cards three"><div class="card"><b>Data</b><span>Export request, redaction segments, crew advisories, decisions, audit events.</span></div><div class="card"><b>Integrations</b><span>Portal discharge screen, Discord bot ping, staff portal review, public page route.</span></div><div class="card"><b>Phasing (to discuss)</b><span>1 · Opt-in, review, public page<br>2 · Crew advisories, staff desk, audit<br>3 · Milestones, share cards, spotlight</span></div></div><p class="fine">Phasing is a suggestion for discussion, not a commitment.</p><div class="strip gal"><figure class="mini"><button type="button" class="th" data-i="0" data-type="img" data-src="media/shots/staff-event-log.webp" data-cap="Data: every action is an event" aria-label="Show: Data: every action is an event"><img src="media/shots/staff-event-log.webp" alt="" loading="lazy"></button><figcaption>Data: every action is an event</figcaption></figure><figure class="mini"><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/tl-discord.webp" data-cap="Integration: the Discord bot ping" aria-label="Show: Integration: the Discord bot ping"><img src="media/shots/tl-discord.webp" alt="" loading="lazy"></button><figcaption>Integration: the Discord bot ping</figcaption></figure><figure class="mini"><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/staff-queue.webp" data-cap="Staff portal: queue and desk" aria-label="Show: Staff portal: queue and desk"><img src="media/shots/staff-queue.webp" alt="" loading="lazy"></button><figcaption>Staff portal: queue and desk</figcaption></figure></div></div></div>
+</section>
+<section class="sec slide" data-label="Try" data-name="Try the playground">
+<span class="big">12</span>
+<div class="sl"><div class="copy"><p class="kick">Your turn</p><h2>Try the playground</h2><ol class="steps"><li>Open <code>index.html</code> and pick <b>Playground</b>, or use the button below.</li><li>Follow the guided tour: 14 short missions, about 3 minutes.</li><li>Explore with <b>Scenario</b> and <b>View as</b>.</li><li>Tell us: where did you get stuck, what would you keep or cut, and would you publish your own rescue?</li></ol><a class="cta" href="playground.html">Open the playground <span aria-hidden="true">→</span></a><div class="note"><b>Showcase only.</b> Not final, not exhaustive. Every feature is an idea to discuss.</div></div><figure class="shot gal"><div class="stage"><video poster="media/clips/tour-poster.jpg" muted loop playsinline preload="metadata" aria-label="From the start menu into the guided tour"><source src="media/clips/tour.webm" type="video/webm"><source src="media/clips/tour.mp4" type="video/mp4"></video></div><figcaption><span class="tg">Playground clip</span><em>From the start menu into the guided tour</em><b class="ct">1 / 4</b></figcaption><div class="thumbs"><button type="button" class="th on" data-i="0" data-type="video" data-src="media/clips/tour.mp4" data-cap="From the start menu into the guided tour" aria-label="Show: From the start menu into the guided tour"><img src="media/clips/tour-poster.jpg" alt="" loading="lazy"><i class="pl" aria-hidden="true"></i></button><button type="button" class="th" data-i="1" data-type="img" data-src="media/shots/deck-try-tour.webp" data-cap="The guided tour in action" aria-label="Show: The guided tour in action"><img src="media/shots/deck-try-tour.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="2" data-type="img" data-src="media/shots/menu.webp" data-cap="The start menu" aria-label="Show: The start menu"><img src="media/shots/menu.webp" alt="" loading="lazy"></button><button type="button" class="th" data-i="3" data-type="img" data-src="media/shots/tour-complete.webp" data-cap="Tour complete" aria-label="Show: Tour complete"><img src="media/shots/tour-complete.webp" alt="" loading="lazy"></button></div></figure></div>
+</section>
+</main>
+<footer>END OF DECK · Public mission exports · Showcase only, not final or exhaustive.</footer>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rail=$('#rail'),nowK=$('#nowK'),nowT=$('#nowT'),fly=$('#fly'),secs=$$('main .sec'),bgs=$$('.bg');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS='http://www.w3.org/2000/svg';
+let style='vitals',starts=[],active=-1,ticking=false,R={},prog=0;
+
+let lockIdx=null,lockY=0,lockUntil=0;
+function curIdx(){const now=performance.now();if(lockIdx!==null){if(Math.abs(scrollY-lockY)<3||now>lockUntil)lockIdx=null;else return lockIdx}let a=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<=innerHeight*.45)a=i});return a}
+const maxScroll=()=>Math.max(1,document.documentElement.scrollHeight-innerHeight);
+const pad=n=>String(n).padStart(2,'0');
+const labHTML=(i,y,maxLen)=>`<span class="lab" data-i="${i}" style="top:${y}px;max-height:${Math.max(30,maxLen)}px">${[...secs[i].dataset.label].map(c=>`<span class="ch">${c}</span>`).join('')}</span>`;
+
+const STYLES={
+vitals:{name:'Vitals',
+ range:H=>[64,H-92],
+ build(H,W){const[t,b]=this.range(H),X=W*.62,Y=p=>t+p/100*(b-t);let d=`M${X} ${t}`;const beat=(y,big)=>{const k=big?1.6:1;d+=` L${X} ${y-12} L${X+5*k} ${y-8} L${X} ${y-5} L${X-20*k} ${y} L${X+15*k} ${y+5} L${X} ${y+9} L${X+6*k} ${y+16} L${X} ${y+22}`};
+  const bigs=starts.map(Y);let y=t+30;const all=[];for(;y<b-20;y+=64)all.push([y,false]);bigs.forEach(v=>{for(let k=all.length-1;k>=0;k--)if(Math.abs(all[k][0]-v)<40)all.splice(k,1);all.push([Math.max(t+14,v+14),true])});all.sort((a,c)=>a[0]-c[0]).forEach(([v,big])=>beat(v,big));d+=` L${X} ${b}`;
+  let labs='';starts.forEach((s,i)=>{const y0=Y(s),y1=i<starts.length-1?Y(starts[i+1]):b;labs+=labHTML(i,y0+6,y1-y0-12)});
+  return `<div class="v-grid"></div><svg class="base"><defs><clipPath id="vclip"><rect id="vcr" x="0" y="0" width="${W}" height="0"/></clipPath><filter id="glow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <path d="${d}" fill="none" stroke="rgba(49,196,141,.18)" stroke-width="1.5"/><path d="${d}" fill="none" stroke="#31C48D" stroke-width="1.8" clip-path="url(#vclip)" filter="url(#glow)"/>
+  ${starts.map(s=>`<line x1="0" x2="${W}" y1="${Y(s)}" y2="${Y(s)}" stroke="rgba(49,196,141,.18)" stroke-dasharray="2 3"/>`).join('')}
+  <circle id="vhead" cx="${X}" cy="${t}" r="4" fill="#d1fae5" filter="url(#glow)"/></svg>${labs}
+  <div class="v-read"><small><span>SCROLL</span><span class="v-dot"></span></small><b id="vpct">000%</b><div class="st" id="vst">STANDBY</div></div>`},
+ update(p,H,W){const[t,b]=this.range(H),y=t+p/100*(b-t);$('#vcr').setAttribute('height',y);$('#vhead').setAttribute('cy',y);$('#vpct').textContent=String(Math.round(p)).padStart(3,'0')+'%';const a=curIdx();$('#vst').textContent=p<0.5?'STANDBY':p>99.5?'DISCHARGED':secs[a].dataset.label.toUpperCase()}}
+};
+
+function build(){const ms=maxScroll();starts=secs.map(s=>Math.min(100,s.offsetTop/ms*100));
+ const W=rail.getBoundingClientRect().width||parseFloat(getComputedStyle(document.body).getPropertyValue('--rail'))||90;
+ rail.innerHTML=STYLES[style].build(innerHeight,W);
+ $$('.lab').forEach(l=>{const k=+l.dataset.i;l.classList.toggle('on',k===active);l.classList.toggle('done',k<active)});update(true)}
+function update(force){const p=Math.min(100,Math.max(0,scrollY/maxScroll()*100));prog=p;
+ STYLES[style].update(p,innerHeight,rail.getBoundingClientRect().width);
+ const a=curIdx();if(a!==active||force)setActive(a,force)}
+
+const charsHTML=(w,hid)=>[...w].map(c=>`<span class="c"${hid?' style="opacity:0"':''}>${c}</span>`).join('');
+function setActive(i,force){const prev=active;active=i;
+ $$('.lab').forEach(l=>{const k=+l.dataset.i;l.classList.toggle('on',k===i);l.classList.toggle('done',k<i)});bgs.forEach((b,k)=>b.classList.toggle('on',k===i%bgs.length));
+ const s=secs[i];nowK.textContent=`${s.dataset.name} · ${pad(i+1)}/${pad(secs.length)}`;
+ if(prev===i&&!force)return;if(prev===i)return;
+ fly.innerHTML='';nowT.querySelectorAll('.old').forEach(o=>o.remove());const oldHTML=[...nowT.querySelectorAll(':scope > .c')].map(c=>`<span class="c">${c.innerHTML}</span>`).join(''),word=s.dataset.label;
+ nowT.innerHTML=charsHTML(word,!reduce&&prev!==-1);if(reduce||prev===-1)return;
+ if(oldHTML){const o=document.createElement('div');o.className='old';o.innerHTML=oldHTML;nowT.appendChild(o);[...o.children].forEach((c,k)=>c.animate([{transform:'none',opacity:1},{transform:'translateY(-26px)',opacity:0}],{duration:380,delay:k*22,easing:'cubic-bezier(.4,0,.6,1)',fill:'forwards'}));setTimeout(()=>o.remove(),700+word.length*22)}
+ const lab=$(`.lab[data-i="${i}"]`),src=lab?[...lab.querySelectorAll('.ch')]:[],dst=[...nowT.querySelectorAll(':scope > .c')],rr=rail.getBoundingClientRect();
+ const vis=src.length&&src.every(c=>{const r=c.getBoundingClientRect();return r.bottom>rr.top&&r.top<rr.bottom&&r.height>0});
+ if(!vis){dst.forEach((c,k)=>c.animate([{transform:'translateY(28px)',opacity:0},{transform:'none',opacity:1}],{duration:520,delay:120+k*40,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'}).onfinish=()=>{c.style.opacity=1});return}
+ 
+ const fs=parseFloat(getComputedStyle(lab).fontSize)/parseFloat(getComputedStyle(nowT).fontSize);
+ dst.forEach((d,k)=>{const sc=src[k];if(!sc){d.style.opacity=1;return}const a=sc.getBoundingClientRect(),b=d.getBoundingClientRect();
+  const f=document.createElement('span');f.className='f';f.textContent=d.textContent;f.style.left=b.left+'px';f.style.top=b.top+'px';fly.appendChild(f);
+  const dx=(a.left+a.width/2)-(b.left+b.width/2),dy=(a.top+a.height/2)-(b.top+b.height/2);
+  f.animate([{transform:`translate(${dx}px,${dy}px) rotate(-90deg) scale(${fs})`,opacity:.35},{transform:`translate(${dx*.55}px,${dy*.45}px) rotate(${-90+k*6}deg) scale(${(fs+1)/2})`,opacity:.9,offset:.55},{transform:'none',opacity:1}],{duration:820,delay:k*45,easing:'cubic-bezier(.22,.9,.24,1)',fill:'both'}).onfinish=()=>{d.style.opacity=1;f.remove()}})}
+
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;update()})}},{passive:true});
+addEventListener('resize',build);
+rail.addEventListener('click',e=>{const lab=e.target.closest('.lab');let idx;
+ if(lab)idx=+lab.dataset.i;else{const[t,b]=STYLES[style].range(innerHeight),r=rail.getBoundingClientRect(),v=(e.clientY-r.top-t)/(b-t)*100;idx=0;starts.forEach((s,k)=>{if(Math.abs(s-v)<Math.abs(starts[idx]-v))idx=k})}
+ const top=Math.min(maxScroll(),starts[idx]/100*maxScroll()+2);lockIdx=idx;lockY=Math.round(top);lockUntil=performance.now()+1600;setActive(idx);
+ scrollTo({top,behavior:reduce?'auto':'smooth'})});
+
+const lb=document.createElement('div');lb.id='lb';lb.innerHTML='<div class="lbm"></div><div class="lbc"><button class="lbn" data-d="-1" aria-label="Previous">‹</button><span class="lbt"></span><button class="lbn" data-d="1" aria-label="Next">›</button></div>';document.body.appendChild(lb);
+let lbG=null,lbI=0;
+const srcs=u=>`<source src="${u.replace(/\.mp4$/,'.webm')}" type="video/webm"><source src="${u}" type="video/mp4">`;
+const items=g=>[...g.querySelectorAll('.th')];
+function setStage(g,i){const ts=items(g),t=ts[i];if(!t)return;ts.forEach((x,k)=>x.classList.toggle('on',k===i));
+ const st=g.querySelector('.stage');if(!st)return;const v=t.dataset.type==='video';
+ st.innerHTML=v?`<video poster="${t.querySelector('img').src}" muted loop playsinline autoplay aria-label="${t.dataset.cap}">${srcs(t.dataset.src)}</video><span class="live">Clip</span>`:`<img src="${t.dataset.src}" alt="${t.dataset.cap}">`;
+ g.querySelector('figcaption em').textContent=t.dataset.cap;g.querySelector('figcaption .tg').textContent=v?'Playground clip':'Playground screenshot';g.querySelector('figcaption .ct').textContent=`${i+1} / ${ts.length}`;
+ if(v){const vv=st.querySelector('video');vv.play&&vv.play().catch(()=>{})}}
+function lbShow(g,i){const ts=items(g);lbI=(i+ts.length)%ts.length;lbG=g;const t=ts[lbI],m=lb.querySelector('.lbm');
+ m.innerHTML=t.dataset.type==='video'?`<video controls autoplay muted loop playsinline>${srcs(t.dataset.src)}</video>`:`<img src="${t.dataset.src}" alt="${t.dataset.cap}">`;
+ lb.querySelector('.lbt').textContent=`${lbI+1} / ${ts.length} · ${t.dataset.cap}`;lb.querySelectorAll('.lbn').forEach(b=>b.style.visibility=ts.length>1?'visible':'hidden');lb.classList.add('on')}
+function lbClose(){lb.classList.remove('on');lb.querySelector('.lbm').innerHTML='';lbG=null}
+document.addEventListener('click',e=>{
+ const nb=e.target.closest('#lb .lbn');if(nb){lbShow(lbG,lbI+ +nb.dataset.d);return}
+ if(e.target.closest('#lb')){if(!e.target.closest('.lbm'))lbClose();return}
+ const th=e.target.closest('.th');if(th){const g=th.closest('.gal'),i=+th.dataset.i;if(g.querySelector('.stage'))setStage(g,i);else lbShow(g,i);return}
+ const st=e.target.closest('.gal .stage');if(st){const g=st.closest('.gal');lbShow(g,items(g).findIndex(x=>x.classList.contains('on')));}});
+// mark clip stages, play videos only while their slide is on screen
+document.querySelectorAll('.gal .stage video').forEach(v=>v.insertAdjacentHTML('afterend','<span class="live">Clip</span>'));
+const io=new IntersectionObserver(es=>es.forEach(en=>{const v=en.target.querySelector('.stage video');if(!v)return;if(en.isIntersecting&&!reduce){v.play().catch(()=>{})}else v.pause()}),{threshold:.35});
+document.querySelectorAll('.gal').forEach(g=>io.observe(g));
+function goTo(idx){idx=Math.max(0,Math.min(secs.length-1,idx));const top=Math.min(maxScroll(),starts[idx]/100*maxScroll()+2);lockIdx=idx;lockY=Math.round(top);lockUntil=performance.now()+1600;setActive(idx);scrollTo({top,behavior:reduce?'auto':'smooth'})}
+addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('input,textarea,select'))return;if(lb.classList.contains('on')){if(e.key==='Escape')lbClose();else if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();lbShow(lbG,lbI+1)}else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();lbShow(lbG,lbI-1)}return}
+ const nxt=['ArrowDown','PageDown',' ','ArrowRight'].includes(e.key),prv=['ArrowUp','PageUp','ArrowLeft'].includes(e.key);
+ if(nxt||prv){e.preventDefault();goTo((lockIdx!==null?lockIdx:active)+(nxt?1:-1))}
+ else if(e.key==='Home'){e.preventDefault();goTo(0)}else if(e.key==='End'){e.preventDefault();goTo(secs.length-1)}});
+addEventListener('load',build);build();
+})();
+</script>
+</body>
+</html>

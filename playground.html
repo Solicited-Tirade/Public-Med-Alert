@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark" data-ss="F">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -42,6 +42,7 @@ body{background:#1F2937}
 .step.cur i{background:#F59E0B;border-color:#F59E0B;box-shadow:0 0 0 3px rgb(245 158 11/.25)}
 .step.cur{color:#fff;font-weight:600}
 .step-sep{flex:1;min-width:12px;height:2px;background:#4B5563}
+.seed-btn{display:flex;align-items:center;gap:.25rem;cursor:pointer;border-radius:.5rem;border:1px solid #D97706;padding:.25rem .5rem;font-size:.75rem;line-height:1rem;font-weight:500;color:#F59E0B}.seed-btn:hover{background:rgb(217 119 6/.12);color:#FACA15}
 .chip-on{background:#1C64F2!important;border-color:#1C64F2!important;color:#fff!important}
 .notes summary{list-style:none}
 .notes summary::-webkit-details-marker{display:none}
@@ -99,6 +100,51 @@ html{scrollbar-gutter:stable}html.g-noscroll,html.g-noscroll body{overflow:hidde
 button[disabled]{opacity:.4;cursor:not-allowed}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 .mn-open{display:flex;align-items:center;gap:6px;cursor:pointer;border-radius:.5rem;border:1px solid #4B5563;padding:.5rem .7rem;font-size:.875rem;font-weight:500;color:#D1D5DB;text-decoration:none}.mn-open:hover{background:#374151;color:#fff}
+
+/* ---------- sections: shared ---------- */
+#client{--ac:#31C48D;--acr:49 196 141}#notify{--ac:#3F83F8;--acr:63 131 248}#crew{--ac:#F59E0B;--acr:245 158 11}
+#review{--ac:#A78BFA;--acr:167 139 250}#staff{--ac:#F05252;--acr:240 82 82}#export{--ac:#22D3EE;--acr:34 211 238}
+.sh-ic{display:none}
+section[data-vis]{position:relative;scroll-margin-top:calc(var(--ctlh,0px) + 8px);transition:opacity .35s ease,filter .35s ease}
+/* sticky section headers: the title bar pins under the control bar while you're in that section */
+.sec-head{position:sticky;top:var(--ctlh,0px);z-index:20;margin-bottom:6px;transition:padding .2s ease,background-color .2s ease,box-shadow .2s ease}
+.sec-head.stuck{padding:10px 18px;margin-left:-18px;margin-right:-18px;background:rgb(15 22 34/.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:2px solid var(--ac);border-radius:0 0 12px 12px;box-shadow:0 10px 24px rgb(0 0 0/.45)}
+.sec-head.stuck .sh-t{font-size:1.35rem!important;line-height:1.1!important;position:static!important;padding:0!important;margin:0!important;background:none!important;color:#fff!important;box-shadow:none!important;flex-direction:row!important;align-items:center!important;gap:8px!important;display:flex!important}
+.sec-head.stuck .sh-t::before{display:none!important}
+.sec-head.stuck .sh-t{clip-path:none!important}
+.sec-head.stuck .sh-n{font:700 1.35rem/1 Mohave,sans-serif!important;letter-spacing:0!important;-webkit-text-stroke:0!important;color:var(--ac)!important;opacity:1!important}
+.sec-head.stuck .sh-n::before,.sec-head.stuck .sh-n::after{content:none!important}
+.sec-head.stuck .sh-sep{display:inline!important}
+.sec-head.stuck .sh-tt{padding:0!important}
+.sec-head.stuck .sh-ic{display:flex!important;position:static!important;width:32px!important;height:32px!important;font-size:18px!important;border-radius:9px!important;align-items:center;justify-content:center;background:rgb(var(--acr)/.15)!important;border:1px solid rgb(var(--acr)/.4)!important;box-shadow:none!important}
+.sec-head.stuck .sh-row{gap:10px}
+.dim .sec-intro .notes{opacity:.5}
+/* focus: fade every section except the one you're on */
+section[data-vis].sf-off{opacity:.3;filter:saturate(.55)}
+section[data-vis].sf-off:hover{opacity:.55}
+@media(max-width:1023px){section[data-vis]{scroll-margin-top:16px}}
+@media(prefers-reduced-motion:reduce){section[data-vis]{transition:none}}
+/* long links inside suggestion chips wrap instead of widening the page */
+.txt span[title]{flex-wrap:wrap;max-width:100%}
+.txt span[title]>span:first-child,.txt .line-through{overflow-wrap:anywhere}
+
+[data-ss=F] .secs{gap:96px}
+[data-ss=F] section[data-vis]{margin-top:44px;scroll-margin-top:calc(var(--ctlh,0px) + 72px);padding:30px 32px 36px;
+ background:
+  linear-gradient(var(--ac),var(--ac)) top right/34px 3px no-repeat,linear-gradient(var(--ac),var(--ac)) top right/3px 34px no-repeat,
+  linear-gradient(var(--ac),var(--ac)) bottom left/34px 3px no-repeat,linear-gradient(var(--ac),var(--ac)) bottom left/3px 34px no-repeat,
+  linear-gradient(var(--ac),var(--ac)) bottom right/34px 3px no-repeat,linear-gradient(var(--ac),var(--ac)) bottom right/3px 34px no-repeat,
+  linear-gradient(rgb(var(--acr)/.05) 1px,transparent 1px) 0 0/22px 22px,linear-gradient(90deg,rgb(var(--acr)/.05) 1px,transparent 1px) 0 0/22px 22px,
+  #121a26;
+ outline:1px solid rgb(var(--acr)/.22);outline-offset:-1px}
+[data-ss=F] section[data-vis]::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(var(--ac),transparent 160px)}
+[data-ss=F] .sh-row{position:relative}
+[data-ss=F] .sh-t{position:absolute;left:-32px;top:-78px;margin:0;padding:9px 26px 9px 16px;background:linear-gradient(180deg,var(--ac),rgb(var(--acr)/.78));color:#0f172a;font-size:1.8rem;line-height:1;display:flex;align-items:center;gap:10px;
+ clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);filter:drop-shadow(0 -4px 14px rgb(var(--acr)/.3))}
+[data-ss=F] .sh-t::before{content:attr(data-ic);font-size:1.3rem}
+[data-ss=F] .sh-n{font:700 .75rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em;opacity:.7}
+[data-ss=F] .sh-n::before{content:'SEC '}
+[data-ss=F] .sh-sep{display:none}
 </style>
 </head>
 <body>
@@ -189,7 +235,7 @@ button[disabled]{opacity:.4;cursor:not-allowed}
 <div class="flex flex-wrap items-center gap-2"><span class="text-gray-500 dark:text-gray-400">View as</span><div id="views" class="inline-flex flex-wrap"></div></div>
 </div>
 <div class="flex flex-wrap items-center justify-between gap-3"><div id="stepper" class="flex min-w-0 flex-1 flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400"></div><div class="flex gap-2">
-<button data-act="reset" class="flex cursor-pointer items-center gap-1 rounded-lg border border-gray-300 px-2 py-1 text-xs font-medium hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"><svg class="h-3.5 w-3.5"><use href="#i-refresh"/></svg>Reset</button>
+<button data-act="seed" class="seed-btn" title="Fill every section with sample data, skipping the tour"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 4-12 2-1.5 5-2 5-2s-.5 3-2 5c-3 4-7 4-7 4"/><path d="M12 15c0-3-1.5-5-4-6.5C6 7.4 3 7 3 7s.4 3 1.5 5C6 14.5 9 15 12 15z"/></svg>Seed data</button><button data-act="reset" class="flex cursor-pointer items-center gap-1 rounded-lg border border-gray-300 px-2 py-1 text-xs font-medium hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"><svg class="h-3.5 w-3.5"><use href="#i-refresh"/></svg>Reset</button>
 <button data-act="openLog" class="flex cursor-pointer items-center gap-1 rounded-lg border border-gray-300 px-2 py-1 text-xs font-medium hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"><svg class="h-3.5 w-3.5"><use href="#i-list"/></svg><span>Event log (<span id="logn">0</span>)</span></button>
 </div></div>
 <div id="rolebar"></div>
@@ -197,7 +243,7 @@ button[disabled]{opacity:.4;cursor:not-allowed}
 </div>
 
 <div class="content-container mb-14 mt-6 w-full flex-grow">
-<div class="mx-auto flex w-full flex-col gap-12 xl:w-2/3">
+<div class="secs mx-auto flex w-full flex-col gap-12 xl:w-2/3">
 
 <section id="client" data-vis="client">
 <div class="sec-head"></div>
@@ -467,10 +513,18 @@ const stars=n=>`<span class="text-yellow-400">${'★'.repeat(n)}</span><span cla
 const empty=(t,extra='')=>`<div class="${CARD}"><p class="text-sm ${MU}">${t}</p>${extra}</div>`;
 const emergBtn=(t='Need us again? Report an emergency')=>`<button data-act="emergency" class="lnk inline-flex items-center gap-1 text-sm">${ic('siren')}${t}</button>`;
 
+function clientRecap(){const hid=cliMsgs().filter(m=>m.hidden);
+ const row=(l,v)=>`<div class="mt-3"><p class="${LBL} text-sm">${l}</p><div class="mt-1 text-sm">${v}</div></div>`;
+ return `<div class="mt-4 rounded-lg border border-gray-200 p-4 dark:border-gray-700"><p class="flex items-center gap-2 ${H} text-lg">${ic('clipboard-heart','size-5 text-green-400')}What you sent</p>
+ ${row('Rating',S.rating?`${stars(S.rating)} ${S.rating}/5`:`<span class="${MU}">No rating</span>`)}
+ ${row('Kudos',S.kudos.length?`<span class="flex flex-wrap gap-2">${S.kudos.map(k=>`<span class="rounded bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800">★ ${esc(k)}</span>`).join('')}</span>`:`<span class="${MU}">None</span>`)}
+ ${row('Testimonial',S.testimonial?`<span class="italic">"${esc(S.testimonial)}"</span>`:`<span class="${MU}">None</span>`)}
+ ${row('Hidden messages',hid.length?hid.map(m=>`<span class="block ${MU}"><span class="line-through">${esc(plainAll(m))}</span> · ${esc(m.hidden.reasons.join(', '))}</span>`).join(''):`<span class="${MU}">None</span>`)}
+ ${row('Handle shown publicly',S.consent?'Yes, ItchyMastadon':'No')}</div>`}
 function rClient(){
 if(S.paused)return empty(`<span class="flex items-center gap-2 font-semibold text-red-400">${ic('lock')}Export requests are paused for this account (${S.paused} days)</span><span class="mt-1 block">Staff paused this account's export rights in section 5. The client can still call for help.</span>`,`<div class="mt-3">${emergBtn()}</div>`);
 if(S.stage==='declined')return empty('No problem. You can publish this later from your alert history.',`<div class="mt-3 flex flex-wrap items-center gap-4"><button data-act="undecline" class="${BTN2}">I changed my mind</button>${emergBtn()}</div>`);
-if(submitted())return `<div class="${CARD}"><p class="font-Mohave text-3xl font-semibold">Submitted for review</p><p class="mt-1 text-sm ${MU}">${S.rating?`Thanks for the ${S.rating}-star rating. `:''}Your attending team lead has been notified. Current status: <b class="text-white">${stageText()}</b>.</p><div class="mt-4 flex flex-wrap items-center gap-4"><button data-act="preview" class="${BTN2}">See what others will see</button>${emergBtn()}</div></div>`;
+if(submitted())return `<div class="${CARD}"><p class="font-Mohave text-3xl font-semibold">Submitted for review</p><p class="mt-1 text-sm ${MU}">${S.rating?`Thanks for the ${S.rating}-star rating. `:''}Your attending team lead has been notified. Current status: <b class="text-white">${stageText()}</b>.</p>${clientRecap()}<div class="mt-4 flex flex-wrap items-center gap-4"><button data-act="preview" class="${BTN2}">See what others will see</button>${emergBtn()}</div></div>`;
 const w=warnings(S.testimonial);
 return `<div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-[#1D2735] dark:shadow-gray-900">${hero('Discharge summary')}
 <div class="p-4 md:p-6">
@@ -644,9 +698,10 @@ function rStepper(){const steps=['Client request','Crew advisories','Team lead r
 let cur={request:0,declined:0,crew:S.crewClosed?2:1,review:2,escalated:2,rejected:2,withheld:2,published:3,takendown:3}[S.stage];
 const term=['declined','rejected','withheld','takendown','escalated'].includes(S.stage);
 $('#stepper').innerHTML=steps.map((s,i)=>`<span class="step ${i<cur||(i===cur&&S.stage==='published')?'done':i===cur?'cur':''}"><i></i>${s}</span>`).join('<span class="step-sep"></span>')+`<span class="ml-2 rounded ${term?'bg-red-600':'bg-blue-700'} px-2 py-0.5 font-semibold text-white">${stageText()}</span>`}
+const SICON={client:'🛟',notify:'📣',crew:'🧑‍🚀',review:'🎖️',staff:'🛡️',export:'🌐'};
 function rHeads(){document.querySelectorAll('section[data-vis]').forEach(sec=>{const c=SEC[sec.id];const head=sec.querySelector('.sec-head');if(head.dataset.done)return;head.dataset.done=1;
-head.innerHTML=`<div class="mb-4"><div class="flex flex-wrap items-center gap-2"><p class="font-Mohave text-2xl font-semibold uppercase">${c.n} · ${c.t}</p><span class="${SYS}">Visible to: ${c.vis}</span><span class="dim-tag items-center gap-1 rounded px-2.5 py-0.5 text-xs font-semibold uppercase">${ic('eye-off','h-3.5 w-3.5')}<span class="dim-who"></span></span></div><p class="mt-1 text-sm ${MU}">${c.blurb}</p>
-<details class="notes mt-2 rounded-lg border border-gray-200 text-sm dark:border-gray-700"><summary class="flex cursor-pointer items-center gap-2 px-3 py-2 font-medium text-blue-300">${ic('chev','chev h-3.5 w-3.5')}How it works and why it's here</summary><div class="grid gap-4 px-3 pb-3 md:grid-cols-2"><div><p class="${LBL} text-sm">How it works</p><ul class="mt-1 flex flex-col gap-1 text-gray-300">${c.how.map(h=>`<li>• ${h}</li>`).join('')}</ul></div><div><p class="${LBL} text-sm">Why it's here</p><p class="mt-1 text-gray-300">${c.why}</p></div></div></details></div>`})}
+sec.dataset.n=String(c.n).padStart(2,"0");head.innerHTML=`<div class="sh"><div class="sh-row flex flex-wrap items-center gap-2"><span class="sh-ic" aria-hidden="true">${SICON[sec.id]||""}</span><p class="sh-t font-Mohave text-2xl font-semibold uppercase" data-ic="${SICON[sec.id]||""}"><span class="sh-n">${String(c.n).padStart(2,"0")}</span><span class="sh-sep"> · </span><span class="sh-tt">${c.t}</span></p><span class="${SYS}">Visible to: ${c.vis}</span><span class="dim-tag items-center gap-1 rounded px-2.5 py-0.5 text-xs font-semibold uppercase">${ic('eye-off','h-3.5 w-3.5')}<span class="dim-who"></span></span></div><p class="mt-1 text-sm ${MU}">${c.blurb}</p>
+<details class="notes mt-2 rounded-lg border border-gray-200 text-sm dark:border-gray-700"><summary class="flex cursor-pointer items-center gap-2 px-3 py-2 font-medium text-blue-300">${ic('chev','chev h-3.5 w-3.5')}How it works and why it's here</summary><div class="grid gap-4 px-3 pb-3 md:grid-cols-2"><div><p class="${LBL} text-sm">How it works</p><ul class="mt-1 flex flex-col gap-1 text-gray-300">${c.how.map(h=>`<li>• ${h}</li>`).join('')}</ul></div><div><p class="${LBL} text-sm">Why it's here</p><p class="mt-1 text-gray-300">${c.why}</p></div></div></details></div>`;const intro=document.createElement('div');intro.className='sec-intro mb-4';[...head.querySelector('.sh').children].slice(1).forEach(n=>intro.appendChild(n));head.after(intro)})}
 function rRole(){const el=$('#rolebar');if(S.view==='all'){el.innerHTML=`<p class="border-t pt-2 text-xs ${MU} dark:border-gray-700">${ic('info','h-3.5 w-3.5 inline-block')} Tip: pick a role in <b>View as</b>. If that role has nothing to do yet, the playground fast-forwards to where they come in, and each role gets its own starting points.</p>`;return}
 const vl=VIEWS.find(x=>x[0]===S.view)[1];
 el.innerHTML=`<div class="flex flex-wrap items-center gap-2 border-t pt-3 text-xs dark:border-gray-700"><span class="rounded bg-primary-600 px-2 py-0.5 font-semibold text-white">Viewing as ${vl}</span><span class="${MU}">Jump to a starting point:</span>${(PRESETS[S.view]||[]).map(([l],i)=>`<button data-act="preset" data-i="${i}" class="${SM}">${l}</button>`).join('')}</div>
@@ -684,6 +739,24 @@ view:a=>{const v=a.dataset.v;closeModal();S.view=v;seedNote=null;
 preset:a=>{const v=S.view,pr=PRESETS[v][+a.dataset.i];undoSnap=snap();pr[1]();S.view=v;log('Playground','Jumped to: '+pr[0],VIEWS.find(x=>x[0]===v)[1]+' view');seedNote=`Jumped to "${pr[0]}".`;render();toast('Jumped to: '+pr[0])},
 undoSeed:()=>{if(!undoSnap)return;const v=S.view;S=JSON.parse(undoSnap);S.view=v;$('#scn').value=S.scenario;undoSnap=null;seedNote=null;render();toast('Undone')},
 dismissSeed:()=>{seedNote=null;rViews()},
+seed:()=>{if(G.on)gEnd();closeModal();closePop();seedNote=null;undoSnap=null;$('#scn').value='rescued';baseScn='rescued';build('rescued');S.view='all';
+ // client: rated, kudos, testimonial, one message hidden, consented and submitted
+ S.rating=4;S.kudos=['Great medic','Smooth landing','Calm team lead'];
+ S.testimonial='Fast, calm and professional. They had me back on my feet in minutes.';
+ const cm=cliMsgs()[0];if(cm)cm.hidden={by:'client',reasons:['Third-party player'],note:'Names the crew that shot me'};
+ S.consent=true;S.stage='crew';
+ log(actor.client,'Submitted for review','Rating 4, kudos: '+S.kudos.join(', '));log('System','Team lead and 4 crew notified','72h review window, 24h crew advisory window');
+ // crew: a redaction suggestion and a note, on top of the pilot's advisory; team lead asked for input
+ const mi=S.msgs.findIndex(m=>plain(m).includes('Cutlass'));
+ if(mi>-1){const ad={id:S.advId++,by:'sec2',type:'redact',mi,text:'Cutlass',cat:'Ship name / registration',note:'Ship model could identify us',status:'open',user:true};S.adv.push(ad);log(actor.crew('sec2'),'Suggested a redaction',advLog(ad)+' → [Ship name / registration]')}
+ const nt={id:S.advId++,by:'medic',type:'note',note:'Smooth mission, nothing in the transcript worries me.',status:'open',user:true};S.adv.push(nt);log(actor.crew('medic'),'Sent advisory',advLog(nt)+' · '+nt.note);
+ S.crewInput=true;
+ // staff: ban list feeds auto-detection, a prior strike, and an escalation waiting on the desk
+ S.bans=['xX_Reaper_Xx'];scanAll();S.strikes=1;
+ S.desk.push({id:S.deskId++,type:'escalation',name:'VoidHexx (reviewer)',reason:'The client mentions they were in the CZ. Not sure if that needs redacting. Please advise.',status:'open'});
+ // public: show the preview so the record is visible too
+ S.preview=true;S.ms=2;
+ log('Playground','Seeded sample data','Every section populated for testing');render();toast('Seeded: every section has sample data')},
 reset:()=>{seedNote=null;undoSnap=null;build(S.scenario);render();toast('Playground reset')},
 openLog:()=>{$('#drawer').classList.add('open');rLog()},
 closeLog:()=>$('#drawer').classList.remove('open'),
@@ -898,7 +971,7 @@ document.addEventListener('keydown',e=>{if(!G.on||G.min)return;if(['PageUp','Pag
 $('#g-jump').addEventListener('click',()=>{const r=gTarget(gStep());r&&r.el.scrollIntoView({behavior:'smooth',block:'center'})});
 $('#g-pill').addEventListener('click',()=>{if(G.on&&G.min){G.min=false;gUI();gGo(G.i,true)}else{G.on=true;G.i=0;G.min=false;gCard();gUI();requestAnimationFrame(gLoop)}});
 document.addEventListener('change',()=>setTimeout(gCheck,0));
-function gAllowed(t){if(!t||!t.closest)return true;if(t.closest('#g-card,#g-pill,#g-jump'))return true;const st=STEPS[G.i];return(st.allow||[]).some(s=>{try{return !!t.closest(s)}catch(e){return false}})}
+function gAllowed(t){if(!t||!t.closest)return true;if(t.closest('#g-card,#g-pill,#g-jump,[data-act=seed]'))return true;const st=STEPS[G.i];return(st.allow||[]).some(s=>{try{return !!t.closest(s)}catch(e){return false}})}
 let gNudgeT=0;function gNudge(){gShake();const now=Date.now();if(now-gNudgeT>2500){gNudgeT=now;toast('Guided tour: use the highlighted spot, or press End tour to explore freely.')}}
 ['pointerdown','mousedown','click','dblclick','auxclick','contextmenu'].forEach(ev=>document.addEventListener(ev,e=>{if(!G.on||G.min||gAllowed(e.target))return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();if(ev==='click')gNudge()},true));
 document.addEventListener('keydown',e=>{if(!G.on||G.min||gAllowed(e.target))return;if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();gNudge()}},true);
@@ -907,6 +980,17 @@ document.addEventListener('focusin',e=>{if(!G.on||G.min||gAllowed(e.target))retu
 setInterval(gCheck,500);window.__gc=gCheck;
 build('rescued');rHeads();render();G.on=true;G.i=0;gCard();gUI();requestAnimationFrame(gLoop);
 })();
+</script>
+
+<script>
+// Sticky headers + focus: fade every section except the one you're on (paused while the guided tour runs)
+(()=>{const S=[...document.querySelectorAll('section[data-vis]')],ctl=document.querySelector('.ctl');let raf=0;
+function ch(){const h=getComputedStyle(ctl).position==='sticky'?ctl.offsetHeight:0;document.documentElement.style.setProperty('--ctlh',h+'px');return h}
+function f(){raf=0;const H=ch();S.forEach(s=>{const h=s.querySelector('.sec-head');if(!h)return;const r=h.getBoundingClientRect(),sr=s.getBoundingClientRect();h.classList.toggle('stuck',r.top<=H+1&&sr.top<H-4&&sr.bottom>H+r.height)});if(document.documentElement.classList.contains('g-noscroll')){S.forEach(s=>s.classList.remove('sf-off','sf-on'));return}
+ const y=innerHeight*.42;let best=S[0],bd=1e9;
+ S.forEach(s=>{const r=s.getBoundingClientRect();const d=(r.top<=y&&r.bottom>=y)?0:Math.min(Math.abs(r.top-y),Math.abs(r.bottom-y));if(d<bd){bd=d;best=s}});
+ S.forEach(s=>{s.classList.toggle('sf-on',s===best);s.classList.toggle('sf-off',s!==best)})}
+addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(f)},{passive:true});addEventListener('resize',f);setInterval(f,600);f()})();
 </script>
 </body>
 </html>

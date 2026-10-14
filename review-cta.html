@@ -89,7 +89,8 @@ h2{margin:12px 0 4px;font:700 36px/1 Mohave;white-space:nowrap;text-transform:up
 .flip{display:grid;width:206px;height:70px;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.3,1.35,.5,1)}
 .face{grid-area:1/1;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .face.ft{transform:rotateX(180deg)}
-.face:not(.act){pointer-events:none}
+.face{transition:opacity .08s linear .12s}
+.face:not(.act){pointer-events:none;opacity:0}
 .stars{display:flex;gap:4px}
 .stars button{width:38px;height:38px;display:grid;place-items:center;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
 .stars button:hover{transform:scale(1.18)}
@@ -212,7 +213,7 @@ h2{font-size:clamp(28px,9vw,34px)}
 <div class="pill" id="pill"></div>
 <h2 id="h">Tell the team thanks!</h2>
 <div class="lead"><p id="lead"></p></div>
-<div class="rate"><div class="rl" id="rl">Rate your care</div><div class="rsw"><button class="arr" data-d="-1" aria-label="Switch rating style"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><div class="flip" id="flip"><div class="face fs act" id="fs"><div class="stars" id="stars"></div></div><div class="face ft" id="ft"><button class="tb up" data-v="up" aria-label="Thumbs up" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></button><button class="tb down" data-v="down" aria-label="Thumbs down" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></button></div></div><button class="arr" data-d="1" aria-label="Switch rating style"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div><span class="rw" id="rw">Tap to rate</span></div>
+<div class="rate"><div class="rl" id="rl">Rate your care</div><div class="rsw"><button class="arr" data-d="-1" aria-label="Switch rating style"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><div class="flip" id="flip"><div class="face fs act" id="fs"><div class="stars" id="stars"></div></div><div class="face ft" id="ft" inert><button class="tb up" data-v="up" aria-label="Thumbs up" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></button><button class="tb down" data-v="down" aria-label="Thumbs down" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></button></div></div><button class="arr" data-d="1" aria-label="Switch rating style"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div><span class="rw" id="rw">Tap to rate</span></div>
 <div class="drawer"><div class="in"><div class="dr">
 <div class="kh"><b>Give kudos</b><span><span class="n" id="kn">0</span>/6</span></div>
 <div class="chips" id="chips"></div>
@@ -273,7 +274,7 @@ function swap(d,instant){
   f.style.transform=`rotateX(${frot}deg)`;
   if(instant){void f.offsetWidth;f.style.transition=''}
   sys=Math.abs(Math.round(frot/180))%2===0?'stars':'thumbs';
-  $('#fs').classList.toggle('act',sys==='stars');$('#ft').classList.toggle('act',sys==='thumbs');
+  $('#fs').classList.toggle('act',sys==='stars');$('#ft').classList.toggle('act',sys==='thumbs');$('#fs').inert=sys!=='stars';$('#ft').inert=sys!=='thumbs';
   $('#rsys').value=sys;lbl();
 }
 $$('.arr').forEach(b=>b.onclick=()=>swap(+b.dataset.d));

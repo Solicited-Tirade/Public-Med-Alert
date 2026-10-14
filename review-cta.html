@@ -170,9 +170,9 @@ textarea:focus{background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px #fff,
 
 .pt{position:absolute;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:9}
 
-.tip{position:fixed;z-index:200;max-width:220px;padding:8px 10px;border-radius:10px;background:#111827;color:#f3f4f6;font:400 12px/1.4 Inter;text-align:left;box-shadow:0 0 0 1px #374151,0 10px 30px rgba(0,0,0,.5);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
+.tip{position:fixed;z-index:200;max-width:220px;padding:8px 10px;border-radius:10px;background:#111827;color:#f3f4f6;font:400 12px/1.4 Inter;text-align:center;box-shadow:0 0 0 1px #374151,0 10px 30px rgba(0,0,0,.5);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
 .tip.on{opacity:1;transform:none}
-.tip b{display:flex;align-items:center;gap:5px;font:700 11px Quantico;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.tip b{display:flex;align-items:center;justify-content:center;gap:5px;font:700 11px Quantico;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
 .tip b svg{width:12px;height:12px;fill:var(--gold)}
 
 .test{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:8px;padding:5px 6px 5px 12px;border-radius:999px;background:rgba(17,24,39,.92);border:1px solid #374151;backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.5)}
@@ -180,6 +180,142 @@ textarea:focus{background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px #fff,
 .test select{appearance:none;-webkit-appearance:none;background:#1f2937 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5l3 3 3-3' fill='none' stroke='%239ca3af' stroke-width='1.6'/%3E%3C/svg%3E") right 8px center/12px no-repeat;border:1px solid #374151;border-radius:999px;padding:6px 28px 6px 12px;font:600 12px Oxanium;color:#f3f4f6;cursor:pointer}
 .test button{font:600 12px Oxanium;padding:6px 12px;border-radius:999px;background:#f9fafb;color:#111827}
 .shot .test{display:none}
+
+
+.stage{position:relative}
+.pane.back{display:none}
+.card.sent .stage{display:none}
+.card.flipped .pane.front{display:none}
+.card.flipped .pane.back{display:block}
+
+.pp{text-align:left;padding-top:16px}
+.pane.back .pp{padding-top:30px}
+.flipped .stage{color:#fff}
+.pph{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pph b{font:700 22px/1 Mohave;text-transform:uppercase;letter-spacing:.03em;text-shadow:0 0 10px rgba(255,255,255,.5)}
+.bk{display:inline-flex;align-items:center;gap:2px;padding:6px 11px 6px 6px;border-radius:999px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4);font:600 11px Oxanium;letter-spacing:.12em;text-transform:uppercase;color:#fff}
+.bk:hover{background:rgba(255,255,255,.2)}
+.bk svg{width:16px;height:16px;stroke:currentColor;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.info{border-radius:14px;padding:12px 14px;background:rgba(40,4,6,.5);box-shadow:inset 0 0 0 1px rgba(255,200,200,.28)}
+.info b{display:flex;align-items:center;gap:7px;font:600 13px Inter}
+.info b svg,.mh b svg,.lnk svg{width:16px;height:16px;flex:none}
+.info p{margin:4px 0 0;font:400 12.5px/1.5 Inter;color:#fecaca}
+.mh{margin-top:16px}
+.mh b{display:flex;align-items:center;gap:7px;font:700 19px/1 Mohave;letter-spacing:.05em;text-transform:uppercase}
+.mh b svg{color:#6EE7B7}
+.mh p{margin:4px 0 4px;font:400 11.5px/1.4 Inter;color:#fecaca}
+.msg{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:start;padding:10px 2px;border-bottom:1px solid rgba(255,200,200,.22);font:400 13px/1.45 Inter}
+.eye{width:28px;height:28px;margin-top:-4px;display:grid;place-items:center;border-radius:50%;color:#fecaca;transition:background .2s,color .2s}
+.eye:hover{background:rgba(255,255,255,.14);color:#fff}
+.eye svg{width:18px;height:18px}
+.msg time{font:500 11px Oxanium;color:#fecaca;padding-top:2px}
+.msg .tx{overflow-wrap:anywhere}
+.msg.hid .tx{text-decoration:line-through;opacity:.45}
+.msg .why{display:table;margin-top:5px;font:600 10.5px Oxanium;letter-spacing:.04em;padding:2px 8px;border-radius:999px;background:rgba(253,230,138,.16);color:#fde68a}
+.cons{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font:400 13px/1.45 Inter;cursor:pointer}
+.cons input{flex:none;width:17px;height:17px;margin:1px 0 0;accent-color:#fff;cursor:pointer}
+.cons.bad{animation:wig .5s}
+.cons.bad span{color:#fde68a}
+.cerr{margin:4px 0 0 27px;font:500 12px Inter;color:#fde68a}
+.cerr:empty{display:none}
+.ppa{display:grid;grid-template-columns:1fr 1.25fr;gap:10px;margin-top:14px}
+.ppa .btn{font-size:12.5px;letter-spacing:.03em;padding:12px 8px;white-space:nowrap}
+.foot{margin-top:12px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 12px;font:400 11.5px/1.4 Inter;color:#fecaca}
+.lnk{display:inline-flex;gap:5px;align-items:center;color:#fff;text-decoration:underline;text-underline-offset:2px;font:500 12px Inter}
+.lnk:hover{color:#fde68a}
+.pp .later{margin-top:10px}
+
+
+
+
+
+.card{isolation:isolate}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-2;pointer-events:none;background:radial-gradient(120% 40% at 50% 0%,#7f1d1d 0%,#2a0709 55%,#160406 100%);opacity:0;transition:opacity .4s ease}
+.card{transition:box-shadow .4s ease}
+.card.flipped::before{opacity:1}
+.card.flipped{box-shadow:0 0 0 1px rgba(255,170,170,.6),0 0 50px rgba(255,90,90,.7),0 0 130px rgba(255,90,90,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+.card.flipped .sun{opacity:.35}
+.info p+p{margin-top:6px}
+.rtag,.ctag{display:inline-block;padding:0 7px;border-radius:5px;font:600 11.5px/1.5 Inter;white-space:nowrap}
+.rtag{border:1px solid #f59e0b;color:#fcd34d;background:rgba(245,158,11,.12)}
+.ctag{border:1px solid rgba(255,255,255,.45);color:#e5e7eb;font-style:italic;background:rgba(255,255,255,.06)}
+.perm{margin:16px auto 0;max-width:340px;text-align:left}
+.perm small{display:block;font:600 11px Oxanium;letter-spacing:.14em;text-transform:uppercase;color:#fecaca;margin-bottom:6px}
+.perm div{display:flex;gap:6px}
+.plink{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);font:500 13px Oxanium;color:#fff;text-align:left;transition:background .2s,box-shadow .2s}
+.plink:hover{background:rgba(0,0,0,.4);box-shadow:inset 0 0 0 1px #fff,0 0 14px rgba(255,255,255,.3)}
+.plink span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plink svg,.pcopy svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pbadge{margin-left:6px;font:600 10px Oxanium;letter-spacing:.12em;text-transform:uppercase;font-style:normal;padding:2px 7px;border-radius:999px;background:rgba(245,158,11,.18);color:#fcd34d;box-shadow:inset 0 0 0 1px rgba(245,158,11,.6)}
+.pcopy{flex:none;width:42px;display:grid;place-items:center;border-radius:10px;background:rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);color:#fff}
+.pcopy:hover{background:rgba(0,0,0,.4)}
+.pcopy.ok{color:#6EE7B7;box-shadow:inset 0 0 0 1px #6EE7B7}
+.pvh{margin:0 0 12px}
+.pvp.rev .pvh{position:relative;margin:6px 0 14px;padding:14px 14px 12px;border-radius:12px;border:1.5px dashed #f59e0b;background:rgba(245,158,11,.06)}
+.pvp.rev .pvh .sm{margin:4px 0 0}
+.pvp .rv{display:none}
+.pvp.rev .rv{position:absolute;top:-10px;left:12px;display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:999px;background:#111827;box-shadow:inset 0 0 0 1.5px #f59e0b;font:700 10.5px Quantico;letter-spacing:.14em;text-transform:uppercase;color:#fcd34d}
+.pvp.rev .rv i{width:7px;height:7px;border-radius:50%;background:#f59e0b;box-shadow:0 0 8px #f59e0b;animation:dot 1.4s ease-in-out infinite}
+@keyframes dot{0%,100%{opacity:.35}50%{opacity:1}}
+
+.sbm{display:inline-flex;align-items:center;justify-content:center;gap:9px}
+.sbm .thm{display:inline-grid;place-items:center;width:20px;height:20px;transform-origin:35% 85%}
+.sbm .thm svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;transition:fill .2s}
+.sbm:hover{transform:translateY(-1px)}
+.sbm:hover .thm{animation:thumb .95s ease-in-out infinite}
+.sbm:hover .thm svg{fill:color-mix(in srgb,currentColor 18%,transparent)}
+@keyframes thumb{0%,100%{transform:none}28%{transform:translateY(-3px) rotate(-18deg) scale(1.18)}52%{transform:translateY(0) rotate(7deg) scale(1.05)}70%{transform:rotate(-4deg)}}
+.sbm.go{animation:btngo .55s cubic-bezier(.3,1.4,.5,1)}
+.sbm.go .thm{animation:thumbgo .7s cubic-bezier(.2,1.4,.4,1) forwards}
+.sbm.go .thm svg{fill:currentColor}
+@keyframes btngo{0%{transform:scale(1)}25%{transform:scale(.93)}60%{transform:scale(1.05);box-shadow:0 0 0 6px rgba(255,255,255,.35),0 0 50px rgba(255,255,255,.9)}100%{transform:scale(1)}}
+@keyframes thumbgo{0%{transform:none}35%{transform:translateY(-8px) rotate(-24deg) scale(1.7)}70%{transform:translateY(-3px) rotate(4deg) scale(1.3)}100%{transform:translateY(-2px) rotate(-8deg) scale(1.25)}}
+.pvp .bar{gap:8px}
+.pvp .bar .pvs{background:#E02424;color:#fff;box-shadow:0 0 18px rgba(240,82,82,.55)}
+.pvp .bar .pvs:hover{background:#F05252}
+.cf{position:fixed;inset:0;z-index:175;pointer-events:none}
+.pop{position:fixed;z-index:180;width:min(380px,calc(100vw - 24px));max-height:min(72vh,540px);overflow:auto;padding:14px 16px;border-radius:14px;background:#111827;color:#f3f4f6;box-shadow:0 0 0 1px #374151,0 20px 50px rgba(0,0,0,.6);text-align:left;display:none;font:400 13px Inter}
+.pop.on{display:block;animation:popin .18s ease-out}
+@keyframes popin{from{opacity:0;transform:translateY(6px) scale(.98)}}
+.pop .ph{margin:0;font:700 20px/1.1 Mohave;letter-spacing:.04em;text-transform:uppercase}
+.pop .ps{margin:4px 0 0;color:#9ca3af;font-size:12.5px}
+.pop .pgh{margin:12px 0 4px;font:600 11px Oxanium;letter-spacing:.14em;text-transform:uppercase;color:#9ca3af}
+.pop .pgr{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}
+.pop label{display:flex;align-items:center;gap:7px;font-size:12.5px;cursor:pointer}
+.pop input[type=checkbox]{accent-color:#F05252;width:15px;height:15px;flex:none}
+.pop input[type=text]{display:block;width:100%;margin-top:12px;padding:8px 10px;border-radius:8px;border:1px solid #374151;background:#1f2937;color:#f3f4f6;font:400 13px Inter;outline:none}
+.pop input[type=text]:focus{border-color:#9ca3af}
+.pop .perr{margin:8px 0 0;color:#fca5a5;font-size:12px}
+.pop .perr:empty{display:none}
+.pop .pa{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.pop .pa button{padding:8px 14px;border-radius:8px;font:600 13px Inter;border:1px solid #4b5563}
+.pop .pa .go{background:#E02424;border-color:#E02424;color:#fff}
+
+.pv{position:fixed;inset:0;z-index:160;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+.pv.on{display:flex;animation:fadein .25s}
+.pvp{width:min(540px,100%);max-height:88vh;overflow:auto;border-radius:16px;background:#111827;color:#f3f4f6;box-shadow:0 0 0 1px #374151,0 30px 80px rgba(0,0,0,.6);padding:18px;text-align:left;font:400 13px/1.5 Inter;animation:popin .3s ease-out}
+.pvp .ey{font:600 11px Oxanium;letter-spacing:.16em;text-transform:uppercase;color:#9ca3af}
+.pvp h3{margin:2px 0 2px;font:700 26px/1.1 Mohave;text-transform:uppercase;letter-spacing:.03em}
+.pvp .sm{margin:0 0 12px;color:#9ca3af;font-size:12.5px}
+.pvp .orow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--tc) 14%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tc) 45%,transparent);color:var(--tc)}
+.pvp .orow b{font:600 18px Mohave;letter-spacing:.05em;text-transform:uppercase}
+.pvp .orow span{font:500 11px Oxanium}
+.pvp dl{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;margin:14px 0 0}
+.pvp dt{font:600 11px Oxanium;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;padding-top:2px}
+.pvp dd{margin:0}
+.pvp .kc{display:inline-flex;align-items:center;gap:5px;margin:0 6px 6px 0;padding:3px 10px 3px 8px;border-radius:999px;background:#1f2937;box-shadow:inset 0 0 0 1px #374151;font:600 12px Oxanium}
+.pvp .kc svg{width:13px;height:13px}
+.pvp .kc.tp{background:#422006;box-shadow:inset 0 0 0 1px #f59e0b;color:#fde68a}
+.pvp .mu{color:#6b7280}
+.pvp .pm{padding:6px 0;border-bottom:1px solid #1f2937}
+.pvp .pm time{font:500 11px Oxanium;color:#6b7280;margin-right:8px}
+.pvp .pm .hd{display:inline-block;padding:1px 8px;border-radius:6px;background:#1f2937;color:#9ca3af;font:600 11px Oxanium}
+.pvp .bar{display:flex;justify-content:flex-end;margin-top:14px}
+.pvp .bar button{padding:9px 16px;border-radius:9px;background:#f9fafb;color:#111827;font:600 13px Inter}
+
+.toast{position:fixed;left:50%;bottom:70px;z-index:190;transform:translate(-50%,20px);opacity:0;padding:10px 14px;border-radius:10px;background:#111827;color:#f3f4f6;box-shadow:0 0 0 1px #374151,0 10px 30px rgba(0,0,0,.5);font:500 13px Inter;transition:opacity .25s,transform .25s;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:480px){.pph{flex-wrap:wrap}.pph b{font-size:19px}.ppa{grid-template-columns:1fr}.pop .pgr{grid-template-columns:1fr}.pvp dl{grid-template-columns:1fr;gap:2px}.pvp dt{margin-top:8px}}
 
 @media (max-width:420px){
 h2{font-size:clamp(28px,9vw,34px)}
@@ -209,7 +345,7 @@ h2{font-size:clamp(28px,9vw,34px)}
 <div class="sun"></div>
 <button class="x" data-close aria-label="Close"><svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
 <div class="sqw"><div class="sq"></div><div class="clip"><div class="medic"></div></div><div class="lg" id="lg"></div></div>
-<div class="body">
+<div class="stage" id="stage"><div class="panes"><div class="pane front" id="front"><div class="body">
 <div class="pill" id="pill"></div>
 <h2 id="h">Tell the team thanks!</h2>
 <div class="lead"><p id="lead"></p></div>
@@ -223,10 +359,24 @@ h2{font-size:clamp(28px,9vw,34px)}
 </div></div></div>
 <div class="acts"><button class="btn pub" id="pub">Make This Rescue Public?</button><button class="btn thx" id="thx">Just say thanks!</button></div>
 <button class="later" data-close>Not now</button>
-</div>
+</div></div><div class="pane back" id="back"></div></div></div>
 <div class="done" id="done"></div>
 </div>
 </section>
+<div id="pphold" hidden><div class="pp" id="pp">
+<div class="pph"><button class="bk" data-back><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>Back</button><b>Make This Rescue Public?</b></div>
+<div class="info"><b><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1-8.5 15a12 12 0 0 1-8.5-15a12 12 0 0 0 8.5-3"/><circle cx="12" cy="11" r="1"/><path d="M12 12v2.5"/></g></svg>Before anything is published</b><p>Crew names become <span class="rtag">[Role]</span>, and anything that breaks opsec is <span class="ctag">[Redacted]</span>.</p><p>Your team lead reviews it with input from the crew. If approved, others will see this. Either way, we’ll let you know.</p></div>
+<div class="mh"><b><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></svg>Your messages</b><p>Use the eye to hide any of your own messages. You'll be asked why, so the reviewer understands.</p></div>
+<div id="msgs"></div>
+<label class="cons" id="consl"><input type="checkbox" id="cons"><span>I understand my RSI handle, <b>ItchyMastadon</b>, will be shown publicly on this record.</span></label>
+<p class="cerr" id="cerr"></p>
+<div class="ppa"><button class="btn thx" data-pv>Preview public page</button><button class="btn pub sbm" data-submit><span>Submit for review</span><span class="thm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></span></button></div>
+<div class="foot"><span>Reviews usually finish within 3 days. You can request a takedown at any time after publishing.</span><button class="lnk" data-emerg><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/><path d="M21 12h1M18.5 4.5L18 5M2 12h1M12 2v1M4.9 4.9l.5.5M12 12v6"/></g></svg>Need us again? Report an emergency</button></div>
+<button class="later" data-close>Not now</button>
+</div></div>
+<div class="pop" id="pop" role="dialog" aria-modal="false"></div>
+<div class="pv" id="pv"><div class="pvp" id="pvp" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" role="status"></div>
 
 <div class="tip" id="tip" role="tooltip"></div>
 
@@ -292,10 +442,10 @@ function buildChips(){
       if(sel.includes(k)){sel=sel.filter(x=>x!==k);if(top===k)top=null}
       else if(sel.length<6){sel.push(k);c.animate([{transform:'scale(.88)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.3,1.6,.5,1)'})}
       else{c.animate([{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:260});hint('That’s the max of 6. Remove one to swap it out.');return}
-      sync();showTip(c);
+      sync();tipLater(c);
     };
     ks.onclick=()=>{if(!sel.includes(k))return;top=top===k?null:k;sync();if(top===k)topAnim(c);showTip(c,true)};
-    [kb,ks].forEach(el=>{el.addEventListener('mouseenter',()=>showTip(c));el.addEventListener('focus',()=>showTip(c));el.addEventListener('mouseleave',hideTip);el.addEventListener('blur',hideTip)});
+    [kb,ks].forEach(el=>{el.addEventListener('mouseenter',()=>tipLater(c));el.addEventListener('focus',()=>tipLater(c));el.addEventListener('mouseleave',hideTip);el.addEventListener('blur',hideTip)});
   });
 }
 function sync(){
@@ -309,14 +459,16 @@ let pin=0;
 function showTip(c,lock){
   const k=c.dataset.k,isTop=top===k;
   tip.innerHTML=(isTop?`<b>${STAR}Top kudo</b>`:'')+esc(K[k].t);
-  tip.classList.add('on');
+  tip.classList.add('on');tip._c=c;
   const r=c.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
   let x=r.left+r.width/2-w/2;x=Math.max(8,Math.min(innerWidth-w-8,x));
   let y=r.top-h-8;if(y<8)y=r.bottom+8;
   tip.style.left=x+'px';tip.style.top=y+'px';
   clearTimeout(pin);if(lock)pin=setTimeout(hideTip,3000);
 }
-function hideTip(){tip.classList.remove('on')}
+let tdl=0;
+function tipLater(c){clearTimeout(tdl);if(tip.classList.contains('on')&&tip._c===c)return;tip.classList.remove('on');tdl=setTimeout(()=>{if(c.isConnected&&c.matches(':hover,:focus-within'))showTip(c)},1000)}
+function hideTip(){clearTimeout(tdl);tip.classList.remove('on')}
 m.addEventListener('scroll',hideTip);
 
 function sparks(host,x,y,cols,n=22,dist=[50,110]){
@@ -352,13 +504,127 @@ function finish(kind){
   hideTip();
   const summary=[sys==='stars'?(srate?`Thanks for the ${srate}-star rating.`:''):trate==='up'?'Thanks for the thumbs up.':trate==='down'?'Thanks for the honest feedback.':'',sel.length?`${sel.length} kudo${sel.length>1?'s':''} sent to the crew${top?`, with <b>${esc(top)}</b> on top`:''}.`:''].filter(Boolean).join(' ');
   $('#done').innerHTML=kind==='pub'
-    ?`<h2>Submitted for review</h2><p>${summary?summary+' ':''}Your attending team lead has been notified. Crew names are replaced with their roles, and anything sensitive is redacted.</p><p>Reviews usually finish within 3 days.</p>${OUT[tone].again?`<p>${OUT[tone].again}</p>`:''}<button class="btn pub" data-close>Done</button>`
+    ?`<h2>Submitted for review</h2><p>${summary?summary+' ':''}Your attending team lead has been notified.</p><p>Reviews usually finish within 3 days.</p>${OUT[tone].again?`<p>${OUT[tone].again}</p>`:''}<div class="perm"><small>Your permalink <em class="pbadge">Under review</em></small><div><button class="plink" data-plink><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>medrunner.space/verify/agile-snail</span></button><button class="pcopy" data-pcopy aria-label="Copy link" title="Copy link"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><button class="btn pub" data-close>Done</button>`
     :`<h2>Thanks sent!</h2><p>${summary||'The crew will see your thanks on their record.'}</p>${OUT[tone].again?`<p>${OUT[tone].again}</p>`:''}<p>You can publish this later from your alert history.</p><button class="btn thx" data-close>Done</button>`;
   $$('[data-close]',$('#done')).forEach(b=>b.onclick=close);
-  card.classList.add('sent');burst();
+  const pl=$('[data-plink]',$('#done'));if(pl)pl.onclick=()=>preview(true);
+  const pc=$('[data-pcopy]',$('#done'));if(pc)pc.onclick=()=>{try{navigator.clipboard.writeText('https://medrunner.space/verify/agile-snail').catch(()=>{})}catch(_){}pc.classList.add('ok');toast('Link copied');setTimeout(()=>pc.classList.remove('ok'),1600)};
+  const hn=msgs.filter(x=>x.h).length;if(kind==='pub'&&hn)$('#done').querySelector('p').insertAdjacentHTML('beforeend',` ${hn} message${hn>1?'s':''} hidden.`);
+  card.classList.add('sent');burst();m.scrollTo({top:0});
 }
 const need=()=>{if(rated())return false;const r=$('.rate');r.classList.remove('wig');void r.offsetWidth;r.classList.add('wig');$('#rw').textContent=sys==='stars'?'Pick a star rating first':'Choose thumbs up or thumbs down first';clearTimeout(r._t);r._t=setTimeout(()=>{r.classList.remove('wig');if(!rated())lbl()},1800);return true};
-$('#pub').onclick=()=>{if(!need())finish('pub')};
+
+const CATS={'Identity':['Personal info','Handle / username','Third-party player','Party / group members','Org name / affiliation','Ship name / registration','CrimeStat / bounty info'],'Location':['Location detail','Hab / home location'],'Links and comms':['Comms details','Streamer / social links','Spectrum / forum links','Clip / recording links','Attachments / screenshots'],'Content and safety':['Tactics / opsec','Profanity / offensive','Out-of-character info','Internal Medrunner info']};
+const MSG={ok:[['21:16:02',"I'm downed inside a cave. The pirates from xX_Reaper_Xx's crew who shot me have left the area."],['21:25:40','Thanks all, you saved my cargo run. Clip of the rescue: https://twitch.tv/itchymastadon/clip/Rescue'],['21:27:30','Add me if you ever need a hauler!']],
+died:[['21:16:02',"I'm downed inside a cave. The pirates from xX_Reaper_Xx's crew who shot me have left the area."],['21:25:40','All good, you tried. Thanks for coming out that fast.']],
+cancel:[['21:18:20','Never mind, I respawned at Port Tressler. Sorry for the trouble!']]};
+const EYE='<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></svg>',EYEOFF='<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 10.6a3 3 0 0 0 4.2 4.2M9.9 5.1A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/></g></svg>';
+const pp=$('#pp'),pop=$('#pop'),cons=$('#cons');
+let msgs=[],pubOn=false;
+function rMsgs(){
+  $('#msgs').innerHTML=msgs.map((x,i)=>`<div class="msg${x.h?' hid':''}"><button class="eye" data-i="${i}" aria-label="${x.h?'Show again':'Hide from public'}" title="${x.h?'Show again':'Hide from public'}">${x.h?EYEOFF:EYE}</button><time>${x.t}</time><div><span class="tx">${esc(x.m)}</span>${x.h?`<span class="why">Hidden · ${esc(x.h.join(', '))}</span>`:''}</div></div>`).join('');
+  $$('#msgs .eye').forEach(b=>b.onclick=e=>{e.stopPropagation();const x=msgs[+b.dataset.i];if(x.h){x.h=null;x.n='';rMsgs();return}askHide(b,x)});
+}
+function askHide(b,x){
+  pop.innerHTML=`<p class="ph">Hide this message?</p><p class="ps">Pick every reason that applies. Your reviewer sees these.</p>${Object.entries(CATS).map(([g,l])=>`<p class="pgh">${g}</p><div class="pgr">${l.map(c=>`<label><input type="checkbox" value="${esc(c)}">${esc(c)}</label>`).join('')}</div>`).join('')}<input type="text" id="hn" placeholder="Optional note"><p class="perr" id="perr"></p><div class="pa"><button data-x>Cancel</button><button class="go" data-go>Hide from public</button></div>`;
+  pop.classList.add('on');
+  const r=b.getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight;
+  let left=Math.max(12,Math.min(innerWidth-w-12,r.left-8)),y=r.bottom+8;if(y+h>innerHeight-12)y=Math.max(12,r.top-h-8);if(y+h>innerHeight-12)y=Math.max(12,(innerHeight-h)/2);
+  pop.style.left=left+'px';pop.style.top=y+'px';
+  pop.querySelector('[data-x]').onclick=hidePop;
+  pop.querySelector('[data-go]').onclick=()=>{const rs=$$('input[type=checkbox]:checked',pop).map(c=>c.value);if(!rs.length){$('#perr').textContent='Pick at least one reason.';return}x.h=rs;x.n=$('#hn').value.trim();hidePop();rMsgs()};
+  pop.querySelector('input').focus({preventScroll:true});
+}
+function hidePop(){pop.classList.remove('on')}
+document.addEventListener('mousedown',e=>{if(pop.classList.contains('on')&&!pop.contains(e.target)&&!e.target.closest('.eye'))hidePop()});
+m.addEventListener('scroll',hidePop);
+cons.onchange=()=>{if(cons.checked){$('#cerr').textContent='';$('#consl').classList.remove('bad')}};
+function rateHTML(){return sys==='stars'?(srate?'★'.repeat(srate)+'☆'.repeat(5-srate)+` ${srate}/5`:'<span class="mu">No rating</span>'):(trate?(trate==='up'?'Thumbs up':'Thumbs down'):'<span class="mu">No rating</span>')}
+function preview(rev){
+  hidePop();const o=OUT[tone];const ks=top?[top,...sel.filter(k=>k!==top)]:sel;
+  $('#pvp').classList.toggle('rev',!!rev);
+  $('#pvp').innerHTML=`<div class="pvh"><span class="rv"><i></i>Under review</span><div class="ey">${rev?'medrunner.space/verify/agile-snail':'Preview public page'}</div><h3>See what others will see</h3><p class="sm">${rev?'Only you can see this until it’s approved. Your team lead may still swap names for roles or redact details.':'This is what anyone with the link sees: roles instead of names, redactions shown as categories, plus kudos and the testimonial.'}</p></div>
+<div class="orow"><b>${o.title}</b><span>${o.sub}</span></div>
+<dl><dt>Client</dt><dd>${cons.checked?'ItchyMastadon':'<span class="mu">Shown once you confirm your handle</span>'}</dd>
+<dt>Rating</dt><dd>${rateHTML()}</dd>
+<dt>Kudos</dt><dd>${ks.length?ks.map(k=>`<span class="kc${k===top?' tp':''}">${K[k].i}${esc(k)}</span>`).join(''):'<span class="mu">None</span>'}</dd>
+<dt>Testimonial</dt><dd>${ta.value.trim()?`<i>"${esc(ta.value.trim())}"</i>`:'<span class="mu">None</span>'}</dd>
+<dt>Your messages</dt><dd>${msgs.map(x=>`<div class="pm"><time>${x.t}</time>${x.h?`<span class="hd">Hidden by client: ${esc(x.h.join(', '))}</span>`:esc(x.m)}</div>`).join('')}</dd></dl>
+<div class="bar"><button data-pvx>${rev?'Close':'Back to editing'}</button>${rev?'':`<button class="sbm pvs" data-pvsub><span>Submit</span><span class="thm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></span></button>`}</div>`;
+  $('#pv').classList.add('on');$('[data-pvx]').onclick=()=>$('#pv').classList.remove('on');
+  const ps=$('[data-pvsub]');if(ps)ps.onclick=()=>{if(rated()&&cons.checked){launch(ps,()=>$('#pv').classList.remove('on'))}else{$('#pv').classList.remove('on');submit()}};
+ $('[data-pvx]').focus({preventScroll:true});
+}
+$('#pv').onclick=e=>{if(e.target.id==='pv')$('#pv').classList.remove('on')};
+let tt;function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('on'),2600)}
+$$('[data-pv]',pp).forEach(b=>b.onclick=()=>preview(false));
+$$('[data-emerg]',pp).forEach(b=>b.onclick=()=>toast('Opens Report an emergency, same as the portal.'));
+$$('[data-close]',pp).forEach(b=>b.onclick=close);
+
+function celebrate(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cv=document.createElement('canvas');cv.className='cf';document.body.appendChild(cv);
+  const dpr=Math.min(2,devicePixelRatio||1),ctx=cv.getContext('2d');
+  const fit=()=>{cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};fit();addEventListener('resize',fit);
+  const R=(a,b)=>a+Math.random()*(b-a);
+  const COLS=['#ffffff','#fecaca','#F05252','#fde68a','#f59e0b',getComputedStyle(document.body).getPropertyValue('--tc').trim()||'#6EE7B7'];
+  const src=()=>{const r=$('.sq').getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,s:r.width}};
+  const o=src(),P=[],SP=[];
+  const ring=(n,s0,s1,delay)=>{for(let i=0;i<n;i++){const a=i/n*Math.PI*2+R(-.08,.08),v=R(s0,s1);P.push({x:o.x,y:o.y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:R(0,6.28),vr:R(-.2,.2),w:R(5,9),h:R(8,13),c:COLS[Math.random()*COLS.length|0],ph:R(0,6.28),vp:R(.08,.2),round:Math.random()<.25,d:delay})}};
+  const k=Math.max(.8,Math.min(1.3,o.s/150));
+  ring(64,21.2*k,23.6*k,0);ring(34,14*k,16*k,160);
+  const star=(x,y,r,a)=>{ctx.beginPath();for(let i=0;i<8;i++){const rr=i%2?r*.28:r,an=a+i*Math.PI/4;ctx.lineTo(x+Math.cos(an)*rr,y+Math.sin(an)*rr)}ctx.closePath();ctx.fill()};
+  const t0=performance.now();let last=t0;
+  (function frame(now){
+    const dt=Math.min(3,(now-last)/16.67),t=now-t0;last=now;
+    const fade=t<1700?1:Math.max(0,1-(t-1700)/1300);
+    if(t<2400&&Math.random()<.5*dt){const a=R(0,6.28),d=R(1.4,2.7)*o.s*k;SP.push({x:o.x+Math.cos(a)*d,y:o.y+Math.sin(a)*d,r:R(4,10),a:R(0,.8),b:now,l:R(500,900),c:Math.random()<.6?'#ffffff':(Math.random()<.5?'#fde68a':'#fecaca')})}
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    ctx.globalAlpha=fade;
+    for(const p of P){if(t<p.d)continue;
+      const dr=Math.pow(.93,dt);p.vx*=dr;p.vy*=dr;p.vy+=.035*dt;
+      p.x+=(p.vx+Math.sin(p.ph)*.25)*dt;p.y+=p.vy*dt;p.r+=p.vr*dt;p.ph+=p.vp*dt;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.scale(1,Math.cos(p.ph));ctx.fillStyle=p.c;
+      if(p.round){ctx.beginPath();ctx.arc(0,0,p.w*.45,0,6.28);ctx.fill()}else ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()}
+    ctx.save();ctx.shadowBlur=12;
+    for(let i=SP.length-1;i>=0;i--){const s=SP[i],q=(now-s.b)/s.l;if(q>=1){SP.splice(i,1);continue}
+      const e=Math.sin(q*Math.PI);ctx.globalAlpha=e*fade;ctx.fillStyle=s.c;ctx.shadowColor=s.c;star(s.x,s.y,s.r*(.4+e*.8),s.a+q*.6)}
+    ctx.restore();ctx.globalAlpha=1;
+    if(t<3000||SP.length)requestAnimationFrame(frame);else{removeEventListener('resize',fit);cv.remove()}
+  })(t0);
+}
+function launch(btn,before){
+  btn.classList.remove('go');void btn.offsetWidth;btn.classList.add('go');btn.disabled=true;
+  setTimeout(()=>{before&&before();finish('pub');requestAnimationFrame(celebrate);btn.disabled=false;btn.classList.remove('go')},380);
+}
+function submit(btn){
+  if(need())return;
+  if(!cons.checked){const l=$('#consl');l.classList.remove('bad');void l.offsetWidth;l.classList.add('bad');$('#cerr').textContent='Confirm your handle can be shown publicly first.';l.scrollIntoView({behavior:'smooth',block:'center'});return}
+  launch(btn||$('[data-submit]',pp));
+}
+$$('[data-submit]',pp).forEach(b=>b.onclick=()=>submit(b));
+$$('[data-back]',pp).forEach(b=>b.onclick=()=>setPub(false));
+
+const stage=$('#stage');
+let flipping=false;
+function toTop(){return new Promise(res=>{if(m.scrollTop<2)return res();let done=false;const fin=()=>{if(done)return;done=true;m.removeEventListener('scrollend',fin);res()};m.addEventListener('scrollend',fin);setTimeout(fin,Math.min(700,250+m.scrollTop));m.scrollTo({top:0,behavior:'smooth'})})}
+function pinTop(){if(card.style.marginTop)return;const pt=parseFloat(getComputedStyle(m).paddingTop);card.style.marginTop=Math.max(0,card.getBoundingClientRect().top-m.getBoundingClientRect().top+m.scrollTop-pt)+'px';card.style.marginBottom='auto'}
+async function flipTo(on){
+  if(flipping)return;flipping=true;hidePop();
+  await toTop();pinTop();
+  const h0=stage.offsetHeight;
+  await stage.animate([{transform:'perspective(1000px) rotateY(0)',opacity:1},{transform:'perspective(1000px) rotateY(90deg)',opacity:.6}],{duration:200,easing:'ease-in'}).finished;
+  card.classList.toggle('flipped',on);
+  const h1=stage.offsetHeight;
+  stage.style.overflow='hidden';
+  const hA=stage.animate([{height:h0+'px'},{height:h1+'px'}],{duration:420,easing:'cubic-bezier(.2,.8,.2,1)'});
+  const fA=stage.animate([{transform:'perspective(1000px) rotateY(-90deg)',opacity:.6},{transform:'perspective(1000px) rotateY(0)',opacity:1}],{duration:420,easing:'cubic-bezier(.2,1.25,.4,1)'});
+  await Promise.all([hA.finished,fA.finished]).catch(()=>{});
+  stage.style.overflow='';flipping=false;
+}
+function setPub(on){hidePop();pubOn=on;card.classList.toggle('pubon',on);flipTo(on)}
+$('#back').appendChild(pp);
+$('#pub').onclick=()=>{if(!need())setPub(true)};
 $('#thx').onclick=()=>{if(!need())finish('thx')};
 
 function setTone(t){
@@ -369,7 +635,9 @@ function setTone(t){
 }
 function reset(){
   srate=0;trate=null;sel=[];top=null;paint(0);tbs.forEach(x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false')});$('#ft').classList.remove('picked');lbl();$('.rate').classList.remove('wig');ta.value='';ta.oninput();
-  card.classList.remove('open','sent');buildChips();sync();hideTip();
+  card.classList.remove('open','sent','pubon','flipped');card.style.marginTop='';card.style.marginBottom='';flipping=false;pubOn=false;hidePop();$('#pv').classList.remove('on');
+  msgs=MSG[tone].map(([t,mm])=>({t,m:mm,h:null,n:''}));rMsgs();cons.checked=false;$('#cerr').textContent='';$('#consl').classList.remove('bad');
+  buildChips();sync();hideTip();
 }
 function show(){
   clearTimeout(ct);reset();m.classList.remove('on','out');void m.offsetWidth;
@@ -378,11 +646,11 @@ function show(){
 function close(){
   clearTimeout(ct);hideTip();if(!m.classList.contains('on'))return;
   m.classList.add('out');scrim.classList.remove('on');
-  ct=setTimeout(()=>m.classList.remove('on','out'),340);
+  hidePop();ct=setTimeout(()=>m.classList.remove('on','out'),340);
 }
 $$('[data-close]').forEach(b=>b.onclick=close);
 m.addEventListener('click',e=>{if(e.target===m)close()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(pop.classList.contains('on')){hidePop();return}if($('#pv').classList.contains('on')){$('#pv').classList.remove('on');return}close()});
 $('#scn').onchange=e=>{setTone(e.target.value);try{history.replaceState(null,'','#'+e.target.value)}catch(_){}show()};
 $('#replay').onclick=show;
 $('#rsys').onchange=e=>{if(e.target.value!==sys)swap(1)};

@@ -1074,9 +1074,15 @@ function placeAll(){
 }
 function onDone(kind){
   card.dataset.kind=kind;placeAll();
-  if(T.proof&&proof.parentElement!==HOLD)proofRun();
-  if(T.crew&&crew.parentElement!==HOLD)crewRun();
-  if(T.cert&&cert.parentElement!==HOLD){cimg.removeAttribute('src');drawCert()}
+  proofRun();crewRun();cimg.removeAttribute('src');drawCert();
+}
+function addOn(k){
+  if(!card.classList.contains('sent'))return;
+  if(k==='crew')crewRun();
+  if(k==='proof')proofRun();
+  if(k==='cert'){if(!cimg.src)drawCert();cert.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:350})}
+  if(k==='discord'&&!dc.classList.contains('show')){const h=[cpyDone,tell].find(x=>x.parentElement&&x.parentElement!==HOLD);if(h)showDiscord(h,h===tell?tmsg.value:'https://'+URL0)}
+  if(['badge','pay','joinsub','sharecare'].includes(k)){const e={badge,pay,joinsub:join.querySelector('.join-p'),sharecare:tell.querySelector('.tell-care')}[k];if(e&&e.isConnected)e.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:350})}
 }
 function compReset(){card.dataset.kind='';dc.classList.remove('show');HOLD.appendChild(dc);tellReset();crew.innerHTML='';proof.innerHTML='';cimg.removeAttribute('src');$$('.cpy-b').forEach(b=>{b.classList.remove('ok');b.querySelector('.cpy-ic').innerHTML=LINK})}
 
@@ -1117,12 +1123,15 @@ function syncPanel(){
   $$('[data-pre]',pz).forEach(b=>{const t=JSON.parse(JSON.stringify(S));PRE[b.dataset.pre](t);b.classList.toggle('hi',JSON.stringify([t.tog,t.pl])===cur)});
 }
 function applyAll(){
+  const prev={...T};
   TOG.forEach(([k])=>{T[k]=!!S.tog[k];document.body.classList.toggle('x-'+k,!T[k])});
   FK.forEach(k=>{const o=FONTS[k].o[S.f[k]];loadFont(o);document.documentElement.style.setProperty(FONTS[k].v,`'${o[0]}',${FONTS[k].fb}`)});
   $$('.cpy').forEach(c=>c.dataset.hover=S.hv);
   if(!T.rating&&m.classList.contains('on')&&!card.classList.contains('open'))open();
   if(!T.topkudo&&top){top=null;sync()}
   placeAll();flow();syncPanel();save();
+  TOG.forEach(([k])=>{if(T[k]&&prev[k]===false)addOn(k)});
+  if(pubOn&&card.classList.contains('flipped')&&!card.classList.contains('sent'))$('#prb').innerHTML=rbHTML(true);
 }
 
 function setTone(t){

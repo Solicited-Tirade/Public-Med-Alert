@@ -542,6 +542,15 @@ body.pz-open .m{padding-right:410px}
 .dc-im b{font-size:clamp(14px,8.5cqw,30px);bottom:17%;max-width:70%}
 .dc-im small{font-size:clamp(8px,2.4cqw,10px)}
 @media (max-width:600px){.m{padding-bottom:118px}.tell-act button{font-size:11.5px;padding:10px 8px}}
+.join-h.rec-r{font:700 22px/1.12 var(--fh);height:2.3em}
+.join-ic.land{animation:jrglow 1.3s ease-out}
+.x-joinsub .join-p{display:none!important}
+.join{row-gap:14px}
+.m>.card{margin:clamp(0px,calc((100vh - 1040px) / 2),12vh) auto 0}
+.below{margin:16px auto 0}
+.m::after{content:"";flex:1 0 0}
+.pz-fl{margin-top:12px}
+.pz-body{overflow-anchor:none;scrollbar-gutter:stable}
 </style>
 </head>
 <body data-tone="ok">
@@ -900,10 +909,10 @@ const TOG=[
 ['pill','Status pill','front',1],['heading','Heading','front',1],['lead','Lead line','front',1],['rating','Rating','front',1],['ratepill','Rating pill','front',1],['switcher','Rating style arrows','front',1],['kudos','Kudos / What went wrong?','front',1],['topkudo','Top kudo star','front',1],['testimonial','Testimonial','front',1],['public','Make This Rescue Public?','front',1],['thanks','Just say thanks!','front',1],['notnow','Not now','front',1],
 ['prate','Your rating','back',1],['info','Before anything is published','back',1],['transcript','Transcript (your messages)','back',0],['redact','Player redactions (eye)','back',0],['consent','Handle checkbox','back',1],['preview','Preview public page','back',1],['copyback','Copy link','back',1],['foot','Review time and takedown note','back',1],['emerg','Emergency link','back',1],
 ['summary','Summary','done',1],['permalink','Permalink and copy link','done',1],['underreview','Under review preview','done',1],['confetti','Confetti','done',1],
-['discord','Discord preview','add',1],['sharecare','Why sharing is caring','add',1],['crew','Crew thanks back','add',0],['proof','Social proof counter','add',0],['cert','Rescue certificate','add',0],['badge','Discord badge','add',0],['pay','Pay it forward','add',0]];
+['discord','Discord preview','add',1],['sharecare','Why sharing is caring','add',1],['crew','Crew thanks back','add',0],['proof','Social proof counter','add',0],['cert','Rescue certificate','add',0],['badge','Discord badge','add',0],['pay','Pay it forward','add',0],['joinsub','Join Medrunner subtext','add',0]];
 const TOGN=Object.fromEntries(TOG.map(x=>[x[0],x[1]]));
 const GRP=[['front','Front of card'],['back','Publish side'],['done','After submitting'],['add','Add-ons']];
-const PLC=[['recruit','Recruitment','below'],['join','Join Medrunner','done'],['tell','Tell a friend','done']];
+const PLC=[['join','Join Medrunner','done'],['tell','Tell a friend','done']];
 const PLO=[['off','Off'],['front','Front of card'],['back','Back of card'],['done','Confirmation screen'],['below','Below the card']];
 const FONTS={
 head:{n:'Headings',v:'--fh',fb:'sans-serif',o:[['Mohave','Mohave:wght@500;600;700'],['Oxanium','Oxanium:wght@500;600;700;800'],['Quantico','Quantico:wght@400;700'],['Rajdhani','Rajdhani:wght@500;600;700'],['Orbitron','Orbitron:wght@500;700;800'],['Teko','Teko:wght@500;600'],['Chakra Petch','Chakra+Petch:wght@500;600;700'],['Bebas Neue','Bebas+Neue']]},
@@ -934,7 +943,7 @@ function dec(h){
   FK.forEach((k,i)=>{const d=parseInt((a[4]||'')[i],10);if(d>=0&&d<FONTS[k].o.length)s.f[k]=d});
   const e=a[5]||'',c0=parseInt(e[0],10),c1=parseInt(e[1],10),c2=parseInt(e[2],10);
   if(c0>=0&&c0<CTY.length)s.ct=c0;if(c1>=0&&c1<CSH.length)s.cs=c1;if(c2>=0&&c2<HOV.length)s.hv=c2;
-  PLC.forEach((p,i)=>{const d=parseInt((a[6]||'')[i],10);if(PLO[d])s.pl[p[0]]=PLO[d][0]});
+  const pd=(a[6]||'').length===3?(a[6]||'').slice(1):(a[6]||'');PLC.forEach((p,i)=>{const d=parseInt(pd[i],10);if(PLO[d])s.pl[p[0]]=PLO[d][0]});
   return s;
 }
 function save(){const h='#'+enc();try{history.replaceState(null,'',h)}catch(_){}try{localStorage.setItem('mr-cta-potato',h)}catch(_){}}
@@ -993,20 +1002,19 @@ tell.querySelector('[data-td]').onclick=e=>tellCopy(e.currentTarget,'Copied. Pas
 const REEL=[["Be the reason", "someone makes it home."], ["Be the one", "who answers the call."], ["Someone’s still waiting on a rescue.", "Be the crew that comes."], ["Every rescue starts", "with someone who clicked “Accept.”"], ["Turn someone’s bad day in the ’verse", "into their best story."], ["Fly toward the trouble", "everyone else flies away from."], ["When someone goes down,", "be the one who shows up."], ["Somewhere out there,", "someone’s counting on you."], ["One alert. One crew.", "One more life saved."], ["The next record", "could be yours to write."], ["Be someone’s", "second chance."], ["Behind every rescue", "is a crew that chose to respond."], ["No one gets left behind,", "not on our watch."], ["Downed, alone, out of meds.", "Then someone like you showed up."], ["Out here, help doesn’t come by chance.", "It comes by choice."], ["A stranger in trouble.", "A crew on the way."], ["From “I’m downed”", "to “I’m home.”"], ["Hold the line.", "Heal the fallen."], ["Every alert is a person.", "Every person is worth the risk."], ["Someone is bleeding out in Pyro.", "Who’s flying?"], ["Gear up.", "Someone’s waiting."], ["The fastest ship in the ’verse", "is the one that shows up."], ["They’ve never been so happy", "to hear “on our way.”"], ["No bounty. No cargo.", "Just someone who needed help."], ["Patch them up.", "Bring them home."], ["Medpens are cheap.", "Their lives are priceless."], ["We don’t ask who you are.", "Just where you are."], ["Responders wanted.", "Heroes welcome."], ["Their ship is gone.", "Their hope doesn’t have to be."], ["To us, you’re family.", "To them, you’re a hero."], ["Not every hero carries a medpen.", "Some carry a rifle, too."], ["Their last hope", "could be your first mission."], ["Answer an alert.", "Change a night."], ["It’s not about the ship you fly.", "It’s who you fly it for."], ["Nobody plans to get downed.", "We plan to be there."], ["Rescue isn’t a job.", "It’s a promise."], ["Be the story", "they tell their friends."], ["Change “OMG, WTF?”", "to “OMW, ETA.”"], ["Downed is temporary.", "Forgotten isn’t. Be there."], ["Hit the alert.", "We’ll hit the throttle."], ["Cross the galaxy just to", "stab someone with a red pen."], ["They didn’t need a hero.", "Just someone who’d come. Be both."], ["Find them.", "Fix them."], ["Fewer respawns.", "More reunions."], ["30 dead NineTails.", "1 very alive client."]],still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let rc=Math.random()*REEL.length|0,rbusy=false;
 const ritem=k=>`<span class="rec-i">${REEL[k].map(t=>`<span>${t}</span>`).join('')}</span>`;
-const rec=el('rec','c-recruit',`<span class="rec-ic">${AST}</span><div><span class="rec-k">Medrunner is recruiting</span><p class="rec-r"><span class="rec-tr">${ritem(rc)}</span></p></div>`);
 function rspin(){
-  const r=rec.querySelector('.rec-r'),tr=rec.querySelector('.rec-tr');
-  if(rbusy||!rec.isConnected||!rec.offsetParent||document.hidden)return;
+  const r=join.querySelector('.rec-r'),tr=join.querySelector('.rec-tr');
+  if(rbusy||!join.isConnected||!join.offsetParent||document.hidden)return;
   const h=r.offsetHeight;let to;do{to=Math.random()*REEL.length|0}while(to===rc);
   const seq=[rc];for(let i=0;i<6;i++){let k;do{k=Math.random()*REEL.length|0}while(k===seq[seq.length-1]||k===to);seq.push(k)}seq.push(to);rc=to;
   if(still){tr.innerHTML=ritem(to);return}
   rbusy=true;tr.innerHTML=seq.map(ritem).join('');r.classList.add('spin');
   const a=tr.animate([{transform:'translateY(0)',filter:'blur(0)'},{filter:'blur(2.5px)',offset:.18},{filter:'blur(1.5px)',offset:.6},{transform:`translateY(${-(seq.length-1)*h}px)`,filter:'blur(0)'}],{duration:1500,easing:'cubic-bezier(.3,.05,.2,1.12)'});
-  a.onfinish=a.oncancel=()=>{rbusy=false;r.classList.remove('spin');tr.innerHTML=ritem(rc);const ic=rec.querySelector('.rec-ic');ic.classList.remove('land');void ic.offsetWidth;ic.classList.add('land')};
+  a.onfinish=a.oncancel=()=>{rbusy=false;r.classList.remove('spin');tr.innerHTML=ritem(rc);const ic=join.querySelector('.join-ic');ic.classList.remove('land');void ic.offsetWidth;ic.classList.add('land')};
 }
 setInterval(rspin,5700);
 
-const join=el('join','c-join',`<span class="join-ic">${AST}</span><div><p class="join-h">Be the reason someone makes it home.</p><p class="join-p">Join Medrunner as a responder and help save lives, just like this one.</p></div><a class="join-cta" href="https://www.medrunner.space" target="_blank" rel="noopener"><span class="cta-a">Become a responder <span aria-hidden="true">→</span></span><span class="cta-b" aria-hidden="true"><i></i>Join Medrunner</span></a>`);
+const join=el('join','c-join',`<span class="join-ic">${AST}</span><div><p class="join-h rec-r"><span class="rec-tr">${ritem(rc)}</span></p><p class="join-p">Join Medrunner as a responder and help save lives, just like this one.</p></div><a class="join-cta" href="https://www.medrunner.space" target="_blank" rel="noopener"><span class="cta-a">Become a responder <span aria-hidden="true">→</span></span><span class="cta-b" aria-hidden="true"><i></i>Join Medrunner</span></a>`);
 {const a=join.querySelector('.join-cta');let t=0;a.addEventListener('mouseenter',()=>{clearTimeout(t);a.classList.add('on')});a.addEventListener('mouseleave',()=>{t=setTimeout(()=>a.classList.remove('on'),250)});a.addEventListener('focus',()=>a.classList.add('on'));a.addEventListener('blur',()=>a.classList.remove('on'))}
 
 const CREWSAYS={ok:[['Great comms','Followed the plan'],'Thanks for the clear sitrep. Fly safe out there.'],died:[['Great comms','Sitrep pro'],'Sorry we couldn’t get you back. Thanks for calling us in.'],cancel:[['Great comms'],'Glad you made it out. Call anytime.']};
@@ -1056,9 +1064,9 @@ badge.querySelector('button').onclick=e=>{toast('Mock: this would link your Disc
 const pay=el('payf','c-pay',`<span>Know someone stranded right now?</span><button class="lnk" type="button">${SVG('<path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/><path d="M21 12h1M18.5 4.5L18 5M2 12h1M12 2v1M4.9 4.9l.5.5M12 12v6"/>',' fill="none" stroke="currentColor" stroke-width="2"')}Report an emergency</button>`);
 pay.querySelector('button').onclick=()=>toast('Opens Report an emergency, same as the portal.');
 
-const COMP={'c-copy-back':cpyBack,'c-crew':crew,'c-proof':proof,'c-copy-done':cpyDone,'c-tell':tell,'c-cert':cert,'c-join':join,'c-recruit':rec,'c-badge':badge,'c-pay':pay};
-const ORDER=['c-copy-back','c-crew','c-proof','c-copy-done','c-tell','c-cert','c-join','c-recruit','c-badge','c-pay'];
-function where(id){if(id==='c-recruit')return S.pl.recruit;if(id==='c-join')return S.pl.join;if(id==='c-tell')return S.pl.tell;if(id==='c-copy-back')return 'back';return 'done'}
+const COMP={'c-copy-back':cpyBack,'c-crew':crew,'c-proof':proof,'c-copy-done':cpyDone,'c-tell':tell,'c-cert':cert,'c-join':join,'c-badge':badge,'c-pay':pay};
+const ORDER=['c-copy-back','c-crew','c-proof','c-copy-done','c-tell','c-cert','c-join','c-badge','c-pay'];
+function where(id){if(id==='c-join')return S.pl.join;if(id==='c-tell')return S.pl.tell;if(id==='c-copy-back')return 'back';return 'done'}
 function placeAll(){
   const slots={front:$('#front [data-slot=front]'),back:$('#pp [data-slot=back]'),done:$('#done [data-slot=done]'),below:$('#slot-below')},kind=card.dataset.kind||'';
   ORDER.forEach(id=>{const c=COMP[id],w=where(id);let t=w&&w!=='off'?slots[w]:null;if(w==='done'&&kind!=='pub'&&(id==='c-copy-done'||id==='c-tell'))t=null;(t||HOLD).appendChild(c)});
@@ -1072,7 +1080,7 @@ function onDone(kind){
 }
 function compReset(){card.dataset.kind='';dc.classList.remove('show');HOLD.appendChild(dc);tellReset();crew.innerHTML='';proof.innerHTML='';cimg.removeAttribute('src');$$('.cpy-b').forEach(b=>{b.classList.remove('ok');b.querySelector('.cpy-ic').innerHTML=LINK})}
 
-const pz=el('pz','pz',`<div class="pz-bar"><button class="pz-t" id="pzt" type="button" aria-expanded="false"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 7.5l3-3 3 3"/></svg>Build-a-potato</button><select id="scn" aria-label="Outcome"><option value="ok">Rescued</option><option value="died">Did not survive</option><option value="cancel">Cancelled</option></select><select id="rsys" aria-label="Rating style"><option value="stars">5 stars</option><option value="thumbs">Thumbs</option></select><button class="pz-b" id="replay" type="button">Replay</button><span class="pz-sp"></span><button class="pz-b" id="pzcopy" type="button">Copy this setup</button></div><div class="pz-body"><div class="pz-row"><span class="pz-lb">Presets</span>${['minimal','current','everything','outreach'].map(p=>`<button class="pz-b" type="button" data-pre="${p}">${p[0].toUpperCase()+p.slice(1)}</button>`).join('')}</div><div class="pz-flow" id="pzflow"></div><div class="pz-grid" id="pzgrid"></div></div>`);
+const pz=el('pz','pz',`<div class="pz-bar"><button class="pz-t" id="pzt" type="button" aria-expanded="false"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 7.5l3-3 3 3"/></svg>Build-a-potato</button><select id="scn" aria-label="Outcome"><option value="ok">Rescued</option><option value="died">Did not survive</option><option value="cancel">Cancelled</option></select><select id="rsys" aria-label="Rating style"><option value="stars">5 stars</option><option value="thumbs">Thumbs</option></select><button class="pz-b" id="replay" type="button">Replay</button><span class="pz-sp"></span><button class="pz-b" id="pzcopy" type="button">Copy this setup</button></div><div class="pz-body"><div class="pz-row"><span class="pz-lb">Presets</span>${['minimal','current','everything','outreach'].map(p=>`<button class="pz-b" type="button" data-pre="${p}">${p[0].toUpperCase()+p.slice(1)}</button>`).join('')}</div><div class="pz-grid" id="pzgrid"></div><div class="pz-lb pz-fl">Current flow</div><div class="pz-flow" id="pzflow"></div></div>`);
 document.body.appendChild(pz);
 {
   const g=$('#pzgrid');
@@ -1094,7 +1102,7 @@ function flow(){
   const br=[];if(T.public){const p=['Make public'];if(T.info||T.transcript||T.consent)p.push('Review');p.push('Submit');br.push(p.join(' → '))}if(T.thanks)br.push('Just say thanks');
   if(br.length)f.push(br.map(b=>i(b,1)).join('<u>or</u>'));
   const a=[];if(T.confetti)a.push('Confetti');if(T.crew)a.push('Crew thanks');if(T.proof)a.push('Social proof');if(T.permalink)a.push('Copy link');
-  [['tell','Tell a friend'],['join','Join'],['recruit','Recruitment']].forEach(([k,n])=>{if(S.pl[k]!=='off')a.push(n+(S.pl[k]==='done'?'':' ('+PLO.find(o=>o[0]===S.pl[k])[1].toLowerCase()+')'))});
+  [['tell','Tell a friend'],['join','Join Medrunner']].forEach(([k,n])=>{if(S.pl[k]!=='off')a.push(n+(S.pl[k]==='done'?'':' ('+PLO.find(o=>o[0]===S.pl[k])[1].toLowerCase()+')'))});
   ['cert','badge','pay'].forEach(k=>T[k]&&a.push(TOGN[k]));
   if(a.length)f.push(i(a.join(' · ')));
   $('#pzflow').innerHTML=f.length?f.join('<u>→</u>'):'Nothing is switched on.';

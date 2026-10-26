@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Missing Pages · Medrunner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mohave:wght@500;600;700&family=Oxanium:wght@500;600;700&family=Quantico:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--hero:url(media/img/hero.webp);--logo:url(media/img/logo.webp);--team:url(media/img/team.webp);--medic:url(media/img/medic.webp);--lineup:url(media/img/lineup.webp);--red:#ef4444;--red-hi:#ff8b8b;--ok:#31C48D;--died:#F05252;--cancel:#9CA3AF;--blue:#3F83F8;--amber:#F59E0B;--bg:#0b0f17;--p1:#121823;--p2:#182031;--ln:rgba(255,255,255,.09);--fg:#f3f4f6;--mut:#aeb7c4;--dim:#7b8594;--fh:'Mohave',sans-serif;--fl:'Oxanium',sans-serif;--fb:'Inter',system-ui,sans-serif;--fq:'Quantico',sans-serif;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:radial-gradient(70% 45% at 50% 0%,rgba(239,68,68,.11),transparent 70%),var(--bg);color:var(--fg);font-family:var(--fb);min-height:100vh;overflow-x:hidden}
+button{font:inherit;color:inherit}
+a{color:inherit}
+.wrap{width:min(1240px,100% - 32px);margin:0 auto;padding:clamp(28px,4vw,48px) 0 72px}
+.hd{text-align:center;margin-bottom:22px}
+.ey{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;font:600 12px var(--fl);letter-spacing:.22em;text-transform:uppercase;color:var(--red-hi)}
+.ey::before,.ey::after{content:"";width:22px;height:1px;background:currentColor;opacity:.6}
+h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase;letter-spacing:.02em;text-shadow:0 0 22px rgba(255,120,120,.3)}
+.sub{margin:12px auto 0;max-width:44rem;font-size:15px;line-height:1.6;color:var(--mut)}
+.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:0 auto 14px;padding:5px;width:max-content;max-width:100%;border-radius:14px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--ln)}
+.nav button{display:flex;align-items:center;gap:8px;padding:9px 14px;border:0;border-radius:10px;background:transparent;font:600 12px var(--fl);letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;cursor:pointer;transition:background .25s,color .25s}
+.nav button b{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:rgba(255,255,255,.08);font:700 10px var(--fl);color:#cbd5e1}
+.nav button[aria-selected=true]{background:linear-gradient(180deg,#ef4444,#b91c1c);color:#fff;box-shadow:0 0 18px rgba(239,68,68,.45)}
+.nav button[aria-selected=true] b{background:rgba(0,0,0,.25);color:#fff}
+.nav button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.why{display:flex;gap:12px;align-items:flex-start;max-width:860px;margin:0 auto 22px;padding:12px 16px;border-radius:12px;border:1px dashed #374151;background:rgba(255,255,255,.02);font-size:13.5px;line-height:1.55;color:#9ca3af}
+.why svg{flex:none;width:18px;height:18px;margin-top:1px;fill:none;stroke:#9ca3af;stroke-width:2;stroke-linecap:round}
+.why b{color:#e5e7eb}
+.pg{display:none}
+.pg.on{display:block;animation:pin .45s var(--ease)}
+@keyframes pin{from{opacity:0;transform:translateY(10px)}}
+.frame{border-radius:20px;overflow:hidden;background:var(--p1);box-shadow:0 0 0 1px rgba(255,200,200,.14),0 30px 80px rgba(0,0,0,.5)}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#0e131d;border-bottom:1px solid var(--ln);font:500 12.5px var(--fb);color:#7b8594}
+.bar i{width:10px;height:10px;border-radius:50%;background:#2a3140}
+.bar span{flex:1;margin-left:8px;padding:5px 12px;border-radius:8px;background:#151b27;color:#9aa3b2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.bar span b{color:#e5e7eb;font-weight:500}
+.lk{display:inline-flex;align-items:center;gap:6px;color:#7b8594}
+.lk svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.2}
+.in{padding:clamp(20px,3.4vw,40px)}
+.code{display:inline-flex;align-items:center;gap:7px;padding:4px 9px;border-radius:7px;background:rgba(239,68,68,.16);box-shadow:inset 0 0 0 1px rgba(255,140,140,.45);font:700 11px var(--fl);letter-spacing:.16em;color:#fecaca;text-transform:uppercase}
+.h2{margin:0;font:700 clamp(28px,3.2vw,42px)/1 var(--fh);text-transform:uppercase;letter-spacing:.03em}
+.h3{margin:0 0 12px;font:700 11px var(--fl);letter-spacing:.2em;text-transform:uppercase;color:var(--red-hi)}
+.card{border-radius:16px;background:var(--p2);box-shadow:inset 0 0 0 1px var(--ln);padding:20px 22px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0;padding:0;list-style:none}
+.chips li{padding:6px 12px;border-radius:999px;background:rgba(239,68,68,.12);box-shadow:inset 0 0 0 1px rgba(255,140,140,.35);font:600 12.5px var(--fb);color:#fee2e2;white-space:nowrap}
+.chips li em{font-style:normal;margin-left:6px;padding:1px 6px;border-radius:999px;background:rgba(0,0,0,.35);font:700 11px var(--fl);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:12px 18px;border:0;border-radius:12px;font:700 13px var(--fq);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .2s,background .2s}
+.btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.btn.pri{background:linear-gradient(180deg,#fff,#ffe1e1);color:#991b1b;box-shadow:0 0 0 1px rgba(255,255,255,.6),0 0 24px rgba(255,120,120,.4),0 8px 20px rgba(80,0,0,.4)}
+.btn.pri:hover{transform:translateY(-2px)}
+.btn.sec{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);color:#fff}
+.btn.sec:hover{background:rgba(239,68,68,.25)}
+.btn.ghost{background:none;padding:10px 6px;color:#9ca3af;font:600 12px var(--fl);letter-spacing:.12em}
+.btn.ghost:hover{color:#fff}
+.btn.dan{background:rgba(240,82,82,.12);box-shadow:inset 0 0 0 1px rgba(240,82,82,.5);color:#fecaca}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:10px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--ln)}
+.seg button{padding:6px 11px;border:0;border-radius:7px;background:none;font:600 11.5px var(--fl);letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;cursor:pointer}
+.seg button[aria-pressed=true]{background:rgba(239,68,68,.22);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,140,140,.55)}
+.demo{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin:-4px 0 12px;font:600 11px var(--fl);letter-spacing:.16em;text-transform:uppercase;color:#64748b}
+.muted{color:var(--mut)}
+.sm{font-size:13px;color:var(--dim)}
+.ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.rec-hero{position:relative;min-height:330px;display:flex;align-items:flex-end;padding:clamp(22px,3.4vw,40px);background:linear-gradient(0deg,rgba(10,12,18,.96) 8%,rgba(10,12,18,.35) 60%,rgba(10,12,18,.55)),linear-gradient(90deg,rgba(10,12,18,.8),transparent 70%),var(--hero) 62% center/cover}
+.rec-hero .tint{position:absolute;inset:0;background:var(--oc);mix-blend-mode:color;opacity:.28;pointer-events:none}
+.rec-top{position:absolute;top:18px;left:clamp(22px,3.4vw,40px);right:clamp(22px,3.4vw,40px);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ver{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:999px;background:rgba(8,10,16,.7);box-shadow:inset 0 0 0 1px rgba(49,196,141,.6);font:700 11px var(--fl);letter-spacing:.14em;text-transform:uppercase;color:#a7f3d0;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ver svg{width:16px;height:16px;color:var(--ok)}
+.ver.rv{box-shadow:inset 0 0 0 1px rgba(245,158,11,.6);color:#fde68a}
+.ver.rv svg{color:var(--amber)}
+.rec-logo{width:44px;height:44px;background:var(--logo) center/contain no-repeat;filter:drop-shadow(0 0 8px rgba(255,255,255,.4))}
+.rec-t{max-width:760px}
+.oc{display:inline-flex;align-items:center;gap:8px;font:700 12px var(--fl);letter-spacing:.18em;text-transform:uppercase;color:var(--oc)}
+.oc::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--oc);box-shadow:0 0 10px var(--oc)}
+.rec-t h2{margin:8px 0 6px;font:700 clamp(40px,5.6vw,76px)/.92 var(--fh);text-transform:uppercase;text-shadow:0 2px 0 rgba(0,0,0,.5),0 0 24px rgba(0,0,0,.9)}
+.rec-t p{margin:0;font-size:15px;color:#d1d5db;text-shadow:0 1px 3px #000}
+.rec-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px;padding:clamp(18px,3vw,32px)}
+.stars{display:flex;gap:4px;color:#fbbf24}
+.stars svg{width:22px;height:22px;fill:currentColor}
+.quote{margin:14px 0 0;font:600 clamp(19px,1.8vw,24px)/1.35 var(--fh);letter-spacing:.02em;color:#fff}
+.quote::before{content:"“";display:block;height:20px;font:700 44px/1 var(--fh);color:var(--red)}
+.crew{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0;padding:0;list-style:none}
+.crew li{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px;border-radius:12px;background:rgba(0,0,0,.25);box-shadow:inset 0 0 0 1px var(--ln);font:700 13px var(--fh);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.crew li svg{width:22px;height:22px;fill:var(--red-hi);stroke:none}
+.crew li small{font:600 10px var(--fl);letter-spacing:.14em;color:#64748b}
+.red{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(0,0,0,.3);border:1px dashed rgba(255,255,255,.16);font-size:13.5px;line-height:1.5;color:#cbd5e1}
+.red b{color:#fff}
+.about{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.about .rec-logo{width:52px;height:52px}
+.about p{margin:6px 0 0;font-size:14px;line-height:1.6;color:#cbd5e1}
+.ctas{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.ctas .btn{justify-content:center}
+.share{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.rec-ft{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px clamp(18px,3vw,32px) 20px;border-top:1px solid var(--ln);font-size:12.5px;color:#64748b}
+.rec-ft a{color:#94a3b8;text-decoration:underline;text-underline-offset:3px}
+.rv-band{display:none;margin:0 clamp(18px,3vw,32px);padding:12px 16px;border-radius:12px;background:rgba(245,158,11,.1);box-shadow:inset 0 0 0 1px rgba(245,158,11,.45);font-size:13.5px;line-height:1.5;color:#fde68a}
+.st-rv .rv-band{display:block;margin-top:18px}
+
+.fu{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px}
+.trk{position:relative;margin:6px 0 0;padding:0;list-style:none}
+.trk li{position:relative;display:grid;grid-template-columns:34px 1fr;gap:14px;padding-bottom:22px}
+.trk li:last-child{padding-bottom:0}
+.trk li::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:rgba(255,255,255,.1)}
+.trk li:last-child::before{display:none}
+.trk li.done::before{background:linear-gradient(var(--ok),rgba(49,196,141,.35))}
+.dot{position:relative;z-index:1;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#111827;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);color:#64748b}
+.dot svg{width:16px;height:16px}
+.done .dot{background:rgba(49,196,141,.18);box-shadow:inset 0 0 0 1px rgba(49,196,141,.7);color:var(--ok)}
+.now .dot{background:var(--red);box-shadow:0 0 0 5px rgba(239,68,68,.22),0 0 16px rgba(239,68,68,.6);color:#fff}
+.now.warn .dot{background:var(--amber);box-shadow:0 0 0 5px rgba(245,158,11,.22),0 0 16px rgba(245,158,11,.5)}
+.trk b{display:block;padding-top:6px;font:700 16px var(--fh);letter-spacing:.08em;text-transform:uppercase}
+.trk p{margin:4px 0 0;font-size:13.5px;line-height:1.5;color:var(--mut)}
+.trk .todo b{color:#64748b}
+.msg{display:flex;gap:12px;padding:14px 16px;border-radius:12px;font-size:14px;line-height:1.55}
+.msg svg{flex:none;width:20px;height:20px;margin-top:1px}
+.msg.ok{background:rgba(49,196,141,.1);box-shadow:inset 0 0 0 1px rgba(49,196,141,.45);color:#d1fae5}
+.msg.ok svg{color:var(--ok)}
+.msg.wa{background:rgba(245,158,11,.1);box-shadow:inset 0 0 0 1px rgba(245,158,11,.45);color:#fef3c7}
+.msg.wa svg{color:var(--amber)}
+.msg.no{background:rgba(240,82,82,.1);box-shadow:inset 0 0 0 1px rgba(240,82,82,.45);color:#fee2e2}
+.msg.no svg{color:var(--died)}
+.diff{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.diff li{display:flex;gap:10px;align-items:baseline;font-size:13.5px;color:#cbd5e1}
+.diff s{color:#94a3b8;text-decoration-color:var(--died)}
+.diff ins{text-decoration:none;color:#fff;background:rgba(49,196,141,.16);padding:0 5px;border-radius:4px}
+.mng{display:grid;gap:10px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.25);box-shadow:inset 0 0 0 1px var(--ln)}
+.row b{display:block;font-size:14.5px}
+.row span{font-size:13px;color:var(--dim)}
+.tg{position:relative;flex:none;width:44px;height:24px;border:0;border-radius:999px;background:#374151;cursor:pointer;transition:background .25s}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
+.tg[aria-checked=true]{background:var(--ok)}
+.tg[aria-checked=true]::after{transform:translateX(20px)}
+.tg:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.conf{display:none;margin-top:4px;padding:14px 16px;border-radius:12px;background:rgba(240,82,82,.08);box-shadow:inset 0 0 0 1px rgba(240,82,82,.4);font-size:13.5px;line-height:1.5;color:#fecaca}
+.conf.on{display:block;animation:pin .3s var(--ease)}
+.conf div{display:flex;gap:8px;margin-top:10px}
+
+.fb{display:grid;grid-template-columns:minmax(250px,.8fr) minmax(0,1.6fr);min-height:520px}
+.fb-l{border-right:1px solid var(--ln);background:#0f141e}
+.fb-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--ln)}
+.fb-hd b{font:700 18px var(--fh);letter-spacing:.08em;text-transform:uppercase}
+.fb-list{margin:0;padding:6px;list-style:none}
+.fb-it{display:grid;gap:5px;width:100%;padding:12px 14px;border:0;border-radius:10px;background:none;text-align:left;cursor:pointer;transition:background .2s}
+.fb-it:hover{background:rgba(255,255,255,.04)}
+.fb-it[aria-current=true]{background:rgba(239,68,68,.12);box-shadow:inset 3px 0 0 var(--red)}
+.fb-it .t{display:flex;justify-content:space-between;gap:8px;font:600 14px var(--fb)}
+.fb-it .t em{font-style:normal;font:700 10px var(--fl);letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+.s-new{background:rgba(239,68,68,.2);color:#fecaca}
+.s-ack{background:rgba(245,158,11,.18);color:#fde68a}
+.s-done{background:rgba(49,196,141,.16);color:#a7f3d0}
+.fb-it .m{font-size:12.5px;color:var(--dim)}
+.fb-r{padding:22px 24px;display:flex;flex-direction:column;gap:16px}
+.fb-meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--mut)}
+.fb-meta b{color:#fff;font-weight:600}
+.neg li{background:rgba(240,82,82,.12);box-shadow:inset 0 0 0 1px rgba(240,82,82,.4)}
+.note{margin:0;padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);box-shadow:inset 0 0 0 1px var(--ln);font-size:14.5px;line-height:1.6;color:#e5e7eb}
+.who{display:flex;flex-wrap:wrap;gap:8px}
+.who span{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:8px;background:rgba(63,131,248,.12);box-shadow:inset 0 0 0 1px rgba(63,131,248,.4);font:600 12px var(--fb);color:#dbeafe}
+.who span.no{background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--ln);color:#64748b;text-decoration:line-through}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.inote{width:100%;min-height:70px;padding:12px 14px;border:0;border-radius:12px;background:rgba(0,0,0,.35);box-shadow:inset 0 0 0 1px var(--ln);color:#fff;font:14px/1.5 var(--fb);resize:vertical}
+.inote:focus{outline:2px solid rgba(255,140,140,.6)}
+.log{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:12.5px;color:var(--dim)}
+.log b{color:#cbd5e1;font-weight:600}
+
+.kd-hero{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;padding:clamp(20px,3vw,32px);background:linear-gradient(90deg,rgba(18,24,35,.96),rgba(18,24,35,.75)),var(--team) 60% center/cover;border-bottom:1px solid var(--ln)}
+.av{width:84px;height:84px;border-radius:50%;background:var(--medic) center 18%/180% no-repeat,#1f2937;box-shadow:0 0 0 3px rgba(255,255,255,.85),0 0 24px rgba(255,255,255,.35)}
+.kd-hero h2{margin:4px 0 0;font:700 clamp(30px,3.4vw,44px)/1 var(--fh);text-transform:uppercase}
+.kd-hero p{margin:6px 0 0;font-size:14px;color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:clamp(18px,3vw,28px) clamp(18px,3vw,28px) 0}
+.stat{padding:18px;border-radius:14px;background:var(--p2);box-shadow:inset 0 0 0 1px var(--ln)}
+.stat b{display:block;font:700 44px/1 var(--fh);color:#fff}
+.stat span{display:block;margin-top:6px;font:600 11px var(--fl);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.kd-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;padding:18px clamp(18px,3vw,28px) clamp(18px,3vw,28px)}
+.bars{display:grid;gap:10px}
+.bars div{display:grid;grid-template-columns:110px 1fr 34px;gap:10px;align-items:center;font-size:13.5px}
+.bars i{height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.bars i::after{content:"";display:block;height:100%;width:var(--w);border-radius:4px;background:linear-gradient(90deg,#b91c1c,#ff8b8b)}
+.bars em{font-style:normal;text-align:right;font:700 13px var(--fl);color:#fff}
+.ty{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.ty li{padding:12px 14px;border-radius:12px;background:rgba(0,0,0,.25);box-shadow:inset 0 0 0 1px var(--ln);font-size:14px;line-height:1.5;color:#e5e7eb}
+.ty li span{display:block;margin-top:4px;font-size:12px;color:var(--dim)}
+.badges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.bd{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border-radius:12px;background:rgba(0,0,0,.25);box-shadow:inset 0 0 0 1px var(--ln);text-align:center;font:700 12px var(--fh);letter-spacing:.08em;text-transform:uppercase}
+.bd i{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8b8b,#991b1b);box-shadow:0 0 16px rgba(239,68,68,.5)}
+.bd i svg{width:22px;height:22px;stroke:#fff}
+.bd.lock{opacity:.4}
+.bd.lock i{background:#1f2937;box-shadow:none}
+.bd small{font:600 10px var(--fl);letter-spacing:.1em;color:var(--dim)}
+
+.jn-hero{position:relative;padding:clamp(26px,4vw,52px);background:linear-gradient(90deg,rgba(10,12,18,.95) 25%,rgba(10,12,18,.45)),var(--lineup) 42% center/cover;border-bottom:1px solid var(--ln)}
+.jn-hero h2{margin:8px 0 0;max-width:640px;font:700 clamp(40px,5.4vw,72px)/.92 var(--fh);text-transform:uppercase;text-shadow:0 0 24px rgba(0,0,0,.9)}
+.jn-hero p{margin:12px 0 0;max-width:520px;font-size:16px;line-height:1.6;color:#d1d5db;text-shadow:0 1px 3px #000}
+.jn-hero .ctas{flex-direction:row;flex-wrap:wrap}
+.steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0;padding:clamp(22px,3vw,34px);list-style:none}
+.steps::before{content:"";position:absolute;left:calc(clamp(22px,3vw,34px) + 24px);right:calc(clamp(22px,3vw,34px) + 24px);top:calc(clamp(22px,3vw,34px) + 23px);height:2px;background:linear-gradient(90deg,var(--red),rgba(239,68,68,.15))}
+.steps li{position:relative}
+.steps .n{position:relative;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--red);box-shadow:0 0 0 5px rgba(239,68,68,.2),0 0 18px rgba(239,68,68,.6);font:700 14px var(--fl);color:#fff}
+.steps b{display:block;margin-top:14px;font:700 19px var(--fh);letter-spacing:.06em;text-transform:uppercase}
+.steps p{margin:6px 0 0;font-size:14px;line-height:1.55;color:var(--mut)}
+.jn-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;padding:0 clamp(22px,3vw,34px) clamp(22px,3vw,34px)}
+.need{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.need li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.5;color:#e5e7eb}
+.need li svg{color:var(--ok);margin-top:2px}
+.need li span{display:block;font-size:12.5px;color:var(--dim)}
+@media (max-width:900px){
+ .rec-grid,.fu,.kd-grid,.jn-grid{grid-template-columns:1fr}
+ .fb{grid-template-columns:1fr}
+ .fb-l{border-right:0;border-bottom:1px solid var(--ln)}
+ .steps{grid-template-columns:1fr 1fr}
+ .steps::before{display:none}
+ .kd-hero{grid-template-columns:auto 1fr}
+ .kd-hero .btn{grid-column:1/-1;justify-self:start}
+}
+@media (max-width:560px){
+ .crew{grid-template-columns:1fr 1fr}
+ .stats{grid-template-columns:1fr}
+ .badges{grid-template-columns:1fr 1fr}
+ .steps{grid-template-columns:1fr}
+ .bar .lk{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.fixed{display:inline-flex;align-items:center;gap:6px;flex:none;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--ln);font:700 11px var(--fl);letter-spacing:.12em;text-transform:uppercase;color:#cbd5e1}
+.fixed .ic{width:14px;height:14px}
+.by{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:12px 0 0}
+.byn{font:700 18px var(--fh);letter-spacing:.06em;color:#fff}
+.byt{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:rgba(49,196,141,.12);box-shadow:inset 0 0 0 1px rgba(49,196,141,.5);font:700 10.5px var(--fl);letter-spacing:.12em;text-transform:uppercase;color:#a7f3d0}
+.byt .ic{width:12px;height:12px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z" fill="currentColor" opacity=".25"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.9 7.5.6-5.7 4.9 1.8 7.3L12 17.8l-6.6 3.9 1.8-7.3L1.5 9.5 9 8.9z"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="i-lead" viewBox="0 0 24 24"><path d="M12 3l9 5v2l-9-5-9 5V8zm0 6l9 5v2l-9-5-9 5v-2z"/></symbol>
+<symbol id="i-pilot" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></symbol>
+<symbol id="i-sec" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z"/></symbol>
+<symbol id="i-med" viewBox="0 0 24 24"><path d="M9 2h6v7h7v6h-7v7H9v-7H2V9h7z"/></symbol>
+<symbol id="i-arw" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+</svg>
+<main class="wrap">
+<header class="hd">
+<p class="ey">Concept mockups</p>
+<h1>Filling the gaps</h1>
+<p class="sub">Five pages the current flows point to but don’t have yet. Sample data throughout; nothing here is live or final.</p>
+</header>
+<nav class="nav" role="tablist" aria-label="Pages" id="nav">
+<button role="tab" data-p="rec" aria-selected="true"><b>1</b>Public record</button>
+<button role="tab" data-p="fu" aria-selected="false"><b>2</b>Client follow-up</button>
+<button role="tab" data-p="fb" aria-selected="false"><b>3</b>Private feedback</button>
+<button role="tab" data-p="kd" aria-selected="false"><b>4</b>Crew kudos</button>
+<button role="tab" data-p="jn" aria-selected="false"><b>5</b>How joining works</button>
+</nav>
+
+<section class="pg on" id="p-rec" aria-label="Public record">
+<p class="why"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg><span><b>Who sees this:</b> anyone who clicks a shared link, usually in Discord. It has to explain Medrunner to a stranger in seconds, show the rescue safely, and point to help or to joining.</span></p>
+<div class="demo">Preview state <span class="seg" id="recst"><button aria-pressed="true" data-v="live">Approved</button><button aria-pressed="false" data-v="rv">Under review</button></span> Outcome <span class="seg" id="recoc"><button aria-pressed="true" data-v="ok">Rescued</button><button aria-pressed="false" data-v="died">Did not survive</button><button aria-pressed="false" data-v="cancel">Cancelled</button></span></div>
+<div class="frame" id="recf" style="--oc:var(--ok)">
+<div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> medrunner.space/verify/<b>agile-snail</b></span></div>
+<div class="rec-hero"><div class="tint"></div>
+<div class="rec-top"><span class="ver" id="ver"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg><span>Verified by the attending team lead</span></span><div class="rec-logo" role="img" aria-label="Medrunner"></div></div>
+<div class="rec-t"><span class="oc" id="octx">Rescued, stable</span><h2>Agile Snail</h2><p id="ocd">A Medrunner crew answered this alert · October 2026</p></div></div>
+<div class="rv-band"><b>Under review.</b> Only the client can see this page right now. The team lead who attended still needs to check it before it goes public.</div>
+<div class="rec-grid">
+<div style="display:grid;gap:18px">
+<div class="card"><h3 class="h3">From the client</h3><div class="stars" aria-label="Rated 5 out of 5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><p class="quote" id="quote">Didn’t think anyone would come. They were calm, quick and got me back on my feet like it was nothing.</p>
+<p class="by"><span class="byn">— ItchyMastadon</span><span class="byt"><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg>RSI handle verified</span><span class="sm">The rescued client</span></p>
+<ul class="chips" style="margin-top:16px"><li>Fast response</li><li>Professional</li><li>Patched me up</li><li>Would call again</li></ul></div>
+<div class="card"><h3 class="h3">The crew</h3><ul class="crew"><li><svg><use href="#i-lead"/></svg>Team lead<small>LEAD</small></li><li><svg><use href="#i-pilot"/></svg>Pilot<small>PIL</small></li><li><svg><use href="#i-sec"/></svg>Security<small>SEC</small></li><li><svg><use href="#i-med"/></svg>Medic<small>MED</small></li></ul>
+<p class="red"><svg class="ic" viewBox="0 0 24 24" style="color:#9ca3af"><use href="#i-info"/></svg><span><b>Shown by role, not name.</b> 2 details were hidden for privacy: <b>a player name</b> and <b>a location</b>.</span></p></div>
+</div>
+<div style="display:grid;gap:18px;align-content:start">
+<div class="card about"><div class="rec-logo" role="img" aria-label="Medrunner"></div><div><h3 class="h3" style="margin:0">What is Medrunner?</h3><p>A volunteer emergency response crew in Star Citizen. Get downed, send an alert, and a squad comes to bring you back.</p></div></div>
+<div class="card"><h3 class="h3">Need a rescue?</h3><p class="muted" style="margin:0;font-size:14px;line-height:1.55">Downed and out of options? Send an alert and a crew will respond.</p>
+<div class="ctas"><a class="btn pri" href="#">Call Medrunner<svg><use href="#i-arw"/></svg></a><a class="btn sec" href="#jn">Join Medrunner</a></div></div>
+<div class="card"><h3 class="h3">Share this rescue</h3><div class="share"><button class="btn sec" type="button">Copy link</button><button class="btn sec" type="button">Discord</button></div></div>
+</div></div>
+<div class="rec-ft"><span>Published with the client’s consent. Their handle is shown so anyone can check it; crew appear by role only.</span><span><a href="#">How public records work</a> · <a href="#">Report this page</a></span></div>
+</div>
+</section>
+
+<section class="pg" id="p-fu" aria-label="Client follow-up">
+<p class="why"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg><span><b>Who sees this:</b> the client, after choosing “Make this rescue public”. Today nothing tells them what happens next or lets them change their mind later.</span></p>
+<div class="demo">Review result <span class="seg" id="fust"><button aria-pressed="true" data-v="rv">In review</button><button aria-pressed="false" data-v="ok">Approved</button><button aria-pressed="false" data-v="ed">Approved with edits</button><button aria-pressed="false" data-v="no">Not published</button></span></div>
+<div class="frame"><div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> portal.medrunner.space/<b>my-rescues/agile-snail</b></span><span style="flex:none;margin:0;background:rgba(239,68,68,.16);color:#fecaca;font:700 10px var(--fl);letter-spacing:.14em;text-transform:uppercase">New: My rescues</span></div>
+<div class="in fu">
+<div class="card"><span class="code">Agile Snail</span><h2 class="h2" style="margin:10px 0 18px">Your public record</h2><ol class="trk" id="trk"></ol></div>
+<div style="display:grid;gap:14px;align-content:start">
+<div id="fumsg"></div>
+<div class="card"><h3 class="h3">Manage your record</h3><div class="mng">
+<div class="row"><div><b>Rescue card</b><span>A shareable image of your rescue for Discord or socials.</span></div><button class="btn sec" type="button">Download</button></div>
+
+<div class="row"><div><b>Edit your testimonial</b><span>Changes go back to the team lead for a quick check.</span></div><button class="btn sec" type="button"><svg><use href="#i-edit"/></svg>Edit</button></div>
+<div class="row"><div><b>Request removal</b><span>Records stay up unless removed. Our Moderation team handles takedowns.</span></div><button class="btn dan" type="button" id="rmb">Request</button></div>
+<div class="conf" id="conf" role="alertdialog" aria-label="Confirm removal">Ask Moderation to take down the public record for Agile Snail? Once removed, the link stops working. Your rating and kudos still reach the crew.<div><button class="btn dan" type="button" id="rmy">Send request</button><button class="btn ghost" type="button" id="rmn">Keep it</button></div></div>
+</div></div>
+</div></div></div>
+</section>
+
+<section class="pg" id="p-fb" aria-label="Private feedback">
+<p class="why"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg><span><b>Who sees this:</b> Medrunner staff only, for now. “What went wrong?” promises the client it stays private; this is where it lands and what happens next.</span></p>
+<div class="frame"><div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> staff.medrunner.space/<b>feedback</b></span></div>
+<div class="fb">
+<div class="fb-l"><div class="fb-hd"><b>Private feedback</b><span class="code" style="background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--ln);color:#cbd5e1">3 open</span></div><ul class="fb-list" id="fbl"></ul></div>
+<div class="fb-r" id="fbr"></div>
+</div></div>
+</section>
+
+<section class="pg" id="p-kd" aria-label="Crew kudos">
+<p class="why"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg><span><b>Who sees this:</b> each operator, privately. Kudos go to the whole team on a rescue, and everyone who was on it gets credit. Counts are sample data.</span></p>
+<div class="frame"><div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> staff.medrunner.space/<b>me/kudos</b></span></div>
+<div class="kd-hero"><div class="av" role="img" aria-label="Your avatar"></div><div><span class="code">Operator</span><h2>Your kudos</h2><p>Every thank-you from rescues you were part of.</p></div></div>
+<div class="stats"><div class="stat"><b>48</b><span>Team kudos you shared</span></div><div class="stat"><b>21</b><span>Rescues with kudos</span></div><div class="stat"><b>4.8</b><span>Average rating</span></div></div>
+<div class="kd-grid">
+<div class="card"><h3 class="h3">Most given</h3><div class="bars"><div><span>Professional</span><i style="--w:92%"></i><em>14</em></div><div><span>Fast response</span><i style="--w:72%"></i><em>11</em></div><div><span>Patched me up</span><i style="--w:58%"></i><em>9</em></div><div><span>Friendly crew</span><i style="--w:38%"></i><em>6</em></div><div><span>Didn’t give up</span><i style="--w:26%"></i><em>4</em></div></div>
+<h3 class="h3" style="margin-top:22px">By role</h3><ul class="chips"><li>Medic<em>27</em></li><li>Security<em>13</em></li><li>Team lead<em>8</em></li></ul></div>
+<div class="card"><h3 class="h3">Recent thank-yous</h3><ul class="ty"><li>“Calm the whole time. Made a bad night a great story.”<span>A client · Rescued · 3 days ago</span></li><li>“Didn’t think anyone would come. They did, fast.”<span>A client · Rescued · last week</span></li><li>“Couldn’t save me, but they tried everything. Respect.”<span>A client · Did not survive · 2 weeks ago</span></li></ul></div>
+</div></div>
+</section>
+
+<section class="pg" id="p-jn" aria-label="How joining works">
+<p class="why"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg><span><b>Who sees this:</b> anyone who clicks Join, from the review pop-up, a public record or Available roles. Kept deliberately general to stay within the ERG.</span></p>
+<div class="frame"><div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> medrunner.space/<b>join</b></span></div>
+<div class="jn-hero"><span class="code">Join Medrunner</span><h2>From “I’m in” to your first rescue</h2><p>No ship and no experience needed. Just a good attitude and a love of helping people out of a jam.</p><div class="ctas"><a class="btn pri" href="#">Apply on RSI<svg><use href="#i-arw"/></svg></a><a class="btn sec" href="choose-role.html">See available roles</a></div></div>
+<ol class="steps"><li><span class="n">01</span><b>Apply on RSI</b><p>Send an application through the Medrunner organization page.</p></li><li><span class="n">02</span><b>We review it</b><p>Our HR team looks it over and gets back to you.</p></li><li><span class="n">03</span><b>Welcome aboard</b><p>Join us on Discord, say hi and meet the crew.</p></li><li><span class="n">04</span><b>Your first rescue</b><p>Jump in with a squad and see what clicks.</p></li></ol>
+<div class="jn-grid">
+<div class="card"><h3 class="h3">What you’ll need</h3><ul class="need"><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>To be 18 or older</div></li><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>A Star Citizen account<span>Any package works.</span></div></li><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>Discord<span>That’s where squads team up.</span></div></li><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>A good attitude<span>We’ll help with the rest.</span></div></li></ul></div>
+<div class="card"><h3 class="h3">Not sure yet?</h3><p class="muted" style="margin:0;font-size:14.5px;line-height:1.6">See the roles you could step into, or read the questions people usually ask before they apply.</p><div class="ctas"><a class="btn sec" href="choose-role.html">Available roles</a><a class="btn sec" href="choose-role.html#faq">Read the FAQ</a></div></div>
+</div></div>
+</section>
+</main>
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const seg=(el,fn)=>$$('button',el).forEach(b=>b.onclick=()=>{$$('button',el).forEach(x=>x.setAttribute('aria-pressed',x===b));fn(b.dataset.v)});
+function go(p){$$('#nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.p===p));$$('.pg').forEach(s=>s.classList.toggle('on',s.id==='p-'+p));try{history.replaceState(null,'','#'+p);localStorage.setItem('mr-gaps',p)}catch(_){}}
+$$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.p));
+$('#nav').addEventListener('keydown',e=>{const bs=$$('#nav button'),i=bs.findIndex(b=>b.getAttribute('aria-selected')==='true'),d={ArrowRight:1,ArrowLeft:-1}[e.key];if(!d)return;const n=bs[(i+d+bs.length)%bs.length];n.focus();go(n.dataset.p)});
+const OC={ok:['var(--ok)','Rescued, stable','A Medrunner crew answered this alert · October 2026','Didn’t think anyone would come. They were calm, quick and got me back on my feet like it was nothing.'],died:['var(--died)','Did not survive','A Medrunner crew answered this alert · October 2026','Couldn’t save me, but they never stopped trying. That counts for a lot.'],cancel:['var(--cancel)','Cancelled by client','A Medrunner crew was on the way · October 2026','Respawned before they arrived, but they checked in anyway. I’ll call again.']};
+seg($('#recoc'),v=>{const o=OC[v],f=$('#recf');f.style.setProperty('--oc',o[0]);$('#octx').textContent=o[1];$('#ocd').textContent=o[2];$('#quote').textContent=o[3]});
+seg($('#recst'),v=>{const f=$('#recf'),r=v==='rv';f.classList.toggle('st-rv',r);const ver=$('#ver');ver.classList.toggle('rv',r);ver.querySelector('use').setAttribute('href',r?'#i-clock':'#i-shield');ver.querySelector('span').textContent=r?'Under review · only you can see this':'Verified by the attending team lead'});
+const I=(id)=>`<svg viewBox="0 0 24 24"><use href="#${id}"/></svg>`;
+const FU={
+rv:{steps:[['done','Submitted','You chose to make this rescue public.'],['now','Team lead review','The team lead who attended is checking it. This usually takes a little while.'],['todo','Published','Anyone with the link can see it.']],msg:`<div class="msg wa">${I('i-clock')}<div><b>In review.</b> We’ll let you know when it’s live. Until then, only you can see the page.</div></div>`},
+ok:{steps:[['done','Submitted','You chose to make this rescue public.'],['done','Team lead review','Approved as you sent it.'],['done','Published','Live for anyone with the link.']],msg:`<div class="msg ok">${I('i-check')}<div><b>It’s live.</b> Share your link whenever you like.<div style="margin-top:10px"><a class="btn pri" href="#" style="padding:9px 14px">View public page</a></div></div></div>`},
+ed:{steps:[['done','Submitted','You chose to make this rescue public.'],['done','Team lead review','Approved with a couple of privacy edits.'],['done','Published','Live for anyone with the link.']],msg:`<div class="msg ok">${I('i-check')}<div><b>Live, with small edits.</b> The team lead tidied two things before publishing:<ul class="diff"><li><s>a player name</s><ins>Security</ins></li><li><s>a location in your message</s><ins>[location hidden]</ins></li></ul></div></div>`},
+no:{steps:[['done','Submitted','You chose to make this rescue public.'],['now warn','Team lead review','Not published this time.'],['todo','Published','—']],msg:`<div class="msg no">${I('i-x')}<div><b>Not published.</b> The team lead felt this one shouldn’t go public. Your rating and kudos still reached the crew, and you can always say thanks privately.</div></div>`}};
+function fu(v){const d=FU[v];$('#trk').innerHTML=d.steps.map(([c,t,p])=>`<li class="${c}"><span class="dot">${I(c.startsWith('done')?'i-check':c.startsWith('now')?(c.includes('warn')?'i-x':'i-clock'):'i-shield')}</span><div><b>${t}</b><p>${p}</p></div></li>`).join('');$('#fumsg').innerHTML=d.msg}
+seg($('#fust'),fu);fu('rv');
+$$('.tg').forEach(t=>t.onclick=()=>t.setAttribute('aria-checked',t.getAttribute('aria-checked')!=='true'));
+$('#rmb').onclick=()=>$('#conf').classList.add('on');$('#rmn').onclick=()=>$('#conf').classList.remove('on');$('#rmy').onclick=()=>{$('#conf').innerHTML='<b>Request sent.</b> Moderation will take the page down and let you know when it’s done.'};
+const FB=[
+{a:'Swift Otter',o:'Rescued',r:'2 / 5',st:'new',when:'2 hours ago',neg:['Slow to arrive','Hard to follow'],note:'Took a while to get there and I wasn’t sure what was happening. Still got revived, so thanks, but more updates would help.'},
+{a:'Quiet Falcon',o:'Did not survive',r:'Thumbs down',st:'ack',when:'yesterday',neg:['Felt rushed'],note:'Felt like nobody explained anything. Probably just a hectic one.'},
+{a:'Bright Lynx',o:'Cancelled',r:'3 / 5',st:'new',when:'2 days ago',neg:['Ignored my messages'],note:'I sent a few messages that went unanswered before I respawned.'},
+{a:'Calm Heron',o:'Rescued',r:'3 / 5',st:'done',when:'last week',neg:['Hard to follow'],note:'Comms were a bit chaotic but they got it done.'}];
+const SL={new:['New','s-new'],ack:['Acknowledged','s-ack'],done:['Resolved','s-done']};
+let fi=0;
+function fbRender(){$('#fbl').innerHTML=FB.map((f,i)=>`<li><button class="fb-it" type="button" data-i="${i}" aria-current="${i===fi}"><span class="t">${f.a}<em class="${SL[f.st][1]}">${SL[f.st][0]}</em></span><span class="m">${f.o} · ${f.r} · ${f.when}</span></button></li>`).join('');
+ $$('.fb-it').forEach(b=>b.onclick=()=>{fi=+b.dataset.i;fbRender()});
+ const f=FB[fi];$('#fbr').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap"><div><span class="code">${f.a}</span><h2 class="h2" style="margin-top:10px">What went wrong</h2></div><em class="${SL[f.st][1]}" style="font-style:normal;font:700 11px var(--fl);letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px">${SL[f.st][0]}</em></div>
+ <div class="fb-meta"><span>Outcome <b>${f.o}</b></span><span>Rating <b>${f.r}</b></span><span>Received <b>${f.when}</b></span></div>
+ <div><h3 class="h3">Flagged by the client</h3><ul class="chips neg">${f.neg.map(n=>`<li>${n}</li>`).join('')}</ul></div>
+ <div><h3 class="h3">In their words</h3><p class="note">${f.note}</p></div>
+ <div><h3 class="h3">Who can see this</h3><div class="who"><span>Staff</span><span class="no">The attending team lead</span><span class="no">The rest of the crew</span><span class="no">The public</span></div></div>
+ <div><h3 class="h3">Internal note</h3><textarea class="inote" placeholder="Add a note for staff. The client never sees this."></textarea></div>
+ <div class="acts"><button class="btn sec" type="button" data-s="ack">Acknowledge</button><button class="btn sec" type="button" data-s="done">Mark resolved</button><button class="btn ghost" type="button">Escalate to Moderation</button></div>
+ <ul class="log"><li><b>Received</b> · ${f.when}</li>${f.st!=='new'?'<li><b>Acknowledged</b> by staff</li>':''}${f.st==='done'?'<li><b>Resolved</b> · discussed in team debrief</li>':''}</ul>`;
+ $$('#fbr [data-s]').forEach(b=>b.onclick=()=>{f.st=b.dataset.s;fbRender()})}
+fbRender();
+let st=null;try{st=localStorage.getItem('mr-gaps')}catch(_){}
+const h=location.hash.slice(1)||st;if(['rec','fu','fb','kd','jn'].includes(h))go(h);
+addEventListener('hashchange',()=>{const k=location.hash.slice(1);if(['rec','fu','fb','kd','jn'].includes(k))go(k)});
+})();
+</script>
+</body>
+</html>

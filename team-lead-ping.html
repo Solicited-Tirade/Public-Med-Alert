@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Team Lead Ping · Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mohave:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#0b0f17;--ink:#e5e7eb;--mu:#9ca3af;--line:#1f2937;--red:#ef4444;
+--d-bg:#313338;--d-side:#2b2d31;--d-em:#2b2d31;--d-tx:#dbdee1;--d-mu:#949ba4;--d-hd:#f2f3f5;--d-ln:#00a8fc;--d-bl:#5865f2;--d-gr:#4e5058;--d-ok:#248046;--d-bd:#3f4147;--df:"gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;padding:40px 16px 80px}
+.wrap{max-width:1180px;margin:0 auto}
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:28px}
+.kick{font:600 12px Inter;letter-spacing:.18em;text-transform:uppercase;color:#60a5fa;margin:0 0 6px}
+h1{font:700 44px/1 Mohave,sans-serif;text-transform:uppercase;margin:0}
+.top p{margin:8px 0 0;color:var(--mu);font-size:14px;max-width:560px}
+.back{color:#a7f3d0;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.tabs button{cursor:pointer;border:0;border-radius:999px;padding:8px 16px;font:600 13px Inter;color:var(--mu);background:transparent;box-shadow:inset 0 0 0 1px #374151}
+.tabs button.on{color:#fff;box-shadow:inset 0 0 0 1px #3F83F8;background:rgba(63,131,248,.12)}
+.tabs b{font:700 15px Mohave,sans-serif;margin-right:6px;color:#60a5fa}
+.opt{display:none}
+.opt.on{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+@media (max-width:980px){.opt.on{grid-template-columns:1fr}}
+.note{border-radius:14px;padding:18px;box-shadow:inset 0 0 0 1px #374151;background:#111827}
+.note h2{font:700 26px/1.05 Mohave,sans-serif;text-transform:uppercase;margin:0}
+.note .sub{color:var(--mu);font-size:13px;margin:6px 0 14px}
+.note h3{font:600 11px Inter;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);margin:16px 0 6px}
+.note ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.45}
+.note li{padding-left:14px;position:relative}
+.note li:before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:#60a5fa}
+.note .con li:before{background:#6b7280}
+.phone-t{display:flex;gap:8px;margin-top:14px}
+.phone-t button{cursor:pointer;flex:1;border:0;border-radius:8px;padding:8px;font:600 12px Inter;color:var(--mu);background:transparent;box-shadow:inset 0 0 0 1px #374151}
+.phone-t button.on{color:#fff;box-shadow:inset 0 0 0 1px #3F83F8}
+
+.dc{font-family:var(--df);background:var(--d-bg);color:var(--d-tx);border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px #1e1f22,0 24px 60px rgba(0,0,0,.45);display:grid;grid-template-columns:240px minmax(0,1fr);min-height:640px;transition:max-width .3s}
+.dc.phone{grid-template-columns:1fr;max-width:390px;margin:0 auto;min-height:720px;border-radius:28px}
+.dc.phone .side{display:none}
+.side{background:var(--d-side);display:flex;flex-direction:column}
+.side .sv{height:48px;display:flex;align-items:center;padding:0 16px;font-weight:600;color:var(--d-hd);box-shadow:0 1px 0 rgba(0,0,0,.25);font-size:15px}
+.side .ch{padding:8px}
+.side .cat{font:700 12px var(--df);text-transform:uppercase;letter-spacing:.02em;color:var(--d-mu);padding:16px 8px 4px}
+.side .it{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:4px;color:var(--d-mu);font-size:15px;font-weight:500}
+.side .it.on{background:#404249;color:#fff}
+.side .it i{font-style:normal;color:#80848e;width:20px;text-align:center;font-size:18px}
+.side .it .dot{margin-left:auto;background:#f23f43;color:#fff;font:700 11px var(--df);border-radius:8px;padding:1px 6px}
+.side .av{width:32px;height:32px;border-radius:50%;flex:none}
+.main{display:flex;flex-direction:column;min-width:0}
+.hd{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;box-shadow:0 1px 0 rgba(0,0,0,.25);color:var(--d-hd);font-weight:600;font-size:15px;flex:none}
+.hd i{font-style:normal;color:#80848e;font-size:22px;font-weight:400}
+.hd small{color:var(--d-mu);font-weight:500;font-size:13px;border-left:1px solid #3f4147;padding-left:10px;margin-left:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feed{flex:1;padding:16px 0 8px;display:flex;flex-direction:column;justify-content:flex-end}
+.day{display:flex;align-items:center;gap:8px;margin:8px 16px 16px;color:var(--d-mu);font:600 12px var(--df)}
+.day:before,.day:after{content:"";flex:1;height:1px;background:#3f4147}
+.msg{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;padding:2px 48px 2px 16px;margin-top:4px}
+.msg.mention{background:rgba(240,177,50,.08);box-shadow:inset 2px 0 0 #f0b132}
+.msg.dim{opacity:.55}
+.av{width:40px;height:40px;border-radius:50%;background:#e02424;display:grid;place-items:center;overflow:hidden}
+.av svg{width:17px;height:25px;color:#fff}
+.mh{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mh b{color:#f04747;font-weight:500;font-size:16px}
+.mh b.u{color:#3ba55d}
+.app{display:inline-flex;align-items:center;gap:2px;background:var(--d-bl);color:#fff;font:600 10px/1 var(--df);padding:3px 4px;border-radius:3px;text-transform:uppercase}
+.app svg{width:10px;height:10px}
+.mh time{color:var(--d-mu);font-size:12px;margin-left:2px}
+.tx{font-size:16px;line-height:1.375;margin:2px 0 0}
+.pg{background:rgba(88,101,242,.3);color:#c9cdfb;border-radius:3px;padding:0 2px;font-weight:500}
+.ts{background:rgba(78,80,88,.48);border-radius:3px;padding:0 2px}
+.lnk{color:var(--d-ln)}
+.sub{font-size:12px;color:var(--d-mu)}
+.reply{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--d-mu);margin:4px 0 2px 36px;position:relative}
+.reply:before{content:"";position:absolute;left:-34px;top:50%;width:30px;height:12px;border-left:2px solid #4e5058;border-top:2px solid #4e5058;border-top-left-radius:6px}
+.reply .mini{width:16px;height:16px;border-radius:50%;background:#e02424;display:grid;place-items:center}
+.reply .mini svg{width:7px;height:10px;color:#fff}
+.reply b{color:#f04747;font-weight:500}
+.em{margin-top:6px;max-width:520px;background:var(--d-em);border-radius:4px;border-left:4px solid #31c48d;padding:8px 16px 16px 12px;display:grid;gap:8px}
+.em .au{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--d-hd);margin-top:8px}
+.em .au .mini{width:24px;height:24px;border-radius:50%;background:#e02424;display:grid;place-items:center}
+.em .au .mini svg{width:10px;height:15px;color:#fff}
+.em .ti{font-size:16px;font-weight:600;color:var(--d-ln)}
+.em .de{font-size:14px;line-height:1.375}
+.fl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px}
+.fl .w{grid-column:1/-1}
+.fl p{margin:0;font-size:14px;line-height:1.375}
+.fl p:first-child{font-weight:600;color:var(--d-hd);margin-bottom:2px}
+.ft{display:flex;align-items:center;gap:8px;font-size:12px;color:#b5bac1;margin-top:4px}
+.ft .mini{width:20px;height:20px;border-radius:50%;background:#e02424;display:grid;place-items:center}
+.ft .mini svg{width:8px;height:12px;color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.bt{display:inline-flex;align-items:center;gap:6px;height:32px;padding:2px 16px;border-radius:8px;font:500 14px var(--df);color:#fff;background:var(--d-gr);border:0;cursor:pointer}
+.bt.p{background:var(--d-bl)}.bt.g{background:var(--d-ok)}
+.bt svg{width:14px;height:14px}
+.bt:hover{filter:brightness(1.12)}
+.ctn{margin-top:6px;max-width:560px;background:#393a41;background:color-mix(in srgb,#2b2d31 70%,#3f4147);border:1px solid #3f4147;border-radius:8px;padding:16px;display:grid;gap:12px;border-left:4px solid #31c48d}
+.sec{display:grid;grid-template-columns:minmax(0,1fr) 85px;gap:16px;align-items:start}
+.thumb{width:85px;height:85px;border-radius:8px;background:#1e1f22 var(--ship) center/cover}
+.h3{font-size:20px;font-weight:700;color:var(--d-hd);margin:0 0 4px;line-height:1.25}
+.sep{height:1px;background:#4e5058;opacity:.6}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;line-height:1.375}
+.kv dt{color:var(--d-mu)}
+.kv dd{margin:0}
+.bar{height:6px;border-radius:3px;background:#1e1f22;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:100%;background:#23a55a}
+.th{display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:8px 12px;border-radius:8px;background:#2b2d31;border:1px solid #3f4147;font-size:14px}
+.th b{color:var(--d-hd);font-weight:600}
+.th span{color:var(--d-ln)}
+.th svg{width:18px;height:18px;color:var(--d-mu)}
+.inp{margin:8px 16px 20px;height:44px;border-radius:8px;background:#383a40;display:flex;align-items:center;padding:0 16px;color:#6d6f78;font-size:15px;flex:none}
+.inp i{font-style:normal;width:24px;height:24px;border-radius:50%;background:#b5bac1;color:#383a40;display:grid;place-items:center;font-weight:700;margin-right:14px;font-size:18px}
+.dc.phone .msg{padding:2px 12px;gap:12px}
+.dc.phone .fl{grid-template-columns:repeat(2,minmax(0,1fr))}
+.dc.phone .hd small{display:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:#111827;box-shadow:0 0 0 1px #374151;color:#fff;font-size:13px;padding:10px 16px;border-radius:10px;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+:root{--ship:url(media/img/ship.webp)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="logo-mark" viewBox="0 0 79 117"><path fill-rule="evenodd" clip-rule="evenodd" d="M78.4648 39.3849C78.4648 17.6305 60.9017 0 39.2344 0C17.5669 0 0 17.6305 0 39.3849L8.29863 102.301C8.5354 104.108 9.83584 105.598 11.591 106.074L36.9943 112.963C38.46 113.359 40.0048 113.359 41.4743 112.963L66.8777 106.074C68.6329 105.598 69.9294 104.108 70.1699 102.301L78.4686 39.3849H78.4648ZM17.1685 89.8508V72.8467H20.7991L24.9709 84.6498L29.1429 72.8467H32.7735V89.8508H28.9925V82.575L26.2714 89.8508H23.6705L20.9494 82.575V89.8508H17.1685ZM46.5668 75.9061V72.8463V72.8425H37.1895V89.8468H46.5668V86.787H41.2749V82.3653H45.7512V79.3055H41.2749V75.9061H46.5668ZM50.1035 89.8506V72.8463H55.6999C57.4137 72.8463 58.7742 73.2311 59.7816 73.9971C60.7889 74.763 61.2925 75.778 61.2925 77.0418V85.659C61.2925 86.9153 60.7889 87.9265 59.7816 88.696C58.7742 89.4657 57.4137 89.8506 55.6999 89.8506H50.1035ZM54.1852 86.7908H55.6961C56.1811 86.7908 56.5531 86.6853 56.8162 86.4776C57.0793 86.2701 57.2108 85.9948 57.2108 85.6553V77.038C57.2108 76.6985 57.0793 76.4229 56.8162 76.2155C56.5531 76.008 56.1811 75.9023 55.6961 75.9023H54.1852V86.787V86.7908ZM17.1685 90.8507V100.339H19.2769V97.0494H20.0587C20.3105 97.0494 20.5022 97.106 20.6375 97.223C20.7728 97.34 20.8404 97.4946 20.8404 97.6833V100.339H22.949V97.6833C22.949 97.3173 22.8248 97.0041 22.5768 96.7477C22.4593 96.6243 22.3175 96.5158 22.1514 96.4217C22.3395 96.2682 22.4964 96.0928 22.622 95.8949C22.8399 95.5516 22.949 95.1592 22.949 94.7103V93.1899C22.949 92.4881 22.6895 91.9221 22.1671 91.4921C21.6485 91.0657 20.9456 90.8507 20.0587 90.8507H17.1685ZM20.0587 95.3441H19.2769V95.3404V92.556H20.0587C20.3105 92.556 20.5022 92.6126 20.6375 92.7296C20.7728 92.8464 20.8404 93.0012 20.8404 93.1899V94.7103C20.8404 94.9027 20.7728 95.0535 20.6375 95.1705C20.5022 95.2875 20.3067 95.3441 20.0587 95.3441ZM30.7443 90.8503V98.2037C30.7443 98.9055 30.485 99.4675 29.9626 99.9015C29.4402 100.332 28.7373 100.547 27.854 100.547C26.9708 100.547 26.2717 100.332 25.7493 99.9015C25.2269 99.4713 24.9639 98.9055 24.9639 98.2037V90.8503H27.0723V98.2037C27.0723 98.3924 27.14 98.547 27.2753 98.664C27.4106 98.781 27.6022 98.8374 27.854 98.8374C28.1057 98.8374 28.2975 98.781 28.4328 98.664C28.5681 98.547 28.6357 98.3962 28.6357 98.2037V90.8503H30.7443ZM32.9463 90.8503V100.343H34.9008V95.4869L37.0092 100.339H38.5726V90.8465H36.6183V95.7027L34.5097 90.8503H32.9463ZM40.8501 100.343V90.8503H42.4137L44.5221 95.7026V90.8465H46.4766V100.339H44.913L42.8046 95.4869V100.343H40.8501ZM53.5956 92.5595V90.8503H48.7546V100.343H53.5956V98.6337H50.8632V96.1663H53.1747V94.4572H50.8632V92.5595H53.5956ZM55.4255 100.339V90.8503H58.3156C59.2027 90.8503 59.9056 91.0655 60.4242 91.4917C60.9466 91.9219 61.2059 92.4879 61.2059 93.1895V94.71C61.2059 95.159 61.097 95.5514 60.8789 95.8947C60.7533 96.0925 60.5965 96.2678 60.4085 96.4213C60.5746 96.5154 60.7165 96.6239 60.8339 96.7473C61.0819 97.0039 61.2059 97.317 61.2059 97.6831V100.339H59.0975V97.6831C59.0975 97.4944 59.0298 97.3396 58.8945 97.2228C58.7592 97.1058 58.5674 97.0492 58.3156 97.0492H57.5339V100.339H55.4255ZM57.5339 95.3439H58.3156C58.5637 95.3439 58.7592 95.2873 58.8945 95.1703C59.0298 95.0533 59.0975 94.9025 59.0975 94.71V93.1895C59.0975 93.001 59.0298 92.8462 58.8945 92.7292C58.7592 92.6124 58.5674 92.5558 58.3156 92.5558H57.5339V95.3402V95.3439ZM50.8781 39.8715L64.5213 47.7794C65.1715 48.1567 65.3969 48.9979 65.0211 49.6508L60.5637 57.4002C60.1879 58.0529 59.3497 58.2791 58.6993 57.902L45.0563 49.9941V65.806C45.0563 66.5606 44.4437 67.1755 43.6919 67.1755H34.777C34.0252 67.1755 33.4127 66.5606 33.4127 65.806V49.9941L19.7695 57.902C19.1193 58.2791 18.2812 58.0529 17.9054 57.4002L13.4478 49.6508C13.072 48.9979 13.2975 48.1567 13.9477 47.7794L27.5909 39.8715L13.9477 31.9635C13.2975 31.5862 13.072 30.7449 13.4478 30.0922L17.9054 22.3428C18.2812 21.6901 19.1193 21.4636 19.7695 21.841L33.4127 29.7489V13.9369C33.4127 13.1823 34.0252 12.5673 34.777 12.5673H43.6919C44.4437 12.5673 45.0563 13.1823 45.0563 13.9369V29.7489L58.6993 21.841C59.3497 21.4636 60.1879 21.6901 60.5637 22.3428L65.0211 30.0922C65.3969 30.7449 65.1715 31.5862 64.5213 31.9635L50.8781 39.8715Z" fill="white"/></symbol></defs></svg>
+<div class="wrap">
+<div class="top"><div><p class="kick">Step 2 · Team lead</p><h1>The team lead is pinged</h1><p>How the attending team lead hears that a client wants a public record. Same content, three Discord formats.</p></div><a class="back" href="playground-v2.html#notify">Open the playground</a></div>
+<div class="tabs" role="tablist"><button class="on" data-o="a" role="tab"><b>A</b>Direct message</button><button data-o="b" role="tab"><b>B</b>Card layout</button><button data-o="c" role="tab"><b>C</b>Reply in the alert thread</button></div>
+
+<section class="opt on" id="o-a">
+<div class="dc" data-frame>
+<aside class="side"><div class="sv">Direct Messages</div><div class="ch"><div class="cat">Direct messages</div><div class="it on"><span class="av"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></span>Medrunner<span class="dot">1</span></div></div></aside>
+<div class="main"><div class="hd"><i>@</i>Medrunner<span class="app">APP</span></div>
+<div class="feed"><div class="day">October 4, 2956</div>
+<div class="msg"><div class="av"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></div><div>
+<div class="mh"><b>Medrunner</b><span class="app"><svg viewBox="0 0 16 15"><path fill="currentColor" d="M7.4 11.17 4 8.62l1-1.36 2 1.5L10.64 4l1.36 1z"/></svg>APP</span><time>Today at 21:40</time></div>
+<p class="tx">A client asked to publish a rescue you led.</p>
+<div class="em"><div class="au"><span class="mini"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></span>Public export request</div>
+<div class="ti">Alert: Agile Snail</div>
+<div class="de"><b>ItchyMastadon</b> wants a public record of this rescue. Check it for anything sensitive before it goes live.</div>
+<div class="fl"><div><p>Outcome</p><p>Rescued</p></div><div><p>Client rating</p><p>★★★★★ 5/5</p></div><div><p>Respond by</p><p><span class="ts">in 3 days</span></p></div>
+<div><p>Auto-redaction</p><p>3 swapped · 2 to check</p></div><div><p>Client hid</p><p>1 of 3 messages</p></div><div><p>Crew</p><p>4 notified</p></div></div>
+<div class="ft"><span class="mini"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></span>Ticket T-0912 · Today at 21:40</div></div>
+<div class="row"><button class="bt p" data-t="Opens the review in the portal">Review and redact</button><button class="bt" data-t="Crew get a nudge to add their advice">Ask crew for input</button><button class="bt" data-t="Staff take over the decision">Send to Staff</button><button class="bt" data-t="Opens the alert in the portal">Open alert<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></button></div>
+</div></div></div>
+<div class="inp"><i>+</i>Message @Medrunner</div></div></div>
+<aside class="note"><h2>Direct message</h2><p class="sub">A bot DM with a classic embed.</p>
+<h3>Why</h3><ul><li>Private by default. Only the team lead sees it.</li><li>The format every Discord user already reads at a glance.</li><li>Fields line up the numbers that decide how long the review takes.</li></ul>
+<h3>Watch for</h3><ul class="con"><li>DMs get buried if the team lead has many open.</li><li>Needs the bot to be allowed to DM members.</li></ul>
+<div class="phone-t"><button class="on" data-v="desk">Desktop</button><button data-v="phone">Phone</button></div></aside>
+</section>
+
+<section class="opt" id="o-b">
+<div class="dc" data-frame>
+<aside class="side"><div class="sv">Direct Messages</div><div class="ch"><div class="cat">Direct messages</div><div class="it on"><span class="av"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></span>Medrunner<span class="dot">1</span></div></div></aside>
+<div class="main"><div class="hd"><i>@</i>Medrunner<span class="app">APP</span></div>
+<div class="feed"><div class="day">October 4, 2956</div>
+<div class="msg"><div class="av"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></div><div>
+<div class="mh"><b>Medrunner</b><span class="app"><svg viewBox="0 0 16 15"><path fill="currentColor" d="M7.4 11.17 4 8.62l1-1.36 2 1.5L10.64 4l1.36 1z"/></svg>APP</span><time>Today at 21:40</time></div>
+<div class="ctn">
+<div class="sec"><div><p class="h3">Public export requested</p><p class="tx" style="font-size:15px">Alert: <b>Agile Snail</b> · Rescued<br><span class="sub">Client ItchyMastadon · ★★★★★</span></p></div><div class="thumb"></div></div>
+<div class="sep"></div>
+<dl class="kv"><dt>Respond by</dt><dd><span class="ts">in 3 days</span></dd><dt>Auto-redaction</dt><dd>3 swapped · <b>2 to check</b></dd><dt>Client hid</dt><dd>1 of 3 messages</dd><dt>Crew advisories</dt><dd>Open for <span class="ts">24 hours</span> · 4 notified</dd></dl>
+<div><span class="sub">Review window</span><div class="bar"><i></i></div></div>
+<div class="sep"></div>
+<div class="row" style="margin:0"><button class="bt p" data-t="Opens the review in the portal">Review and redact</button><button class="bt" data-t="Crew get a nudge to add their advice">Ask crew for input</button></div>
+<p class="sub" style="margin:0">If you can’t get to it in time, leadership picks it up.</p>
+</div>
+</div></div></div>
+<div class="inp"><i>+</i>Message @Medrunner</div></div></div>
+<aside class="note"><h2>Card layout</h2><p class="sub">A DM using Discord’s newer container layout.</p>
+<h3>Why</h3><ul><li>Reads like a card, closest to the rest of the flow.</li><li>Room for a photo and a time-left bar.</li><li>Buttons sit inside the card, so the action is obvious.</li></ul>
+<h3>Watch for</h3><ul class="con"><li>Newer Discord feature. Needs a bot library that supports it.</li><li>Busier on small phones.</li></ul>
+<div class="phone-t"><button class="on" data-v="desk">Desktop</button><button data-v="phone">Phone</button></div></aside>
+</section>
+
+<section class="opt" id="o-c">
+<div class="dc" data-frame>
+<aside class="side"><div class="sv">Medrunner</div><div class="ch"><div class="cat">Team leads</div><div class="it"><i>#</i>tl-chat</div><div class="it on"><i>#</i>alert-log<span class="dot">1</span></div><div class="it"><i>#</i>exports</div><div class="cat">Ops</div><div class="it"><i>#</i>briefings</div></div></aside>
+<div class="main"><div class="hd"><i>#</i>alert-log<small>Closed alerts, one thread each</small></div>
+<div class="feed"><div class="day">October 4, 2956</div>
+<div class="msg dim"><div class="av"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></div><div>
+<div class="mh"><b>Medrunner</b><span class="app">APP</span><time>Today at 21:31</time></div>
+<p class="tx">Alert: <b>Agile Snail</b> closed · Rescued · 17m 04s</p>
+<div class="th"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14v10H9l-4 4z"/></svg><b>Agile Snail</b><span>2 messages</span><span class="sub">· Today at 21:40</span></div>
+</div></div>
+<div class="reply"><span class="mini"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></span><b>Medrunner</b> Alert: Agile Snail closed · Rescued</div>
+<div class="msg mention" style="margin-top:0"><div class="av"><svg viewBox="0 0 79 117"><use href="#logo-mark"/></svg></div><div>
+<div class="mh"><b>Medrunner</b><span class="app">APP</span><time>Today at 21:40</time></div>
+<p class="tx"><span class="pg">@VoidHexx</span> the client asked to publish this rescue. Review it by <span class="ts">Oct 7, 21:40</span>.</p>
+<div class="em" style="border-left-color:#3F83F8"><div class="fl"><div><p>Client rating</p><p>★★★★★</p></div><div><p>To check</p><p>2 items</p></div><div><p>Client hid</p><p>1 message</p></div></div></div>
+<div class="row"><button class="bt p" data-t="Opens the review in the portal">Review and redact</button><button class="bt" data-t="Crew get a nudge to add their advice">Ask crew for input</button></div>
+</div></div></div>
+<div class="inp"><i>+</i>Message #alert-log</div></div></div>
+<aside class="note"><h2>Reply in the alert thread</h2><p class="sub">Posted under the alert’s own log message.</p>
+<h3>Why</h3><ul><li>Everything about one alert stays in one place.</li><li>Other leads can see who has a review waiting.</li><li>The mention still lands in the team lead’s inbox.</li></ul>
+<h3>Watch for</h3><ul class="con"><li>Visible to every team lead with channel access.</li><li>Keep the details light, since it isn’t private.</li></ul>
+<div class="phone-t"><button class="on" data-v="desk">Desktop</button><button data-v="phone">Phone</button></div></aside>
+</section>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(()=>{const $$=(s,r=document)=>[...r.querySelectorAll(s)],t=document.getElementById('toast');let tt;
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));$$('.opt').forEach(o=>o.classList.toggle('on',o.id==='o-'+b.dataset.o));try{localStorage.setItem('mr-s2',b.dataset.o)}catch(e){}});
+$$('.phone-t button').forEach(b=>b.onclick=()=>{const o=b.closest('.opt');$$('.phone-t button',o).forEach(x=>x.classList.toggle('on',x===b));o.querySelector('[data-frame]').classList.toggle('phone',b.dataset.v==='phone')});
+$$('[data-t]').forEach(b=>b.onclick=()=>{t.textContent=b.dataset.t;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1800)});
+let k=null;try{k=localStorage.getItem('mr-s2')}catch(e){}const b=k&&document.querySelector(`.tabs [data-o="${k}"]`);b&&b.click();
+document.addEventListener('keydown',e=>{const i=['1','2','3'].indexOf(e.key);if(i>-1)$$('.tabs button')[i].click()});
+})();
+</script>
+</body>
+</html>

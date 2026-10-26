@@ -50,6 +50,18 @@ a{color:inherit}
 .mn-ft{margin-top:6px;font-size:12px;color:#6B7280}
 @media(max-width:560px){.mn-row{grid-template-columns:minmax(0,1fr)}.mn-b{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:14px;row-gap:4px;align-items:center;padding:16px 18px;text-align:left}.mn-b svg.ic{grid-row:1/3;width:34px;height:34px}.mn-b b,.mn-b small{white-space:nowrap}.mn-b b{font-size:24px}.mn-b kbd{display:none}.mn-bl{min-height:164px}}
 @media(prefers-reduced-motion:reduce){.mn,.mn-in,.mn-b,.mn-bl p{transition:none}}
+
+.v1{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 10px 7px 12px;border-radius:2px;border:1px solid #4B5563;background:#0b111b;color:#9CA3AF;text-decoration:none;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;transition:color .2s,border-color .2s,background .2s}
+.v1 svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.v1:hover,.v1:focus-visible{color:#F59E0B;border-color:#F59E0B;background:rgb(245 158 11/.08);outline:none}
+.v1:hover svg{transform:translateX(2px)}
+.mn-pw{position:relative;display:flex;flex-direction:column}
+.mn-pw>.mn-b{flex:1;width:100%;padding-bottom:58px}
+.mn-pw>.v1{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);margin:0;z-index:2;white-space:nowrap;background:rgb(0 0 0/.35);border-color:rgb(245 158 11/.35);color:#D1D5DB}
+.mn-pw>.v1:hover,.mn-pw>.v1:focus-visible{background:rgb(245 158 11/.14)}
+.mn-row.hov .mn-pw:has(.mn-b:not(.on))>.v1{opacity:.45}
+@media(max-width:560px){.mn-b .v2t{left:auto!important;right:12px!important;top:10px!important}}
+.mn-b .v2t{position:absolute;top:10px;left:12px;font:700 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#0d141f;background:var(--c);padding:3px 6px;border-radius:2px}
 </style>
 </head>
 <body>
@@ -69,28 +81,23 @@ a{color:inherit}
 <svg class="mn-logo" viewBox="0 0 439 117" role="img" aria-label="Medrunner"><use href="#logo"/></svg>
 <p class="mn-k">Public Med Alert · proposal</p>
 <h1 class="mn-h" id="mn-h">Where would you like to start?</h1>
-<div class="mn-row" id="mn-row">
-<a class="mn-b" data-k="deck" href="medrunner_pitch_deck.html" aria-describedby="mn-b-deck"><kbd>1</kbd>
+<div class="mn-row" id="mn-row"><a class="mn-b" data-k="deck" href="medrunner_pitch_deck.html" aria-describedby="mn-b-deck"><kbd>1</kbd>
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M7 12l3-3 2 2 4-4"/></svg>
-<b>Pitch deck</b><small>12 slides · ~5 min</small></a>
-<a class="mn-b" data-k="play" href="playground.html" aria-describedby="mn-b-play"><kbd>2</kbd>
+<b>Pitch deck</b><small>12 slides · ~5 min</small></a><div class="mn-pw"><a class="mn-b" data-k="play" href="playground-v2.html" aria-describedby="mn-b-play"><kbd>2</kbd>
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><path d="M17.32 5H6.68a4 4 0 0 0-3.98 3.59L2 15a3 3 0 0 0 5.12 2.12L9 15h6l1.88 2.12A3 3 0 0 0 22 15l-.7-6.41A4 4 0 0 0 17.32 5z"/></svg>
-<b>Playground</b><small>Hands-on · 3 min tour</small></a>
-<a class="mn-b" data-k="cta" href="review-cta.html" aria-describedby="mn-b-cta"><kbd>3</kbd>
+<span class="v2t">V2</span><b>Playground</b><small>Hands-on · guided tour</small></a><a class="v1" href="playground.html" title="The first version of the playground"><span>Check out V1</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div><a class="mn-b" data-k="cta" href="review-cta.html" aria-describedby="mn-b-cta"><kbd>3</kbd>
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg>
-<b>Call to action</b><small>Proposal · step 1</small></a>
-<a class="mn-b" data-k="role" href="choose-role.html" aria-describedby="mn-b-role"><kbd>4</kbd>
+<b>Call to action</b><small>Proposal · step 1</small></a><a class="mn-b" data-k="role" href="choose-role.html" aria-describedby="mn-b-role"><kbd>4</kbd>
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-<b>Available roles</b><small>Recruitment · showcase</small></a>
-</div>
+<b>Available roles</b><small>Recruitment · showcase</small></a></div>
 <div class="mn-bl" aria-live="polite">
 <p class="hint on" id="mn-b-none">Hover over a choice to see what's inside. Use ← → or 1–4 to pick, Enter to open.</p>
 <p id="mn-b-deck"><b>The pitch.</b> A short walkthrough for Medrunner leadership and the dev team: the problem, the six steps from discharge to public record, the privacy safeguards, and what it would take to build. Includes short clips of the playground in action.</p>
-<p id="mn-b-play"><b>The hands-on mockup.</b> Take a guided tour as the client, crew and team lead, then explore freely: switch scenarios, view the page as any role, and see every decision logged. Everything is simulated; nothing is sent anywhere.</p>
+<p id="mn-b-play"><b>The hands-on mockup.</b> Follow one alert from the client’s thank-you card to a published record. Take the guided tour as the client, team lead and crew, try the card options, and view the page as any role. Everything is simulated; nothing is sent anywhere.</p>
 <p id="mn-b-role"><b>The recruitment showcase.</b> Look what you can do with Medrunner: the roles on a rescue, what each is like and who it suits, plus a short FAQ for anyone thinking of joining. Not part of the rescue flow.</p>
 <p id="mn-b-cta"><b>The call to action.</b> A proposal to potentially replace step 1 in the playground: a pop-up at the end of an alert where the client rates the crew, gives kudos, and goes public or just says thanks.</p>
 </div>
-<p class="mn-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.5"/></svg><span><b>Four separate showcase ideas.</b> Each was built and is explored on its own, so they don’t link up yet. As we reach consensus and work through revisions and reviews, they’ll be brought together into one connected experience. Nothing here is final. <a href="playground-v2.html" style="color:#a7f3d0;font-weight:600;text-decoration:underline;text-underline-offset:3px">Try the integrated V2 flow →</a></span></p>
+<p class="mn-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.5"/></svg><span><b>Nothing here is final.</b> These are showcase ideas for feedback. The playground runs the whole rescue flow, starting with the call to action card.</span></p>
 </div>
 </main>
 <script>

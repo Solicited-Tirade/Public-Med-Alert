@@ -19,17 +19,22 @@ a{color:inherit}
 .mn{position:relative;min-height:100vh;z-index:1;display:flex;align-items:center;justify-content:center;padding:24px 16px;
  background:radial-gradient(1000px 650px at 25% 15%,#1d3446 0%,transparent 60%),radial-gradient(900px 600px at 80% 95%,#2c2414 0%,transparent 60%),transparent;transition:opacity .25s ease,visibility .25s}
 .mn.off{opacity:0;visibility:hidden;pointer-events:none}
-.mn-in{width:min(100%,760px);text-align:center;transform:none;transition:transform .3s ease}
+.mn-in{width:min(100%,1000px);text-align:center;transform:none;transition:transform .3s ease}
 .mn.off .mn-in{transform:translateY(12px) scale(.98)}
 .mn-logo{width:176px;height:47px;margin:0 auto;color:#fff}
 .mn-k{margin-top:22px;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.24em;text-transform:uppercase;color:#9CA3AF}
 .mn-h{margin:10px 0 0;font:700 clamp(30px,5vw,46px)/1.05 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.02em;color:#fff}
-.mn-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:34px}
+.mn-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:34px}
 .mn-b{--c:#31C48D;--cr:49 196 141;position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:28px 18px 24px;border-radius:14px;
  border:1px solid rgb(var(--cr)/.35);background:linear-gradient(180deg,rgb(var(--cr)/.10),rgb(var(--cr)/.02));color:#fff;text-decoration:none;cursor:pointer;
  transition:transform .2s ease,opacity .2s ease,border-color .2s ease,box-shadow .2s ease,background .2s ease;outline:none}
 .mn-b[data-k=play]{--c:#F59E0B;--cr:245 158 11}
 .mn-b[data-k=cta]{--c:#F05252;--cr:240 82 82}
+.mn-b[data-k=role]{--c:#3F83F8;--cr:63 131 248}
+.mn-note{display:flex;gap:12px;align-items:flex-start;max-width:720px;margin:6px auto 0;padding:14px 18px;border-radius:12px;border:1px dashed #374151;background:rgb(255 255 255/.03);text-align:left;font-size:13.5px;line-height:1.55;color:#9CA3AF}
+.mn-note svg{flex:none;width:18px;height:18px;margin-top:2px;color:#9CA3AF}
+.mn-note b{color:#E5E7EB}
+@media(max-width:900px) and (min-width:561px){.mn-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .mn-b svg.ic{width:44px;height:44px;color:var(--c);transition:transform .25s ease}
 .mn-b b{font:700 30px/1 Mohave,sans-serif;text-transform:uppercase;letter-spacing:.04em}
 .mn-b small{font:600 11px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--cr)/.9)}
@@ -74,14 +79,18 @@ a{color:inherit}
 <a class="mn-b" data-k="cta" href="review-cta.html" aria-describedby="mn-b-cta"><kbd>3</kbd>
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg>
 <b>Call to action</b><small>Proposal · step 1</small></a>
+<a class="mn-b" data-k="role" href="choose-role.html" aria-describedby="mn-b-role"><kbd>4</kbd>
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+<b>Available roles</b><small>Recruitment · showcase</small></a>
 </div>
 <div class="mn-bl" aria-live="polite">
-<p class="hint on" id="mn-b-none">Hover over a choice to see what's inside. Use ← → or 1 / 2 / 3 to pick, Enter to open.</p>
+<p class="hint on" id="mn-b-none">Hover over a choice to see what's inside. Use ← → or 1–4 to pick, Enter to open.</p>
 <p id="mn-b-deck"><b>The pitch.</b> A short walkthrough for Medrunner leadership and the dev team: the problem, the six steps from discharge to public record, the privacy safeguards, and what it would take to build. Includes short clips of the playground in action.</p>
 <p id="mn-b-play"><b>The hands-on mockup.</b> Take a guided tour as the client, crew and team lead, then explore freely: switch scenarios, view the page as any role, and see every decision logged. Everything is simulated; nothing is sent anywhere.</p>
+<p id="mn-b-role"><b>The recruitment showcase.</b> Look what you can do with Medrunner: the roles on a rescue, what each is like and who it suits, plus a short FAQ for anyone thinking of joining. Not part of the rescue flow.</p>
 <p id="mn-b-cta"><b>The call to action.</b> A proposal to potentially replace step 1 in the playground: a pop-up at the end of an alert where the client rates the crew, gives kudos, and goes public or just says thanks.</p>
 </div>
-<p class="mn-ft">Showcase only. Not final, not exhaustive.</p>
+<p class="mn-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.5"/></svg><span><b>Four separate showcase ideas.</b> Each was built and is explored on its own, so they don’t link up yet. As we reach consensus and work through revisions and reviews, they’ll be brought together into one connected experience. Nothing here is final. <a href="playground-v2.html" style="color:#a7f3d0;font-weight:600;text-decoration:underline;text-underline-offset:3px">Try the integrated V2 flow →</a></span></p>
 </div>
 </main>
 <script>
@@ -94,7 +103,7 @@ bs.forEach((b,i)=>{b.addEventListener('mouseenter',()=>hl(i));b.addEventListener
 row.addEventListener('mouseleave',()=>{const a=bs.indexOf(document.activeElement);hl(a)});
 document.addEventListener('keydown',e=>{
  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();const n=cur<0?0:(cur+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+bs.length)%bs.length;bs[n].focus()}
- else if(['1','2','3'].includes(e.key)){e.preventDefault();bs[+e.key-1].focus()}});
+ else if(['1','2','3','4'].includes(e.key)){e.preventDefault();bs[+e.key-1].focus()}});
 addEventListener('pageshow',()=>hl(bs.indexOf(document.activeElement)));
 })();
 </script>

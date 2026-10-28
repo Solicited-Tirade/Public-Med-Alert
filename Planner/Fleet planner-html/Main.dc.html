@@ -17,7 +17,8 @@ body{margin:0}
 button{font-family:inherit}
 </style>
 </helmet>
-<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #1F2937; font-family: Inter, sans-serif; color: #E5E7EB">
+<div style="position: relative; width: {{vw}}px; height: {{vh}}px; overflow: hidden; background: #0d1522">
+<div style="position: absolute; left: {{fx}}px; top: {{fy}}px; width: 1440px; height: 900px; overflow: hidden; transform: scale({{fit}}); transform-origin: top left; background: #1F2937; font-family: Inter, sans-serif; color: #E5E7EB">
 
 <svg width="0" height="0" style="position: absolute" aria-hidden="true">
 <defs>
@@ -526,12 +527,13 @@ button{font-family:inherit}
 </div>
 
 </div>
+</div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
 class Component extends DCLogic {
 constructor(...args) {
 super(...args);
-this.state = { tab: 'fleet', open: true, req: {}, mode: 'plan', labels: true, viewAs: 'Logistics', q: '', tags: {}, sts: {}, collapsed: {}, tool: 0, summary: false, tpl: 0, sel: 'Kestrel_7', offs: {}, hist: [], assign: {}, zones: [], wps: {}, layout: 'Operation A', saved: false, note: '', meas: [], layers: { rings: true, paths: true, ghosts: true } };
+this.state = { tab: 'fleet', open: true, req: {}, mode: 'plan', labels: true, viewAs: 'Logistics', q: '', tags: {}, sts: {}, collapsed: {}, tool: 0, summary: false, tpl: 0, vw: 1440, vh: 900, sel: 'Kestrel_7', offs: {}, hist: [], assign: {}, zones: [], wps: {}, layout: 'Operation A', saved: false, note: '', meas: [], layers: { rings: true, paths: true, ghosts: true } };
 }
 renderVals() {
 const S = this.state;
@@ -893,7 +895,9 @@ l4: s.tip.indexOf('(') >= 0 ? s.tip.slice(s.tip.indexOf('(')) : ''
 });
 const zonesOut = S.zones;
 const wpsSel = S.wps[S.sel] || [];
+const fitS = Math.min(S.vw / 1440, S.vh / 900) || 1;
 return {
+vw: S.vw, vh: S.vh, fit: fitS, fx: (S.vw - 1440 * fitS) / 2, fy: (S.vh - 900 * fitS) / 2,
 sceneH, dockH,
 toolId: TOOL_IDS[S.tool], measStr: S.meas.join(','), metaJson: JSON.stringify(meta), zonesJson: JSON.stringify(zonesOut), wpsJson: JSON.stringify(wpsSel),
 layout: S.layout, saveLabel: S.saved ? 'Saved' : 'Save',
@@ -955,7 +959,13 @@ try { d = JSON.parse(localStorage.getItem(this.key(layout)) || '{}') || {}; } ca
 this.setState({ layout, offs: d.offs || {}, assign: d.assign || {}, zones: d.zones || [], wps: d.wps || {}, hist: [], meas: [] });
 }
 componentDidMount() {
+this.size = () => { try { this.setState({ vw: window.innerWidth || 1440, vh: window.innerHeight || 900 }); } catch (e) {} };
+this.size();
+try { window.addEventListener('resize', this.size); } catch (e) {}
 this.load(this.state.layout);
+}
+componentWillUnmount() {
+try { window.removeEventListener('resize', this.size); } catch (e) {}
 }
 flash(msg) {
 this.setState({ note: msg });

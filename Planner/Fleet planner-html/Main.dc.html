@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fleet planner</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Mohave:wght@700&amp;family=Oxanium:wght@500;700&amp;family=Quantico:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #1F2937; font-family: Inter, sans-serif; color: #E5E7EB">
+
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+<defs>
+<symbol id="fighter" viewBox="0 0 48 28">
+<g fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round">
+<polygon points="12,11 22,1 30,12" fill-opacity="0.7"></polygon>
+<polygon points="12,17 22,27 30,16" fill-opacity="0.4"></polygon>
+<polygon points="2,14 16,9 44,14 16,19" fill-opacity="0.55"></polygon>
+<polygon points="16,9 44,14 26,14" fill-opacity="0.95"></polygon>
+<polygon points="16,19 44,14 26,14" fill-opacity="0.3"></polygon>
+</g>
+</symbol>
+<symbol id="gunship" viewBox="0 0 64 36">
+<g fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round">
+<polygon points="14,14 30,3 40,15" fill-opacity="0.7"></polygon>
+<polygon points="14,22 30,33 40,21" fill-opacity="0.4"></polygon>
+<polygon points="4,18 20,10 58,18 20,26" fill-opacity="0.55"></polygon>
+<polygon points="20,10 58,18 34,18" fill-opacity="0.95"></polygon>
+<polygon points="20,26 58,18 34,18" fill-opacity="0.3"></polygon>
+<polygon points="26,7 33,7 36,12 28,12" fill-opacity="0.95"></polygon>
+<polygon points="26,29 33,29 36,24 28,24" fill-opacity="0.6"></polygon>
+</g>
+</symbol>
+<symbol id="scout" viewBox="0 0 52 30">
+<g fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round">
+<polygon points="10,15 26,2 34,14" fill-opacity="0.7"></polygon>
+<polygon points="10,15 26,28 34,16" fill-opacity="0.4"></polygon>
+<polygon points="2,15 22,10 50,15 22,20" fill-opacity="0.55"></polygon>
+<polygon points="22,10 50,15 30,15" fill-opacity="0.95"></polygon>
+<polygon points="22,20 50,15 30,15" fill-opacity="0.3"></polygon>
+</g>
+<circle cx="42" cy="15" r="2.6" fill="#F9FAFB"></circle>
+</symbol>
+<symbol id="medical" viewBox="0 0 52 32">
+<g fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round">
+<polygon points="16,4 36,4 40,8 12,8" fill-opacity="0.65"></polygon>
+<polygon points="2,16 12,8 40,8 50,16" fill-opacity="0.9"></polygon>
+<polygon points="2,16 12,24 40,24 50,16" fill-opacity="0.35"></polygon>
+</g>
+<path d="M24 10h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="#F9FAFB"></path>
+</symbol>
+<symbol id="cutlass" viewBox="0 0 52 32">
+<g fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round">
+<polygon points="14,10 24,2 34,10" fill-opacity="0.7"></polygon>
+<polygon points="14,22 24,30 34,22" fill-opacity="0.4"></polygon>
+<polygon points="4,10 40,10 50,16 40,22 4,22" fill-opacity="0.5"></polygon>
+<polygon points="4,10 40,10 50,16 4,16" fill-opacity="0.9"></polygon>
+</g>
+<circle cx="22" cy="16" r="5.5" fill="none" stroke="#F9FAFB" stroke-width="1.2"></circle>
+<path d="M22 12.5v7M18.5 16h7" stroke="#F9FAFB" stroke-width="1.4" fill="none"></path>
+</symbol>
+<symbol id="freight" viewBox="0 0 64 30">
+<g fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round">
+<polygon points="8,4 20,4 24,8 12,8" fill-opacity="0.8"></polygon>
+<polygon points="26,4 38,4 42,8 30,8" fill-opacity="0.8"></polygon>
+<polygon points="4,8 44,8 60,15 44,22 4,22" fill-opacity="0.5"></polygon>
+<polygon points="4,8 44,8 60,15 18,15" fill-opacity="0.9"></polygon>
+<polygon points="0,10 4,10 4,20 0,20" fill-opacity="0.95"></polygon>
+</g>
+</symbol>
+<symbol id="capital" viewBox="0 0 120 44">
+<g fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round">
+<polygon points="20,10 34,2 40,12" fill-opacity="0.7"></polygon>
+<polygon points="20,34 34,42 40,32" fill-opacity="0.4"></polygon>
+<polygon points="2,22 26,12 108,18 118,22 108,26 26,32" fill-opacity="0.5"></polygon>
+<polygon points="26,12 108,18 118,22 60,22" fill-opacity="0.9"></polygon>
+<polygon points="26,32 108,26 118,22 60,22" fill-opacity="0.3"></polygon>
+<polygon points="50,6 80,8 86,15 44,13" fill-opacity="0.75"></polygon>
+</g>
+</symbol>
+</defs>
+</svg>
+
+<div style="position: absolute; left: 0; top: 56px; width: 1440px; height: {{sceneH}}px; overflow: hidden">
+<dc-import name="Scene" w="1440" h="{{sceneH}}" ghosts="{{ghosts}}" labels="{{labelsProp}}" dim="{{dimList}}" sel="{{selH}}" offs="{{offsJson}}" on-pick="{{onPick}}" on-move="{{onMove}}" on-zone="{{onZone}}" on-wp="{{onWp}}" tool="{{toolId}}" meas="{{measStr}}" meta="{{metaJson}}" zones="{{zonesJson}}" wps="{{wpsJson}}" rings="{{ringsProp}}" paths="{{pathsProp}}" hint-size="1440px,804px"></dc-import>
+
+<div style="position: absolute; left: 16px; top: 12px; width: 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; padding: 6px; border-radius: 8px; background: rgba(13,21,34,0.92); border: 1px solid #334155">
+<sc-for list="{{tools}}" as="t" hint-placeholder-count="8">
+<button type="button" onClick="{{t.pick}}" aria-label="{{t.label}}" title="{{t.label}}" style="width: 34px; height: 34px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: {{t.color}}; border: 1px solid {{t.border}}; background: {{t.bg}}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.d}}"></path></svg>
+</button>
+</sc-for>
+</div>
+
+<div style="position: absolute; left: 80px; top: 12px; display: flex; align-items: center; gap: 6px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; background: rgba(13,21,34,0.92); border: 1px solid #334155">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Role</span>
+<sc-for list="{{roleChips}}" as="c" hint-placeholder-count="7">
+<button type="button" onClick="{{c.pick}}" style="height: 26px; padding: 0 10px; border-radius: 13px; font-size: 12px; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+<span style="width: 1px; height: 20px; background: #374151; margin: 0 6px"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Status</span>
+<sc-for list="{{statusChips}}" as="c" hint-placeholder-count="5">
+<button type="button" onClick="{{c.pick}}" aria-label="{{c.label}}" aria-pressed="{{c.on}}" title="{{c.label}}" style="width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid {{c.border}}; background: {{c.bg}}"><span style="width: 8px; height: 8px; background: {{c.color}}"></span></button>
+</sc-for>
+</div>
+
+<div style="position: absolute; left: 80px; top: 58px; height: 24px; display: flex; align-items: center; padding: 0 10px; border-radius: 12px; background: rgba(13,21,34,0.88); border: 1px solid #334155; font-size: 11px; color: #D1D5DB; white-space: nowrap">{{hint}}</div>
+
+<div style="position: absolute; left: 80px; bottom: 12px; display: flex; align-items: center; gap: 8px">
+<div style="display: flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 15px; background: rgba(13,21,34,0.92); border: 1px solid #334155; font-family: Quantico, sans-serif; font-size: 10px; letter-spacing: 0.1em; color: #9CA3AF; white-space: nowrap">CRUSADER ORBIT</div>
+<div style="display: flex; height: 30px; box-sizing: border-box; border-radius: 6px; overflow: hidden; background: rgba(13,21,34,0.92); border: 1px solid #334155">
+<sc-for list="{{views}}" as="v" hint-placeholder-count="3">
+<button type="button" style="padding: 0 12px; border: 0; font-size: 12px; font-weight: 600; cursor: pointer; color: {{v.color}}; background: {{v.bg}}">{{v.label}}</button>
+</sc-for>
+</div>
+<div style="display: flex; height: 30px; box-sizing: border-box; border-radius: 6px; overflow: hidden; background: rgba(13,21,34,0.92); border: 1px solid #334155">
+<sc-for list="{{modes}}" as="v" hint-placeholder-count="2">
+<button type="button" onClick="{{v.pick}}" style="padding: 0 12px; border: 0; font-size: 12px; font-weight: 600; cursor: pointer; color: {{v.color}}; background: {{v.bg}}">{{v.label}}</button>
+</sc-for>
+</div>
+<select aria-label="Saved layout" value="{{layout}}" onChange="{{onLayout}}" style="height: 30px; box-sizing: border-box; padding: 0 8px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: inherit; color: #E5E7EB; background: rgba(13,21,34,0.92); border: 1px solid #334155">
+<option>Operation A</option>
+<option>Operation B</option>
+<option>Training run</option>
+</select>
+<sc-if value="{{isPlan}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{undo}}" style="height: 30px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: {{undoColor}}; background: rgba(13,21,34,0.92); border: 1px solid #334155">Undo</button>
+</sc-if>
+<sc-if value="{{isPlan}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{saveNow}}" style="height: 30px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #111827; background: #F59E0B; border: 1px solid #F59E0B">{{saveLabel}}</button>
+</sc-if>
+<sc-if value="{{isPlan}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{openSummary}}" style="height: 30px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #34D399; background: rgba(13,21,34,0.92); border: 1px solid rgba(52,211,153,0.6)">Commit plan</button>
+</sc-if>
+<sc-if value="{{isLive}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; border-radius: 15px; background: rgba(13,21,34,0.92); border: 1px solid rgba(49,196,141,0.6); font-size: 12px; font-weight: 600; color: #31C48D; white-space: nowrap"><span style="width: 8px; height: 8px; border-radius: 4px; background: #31C48D"></span>Live fleet</div>
+</sc-if>
+</div>
+
+<sc-if value="{{summary}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 400px; top: 110px; width: 420px; box-sizing: border-box; padding: 16px; border-radius: 10px; background: #111827; border: 1px solid #F59E0B; box-shadow: 0 12px 40px rgba(0,0,0,0.5)">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 18px">Commit plan</div>
+<div style="font-size: 12px; color: #9CA3AF; margin: 2px 0 10px">Review the changes before they go live.</div>
+<sc-for list="{{changes}}" as="c" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 8px; height: 28px; font-size: 12px; color: #E5E7EB; border-bottom: 1px solid #1F2937">
+<span style="width: 8px; height: 8px; background: {{c.color}}"></span>
+<span style="flex: 1">{{c.text}}</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{c.n}}</span>
+</div>
+</sc-for>
+<div style="display: flex; gap: 8px; margin-top: 14px; justify-content: flex-end">
+<button type="button" onClick="{{closeSummary}}" style="height: 32px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Cancel</button>
+<button type="button" onClick="{{confirmSummary}}" style="height: 32px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #111827; background: #F59E0B; border: 1px solid #F59E0B">Confirm and go live</button>
+</div>
+</div>
+</sc-if>
+
+<div style="position: absolute; left: 1096px; top: 12px; width: 328px; height: {{panelH}}px; box-sizing: border-box; display: flex; flex-direction: column; border-radius: 8px; background: rgba(17,24,39,0.96); border: 1px solid #374151; overflow: hidden">
+<div style="display: flex; gap: 2px; padding: 6px; border-bottom: 1px solid #374151; background: #0d1522">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="7">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="flex: 1; height: 30px; padding: 0; border-radius: 5px; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; cursor: pointer; color: {{t.color}}; border: 1px solid {{t.border}}; background: {{t.bg}}">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; padding: 12px">
+
+<sc-if value="{{isFleet}}" hint-placeholder-val="{{ true }}">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 4px 8px">
+<span style="width: 8px; height: 8px; background: #22D3EE; box-shadow: 0 0 8px #22D3EE"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Fleet structure</span>
+<span style="flex: 1"></span>
+<span style="font-family: Quantico, sans-serif; font-size: 10px; color: #9CA3AF; letter-spacing: 0.08em">14 / 50 SHIPS</span>
+</div>
+<sc-for list="{{tree}}" as="n" hint-placeholder-count="27">
+<button type="button" onClick="{{n.pick}}" style="display: flex; align-items: center; gap: 8px; width: 100%; height: 26px; box-sizing: border-box; border: 0; border-radius: 4px; text-align: left; cursor: pointer; padding: 0 6px 0 {{n.pad}}px; background: {{n.bg}}; opacity: {{n.op}}">
+<span style="width: 8px; height: 8px; flex: none; background: {{n.dot}}"></span>
+<span style="flex: 1; min-width: 0; font-size: 12px; font-weight: {{n.weight}}; color: {{n.color}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{n.title}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #9CA3AF">{{n.right}}</span>
+<span style="width: 7px; height: 7px; flex: none; border-radius: 4px; background: {{n.st}}"></span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{isShip}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; background: {{cur.color}}"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 17px">{{cur.name}}</span>
+</div>
+<div style="font-size: 12px; color: #9CA3AF; margin: 2px 0 10px 18px">{{cur.sub}}</div>
+<div style="position: relative; height: 96px; border-radius: 6px; background: #0d1522; border: 1px solid #334155; display: flex; align-items: center; justify-content: center">
+<svg width="140" height="86" role="img" aria-label="Low-poly hull preview" style="color: {{cur.color}}"><use href="{{cur.href}}" width="140" height="86"></use></svg>
+<span style="position: absolute; left: 8px; top: 6px; font-family: Quantico, sans-serif; font-size: 9px; letter-spacing: 0.1em; color: #9CA3AF">LOW-POLY PREVIEW</span>
+</div>
+<div style="margin-top: 8px">
+<sc-for list="{{shipFacts}}" as="f" hint-placeholder-count="8">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; border-bottom: 1px solid #1F2937; font-size: 12px">
+<span style="color: #9CA3AF">{{f.k}}</span>
+<span style="display: flex; align-items: center; gap: 6px; text-align: right; font-family: Oxanium, sans-serif; font-weight: 500; font-size: 14px; color: #F9FAFB"><span style="width: 8px; height: 8px; background: {{f.dot}}"></span>{{f.v}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px">
+<button type="button" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #111827; background: #F59E0B; border: 1px solid #F59E0B">Set element lead</button>
+<button type="button" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Reposition</button>
+<button type="button" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Leave seat</button>
+<button type="button" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Swap seat</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px">
+<button type="button" onClick="{{clearWp}}" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Clear waypoints</button>
+<button type="button" onClick="{{resetPos}}" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Reset position</button>
+</div>
+<div style="font-size: 11px; line-height: 1.4; color: #9CA3AF; margin-top: 8px">Waypoints: choose Set rally point, then click the map. Up to 6 per ship.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isSeats}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px">
+<span style="width: 8px; height: 8px; background: #60A5FA; box-shadow: 0 0 8px #60A5FA"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Crew by squadron</span>
+<span style="flex: 1"></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px; color: #F9FAFB">34 / 61</span>
+</div>
+<sc-for list="{{seatBars}}" as="q" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 8px; height: 30px">
+<span style="width: 74px; font-size: 12px; color: #D1D5DB">{{q.name}}</span>
+<div style="flex: 1; height: 10px; border-radius: 2px; background: #1F2937; overflow: hidden"><div style="width: {{q.pct}}%; height: 100%; background: {{q.color}}"></div></div>
+<span style="width: 40px; text-align: right; font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">{{q.val}}</span>
+</div>
+</sc-for>
+<div style="display: flex; align-items: center; justify-content: space-between; margin: 16px 0 8px">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Crew by ship</span>
+<span style="font-size: 11px; color: #9CA3AF">Requests pending <span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #FBBF24">{{reqCount}}</span></span>
+</div>
+<sc-for list="{{crews}}" as="c" hint-placeholder-count="6">
+<div style="box-sizing: border-box; border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; {{c.box}}">
+<div style="display: flex; align-items: baseline; gap: 6px">
+<span style="width: 8px; height: 8px; background: {{c.color}}; align-self: center"></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 13px; color: #F9FAFB">{{c.handle}}</span>
+<span style="flex: 1; font-size: 11px; color: #9CA3AF">{{c.squad}}</span>
+</div>
+<div style="font-size: 12px; line-height: 1.4; color: #E5E7EB; margin-top: 4px"><span style="font-weight: 600">{{c.ship}}, {{c.crew}}</span> <span style="color: #9CA3AF">({{c.seated}})</span></div>
+<sc-if value="{{c.hasOpen}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px">
+<span style="font-size: 11px; color: #9CA3AF">Open:</span>
+<sc-for list="{{c.open}}" as="o" hint-placeholder-count="2">
+<button type="button" onClick="{{o.pick}}" style="height: 24px; padding: 0 10px; border-radius: 12px; font-size: 11px; cursor: pointer; color: {{o.color}}; border: 1px solid {{o.border}}; background: {{o.bg}}">{{o.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<div style="margin-top: 4px; padding: 10px; border-radius: 6px; border: 1px solid #374151; background: #0d1522">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Seat requests</div>
+<div style="font-size: 11px; line-height: 1.4; color: #9CA3AF; margin: 4px 0 6px">The ship owner and the lead are notified. The owner, element lead or squadron lead can approve. Seat roles are locked to each ship.</div>
+<sc-for list="{{pending}}" as="p" hint-placeholder-count="0">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 30px; font-size: 12px; color: #E5E7EB">
+<span style="flex: 1">{{p.text}}</span>
+<button type="button" onClick="{{p.approve}}" style="height: 24px; padding: 0 10px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; color: #34D399; border: 1px solid rgba(52,211,153,0.6); background: transparent">Approve</button>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isReady}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px">
+<span style="width: 8px; height: 8px; background: #34D399; box-shadow: 0 0 8px #34D399"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Fleet status</span>
+<span style="flex: 1"></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 18px; color: #31C48D">9 / 14</span>
+</div>
+<div style="display: flex; height: 14px; border-radius: 3px; overflow: hidden; gap: 2px">
+<sc-for list="{{status}}" as="s" hint-placeholder-count="5">
+<div style="width: {{s.pct}}%; background: {{s.color}}"></div>
+</sc-for>
+</div>
+<div style="font-size: 11px; color: #9CA3AF; margin: 6px 0 14px">Ships ready or active</div>
+<sc-for list="{{status}}" as="s" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 8px; height: 30px">
+<span style="width: 8px; height: 8px; background: {{s.color}}"></span>
+<span style="width: 74px; font-size: 12px; color: #D1D5DB">{{s.label}}</span>
+<div style="flex: 1; height: 10px; border-radius: 2px; background: #1F2937; overflow: hidden"><div style="width: {{s.bar}}%; height: 100%; background: {{s.color}}"></div></div>
+<span style="width: 22px; text-align: right; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 13px; color: #F9FAFB">{{s.n}}</span>
+</div>
+</sc-for>
+<div style="margin-top: 14px; padding: 10px; border-radius: 6px; border: 1px solid rgba(251,191,36,0.38); background: linear-gradient(180deg, rgba(251,191,36,0.08), rgba(251,191,36,0.02))">
+<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px">
+<span style="width: 7px; height: 7px; background: #FBBF24; box-shadow: 0 0 6px #FBBF24"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #FBBF24">Needs attention</span>
+</div>
+<sc-for list="{{attention}}" as="a" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 12px; color: #E5E7EB">
+<span style="width: 7px; height: 7px; flex: none; border-radius: 4px; background: {{a.dot}}"></span>
+<span>{{a.text}}</span>
+</div>
+</sc-for>
+</div>
+<div style="margin-top: 12px; padding: 10px; border-radius: 6px; border: 1px solid rgba(63,131,248,0.38); background: linear-gradient(180deg, rgba(63,131,248,0.08), rgba(63,131,248,0.02))">
+<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px">
+<span style="width: 7px; height: 7px; background: #3F83F8; box-shadow: 0 0 6px #3F83F8"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #93C5FD">{{histTitle}}</span>
+</div>
+<sc-for list="{{history}}" as="h" hint-placeholder-count="5">
+<div style="min-height: 26px; display: flex; align-items: center; font-size: 12px; color: #E5E7EB">{{h.text}}</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isLayers}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Options</span>
+<span style="font-size: 11px; color: #9CA3AF">Map layers</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="box-sizing: border-box; border-radius: 6px; padding: 8px; {{g.box}}">
+<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px">
+<span style="width: 7px; height: 7px; background: {{g.color}}; box-shadow: 0 0 6px {{g.color}}"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: {{g.color}}">{{g.name}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{g.opts}}" as="o" hint-placeholder-count="3">
+<button type="button" onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="height: 26px; padding: 0 10px; border-radius: 13px; font-size: 11px; cursor: pointer; color: {{o.color}}; border: 1px solid {{o.border}}; background: {{o.bg}}">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px">
+<button type="button" onClick="{{clearZones}}" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Clear zones</button>
+<button type="button" onClick="{{resetAll}}" style="height: 32px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Reset layout</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isAdd}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px">
+<span style="width: 8px; height: 8px; background: #A78BFA; box-shadow: 0 0 8px #A78BFA"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Add ship</span>
+<span style="flex: 1"></span>
+<span style="font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">14 / 50</span>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; height: 32px; box-sizing: border-box; padding: 0 10px; border-radius: 6px; background: #0d1522; border: 1px solid #374151">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-5-5"></path></svg>
+<input type="text" placeholder="Search ships" aria-label="Search ships" style="flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: #E5E7EB; font-size: 12px; font-family: inherit">
+</label>
+<label style="display: flex; flex-direction: column; gap: 4px; margin: 10px 0; font-size: 11px; color: #9CA3AF">Add to element
+<select aria-label="Target element" style="height: 30px; box-sizing: border-box; padding: 0 8px; border-radius: 6px; background: #0d1522; color: #E5E7EB; border: 1px solid #374151; font-size: 12px; font-family: inherit">
+<option>Element 1-1 · Lifeline</option>
+<option>Element 1-2 · Lifeline</option>
+<option>Element 2-1 · Vanguard</option>
+<option>Element 2-2 · Vanguard</option>
+<option>Element 3-1 · Logistics</option>
+<option>Element 3-2 · Logistics</option>
+<option>Element 4-1 · Overwatch</option>
+</select>
+</label>
+<sc-for list="{{catalog}}" as="s" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 44px; border-bottom: 1px solid #1F2937">
+<svg width="34" height="22" aria-hidden="true" style="flex: none; color: #9CA3AF"><use href="{{s.href}}" width="34" height="22"></use></svg>
+<div style="flex: 1; min-width: 0; line-height: 1.3">
+<div style="font-size: 13px; font-weight: 600; color: #F9FAFB">{{s.name}}</div>
+<div style="font-size: 11px; color: #9CA3AF">{{s.role}} · {{s.seats}}</div>
+</div>
+<button type="button" style="height: 26px; padding: 0 12px; border-radius: 13px; font-size: 11px; font-weight: 600; cursor: pointer; color: #A78BFA; border: 1px solid rgba(167,139,250,0.6); background: transparent">Add</button>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{isNotify}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Notify</span>
+<span style="font-size: 11px; color: #9CA3AF">Direct message on change</span>
+</div>
+<sc-for list="{{rules}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; justify-content: space-between; height: 32px; font-size: 12px; color: #E5E7EB">
+<span>{{r.label}}</span>
+<button type="button" role="switch" aria-checked="{{r.on}}" aria-label="{{r.label}}" style="position: relative; width: 30px; height: 16px; padding: 0; border: 0; border-radius: 8px; cursor: pointer; background: {{r.track}}"><span style="position: absolute; top: 2px; left: {{r.knob}}px; width: 12px; height: 12px; border-radius: 6px; background: #F9FAFB"></span></button>
+</div>
+</sc-for>
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF; margin: 12px 0 6px">Templates</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{templates}}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="height: 26px; padding: 0 10px; border-radius: 13px; font-size: 11px; cursor: pointer; color: {{t.color}}; border: 1px solid {{t.border}}; background: {{t.bg}}">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 11px; color: #9CA3AF; margin-top: 8px">Limit: one message per person every 10 minutes.</div>
+<div style="margin-top: 12px; border-radius: 8px; background: #313338; border: 1px solid #1e1f22; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; background: #2b2d31; border-bottom: 1px solid #1e1f22">
+<span style="font-size: 14px; color: #949ba4">@</span>
+<span style="font-size: 13px; font-weight: 600; color: #F2F3F5">Kestrel_7</span>
+<span style="width: 8px; height: 8px; border-radius: 4px; background: #31C48D"></span>
+<span style="flex: 1"></span>
+<span style="font-family: Quantico, sans-serif; font-size: 9px; letter-spacing: 0.1em; color: #949ba4">PREVIEW</span>
+</div>
+<div style="display: flex; gap: 10px; padding: 12px">
+<div style="width: 30px; height: 30px; flex: none; border-radius: 15px; background: #F59E0B; color: #111827; display: flex; align-items: center; justify-content: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px">M</div>
+<div style="font-size: 12px; line-height: 1.45">
+<div><span style="font-weight: 600; color: #F2F3F5">Marrow_6</span> <span style="font-size: 10px; color: #949ba4">now</span></div>
+<div style="color: #dbdee1">{{dm}}</div>
+</div>
+</div>
+<div style="margin: 0 12px 12px; height: 30px; border-radius: 6px; background: #383a40; display: flex; align-items: center; padding: 0 10px; font-size: 12px; color: #949ba4">Message @Kestrel_7</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; top: {{dockTop}}px; width: 1440px; height: {{dockH}}px; box-sizing: border-box; padding: {{dockPad}}; background: #111827; border-top: 1px solid #334155; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 20px; height: 32px">
+<button type="button" onClick="{{toggleRoster}}" aria-expanded="{{rosterOpen}}" style="display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px 0 8px; border-radius: 6px; cursor: pointer; background: transparent; border: 1px solid #374151; color: #F9FAFB">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{chev}}"></path></svg>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Fleet One roster</span>
+</button>
+<span style="font-family: Quantico, sans-serif; font-size: 10px; color: #9CA3AF; letter-spacing: 0.08em">SQUADRON · ELEMENT · SHIP</span>
+<div style="flex: 1"></div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Phase</span>
+<sc-for list="{{phases}}" as="p" hint-placeholder-count="5">
+<span style="height: 22px; display: flex; align-items: center; padding: 0 10px; border-radius: 11px; font-size: 11px; color: {{p.color}}; border: 1px solid {{p.border}}; background: {{p.bg}}">{{p.label}}</span>
+</sc-for>
+</div>
+<span style="width: 1px; height: 20px; background: #374151"></span>
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="display: flex; width: 150px; height: 12px; border-radius: 3px; overflow: hidden; gap: 2px">
+<sc-for list="{{status}}" as="s" hint-placeholder-count="5">
+<div style="width: {{s.pct}}%; background: {{s.color}}"></div>
+</sc-for>
+</div>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px; color: #31C48D">9 / 14</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">Crew 34 / 61</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">Ships 14 / 50</span>
+</div>
+</div>
+<sc-if value="{{rosterOpen}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 8px">
+<sc-for list="{{cols}}" as="col" hint-placeholder-count="5">
+<div onDragOver="{{col.over}}" onDrop="{{col.drop}}" style="box-sizing: border-box; border-radius: 6px; padding: 8px; min-height: 120px; {{col.box}}">
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 8px; height: 8px; background: {{col.color}}; box-shadow: 0 0 6px {{col.color}}"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 14px; color: {{col.color}}">{{col.name}}</span>
+<span style="flex: 1"></span>
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #9CA3AF">Crew {{col.seats}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; height: 17px; font-size: 11px">
+<span style="width: 46px; font-weight: 600; color: #FBBF24">Lead:</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{col.lead}}</span>
+<span style="flex: 1; min-width: 0; text-align: right; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{col.leadShip}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; height: 17px; font-size: 11px">
+<span style="width: 46px; font-weight: 600; color: #93C5FD">Deputy:</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{col.deputy}}</span>
+<span style="flex: 1; min-width: 0; text-align: right; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{col.deputyShip}}</span>
+</div>
+<div style="height: 4px; border-radius: 2px; background: #1F2937; overflow: hidden; margin: 2px 0 4px"><div style="width: {{col.pct}}%; height: 100%; background: {{col.color}}"></div></div>
+<sc-for list="{{col.els}}" as="el" hint-placeholder-count="2">
+<div onDragOver="{{el.over}}" onDrop="{{el.drop}}" style="margin-top: 4px; padding-bottom: 2px; border-radius: 4px">
+<div style="font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: {{el.color}}; margin-bottom: 3px">{{el.label}}</div>
+<div style="display: flex; flex-direction: column; gap: 3px">
+<sc-for list="{{el.ships}}" as="sh" hint-placeholder-count="2">
+<button type="button" draggable="true" onDragStart="{{sh.drag}}" onClick="{{sh.pick}}" title="{{sh.tip}}" style="display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; font-family: inherit; cursor: pointer; height: 26px; box-sizing: border-box; padding: 0 8px 0 5px; border-radius: 5px; opacity: {{sh.op}}; background: {{sh.bg}}; border: 1px solid {{sh.border}}">
+<svg width="26" height="18" aria-hidden="true" style="flex: none; color: {{col.color}}"><use href="{{sh.href}}" width="26" height="18"></use></svg>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; color: #F9FAFB; white-space: nowrap">{{sh.handle}}</span>
+<span style="flex: 1; min-width: 0; font-size: 11px; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{sh.name}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #D1D5DB">{{sh.crew}}</span>
+<span style="width: 7px; height: 7px; flex: none; border-radius: 4px; background: {{sh.st}}"></span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<div style="position: absolute; left: 0; top: 0; width: 1440px; height: 56px; box-sizing: border-box; display: flex; align-items: center; gap: 20px; padding: 0 16px; background: #0d1522; border-bottom: 1px solid #334155">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><polygon points="13,2 23,8 23,18 13,24 3,18 3,8" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"></polygon><polygon points="13,8 18,11 18,15 13,18 8,15 8,11" fill="#FBBF24"></polygon></svg>
+<div style="display: flex; flex-direction: column; line-height: 1.05">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 20px; color: #F9FAFB">Fleet Layout</span>
+<span style="font-size: 11px; color: #9CA3AF">Org staff · one org</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">View as</span>
+<sc-for list="{{roles}}" as="r" hint-placeholder-count="5">
+<button type="button" onClick="{{r.pick}}" aria-pressed="{{r.on}}" style="height: 32px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: {{r.color}}; border: 1px solid {{r.border}}; background: {{r.bg}}">{{r.label}}</button>
+</sc-for>
+</div>
+<div style="flex: 1"></div>
+<label style="display: flex; align-items: center; gap: 8px; width: 280px; height: 34px; box-sizing: border-box; padding: 0 10px; border-radius: 6px; background: #111827; border: 1px solid #374151">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-5-5"></path></svg>
+<input type="text" onInput="{{onSearch}}" placeholder="Search ships, handles, squadrons" aria-label="Search" style="flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: #E5E7EB; font-size: 12px; font-family: inherit">
+</label>
+<div style="display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 12px 0 6px; border-radius: 19px; background: #111827; border: 1px solid #374151">
+<div style="position: relative; width: 28px; height: 28px; border-radius: 14px; background: #F59E0B; color: #111827; display: flex; align-items: center; justify-content: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px">M<span style="position: absolute; right: -1px; bottom: -1px; width: 9px; height: 9px; border-radius: 5px; background: #31C48D; border: 2px solid #111827"></span></div>
+<div style="display: flex; flex-direction: column; line-height: 1.1">
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 13px">Marrow_6</span>
+<span style="font-size: 10px; color: #9CA3AF">Logistics and Operations</span>
+</div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+constructor(...args) {
+super(...args);
+this.state = { tab: 'fleet', open: true, req: {}, mode: 'plan', labels: true, viewAs: 'Logistics', q: '', tags: {}, sts: {}, collapsed: {}, tool: 0, summary: false, tpl: 0, sel: 'Kestrel_7', offs: {}, hist: [], assign: {}, zones: [], wps: {}, layout: 'Operation A', saved: false, note: '', meas: [], layers: { rings: true, paths: true, ghosts: true } };
+}
+renderVals() {
+const S = this.state;
+const tab = S.tab;
+const open = S.open;
+const mode = S.mode;
+const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)).join(',');
+const box = (h) => 'border: 1px solid rgba(' + rgb(h) + ',0.38); background: linear-gradient(180deg, rgba(' + rgb(h) + ',0.08), rgba(' + rgb(h) + ',0.02));';
+const ST = { Ready: '#31C48D', Mustering: '#FBBF24', Active: '#3F83F8', RTB: '#9CA3AF', Refitting: '#F05252' };
+const C = '#22D3EE', V = '#F87171', L = '#FB923C', O = '#A78BFA', K = '#60A5FA';
+const HULL = { 'Idris-P': '#capital', 'Perseus': '#gunship', 'Gladius': '#fighter', 'Terrapin': '#scout', 'Apollo Medivac': '#medical', 'Cutlass Red': '#cutlass', 'Caterpillar': '#freight' };
+
+const SHIPS = [
+['Marrow_6', 'Idris-P', 'Capital', '12/28', 'Command', 'CMD', 'Ready', 'Idris-P, 12/28 (Captain/Pilot/Co-Pilot/Comms/Tactical/Science)'],
+['Tessel', 'Cutlass Red', 'Specialized', '2/2', 'Lifeline', '1-1', 'Ready', 'Cutlass Red, 2/2 (Pilot/Co-Pilot)'],
+['Kestrel_7', 'Apollo Medivac', 'Specialized', '2/2', 'Lifeline', '1-1', 'Active', 'Apollo Medivac, 2/2 (Pilot/Medic)'],
+['Pellam', 'Apollo Medivac', 'Specialized', '1/2', 'Lifeline', '1-2', 'Ready', 'Apollo Medivac, 1/2 (Pilot)'],
+['Dovetail', 'Cutlass Red', 'Specialized', '1/2', 'Lifeline', '1-2', 'Mustering', 'Cutlass Red, 1/2 (Pilot)'],
+['Brightwater', 'Perseus', 'Gunships', '4/6', 'Vanguard', '2-1', 'Ready', 'Perseus, 4/6 (Pilot/Top Turret/Bottom Turret/Torpedo Console)'],
+['Corvid_3', 'Gladius', 'Fighters', '1/1', 'Vanguard', '2-1', 'Ready', 'Gladius, 1/1 (Pilot)'],
+['Hollis', 'Gladius', 'Fighters', '1/1', 'Vanguard', '2-2', 'Mustering', 'Gladius, 1/1 (Pilot)'],
+['Nyx_Runner', 'Gladius', 'Fighters', '0/1', 'Vanguard', '2-2', 'Refitting', 'Gladius, 0/1 (no crew)'],
+['Sable_Run', 'Caterpillar', 'Cargo', '3/4', 'Logistics', '3-1', 'Active', 'Caterpillar, 3/4 (Pilot/Engineering/Tractor Beam)'],
+['Orrin', 'Caterpillar', 'Cargo', '2/4', 'Logistics', '3-1', 'Mustering', 'Caterpillar, 2/4 (Pilot/Engineering)'],
+['Vesper_4', 'Caterpillar', 'Cargo', '2/4', 'Logistics', '3-2', 'RTB', 'Caterpillar, 2/4 (Pilot/Engineering)'],
+['Okapi_9', 'Terrapin', 'Exploration', '2/2', 'Overwatch', '4-1', 'Active', 'Terrapin, 2/2 (Pilot/Turret)'],
+['Lumen_2', 'Terrapin', 'Exploration', '1/2', 'Overwatch', '4-1', 'Ready', 'Terrapin, 1/2 (Pilot)']
+].map(([handle, name, role, crew, squad, el, status, tip]) => ({ handle, name, role, crew, squad, el, status, tip }));
+const LEADS0 = { Command: ['Marrow_6', 'Brightwater'], Lifeline: ['Tessel', 'Pellam'], Vanguard: ['Brightwater', 'Corvid_3'], Logistics: ['Sable_Run', 'Orrin'], Overwatch: ['Okapi_9', 'Lumen_2'] };
+const SQ = [['Command', K], ['Lifeline', C], ['Vanguard', V], ['Logistics', L], ['Overwatch', O]];
+SHIPS.forEach((s) => { const a = S.assign[s.handle]; if (a) { s.squad = a[0]; s.el = a[1]; } });
+const LEADS = {};
+SQ.forEach(([n]) => {
+const inSq = SHIPS.filter((s) => s.squad === n).map((s) => s.handle);
+const d = LEADS0[n];
+const l = inSq.indexOf(d[0]) >= 0 ? d[0] : (inSq[0] || null);
+const dep = (inSq.indexOf(d[1]) >= 0 && d[1] !== l) ? d[1] : (inSq.filter((h) => h !== l)[0] || null);
+LEADS[n] = [l, dep];
+});
+const SQN = { Command: 'CMD', Lifeline: '1', Vanguard: '2', Logistics: '3', Overwatch: '4' };
+const byH = {};
+SHIPS.forEach((s) => { byH[s.handle] = s; });
+const sum = (list) => {
+let a = 0, b = 0;
+list.forEach((s) => { const p = s.crew.split('/'); a += +p[0]; b += +p[1]; });
+return [a, b];
+};
+
+const q = S.q.trim().toLowerCase();
+const tagOn = Object.keys(S.tags).filter((k) => S.tags[k]);
+const stsOn = Object.keys(S.sts).filter((k) => S.sts[k]);
+const viewAs = S.viewAs;
+const visible = (s) => {
+if (viewAs === 'Squadron Lead' && s.squad !== 'Lifeline') return false;
+if (viewAs === 'Element Lead' && !(s.squad === 'Lifeline' && s.el === '1-1')) return false;
+if (viewAs === 'Pilot' && s.handle !== 'Kestrel_7') return false;
+if (q && (s.handle + ' ' + s.name + ' ' + s.squad).toLowerCase().indexOf(q) < 0) return false;
+if (tagOn.length && tagOn.indexOf(s.role) < 0) return false;
+if (stsOn.length && stsOn.indexOf(s.status) < 0) return false;
+return true;
+};
+const dimList = SHIPS.filter((s) => !visible(s)).map((s) => s.handle).join(',');
+
+const sceneH = open ? 548 : 804;
+const dockH = 900 - 56 - sceneH;
+const tabDefs = [['fleet', 'Fleet'], ['ship', 'Ship'], ['seats', 'Seats'], ['ready', 'Status'], ['layers', 'Layers'], ['notify', 'Notify'], ['add', 'Add']];
+const tabs = tabDefs.map(([id, label]) => ({
+label,
+on: tab === id ? 'true' : 'false',
+color: tab === id ? '#FBBF24' : '#9CA3AF',
+border: tab === id ? '#F59E0B' : 'transparent',
+bg: tab === id ? 'rgba(245,158,11,0.16)' : 'transparent',
+pick: () => this.setState({ tab: id })
+}));
+
+const roles = ['Fleet Commander', 'Squadron Lead', 'Element Lead', 'Pilot', 'Logistics'].map((label) => {
+const on = viewAs === label;
+return {
+label,
+on: on ? 'true' : 'false',
+color: on ? '#FBBF24' : '#9CA3AF',
+border: on ? '#F59E0B' : '#374151',
+bg: on ? 'rgba(245,158,11,0.16)' : 'transparent',
+pick: () => this.setState({ viewAs: label })
+};
+});
+
+const row = (pad, dot, title, right, o = {}) => ({
+pad, dot, title, right,
+st: o.st ? ST[o.st] : 'transparent',
+weight: o.sel ? 600 : (pad < 40 ? 600 : 400),
+color: o.sel ? '#FBBF24' : (pad < 40 ? '#F9FAFB' : '#D1D5DB'),
+bg: o.sel ? 'rgba(245,158,11,0.14)' : 'transparent',
+op: o.op === undefined ? 1 : o.op,
+pick: o.pick || (() => {})
+});
+const tree = [row(8, '#F59E0B', 'Fleet One', 'Cmdr: Marrow_6')];
+SQ.forEach(([name, color]) => {
+const collapsed = !!S.collapsed[name];
+const ships = SHIPS.filter((s) => s.squad === name);
+const lead = LEADS[name][0];
+tree.push(row(20, color, (collapsed ? '▸ ' : '▾ ') + (name === 'Command' ? 'Fleet Command' : name), 'Lead: ' + lead, {
+pick: () => this.setState({ collapsed: Object.assign({}, S.collapsed, { [name]: !collapsed }) })
+}));
+if (collapsed) return;
+const els = [];
+ships.forEach((s) => { if (els.indexOf(s.el) < 0) els.push(s.el); });
+els.forEach((el) => {
+const inEl = ships.filter((s) => s.el === el);
+if (name !== 'Command') tree.push(row(34, color, 'Element ' + el, 'Lead: ' + inEl[0].handle));
+inEl.forEach((s) => {
+tree.push(row(48, s.handle === S.sel ? '#FBBF24' : color, s.name, s.handle + ' · ' + s.crew, { st: s.status, sel: s.handle === S.sel, op: visible(s) ? 1 : 0.3, pick: () => this.setState({ sel: s.handle }) }));
+});
+});
+});
+
+const counts = {};
+Object.keys(ST).forEach((k) => { counts[k] = SHIPS.filter((s) => s.status === k).length; });
+const status = Object.keys(counts).map((label) => ({
+label, n: counts[label], color: ST[label],
+pct: counts[label] / 14 * 100,
+bar: counts[label] / 6 * 100
+}));
+
+const seatBars = SQ.map(([name, color]) => {
+const t = sum(SHIPS.filter((s) => s.squad === name));
+return { name, val: t[0] + '/' + t[1], pct: t[1] ? Math.round(t[0] / t[1] * 100) : 0, color };
+});
+const req = S.req;
+const crewDefs = [
+{ id: 'idris', color: K, handle: 'Marrow_6', squad: 'Fleet Command', ship: 'Idris-P', crew: '12/28', seated: 'Captain/Pilot/Co-Pilot/Comms/Tactical/Science +6 more', open: ['Security', 'Brig'] },
+{ id: 'cutlass', color: C, handle: 'Tessel', squad: 'Lifeline · Element 1-1', ship: 'Cutlass Red', crew: '2/2', seated: 'Pilot/Co-Pilot', open: [] },
+{ id: 'apollo', color: C, handle: 'Kestrel_7', squad: 'Lifeline · Element 1-1', ship: 'Apollo Medivac', crew: '2/2', seated: 'Pilot/Medic', open: [] },
+{ id: 'perseus', color: V, handle: 'Brightwater', squad: 'Vanguard · Element 2-1', ship: 'Perseus', crew: '4/6', seated: 'Pilot/Top Turret/Bottom Turret/Torpedo Console', open: ['Co-Pilot', 'Gunner'] },
+{ id: 'cat', color: L, handle: 'Sable_Run', squad: 'Logistics · Element 3-1', ship: 'Caterpillar', crew: '3/4', seated: 'Pilot/Engineering/Tractor Beam', open: ['Co-Pilot'] },
+{ id: 'terrapin', color: O, handle: 'Okapi_9', squad: 'Overwatch · Element 4-1', ship: 'Terrapin', crew: '2/2', seated: 'Pilot/Turret', open: [] }
+];
+const crews = crewDefs.map((c) => ({
+color: c.color, handle: c.handle, squad: c.squad, ship: c.ship, crew: c.crew, seated: c.seated,
+box: box(c.color),
+hasOpen: c.open.length > 0,
+open: c.open.map((role) => {
+const key = c.id + role;
+const on = !!req[key];
+return {
+label: role + (on ? ' · Requested' : ' · Request'),
+color: on ? '#111827' : '#FBBF24',
+border: on ? '#F59E0B' : 'rgba(245,158,11,0.6)',
+bg: on ? '#F59E0B' : 'transparent',
+pick: () => this.setState({ req: Object.assign({}, this.state.req, { [key]: !on }) })
+};
+})
+}));
+const reqCount = Object.keys(req).filter((k) => req[k]).length;
+const pending = Object.keys(req).filter((k) => req[k]).map((k) => {
+const d = crewDefs.find((c) => k.indexOf(c.id) === 0);
+return {
+text: d.ship + ' · ' + k.slice(d.id.length) + ' · ' + d.handle,
+approve: () => this.setState({ req: Object.assign({}, this.state.req, { [k]: false }) })
+};
+});
+
+const roleDefs = ['Fighters', 'Gunships', 'Capital', 'Cargo', 'Exploration', 'Specialized'];
+const roleChips = [{ label: 'All', on: tagOn.length === 0, pick: () => this.setState({ tags: {} }) }].concat(roleDefs.map((label) => ({
+label, on: !!S.tags[label],
+pick: () => this.setState({ tags: Object.assign({}, S.tags, { [label]: !S.tags[label] }) })
+}))).map((c) => ({
+label: c.label, pick: c.pick,
+color: c.on ? '#FBBF24' : '#D1D5DB',
+border: c.on ? '#F59E0B' : '#374151',
+bg: c.on ? 'rgba(245,158,11,0.16)' : 'transparent'
+}));
+const statusChips = Object.keys(ST).map((label) => {
+const on = !!S.sts[label];
+return {
+label, color: ST[label], on: on ? 'true' : 'false',
+border: on ? '#F59E0B' : '#374151',
+bg: on ? 'rgba(245,158,11,0.16)' : 'transparent',
+pick: () => this.setState({ sts: Object.assign({}, S.sts, { [label]: !on }) })
+};
+});
+
+const toolDefs = [
+['Select', 'M5 3l14 7-6 2-2 6z', 'Click a ship to inspect it'],
+['Reposition', 'M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3', 'Drag a ship to a new slot. In Live, owners are notified'],
+['Group into squadron', 'M4 6h7v7H4zM13 11h7v7h-7z', 'Select ships, then choose a squadron'],
+['Set rally point', 'M6 21V4M6 5h11l-2 4 2 4H6', 'Click the map to place a rally point'],
+['Set commander', 'M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z', 'Pick the ship the commander flies'],
+['Mission loadout', 'M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8', 'Choose a loadout for a ship or an element'],
+['Measure', 'M4 20L20 4M7 17l2 2M10 14l2 2M13 11l2 2M16 8l2 2', 'Pick two ships to see their separation'],
+['Draw zone', 'M4 4h6M14 4h6v6M20 14v6h-6M10 20H4v-6M4 10V4', 'Drag on the map to outline a squadron zone']
+];
+const tools = toolDefs.map(([label, d], i) => ({
+label, d,
+color: S.tool === i ? '#FBBF24' : '#D1D5DB',
+border: S.tool === i ? '#F59E0B' : 'transparent',
+bg: S.tool === i ? 'rgba(245,158,11,0.16)' : 'transparent',
+pick: () => this.setState({ tool: i, meas: [] })
+}));
+const TOOL_IDS = ['select', 'move', 'group', 'rally', 'cmd', 'loadout', 'measure', 'zone'];
+const persona = { 'Squadron Lead': ' · Viewing as Squadron Lead: Lifeline', 'Element Lead': ' · Viewing as Element Lead: Element 1-1', 'Pilot': ' · Viewing as Pilot: Kestrel_7' }[viewAs] || '';
+const hint = S.note ? S.note : toolDefs[S.tool][0] + ': ' + toolDefs[S.tool][2] + persona;
+
+const seg = (labels) => labels.map((label, i) => ({
+label,
+color: i === 0 ? '#111827' : '#D1D5DB',
+bg: i === 0 ? '#F59E0B' : 'transparent'
+}));
+const views = seg(['Orbit', 'Top', 'Free']);
+const modes = ['Plan', 'Live'].map((label, i) => {
+const active = (mode === 'plan') === (i === 0);
+return {
+label,
+color: active ? '#111827' : '#D1D5DB',
+bg: active ? '#F59E0B' : 'transparent',
+pick: () => this.setState({ mode: i === 0 ? 'plan' : 'live' })
+};
+});
+const phases = ['Muster', 'Stage', 'Launch', 'Hold', 'Recover'].map((label, i) => ({
+label,
+color: i === 1 ? '#FBBF24' : (i < 1 ? '#31C48D' : '#9CA3AF'),
+border: i === 1 ? '#F59E0B' : (i < 1 ? 'rgba(49,196,141,0.5)' : '#374151'),
+bg: i === 1 ? 'rgba(245,158,11,0.16)' : 'transparent'
+}));
+const selS = byH[S.sel] || byH.Kestrel_7;
+const SPEC = { 'Apollo Medivac': ['8', '32 SCU'], 'Caterpillar': ['—', '576 SCU'] };
+const spec = SPEC[selS.name] || ['—', '—'];
+const sqColor = { Command: K, Lifeline: C, Vanguard: V, Logistics: L, Overwatch: O }[selS.squad];
+const moved = S.offs[S.sel];
+const cur = {
+name: selS.name,
+color: sqColor,
+href: HULL[selS.name],
+sub: selS.squad + (selS.squad === 'Command' ? '' : ' · Element ' + selS.el) + ' · Owner ' + selS.handle
+};
+const shipFacts = [
+{ k: 'Owner', v: selS.handle, dot: 'transparent' },
+{ k: 'Ship', v: selS.name, dot: 'transparent' },
+{ k: 'Role', v: selS.role, dot: 'transparent' },
+{ k: 'Crew #', v: selS.tip.split(', ').slice(1).join(', '), dot: 'transparent' },
+{ k: 'Status', v: selS.status, dot: ST[selS.status] },
+{ k: 'Med beds', v: spec[0], dot: 'transparent' },
+{ k: 'Cargo', v: spec[1], dot: 'transparent' }
+].concat(mode === 'plan' ? [{ k: 'Planned position', v: moved ? 'Moved ' + moved[0] + ', ' + moved[1] : 'Orbit slot (default)', dot: 'transparent' }] : []);
+const LAY = { 'Squad rings': 'rings', 'Orbit paths': 'paths', 'Planned ghosts': 'ghosts' };
+const gr = (name, color, opts) => ({
+name, color, box: box(color),
+opts: opts.map(([label, on]) => ({
+label, on: on ? 'true' : 'false',
+color: on ? color : '#9CA3AF',
+border: on ? 'rgba(' + rgb(color) + ',0.6)' : '#374151',
+bg: on ? 'rgba(' + rgb(color) + ',0.14)' : 'transparent',
+pick: label === 'Handles' ? () => this.setState({ labels: !this.state.labels }) : (LAY[label] ? () => this.setState({ layers: Object.assign({}, this.state.layers, { [LAY[label]]: !this.state.layers[LAY[label]] }) }) : () => {})
+}))
+});
+const groups = [
+gr('Terrain', '#34D399', [['Asteroids', 1], ['Gas clouds', 1], ['Moons', 1]]),
+gr('Fleet', '#22D3EE', [['Squad rings', S.layers.rings ? 1 : 0], ['Handles', S.labels ? 1 : 0], ['Orbit paths', S.layers.paths ? 1 : 0], ['Planned ghosts', S.layers.ghosts ? 1 : 0]]),
+gr('Stations', '#A78BFA', [['Launch point', 1], ['Launch path', 1], ['Rally points', 0]]),
+gr('Display', '#FB923C', [['Low visibility', 1], ['Sensor range', 1], ['Obstructions 60%', 1]])
+];
+const rules = [['Assigned to an element', 1], ['Status changes', 1], ['Rally point set', 1], ['Seat opened', 0]].map(([label, on]) => ({
+label, on: on ? 'true' : 'false',
+track: on ? '#F59E0B' : '#4B5563',
+knob: on ? 16 : 2
+}));
+const tplDefs = [
+['Assigned', 'You are assigned to Element 1-1, Lifeline, aboard Apollo Medivac. Confirm your seat when ready.'],
+['Move to staging', 'Move to staging and confirm when your seats are filled.'],
+['Seat opened', 'A seat is open on your ship. Reply to fill it.'],
+['Status check', 'Please confirm your current status.']
+];
+const templates = tplDefs.map(([label], i) => ({
+label,
+on: S.tpl === i ? 'true' : 'false',
+color: S.tpl === i ? '#FBBF24' : '#D1D5DB',
+border: S.tpl === i ? '#F59E0B' : '#374151',
+bg: S.tpl === i ? 'rgba(245,158,11,0.16)' : 'transparent',
+pick: () => this.setState({ tpl: i })
+}));
+const catalog = [
+{ name: 'Idris-P', role: 'Combat · Capital ship', seats: '28 seats', href: '#capital' },
+{ name: 'Perseus', role: 'Combat · Heavy gunship', seats: '6 seats', href: '#gunship' },
+{ name: 'Gladius', role: 'Combat · Fighter', seats: '1 seat', href: '#fighter' },
+{ name: 'Apollo Medivac', role: 'Specialized · Medical', seats: '2 seats', href: '#medical' },
+{ name: 'Cutlass Red', role: 'Specialized · Medical', seats: '2 seats', href: '#cutlass' },
+{ name: 'Caterpillar', role: 'Cargo', seats: '4 seats', href: '#freight' },
+{ name: 'Terrapin', role: 'Exploration', seats: '2 seats', href: '#scout' }
+];
+const attention = [
+{ dot: ST.Refitting, text: 'Nyx_Runner · Gladius · Refitting, no crew' },
+{ dot: ST.RTB, text: 'Vesper_4 · Caterpillar · Returning to base' },
+{ dot: ST.Mustering, text: 'Perseus · 2 open seats (Co-Pilot, Gunner)' },
+{ dot: ST.Mustering, text: 'Dovetail · Cutlass Red · 1 of 2 seats filled' }
+];
+const history = (mode === 'plan' ? [
+'Vesper_4 · Caterpillar · Active → RTB',
+'Nyx_Runner · Gladius · Ready → Refitting',
+'Dovetail · Cutlass Red · Ready → Mustering',
+'Orrin · Caterpillar · Ready → Mustering'
+] : [
+'Kestrel_7 moved to Ring 2 · Slot 4',
+'Vesper_4 · Active → RTB',
+'Nyx_Runner · Ready → Refitting',
+'Pellam promoted to squadron deputy'
+]).map((text) => ({ text }));
+const changes = [
+{ color: '#22D3EE', text: 'Ships repositioned', n: Object.keys(S.offs).length },
+{ color: '#A78BFA', text: 'Ships added', n: 1 },
+{ color: '#F87171', text: 'Ships removed', n: 1 },
+{ color: '#FBBF24', text: 'Owners and leads notified', n: 5 }
+];
+
+const cols = SQ.map(([name, color]) => {
+const ships = SHIPS.filter((s) => s.squad === name);
+const t = sum(ships);
+const els = [];
+ships.forEach((s) => { if (els.indexOf(s.el) < 0) els.push(s.el); });
+return {
+name, color, box: box(color),
+lead: LEADS[name][0] || '—', leadShip: LEADS[name][0] ? byH[LEADS[name][0]].name : '',
+deputy: LEADS[name][1] || '—', deputyShip: LEADS[name][1] ? byH[LEADS[name][1]].name : '',
+over: (e) => { if (e && e.preventDefault) e.preventDefault(); },
+drop: (e) => this.dropOn(name, els[0] || (name === 'Command' ? 'CMD' : SQN[name] + '-1'), e),
+seats: t[0] + '/' + t[1], pct: t[1] ? Math.round(t[0] / t[1] * 100) : 0,
+els: els.map((el) => {
+const inEl = ships.filter((s) => s.el === el);
+const et = sum(inEl);
+const hasLead = inEl.length > 0;
+return {
+over: (e) => { if (e && e.preventDefault) e.preventDefault(); },
+drop: (e) => this.dropOn(name, el, e),
+label: (name === 'Command' ? 'Commander on ship' : 'Element ' + el) + ' · Crew ' + et[0] + '/' + et[1] + (hasLead ? '' : ' · No lead'),
+color: hasLead ? '#9CA3AF' : '#FBBF24',
+ships: inEl.map((s) => ({
+href: HULL[s.name], name: s.name, crew: s.crew, handle: s.handle, tip: s.tip,
+st: ST[s.status],
+op: visible(s) ? 1 : 0.28,
+bg: s.handle === S.sel ? 'rgba(245,158,11,0.14)' : 'rgba(17,24,39,0.8)',
+border: s.handle === S.sel ? '#F59E0B' : '#374151',
+pick: () => this.setState({ sel: s.handle }),
+drag: (e) => { this.dragH = s.handle; try { e.dataTransfer.setData('text/plain', s.handle); } catch (err) {} }
+}))
+};
+})
+};
+});
+
+const meta = {};
+SHIPS.forEach((s) => {
+const sc = { Command: K, Lifeline: C, Vanguard: V, Logistics: L, Overwatch: O }[s.squad];
+const isL = LEADS[s.squad][0] === s.handle, isD = LEADS[s.squad][1] === s.handle;
+meta[s.handle] = {
+v: { c: sc, el: s.el, badge: isL ? 'LEAD' : (isD ? 'DEP' : ''), bc: isL ? '#FBBF24' : '#93C5FD' },
+l2: s.name + ' · crew ' + s.crew,
+l3: s.squad + (s.squad === 'Command' ? '' : ' · Element ' + s.el) + ' · ' + s.status,
+l4: s.tip.indexOf('(') >= 0 ? s.tip.slice(s.tip.indexOf('(')) : ''
+};
+});
+const zonesOut = S.zones;
+const wpsSel = S.wps[S.sel] || [];
+return {
+sceneH, dockH,
+toolId: TOOL_IDS[S.tool], measStr: S.meas.join(','), metaJson: JSON.stringify(meta), zonesJson: JSON.stringify(zonesOut), wpsJson: JSON.stringify(wpsSel),
+layout: S.layout, saveLabel: S.saved ? 'Saved' : 'Save',
+onLayout: (e) => this.load((e && e.target && e.target.value) || 'Operation A'),
+saveNow: () => { this.persist(this.state); this.setState({ saved: true }); setTimeout(() => this.setState({ saved: false }), 1800); },
+clearWp: () => { const w = Object.assign({}, this.state.wps); delete w[this.state.sel]; this.upd({ wps: w }); },
+resetPos: () => { const o = Object.assign({}, this.state.offs); delete o[this.state.sel]; this.upd({ offs: o }); },
+clearZones: () => this.upd({ zones: [] }),
+resetAll: () => this.upd({ offs: {}, assign: {}, zones: [], wps: {}, hist: [] }),
+onZone: (x, y, w, h) => { const st = this.state; if (st.zones.length >= 6) { this.flash('Zone limit reached (6)'); return; } const sq = (byH[st.sel] || {}).squad || 'Fleet'; const col = { Command: K, Lifeline: C, Vanguard: V, Logistics: L, Overwatch: O }[sq] || '#FBBF24'; this.upd({ zones: st.zones.concat([{ x, y, w, h, c: col, t: 'ZONE ' + (st.zones.length + 1) + ' · ' + sq.toUpperCase() }]) }); },
+onWp: (x, y) => { const st = this.state; const cur = (st.wps[st.sel] || []).slice(); if (cur.length >= 6) { this.flash('Waypoint limit reached (6 per ship)'); return; } cur.push([x, y]); this.upd({ wps: Object.assign({}, st.wps, { [st.sel]: cur }) }); }, cur, selH: S.sel, offsJson: JSON.stringify(S.offs),
+onPick: (h) => { const st = this.state; if (TOOL_IDS[st.tool] === 'measure') { let m = st.meas.slice(); if (m.length >= 2) m = []; if (m.indexOf(h) < 0) m.push(h); this.setState({ sel: h, meas: m }); } else this.setState({ sel: h, tab: 'ship' }); },
+onMove: (h, dx, dy) => { const st = this.state; this.upd({ offs: Object.assign({}, st.offs, { [h]: [dx, dy] }), hist: st.hist.concat([{ h, prev: st.offs[h] || null }]) }); },
+undo: () => {
+const st = this.state;
+if (!st.hist.length) return;
+const last = st.hist[st.hist.length - 1];
+const offs = Object.assign({}, st.offs);
+if (last.prev) offs[last.h] = last.prev; else delete offs[last.h];
+this.upd({ offs, hist: st.hist.slice(0, -1) });
+},
+undoColor: S.hist.length ? '#F9FAFB' : '#6B7280',
+dockTop: 56 + sceneH,
+panelH: sceneH - 24,
+dockPad: open ? '10px 16px' : '4px 16px',
+rosterOpen: open ? 'true' : 'false',
+chev: open ? 'M6 9l6 6 6-6' : 'M6 15l6-6 6 6',
+toggleRoster: () => this.setState({ open: !this.state.open }),
+tabs, roles,
+isFleet: tab === 'fleet', isShip: tab === 'ship', isSeats: tab === 'seats',
+isReady: tab === 'ready', isLayers: tab === 'layers', isNotify: tab === 'notify', isAdd: tab === 'add',
+isPlan: mode === 'plan', isLive: mode === 'live', ghosts: (mode === 'plan' && S.layers.ghosts) ? 'on' : 'off',
+ringsProp: S.layers.rings ? 'on' : 'off', pathsProp: S.layers.paths ? 'on' : 'off',
+labelsProp: S.labels ? 'on' : 'off',
+dimList, hint,
+onSearch: (e) => this.setState({ q: (e && e.target && e.target.value) || '' }),
+summary: S.summary,
+openSummary: () => this.setState({ summary: true }),
+closeSummary: () => this.setState({ summary: false }),
+confirmSummary: () => this.setState({ summary: false, mode: 'live' }),
+dm: tplDefs[S.tpl][1],
+catalog, pending, reqCount, crews, seatBars,
+roleChips, statusChips, tools, views, modes, phases, status, tree,
+shipFacts, groups, rules, templates, attention, history, histTitle: mode === 'plan' ? 'Recent status changes' : 'Change log',
+changes, cols
+};
+}
+key(l) { return 'fleetplan.v1.' + l; }
+persist(st) {
+try { localStorage.setItem(this.key(st.layout), JSON.stringify({ offs: st.offs, assign: st.assign, zones: st.zones, wps: st.wps })); } catch (e) {}
+}
+upd(patch) {
+this.setState(patch);
+this.persist(Object.assign({}, this.state, patch));
+}
+load(layout) {
+let d = {};
+try { d = JSON.parse(localStorage.getItem(this.key(layout)) || '{}') || {}; } catch (e) { d = {}; }
+this.setState({ layout, offs: d.offs || {}, assign: d.assign || {}, zones: d.zones || [], wps: d.wps || {}, hist: [], meas: [] });
+}
+componentDidMount() {
+this.load(this.state.layout);
+}
+flash(msg) {
+this.setState({ note: msg });
+setTimeout(() => this.setState({ note: '' }), 2600);
+}
+dropOn(squad, el, e) {
+if (e && e.preventDefault) e.preventDefault();
+if (e && e.stopPropagation) e.stopPropagation();
+let h = this.dragH;
+try { h = (e.dataTransfer && e.dataTransfer.getData('text/plain')) || h; } catch (err) {}
+this.dragH = null;
+if (!h) return;
+if (h === 'Marrow_6' && squad !== 'Command') { this.flash('The commander stays on a ship in Fleet Command'); return; }
+if (h !== 'Marrow_6' && squad === 'Command') { this.flash('Fleet Command holds only the commander ship'); return; }
+const a = Object.assign({}, this.state.assign, { [h]: [squad, el] });
+this.upd({ assign: a, sel: h });
+this.flash(h + ' moved to ' + squad + (squad === 'Command' ? '' : ' · Element ' + el));
+}
+}
+</script>
+</body>
+</html>

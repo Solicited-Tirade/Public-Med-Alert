@@ -6,6 +6,11 @@
 <script src="./vendor/react.js"></script>
 <script src="./vendor/react-dom.js"></script>
 <script src="./support.js"></script>
+<script src="./js/fleet-data.js"></script>
+<script src="./js/fleet-geo.js"></script>
+<script src="./js/scene-data.js"></script>
+<script src="./js/scene-view.js"></script>
+<script src="./js/scene-input.js"></script>
 </head>
 <body>
 <x-dc>
@@ -16,8 +21,8 @@
 body{margin:0}
 </style>
 </helmet>
-<div style="position: relative; width: {{w}}px; height: {{h}}px; overflow: hidden; background: #05080f">
-<svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" onPointerDown="{{bg}}" onPointerMove="{{mv}}" onPointerUp="{{up}}" aria-label="Fleet in orbit around Crusader with an asteroid belt, gas clouds, distant moons and Port Olisar (RIP) in the distance" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; touch-action: none">
+<div data-scene="1" style="position: relative; width: {{w}}px; height: {{h}}px; overflow: hidden; background: #05080f; font-family: Inter, sans-serif; color: #E5E7EB">
+<svg data-map="1" viewBox="{{vb}}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Fleet in orbit around Crusader with an asteroid belt, gas clouds, distant moons and Port Olisar (RIP) in the distance" onPointerDown="{{bg}}" onPointerMove="{{mv}}" onPointerUp="{{up}}" onContextMenu="{{bgCtx}}" onWheel="{{wheel}}" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; touch-action: none; cursor: {{cursor}}">
 <defs>
 <radialGradient id="bg" cx="720" cy="470" r="900" gradientUnits="userSpaceOnUse">
 <stop offset="0" stop-color="#131c2e"/>
@@ -140,8 +145,15 @@ body{margin:0}
 <polygon points="8,2 15,3 11,9" fill-opacity="0.45"/>
 </g>
 </symbol>
+<symbol id="mk-objective" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" fill="#05080f" stroke="currentColor" stroke-width="2"/><circle cx="13" cy="13" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="13" cy="13" r="2" fill="currentColor"/></symbol>
+<symbol id="mk-extraction" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" fill="#05080f" stroke="currentColor" stroke-width="2"/><path d="M8 15l5-6 5 6M13 9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="mk-threat" viewBox="0 0 26 26"><path d="M13 1l12 12-12 12L1 13z" fill="#05080f" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 7v8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="13" cy="19" r="1.5" fill="currentColor"/></symbol>
+<symbol id="mk-hazard" viewBox="0 0 26 26"><path d="M13 2l11 20H2z" fill="#05080f" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 9v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="13" cy="18.5" r="1.4" fill="currentColor"/></symbol>
+<symbol id="mk-casualty" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" fill="#05080f" stroke="currentColor" stroke-width="2"/><path d="M11 6h4v5h5v4h-5v5h-4v-5H6v-4h5z" fill="currentColor"/></symbol>
 </defs>
+<g data-section="backdrop">
 
+<rect x="-4320" y="-2700" width="10080" height="6300" fill="#05080f"/>
 <rect width="1440" height="900" fill="url(#bg)"/>
 
 <g fill="#E5E7EB">
@@ -199,20 +211,13 @@ body{margin:0}
 <circle cx="720" cy="500" r="420" fill="none" stroke="#22D3EE" stroke-opacity="0.22" stroke-dasharray="2 8"/>
 <text x="720" y="76" text-anchor="middle" fill="#22D3EE" fill-opacity="0.75" font-family="Quantico, sans-serif" font-size="11" letter-spacing="1.6">SENSOR RANGE</text>
 
-<g color="#A78BFA" opacity="0.6">
-<use href="#scout" x="477" y="418" width="44" height="26" opacity="{{op.Okapi_9}}" transform="{{sp.Okapi_9}}" onPointerDown="{{dn.Okapi_9}}" color="{{mt.Okapi_9.c}}" onPointerEnter="{{en.Okapi_9}}" onPointerLeave="{{lv.Okapi_9}}" style="cursor: grab"/>
 </g>
-<g color="#22D3EE" opacity="0.6">
-<use href="#cutlass" x="675" y="394" width="44" height="27" opacity="{{op.Tessel}}" transform="{{sp.Tessel}}" onPointerDown="{{dn.Tessel}}" color="{{mt.Tessel.c}}" onPointerEnter="{{en.Tessel}}" onPointerLeave="{{lv.Tessel}}" style="cursor: grab"/>
-<use href="#cutlass" x="823" y="454" width="44" height="27" opacity="{{op.Dovetail}}" transform="{{sp.Dovetail}}" onPointerDown="{{dn.Dovetail}}" color="{{mt.Dovetail.c}}" onPointerEnter="{{en.Dovetail}}" onPointerLeave="{{lv.Dovetail}}" style="cursor: grab"/>
+<g data-section="ships-behind-planet" opacity="0.6">
+<sc-for list="{{shipsBehind}}" as="s" hint-placeholder-count="5">
+<use href="{{s.href}}" x="{{s.x}}" y="{{s.y}}" width="{{s.w}}" height="{{s.h}}" color="{{s.c}}" opacity="{{s.op}}" transform="{{s.tr}}" onPointerDown="{{s.down}}" onPointerEnter="{{s.enter}}" onPointerLeave="{{s.leave}}" onContextMenu="{{s.ctx}}" style="cursor: {{s.cur}}"/>
+</sc-for>
 </g>
-<g color="#FB923C" opacity="0.6">
-<use href="#freight" x="968" y="370" width="52" height="24" opacity="{{op.Sable_Run}}" transform="{{sp.Sable_Run}}" onPointerDown="{{dn.Sable_Run}}" color="{{mt.Sable_Run.c}}" onPointerEnter="{{en.Sable_Run}}" onPointerLeave="{{lv.Sable_Run}}" style="cursor: grab"/>
-</g>
-<g color="#F87171" opacity="0.6">
-<use href="#fighter" x="494" y="461" width="36" height="21" opacity="{{op.Corvid_3}}" transform="{{sp.Corvid_3}}" onPointerDown="{{dn.Corvid_3}}" color="{{mt.Corvid_3.c}}" onPointerEnter="{{en.Corvid_3}}" onPointerLeave="{{lv.Corvid_3}}" style="cursor: grab"/>
-</g>
-
+<g data-section="planet">
 <circle cx="720" cy="500" r="150" fill="url(#globe)" opacity="0.9"/>
 <g clip-path="url(#globeClip)" transform="rotate(-8 720 500)">
 <rect x="560" y="396" width="320" height="16" fill="#7c2d12" opacity="0.35"/>
@@ -235,72 +240,120 @@ body{margin:0}
 <line x1="720" y1="350" x2="720" y2="650"/>
 </g>
 <text x="720" y="740" text-anchor="middle" fill="#FBBF24" font-family="Mohave, sans-serif" font-weight="700" font-size="16" letter-spacing="1.2">CRUSADER · ORBIT</text>
-
-<g display="{{rd}}" fill="none" stroke-width="1.3" stroke-dasharray="3 7" pointer-events="none">
-<ellipse cx="720" cy="500" rx="130" ry="42" stroke="#60A5FA" stroke-opacity="0.5"/>
-<ellipse cx="720" cy="500" rx="265" ry="62" stroke="#22D3EE" stroke-opacity="0.45" transform="rotate(12 720 500)"/>
-<ellipse cx="720" cy="500" rx="395" ry="118" stroke="#F87171" stroke-opacity="0.45" transform="rotate(-6 720 500)"/>
-<ellipse cx="720" cy="500" rx="370" ry="98" stroke="#FB923C" stroke-opacity="0.45" transform="rotate(8 720 500)"/>
-<ellipse cx="720" cy="500" rx="330" ry="108" stroke="#A78BFA" stroke-opacity="0.45" transform="rotate(-18 720 500)"/>
 </g>
-<g display="{{zn.z1.d}}" pointer-events="none"><rect x="{{zn.z1.x}}" y="{{zn.z1.y}}" width="{{zn.z1.w}}" height="{{zn.z1.h}}" rx="8" fill="{{zn.z1.c}}" fill-opacity="0.07" stroke="{{zn.z1.c}}" stroke-opacity="0.75" stroke-width="1.5" stroke-dasharray="8 5"/></g>
-<g display="{{zn.z2.d}}" pointer-events="none"><rect x="{{zn.z2.x}}" y="{{zn.z2.y}}" width="{{zn.z2.w}}" height="{{zn.z2.h}}" rx="8" fill="{{zn.z2.c}}" fill-opacity="0.07" stroke="{{zn.z2.c}}" stroke-opacity="0.75" stroke-width="1.5" stroke-dasharray="8 5"/></g>
-<g display="{{zn.z3.d}}" pointer-events="none"><rect x="{{zn.z3.x}}" y="{{zn.z3.y}}" width="{{zn.z3.w}}" height="{{zn.z3.h}}" rx="8" fill="{{zn.z3.c}}" fill-opacity="0.07" stroke="{{zn.z3.c}}" stroke-opacity="0.75" stroke-width="1.5" stroke-dasharray="8 5"/></g>
-<g display="{{zn.z4.d}}" pointer-events="none"><rect x="{{zn.z4.x}}" y="{{zn.z4.y}}" width="{{zn.z4.w}}" height="{{zn.z4.h}}" rx="8" fill="{{zn.z4.c}}" fill-opacity="0.07" stroke="{{zn.z4.c}}" stroke-opacity="0.75" stroke-width="1.5" stroke-dasharray="8 5"/></g>
-<g display="{{zn.z5.d}}" pointer-events="none"><rect x="{{zn.z5.x}}" y="{{zn.z5.y}}" width="{{zn.z5.w}}" height="{{zn.z5.h}}" rx="8" fill="{{zn.z5.c}}" fill-opacity="0.07" stroke="{{zn.z5.c}}" stroke-opacity="0.75" stroke-width="1.5" stroke-dasharray="8 5"/></g>
-<g display="{{zn.z6.d}}" pointer-events="none"><rect x="{{zn.z6.x}}" y="{{zn.z6.y}}" width="{{zn.z6.w}}" height="{{zn.z6.h}}" rx="8" fill="{{zn.z6.c}}" fill-opacity="0.07" stroke="{{zn.z6.c}}" stroke-opacity="0.75" stroke-width="1.5" stroke-dasharray="8 5"/></g>
+<g data-section="squad-rings" display="{{rd}}" fill="none" stroke-width="1.3" stroke-dasharray="3 7" pointer-events="none">
+<sc-for list="{{rings}}" as="r" hint-placeholder-count="5">
+<ellipse cx="720" cy="500" rx="{{r.rx}}" ry="{{r.ry}}" stroke="{{r.c}}" stroke-opacity="0.45" transform="{{r.tr}}"/>
+</sc-for>
+</g>
+<g data-section="hazards" pointer-events="none">
+<sc-for list="{{hazards}}" as="z" hint-placeholder-count="0">
+<circle cx="{{z.cx}}" cy="{{z.cy}}" r="{{z.r}}" fill="#FB923C" fill-opacity="0.1" stroke="#FB923C" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+</sc-for>
+</g>
+<g data-section="zones">
+<sc-for list="{{zones}}" as="z" hint-placeholder-count="0">
+<rect x="{{z.x}}" y="{{z.y}}" width="{{z.w}}" height="{{z.h}}" rx="8" fill="{{z.c}}" fill-opacity="{{z.fo}}" stroke="{{z.c}}" stroke-opacity="0.8" stroke-width="{{z.sw}}" stroke-dasharray="8 5" onPointerDown="{{z.down}}" onContextMenu="{{z.ctx}}" style="cursor: {{z.cur}}"/>
+</sc-for>
+<sc-for list="{{zoneHandles}}" as="z" hint-placeholder-count="0">
+<rect x="{{z.x}}" y="{{z.y}}" width="12" height="12" rx="2" fill="#05080f" stroke="{{z.c}}" stroke-width="1.5" onPointerDown="{{z.down}}" style="cursor: nwse-resize"/>
+</sc-for>
 <g display="{{zdd}}" pointer-events="none"><rect x="{{zdx}}" y="{{zdy}}" width="{{zdw}}" height="{{zdh}}" rx="8" fill="#FBBF24" fill-opacity="0.08" stroke="#FBBF24" stroke-width="1.5" stroke-dasharray="4 4"/></g>
+</g>
+<g data-section="weapon-arcs" fill="none" pointer-events="none">
+<sc-for list="{{arcCircles}}" as="a" hint-placeholder-count="0">
+<circle cx="{{a.cx}}" cy="{{a.cy}}" r="{{a.r}}" stroke="{{a.c}}" stroke-opacity="0.55" stroke-width="1.2" stroke-dasharray="{{a.dash}}" fill="{{a.c}}" fill-opacity="0.03"/>
+</sc-for>
+</g>
 <g display="{{pd}}">
 <g transform="rotate(-14 720 500)"><path id="ringPath1" d="M380 500 a340 95 0 1 1 680 0 a340 95 0 1 1 -680 0" fill="none"/><text font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.75" dominant-baseline="middle"><textPath href="#ringPath1" textLength="1470" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text></g>
 <g transform="rotate(10 720 500)"><path id="ringPath2" d="M470 500 a250 70 0 1 1 500 0 a250 70 0 1 1 -500 0" fill="none"/><text font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.75" dominant-baseline="middle"><textPath href="#ringPath2" textLength="1080" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text></g>
 </g>
-
-<g color="#F87171">
-<use href="#gunship" x="370" y="528" width="64" height="36" opacity="{{op.Brightwater}}" transform="{{sp.Brightwater}}" onPointerDown="{{dn.Brightwater}}" color="{{mt.Brightwater.c}}" onPointerEnter="{{en.Brightwater}}" onPointerLeave="{{lv.Brightwater}}" style="cursor: grab"/>
-<use href="#fighter" x="528" y="612" width="36" height="21" opacity="{{op.Nyx_Runner}}" transform="{{sp.Nyx_Runner}}" onPointerDown="{{dn.Nyx_Runner}}" color="{{mt.Nyx_Runner.c}}" onPointerEnter="{{en.Nyx_Runner}}" onPointerLeave="{{lv.Nyx_Runner}}" style="cursor: grab"/>
-<use href="#fighter" x="428" y="606" width="36" height="21" opacity="{{op.Hollis}}" transform="{{sp.Hollis}}" onPointerDown="{{dn.Hollis}}" color="{{mt.Hollis.c}}" onPointerEnter="{{en.Hollis}}" onPointerLeave="{{lv.Hollis}}" style="cursor: grab"/>
+<g data-section="ships">
+<sc-for list="{{shipsFront}}" as="s" hint-placeholder-count="9">
+<use href="{{s.href}}" x="{{s.x}}" y="{{s.y}}" width="{{s.w}}" height="{{s.h}}" color="{{s.c}}" opacity="{{s.op}}" transform="{{s.tr}}" onPointerDown="{{s.down}}" onPointerEnter="{{s.enter}}" onPointerLeave="{{s.leave}}" onContextMenu="{{s.ctx}}" style="cursor: {{s.cur}}"/>
+</sc-for>
+<sc-for list="{{lostMarks}}" as="x" hint-placeholder-count="0">
+<path d="{{x.d}}" stroke="{{x.c}}" stroke-width="3" stroke-linecap="round" pointer-events="none"/>
+</sc-for>
 </g>
-<g color="#A78BFA">
-<use href="#scout" x="515" y="418" width="44" height="26" opacity="{{op.Lumen_2}}" transform="{{sp.Lumen_2}}" onPointerDown="{{dn.Lumen_2}}" color="{{mt.Lumen_2.c}}" onPointerEnter="{{en.Lumen_2}}" onPointerLeave="{{lv.Lumen_2}}" style="cursor: grab"/>
+<g data-section="plan-diff" pointer-events="none">
+<sc-for list="{{diffGhosts}}" as="g" hint-placeholder-count="0">
+<use href="{{g.href}}" x="{{g.x}}" y="{{g.y}}" width="{{g.w}}" height="{{g.h}}" color="{{g.c}}" opacity="0.3"/>
+</sc-for>
+<sc-for list="{{diffLines}}" as="g" hint-placeholder-count="0">
+<path d="{{g.d}}" fill="none" stroke="{{g.c}}" stroke-opacity="0.7" stroke-width="1.3" stroke-linecap="round"/>
+</sc-for>
 </g>
-<g color="#22D3EE">
-<use href="#medical" x="881" y="523" width="48" height="29" opacity="{{op.Pellam}}" transform="{{sp.Pellam}}" onPointerDown="{{dn.Pellam}}" color="{{mt.Pellam.c}}" onPointerEnter="{{en.Pellam}}" onPointerLeave="{{lv.Pellam}}" style="cursor: grab"/>
-<use href="#medical" x="645" y="537" width="48" height="29" opacity="{{op.Kestrel_7}}" transform="{{sp.Kestrel_7}}" onPointerDown="{{dn.Kestrel_7}}" color="{{mt.Kestrel_7.c}}" onPointerEnter="{{en.Kestrel_7}}" onPointerLeave="{{lv.Kestrel_7}}" style="cursor: grab"/>
-</g>
-<g color="#FB923C">
-<use href="#freight" x="1010" y="441" width="56" height="26" opacity="{{op.Orrin}}" transform="{{sp.Orrin}}" onPointerDown="{{dn.Orrin}}" color="{{mt.Orrin.c}}" onPointerEnter="{{en.Orrin}}" onPointerLeave="{{lv.Orrin}}" style="cursor: grab"/>
-<use href="#freight" x="887" y="553" width="56" height="26" opacity="{{op.Vesper_4}}" transform="{{sp.Vesper_4}}" onPointerDown="{{dn.Vesper_4}}" color="{{mt.Vesper_4.c}}" onPointerEnter="{{en.Vesper_4}}" onPointerLeave="{{lv.Vesper_4}}" style="cursor: grab"/>
-</g>
-<g color="#60A5FA">
-<use href="#capital" x="683" y="570" width="120" height="44" opacity="{{op.Marrow_6}}" transform="{{sp.Marrow_6}}" onPointerDown="{{dn.Marrow_6}}" color="{{mt.Marrow_6.c}}" onPointerEnter="{{en.Marrow_6}}" onPointerLeave="{{lv.Marrow_6}}" style="cursor: grab"/>
-</g>
-
-<g style="display: {{gd}}">
+<g data-section="planned-ghosts" style="display: {{gd}}">
 <g opacity="0.4">
 <g color="#F87171"><use href="#gunship" x="268" y="446" width="64" height="36"/></g>
 <g color="#FB923C"><use href="#freight" x="1090" y="505" width="52" height="24"/></g>
 <g color="#22D3EE"><use href="#medical" x="938" y="598" width="48" height="29"/></g>
 </g>
-<path id="ghostPath1" d="{{gb1.d}}" fill="none"/><text display="{{gb1.b0}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;</textPath></text><text display="{{gb1.b1}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb1.b2}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb1.b3}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb1.b4}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb1.b5}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb1.b6}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb1.b7}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb1.b8}}" font-family="Quantico, sans-serif" font-size="11" fill="#F87171" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath1" textLength="{{gb1.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><path id="ghostPath2" d="{{gb2.d}}" fill="none"/><text display="{{gb2.b0}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;</textPath></text><text display="{{gb2.b1}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb2.b2}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb2.b3}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb2.b4}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb2.b5}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb2.b6}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb2.b7}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb2.b8}}" font-family="Quantico, sans-serif" font-size="11" fill="#FB923C" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath2" textLength="{{gb2.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><path id="ghostPath3" d="{{gb3.d}}" fill="none"/><text display="{{gb3.b0}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;</textPath></text><text display="{{gb3.b1}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb3.b2}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb3.b3}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb3.b4}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb3.b5}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb3.b6}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb3.b7}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{gb3.b8}}" font-family="Quantico, sans-serif" font-size="11" fill="#22D3EE" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#ghostPath3" textLength="{{gb3.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text>
+<sc-for list="{{ghostPaths}}" as="g" hint-placeholder-count="3">
+<path d="{{g.d}}" fill="none" stroke="{{g.c}}" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
+</sc-for>
 <g font-family="Quantico, sans-serif" font-size="10" letter-spacing="1.2" fill="#E5E7EB" fill-opacity="0.75">
 <text x="272" y="446">PLANNED · BRIGHTWATER</text>
 <text x="1090" y="499">PLANNED · ORRIN</text>
 <text x="940" y="594">PLANNED · PELLAM</text>
 </g>
 </g>
+<g data-section="links" pointer-events="none">
+<sc-for list="{{linkLines}}" as="l" hint-placeholder-count="0">
+<line x1="{{l.x1}}" y1="{{l.y1}}" x2="{{l.x2}}" y2="{{l.y2}}" stroke="{{l.c}}" stroke-width="{{l.w}}" stroke-opacity="{{l.o}}" stroke-dasharray="2 4"/>
+</sc-for>
+<sc-for list="{{coverLines}}" as="l" hint-placeholder-count="0">
+<line x1="{{l.x1}}" y1="{{l.y1}}" x2="{{l.x2}}" y2="{{l.y2}}" stroke="{{l.c}}" stroke-width="1.2" stroke-opacity="{{l.o}}" stroke-dasharray="6 4"/>
+</sc-for>
+</g>
+<g data-section="routes">
+<sc-for list="{{routes}}" as="r" hint-placeholder-count="0">
+<path d="{{r.line}}" fill="none" stroke="{{r.c}}" stroke-opacity="0.22" stroke-width="1" pointer-events="none"/>
+<path d="{{r.d}}" fill="none" stroke="{{r.c}}" stroke-opacity="{{r.o}}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
+</sc-for>
+<sc-for list="{{segs}}" as="g" hint-placeholder-count="0">
+<line x1="{{g.x1}}" y1="{{g.y1}}" x2="{{g.x2}}" y2="{{g.y2}}" stroke="#FBBF24" stroke-opacity="0" stroke-width="14" onDoubleClick="{{g.dbl}}" onContextMenu="{{g.ctx}}" style="cursor: copy"><title>Route leg. Double-click to break it with a new waypoint. Right-click for options.</title></line>
+</sc-for>
+<sc-for list="{{wpts}}" as="p" hint-placeholder-count="0">
+<circle cx="{{p.x}}" cy="{{p.y}}" r="10" fill="{{p.fill}}" fill-opacity="0.95" stroke="{{p.c}}" stroke-width="1.6" onPointerDown="{{p.down}}" onDoubleClick="{{p.dbl}}" onContextMenu="{{p.ctx}}" style="cursor: move"><title>Waypoint. Drag to move. Double-click or right-click to remove.</title></circle>
+</sc-for>
+</g>
+<g data-section="markers">
+<sc-for list="{{threatPaths}}" as="r" hint-placeholder-count="0">
+<path d="{{r.line}}" fill="none" stroke="{{r.c}}" stroke-opacity="0.2" stroke-width="1" pointer-events="none"/>
+<path d="{{r.d}}" fill="none" stroke="{{r.c}}" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" pointer-events="none"/>
+</sc-for>
+<sc-for list="{{threatPts}}" as="p" hint-placeholder-count="0">
+<circle cx="{{p.x}}" cy="{{p.y}}" r="5" fill="#05080f" stroke="{{p.c}}" stroke-width="1.5" onContextMenu="{{p.ctx}}"><title>Threat path point. Right-click to remove.</title></circle>
+</sc-for>
+<sc-for list="{{markers}}" as="m" hint-placeholder-count="0">
+<circle cx="{{m.cx}}" cy="{{m.cy}}" r="17" fill="none" stroke="{{m.ring}}" stroke-width="1.5" stroke-dasharray="3 3" pointer-events="none"/>
+<use href="{{m.href}}" x="{{m.x}}" y="{{m.y}}" width="26" height="26" color="{{m.c}}" onPointerDown="{{m.down}}" onContextMenu="{{m.ctx}}" style="cursor: move"><title>Marker. Drag to move, right-click for options.</title></use>
+</sc-for>
+</g>
+<g data-section="annotations">
+<sc-for list="{{annoPaths}}" as="a" hint-placeholder-count="0">
+<path d="{{a.d}}" fill="none" stroke="{{a.c}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" onContextMenu="{{a.ctx}}"/>
+</sc-for>
+<sc-for list="{{annoCircles}}" as="a" hint-placeholder-count="0">
+<circle cx="{{a.cx}}" cy="{{a.cy}}" r="18" fill="none" stroke="{{a.c}}" stroke-width="2" onContextMenu="{{a.ctx}}"><animate attributeName="r" values="14;26;14" dur="1.6s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/></circle>
+</sc-for>
+<path d="{{annoDraft}}" fill="none" stroke="#FDE68A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.8" pointer-events="none"/>
+</g>
+<g data-section="measure-and-highlights" pointer-events="none">
+<g display="{{md}}"><line x1="{{mx1}}" y1="{{my1}}" x2="{{mx2}}" y2="{{my2}}" stroke="#22D3EE" stroke-width="1.5" stroke-dasharray="6 4"/><circle cx="{{mx1}}" cy="{{my1}}" r="4" fill="#22D3EE"/><circle cx="{{mx2}}" cy="{{my2}}" r="4" fill="#22D3EE"/></g>
+<sc-for list="{{multiRings}}" as="m" hint-placeholder-count="0">
+<circle cx="{{m.x}}" cy="{{m.y}}" r="26" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-dasharray="3 3"/>
+</sc-for>
+<g display="{{hld}}"><circle cx="{{hlx}}" cy="{{hly}}" r="30" fill="#22D3EE" fill-opacity="0.08" stroke="#22D3EE" stroke-width="1.5"/></g>
 <g fill="none" stroke="#FBBF24" stroke-width="1.5" transform="translate({{rt}})" display="{{rtd}}" pointer-events="none">
 <circle cx="0" cy="0" r="28" stroke-dasharray="5 4"/>
 <path d="M-30 -18v-10h10M30 -18v-10h-10M-30 18v10h10M30 18v10h-10"/>
 </g>
-
-<g font-family="Mohave, sans-serif" font-weight="700" font-size="14" letter-spacing="0.9" paint-order="stroke" stroke="#05080f" stroke-width="3">
-<text x="340" y="590" fill="#F87171">VANGUARD</text>
-<text x="420" y="418" fill="#A78BFA">OVERWATCH</text>
-<text x="660" y="376" fill="#22D3EE">LIFELINE</text>
-<text x="960" y="360" fill="#FB923C">LOGISTICS</text>
-<text x="743" y="642" fill="#60A5FA" text-anchor="middle">COMMAND</text>
 </g>
-
+<g data-section="belt-and-station">
 <g color="#6B7280" opacity="0.6">
 <use href="#rock" x="0" y="0" width="20" height="20" transform="translate(60 742) rotate(20) scale(1.6)" style="color:#4B5563"/>
 <use href="#rock" x="0" y="0" width="20" height="20" transform="translate(120 770) rotate(60) scale(1.1)"/>
@@ -343,278 +396,123 @@ body{margin:0}
 <text x="1090" y="268" text-anchor="middle" fill="#22D3EE" font-family="Quantico, sans-serif" font-size="11" letter-spacing="1.4">LAUNCH POINT</text>
 <path id="launchPath" d="M1096 280 Q1112 360 1046 440" fill="none"/><text font-family="Quantico, sans-serif" font-size="12" fill="#22D3EE" fill-opacity="0.95" dominant-baseline="middle"><textPath href="#launchPath" textLength="165" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text>
 </g>
-
-<g style="display: {{ld}}" font-family="Oxanium, sans-serif">
-<g opacity="{{op.Kestrel_7}}" transform="translate({{lp.Kestrel_7}})" onPointerDown="{{dn.Kestrel_7}}" onPointerEnter="{{en.Kestrel_7}}" onPointerLeave="{{lv.Kestrel_7}}" style="cursor: grab"><rect width="122" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="#FBBF24"/><circle cx="10" cy="10" r="3.5" fill="#3F83F8"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Kestrel_7</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Apollo Medivac · 2/2</text></g>
-<g opacity="{{op.Tessel}}" transform="translate({{lp.Tessel}})" onPointerDown="{{dn.Tessel}}" onPointerEnter="{{en.Tessel}}" onPointerLeave="{{lv.Tessel}}" style="cursor: grab"><rect width="110" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Tessel.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#31C48D"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Tessel</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Cutlass Red · 2/2</text></g>
-<g opacity="{{op.Dovetail}}" transform="translate({{lp.Dovetail}})" onPointerDown="{{dn.Dovetail}}" onPointerEnter="{{en.Dovetail}}" onPointerLeave="{{lv.Dovetail}}" style="cursor: grab"><rect width="110" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Dovetail.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#FBBF24"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Dovetail</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Cutlass Red · 1/2</text></g>
-<g opacity="{{op.Pellam}}" transform="translate({{lp.Pellam}})" onPointerDown="{{dn.Pellam}}" onPointerEnter="{{en.Pellam}}" onPointerLeave="{{lv.Pellam}}" style="cursor: grab"><rect width="122" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Pellam.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#31C48D"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Pellam</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Apollo Medivac · 1/2</text></g>
-<g opacity="{{op.Brightwater}}" transform="translate({{lp.Brightwater}})" onPointerDown="{{dn.Brightwater}}" onPointerEnter="{{en.Brightwater}}" onPointerLeave="{{lv.Brightwater}}" style="cursor: grab"><rect width="134" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Brightwater.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#31C48D"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Brightwater</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Perseus · 4/6</text></g>
-<g opacity="{{op.Corvid_3}}" transform="translate({{lp.Corvid_3}})" onPointerDown="{{dn.Corvid_3}}" onPointerEnter="{{en.Corvid_3}}" onPointerLeave="{{lv.Corvid_3}}" style="cursor: grab"><rect width="96" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Corvid_3.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#31C48D"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Corvid_3</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Gladius · 1/1</text></g>
-<g opacity="{{op.Hollis}}" transform="translate({{lp.Hollis}})" onPointerDown="{{dn.Hollis}}" onPointerEnter="{{en.Hollis}}" onPointerLeave="{{lv.Hollis}}" style="cursor: grab"><rect width="96" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Hollis.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#FBBF24"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Hollis</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Gladius · 1/1</text></g>
-<g opacity="{{op.Nyx_Runner}}" transform="translate({{lp.Nyx_Runner}})" onPointerDown="{{dn.Nyx_Runner}}" onPointerEnter="{{en.Nyx_Runner}}" onPointerLeave="{{lv.Nyx_Runner}}" style="cursor: grab"><rect width="104" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Nyx_Runner.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#F05252"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Nyx_Runner</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Gladius · 0/1</text></g>
-<g opacity="{{op.Okapi_9}}" transform="translate({{lp.Okapi_9}})" onPointerDown="{{dn.Okapi_9}}" onPointerEnter="{{en.Okapi_9}}" onPointerLeave="{{lv.Okapi_9}}" style="cursor: grab"><rect width="98" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Okapi_9.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#3F83F8"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Okapi_9</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Terrapin · 2/2</text></g>
-<g opacity="{{op.Lumen_2}}" transform="translate({{lp.Lumen_2}})" onPointerDown="{{dn.Lumen_2}}" onPointerEnter="{{en.Lumen_2}}" onPointerLeave="{{lv.Lumen_2}}" style="cursor: grab"><rect width="98" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Lumen_2.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#31C48D"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Lumen_2</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Terrapin · 1/2</text></g>
-<g opacity="{{op.Sable_Run}}" transform="translate({{lp.Sable_Run}})" onPointerDown="{{dn.Sable_Run}}" onPointerEnter="{{en.Sable_Run}}" onPointerLeave="{{lv.Sable_Run}}" style="cursor: grab"><rect width="104" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Sable_Run.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#3F83F8"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Sable_Run</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Caterpillar · 3/4</text></g>
-<g opacity="{{op.Orrin}}" transform="translate({{lp.Orrin}})" onPointerDown="{{dn.Orrin}}" onPointerEnter="{{en.Orrin}}" onPointerLeave="{{lv.Orrin}}" style="cursor: grab"><rect width="104" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Orrin.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#FBBF24"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Orrin</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Caterpillar · 2/4</text></g>
-<g opacity="{{op.Vesper_4}}" transform="translate({{lp.Vesper_4}})" onPointerDown="{{dn.Vesper_4}}" onPointerEnter="{{en.Vesper_4}}" onPointerLeave="{{lv.Vesper_4}}" style="cursor: grab"><rect width="104" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Vesper_4.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#9CA3AF"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Vesper_4</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Caterpillar · 2/4</text></g>
-<g opacity="{{op.Marrow_6}}" transform="translate({{lp.Marrow_6}})" onPointerDown="{{dn.Marrow_6}}" onPointerEnter="{{en.Marrow_6}}" onPointerLeave="{{lv.Marrow_6}}" style="cursor: grab"><rect width="106" height="28" rx="4" fill="#05080f" fill-opacity="0.85" stroke="{{mt.Marrow_6.c}}" stroke-opacity="0.55"/><circle cx="10" cy="10" r="3.5" fill="#31C48D"/><text x="18" y="13" font-size="12" font-weight="700" fill="#F9FAFB">Marrow_6</text><text x="8" y="24" font-size="9.5" fill="#9CA3AF" font-family="Quantico, sans-serif">Idris-P · 12/28</text></g>
 </g>
-
-<g display="{{wpd2}}" pointer-events="none"><path id="wpPath" d="{{wpd}}" fill="none" stroke="#FBBF24" stroke-opacity="0.35" stroke-dasharray="2 5"/><text display="{{wb.b0}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;</textPath></text><text display="{{wb.b1}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{wb.b2}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{wb.b3}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{wb.b4}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{wb.b5}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{wb.b6}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{wb.b7}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text><text display="{{wb.b8}}" font-family="Quantico, sans-serif" font-size="11" fill="#FBBF24" fill-opacity="0.9" dominant-baseline="middle"><textPath href="#wpPath" textLength="{{wb.len}}" lengthAdjust="spacing">-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;-&gt;</textPath></text>
-<g display="{{wm.w1.d}}"><circle cx="{{wm.w1.x}}" cy="{{wm.w1.y}}" r="9" fill="#05080f" fill-opacity="0.9" stroke="#FBBF24" stroke-width="1.5"/></g>
-<g display="{{wm.w2.d}}"><circle cx="{{wm.w2.x}}" cy="{{wm.w2.y}}" r="9" fill="#05080f" fill-opacity="0.9" stroke="#FBBF24" stroke-width="1.5"/></g>
-<g display="{{wm.w3.d}}"><circle cx="{{wm.w3.x}}" cy="{{wm.w3.y}}" r="9" fill="#05080f" fill-opacity="0.9" stroke="#FBBF24" stroke-width="1.5"/></g>
-<g display="{{wm.w4.d}}"><circle cx="{{wm.w4.x}}" cy="{{wm.w4.y}}" r="9" fill="#05080f" fill-opacity="0.9" stroke="#FBBF24" stroke-width="1.5"/></g>
-<g display="{{wm.w5.d}}"><circle cx="{{wm.w5.x}}" cy="{{wm.w5.y}}" r="9" fill="#05080f" fill-opacity="0.9" stroke="#FBBF24" stroke-width="1.5"/></g>
-<g display="{{wm.w6.d}}"><circle cx="{{wm.w6.x}}" cy="{{wm.w6.y}}" r="9" fill="#05080f" fill-opacity="0.9" stroke="#FBBF24" stroke-width="1.5"/></g>
-</g>
-<g display="{{md}}" pointer-events="none"><line x1="{{mx1}}" y1="{{my1}}" x2="{{mx2}}" y2="{{my2}}" stroke="#22D3EE" stroke-width="1.5" stroke-dasharray="6 4"/></g>
 <rect width="1440" height="900" fill="url(#fog)" pointer-events="none"/>
 </svg>
-<div style="position: absolute; left: 0; top: 0; width: {{w}}px; height: {{h}}px; overflow: hidden; pointer-events: none; display: {{ld}}">
-<span style="position: absolute; left: {{ov.Kestrel_7.tl}}px; top: {{ov.Kestrel_7.tt}}px; transform: translateX(-100%); opacity: {{ov.Kestrel_7.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Kestrel_7.el}}</span>
-<span style="position: absolute; left: {{ov.Kestrel_7.tl}}px; top: {{ov.Kestrel_7.bt}}px; transform: translateX(-100%); opacity: {{ov.Kestrel_7.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Kestrel_7.bc}}; white-space: nowrap">{{ov.Kestrel_7.badge}}</span>
-<span style="position: absolute; left: {{ov.Tessel.tl}}px; top: {{ov.Tessel.tt}}px; transform: translateX(-100%); opacity: {{ov.Tessel.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Tessel.el}}</span>
-<span style="position: absolute; left: {{ov.Tessel.tl}}px; top: {{ov.Tessel.bt}}px; transform: translateX(-100%); opacity: {{ov.Tessel.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Tessel.bc}}; white-space: nowrap">{{ov.Tessel.badge}}</span>
-<span style="position: absolute; left: {{ov.Dovetail.tl}}px; top: {{ov.Dovetail.tt}}px; transform: translateX(-100%); opacity: {{ov.Dovetail.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Dovetail.el}}</span>
-<span style="position: absolute; left: {{ov.Dovetail.tl}}px; top: {{ov.Dovetail.bt}}px; transform: translateX(-100%); opacity: {{ov.Dovetail.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Dovetail.bc}}; white-space: nowrap">{{ov.Dovetail.badge}}</span>
-<span style="position: absolute; left: {{ov.Pellam.tl}}px; top: {{ov.Pellam.tt}}px; transform: translateX(-100%); opacity: {{ov.Pellam.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Pellam.el}}</span>
-<span style="position: absolute; left: {{ov.Pellam.tl}}px; top: {{ov.Pellam.bt}}px; transform: translateX(-100%); opacity: {{ov.Pellam.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Pellam.bc}}; white-space: nowrap">{{ov.Pellam.badge}}</span>
-<span style="position: absolute; left: {{ov.Brightwater.tl}}px; top: {{ov.Brightwater.tt}}px; transform: translateX(-100%); opacity: {{ov.Brightwater.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Brightwater.el}}</span>
-<span style="position: absolute; left: {{ov.Brightwater.tl}}px; top: {{ov.Brightwater.bt}}px; transform: translateX(-100%); opacity: {{ov.Brightwater.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Brightwater.bc}}; white-space: nowrap">{{ov.Brightwater.badge}}</span>
-<span style="position: absolute; left: {{ov.Corvid_3.tl}}px; top: {{ov.Corvid_3.tt}}px; transform: translateX(-100%); opacity: {{ov.Corvid_3.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Corvid_3.el}}</span>
-<span style="position: absolute; left: {{ov.Corvid_3.tl}}px; top: {{ov.Corvid_3.bt}}px; transform: translateX(-100%); opacity: {{ov.Corvid_3.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Corvid_3.bc}}; white-space: nowrap">{{ov.Corvid_3.badge}}</span>
-<span style="position: absolute; left: {{ov.Hollis.tl}}px; top: {{ov.Hollis.tt}}px; transform: translateX(-100%); opacity: {{ov.Hollis.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Hollis.el}}</span>
-<span style="position: absolute; left: {{ov.Hollis.tl}}px; top: {{ov.Hollis.bt}}px; transform: translateX(-100%); opacity: {{ov.Hollis.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Hollis.bc}}; white-space: nowrap">{{ov.Hollis.badge}}</span>
-<span style="position: absolute; left: {{ov.Nyx_Runner.tl}}px; top: {{ov.Nyx_Runner.tt}}px; transform: translateX(-100%); opacity: {{ov.Nyx_Runner.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Nyx_Runner.el}}</span>
-<span style="position: absolute; left: {{ov.Nyx_Runner.tl}}px; top: {{ov.Nyx_Runner.bt}}px; transform: translateX(-100%); opacity: {{ov.Nyx_Runner.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Nyx_Runner.bc}}; white-space: nowrap">{{ov.Nyx_Runner.badge}}</span>
-<span style="position: absolute; left: {{ov.Okapi_9.tl}}px; top: {{ov.Okapi_9.tt}}px; transform: translateX(-100%); opacity: {{ov.Okapi_9.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Okapi_9.el}}</span>
-<span style="position: absolute; left: {{ov.Okapi_9.tl}}px; top: {{ov.Okapi_9.bt}}px; transform: translateX(-100%); opacity: {{ov.Okapi_9.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Okapi_9.bc}}; white-space: nowrap">{{ov.Okapi_9.badge}}</span>
-<span style="position: absolute; left: {{ov.Lumen_2.tl}}px; top: {{ov.Lumen_2.tt}}px; transform: translateX(-100%); opacity: {{ov.Lumen_2.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Lumen_2.el}}</span>
-<span style="position: absolute; left: {{ov.Lumen_2.tl}}px; top: {{ov.Lumen_2.bt}}px; transform: translateX(-100%); opacity: {{ov.Lumen_2.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Lumen_2.bc}}; white-space: nowrap">{{ov.Lumen_2.badge}}</span>
-<span style="position: absolute; left: {{ov.Sable_Run.tl}}px; top: {{ov.Sable_Run.tt}}px; transform: translateX(-100%); opacity: {{ov.Sable_Run.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Sable_Run.el}}</span>
-<span style="position: absolute; left: {{ov.Sable_Run.tl}}px; top: {{ov.Sable_Run.bt}}px; transform: translateX(-100%); opacity: {{ov.Sable_Run.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Sable_Run.bc}}; white-space: nowrap">{{ov.Sable_Run.badge}}</span>
-<span style="position: absolute; left: {{ov.Orrin.tl}}px; top: {{ov.Orrin.tt}}px; transform: translateX(-100%); opacity: {{ov.Orrin.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Orrin.el}}</span>
-<span style="position: absolute; left: {{ov.Orrin.tl}}px; top: {{ov.Orrin.bt}}px; transform: translateX(-100%); opacity: {{ov.Orrin.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Orrin.bc}}; white-space: nowrap">{{ov.Orrin.badge}}</span>
-<span style="position: absolute; left: {{ov.Vesper_4.tl}}px; top: {{ov.Vesper_4.tt}}px; transform: translateX(-100%); opacity: {{ov.Vesper_4.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Vesper_4.el}}</span>
-<span style="position: absolute; left: {{ov.Vesper_4.tl}}px; top: {{ov.Vesper_4.bt}}px; transform: translateX(-100%); opacity: {{ov.Vesper_4.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Vesper_4.bc}}; white-space: nowrap">{{ov.Vesper_4.badge}}</span>
-<span style="position: absolute; left: {{ov.Marrow_6.tl}}px; top: {{ov.Marrow_6.tt}}px; transform: translateX(-100%); opacity: {{ov.Marrow_6.o}}; font-family: Quantico, sans-serif; font-size: 9px; line-height: 11px; color: #9CA3AF; white-space: nowrap">{{ov.Marrow_6.el}}</span>
-<span style="position: absolute; left: {{ov.Marrow_6.tl}}px; top: {{ov.Marrow_6.bt}}px; transform: translateX(-100%); opacity: {{ov.Marrow_6.o}}; font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; line-height: 10px; color: {{ov.Marrow_6.bc}}; white-space: nowrap">{{ov.Marrow_6.badge}}</span>
+
+<div data-section="map-text" style="position: absolute; left: 0; top: 0; width: {{w}}px; height: {{h}}px; overflow: hidden; pointer-events: none">
+<sc-for list="{{sqLabels}}" as="q" hint-placeholder-count="5">
+<div onDoubleClick="{{q.dbl}}" onContextMenu="{{q.ctx}}" data-tip="{{q.tip}}" style="position: absolute; left: {{q.l}}px; top: {{q.t}}px; transform: translateX({{q.tx}}); pointer-events: auto; cursor: text; font-family: Mohave, sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: {{q.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f, 0 0 2px #05080f; white-space: nowrap; user-select: none">
+<sc-if value="{{q.editing}}" hint-placeholder-val="{{ false }}">
+<input data-sedit="1" type="text" value="{{q.draft}}" onChange="{{q.chg}}" onKeyDown="{{q.kd}}" onBlur="{{q.blur}}" aria-label="Squadron name" style="width: 140px; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid {{q.c}}; background: #05080f; color: #F9FAFB; font: inherit; text-transform: none">
+</sc-if>
+<sc-if value="{{q.show}}" hint-placeholder-val="{{ true }}">
+<span>{{q.name}}</span>
+</sc-if>
 </div>
-<div style="position: absolute; left: 0; top: 0; width: {{w}}px; height: {{h}}px; overflow: hidden; pointer-events: none">
-<span style="position: absolute; left: {{zo.z1.l}}px; top: {{zo.z1.t}}px; display: {{zo.z1.d}}; font-family: Mohave, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.07em; color: {{zo.z1.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f; white-space: nowrap">{{zo.z1.t2}}</span>
-<span style="position: absolute; left: {{zo.z2.l}}px; top: {{zo.z2.t}}px; display: {{zo.z2.d}}; font-family: Mohave, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.07em; color: {{zo.z2.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f; white-space: nowrap">{{zo.z2.t2}}</span>
-<span style="position: absolute; left: {{zo.z3.l}}px; top: {{zo.z3.t}}px; display: {{zo.z3.d}}; font-family: Mohave, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.07em; color: {{zo.z3.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f; white-space: nowrap">{{zo.z3.t2}}</span>
-<span style="position: absolute; left: {{zo.z4.l}}px; top: {{zo.z4.t}}px; display: {{zo.z4.d}}; font-family: Mohave, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.07em; color: {{zo.z4.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f; white-space: nowrap">{{zo.z4.t2}}</span>
-<span style="position: absolute; left: {{zo.z5.l}}px; top: {{zo.z5.t}}px; display: {{zo.z5.d}}; font-family: Mohave, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.07em; color: {{zo.z5.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f; white-space: nowrap">{{zo.z5.t2}}</span>
-<span style="position: absolute; left: {{zo.z6.l}}px; top: {{zo.z6.t}}px; display: {{zo.z6.d}}; font-family: Mohave, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.07em; color: {{zo.z6.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f; white-space: nowrap">{{zo.z6.t2}}</span>
-<span style="position: absolute; left: {{wo.w1.l}}px; top: {{wo.w1.t}}px; display: {{wo.w1.d}}; width: 18px; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 18px; color: #FBBF24">{{wo.w1.n}}</span>
-<span style="position: absolute; left: {{wo.w2.l}}px; top: {{wo.w2.t}}px; display: {{wo.w2.d}}; width: 18px; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 18px; color: #FBBF24">{{wo.w2.n}}</span>
-<span style="position: absolute; left: {{wo.w3.l}}px; top: {{wo.w3.t}}px; display: {{wo.w3.d}}; width: 18px; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 18px; color: #FBBF24">{{wo.w3.n}}</span>
-<span style="position: absolute; left: {{wo.w4.l}}px; top: {{wo.w4.t}}px; display: {{wo.w4.d}}; width: 18px; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 18px; color: #FBBF24">{{wo.w4.n}}</span>
-<span style="position: absolute; left: {{wo.w5.l}}px; top: {{wo.w5.t}}px; display: {{wo.w5.d}}; width: 18px; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 18px; color: #FBBF24">{{wo.w5.n}}</span>
-<span style="position: absolute; left: {{wo.w6.l}}px; top: {{wo.w6.t}}px; display: {{wo.w6.d}}; width: 18px; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 18px; color: #FBBF24">{{wo.w6.n}}</span>
-<div style="position: absolute; left: {{mo.l}}px; top: {{mo.t}}px; display: {{mo.d}}; width: 76px; height: 20px; box-sizing: border-box; border-radius: 4px; background: rgba(5,8,15,0.92); border: 1px solid #22D3EE; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; line-height: 18px; color: #22D3EE">{{mo.txt}}</div>
-<div style="position: absolute; left: {{ho.l}}px; top: {{ho.t}}px; display: {{ho.d}}; width: 214px; height: 78px; box-sizing: border-box; padding: 8px 10px; border-radius: 6px; background: rgba(5,8,15,0.96); border: 1px solid {{ho.c}}">
+</sc-for>
+<sc-for list="{{zoneLabels}}" as="z" hint-placeholder-count="0">
+<div onDoubleClick="{{z.dbl}}" onContextMenu="{{z.ctx}}" data-tip="Zone label: double-click to rename, right-click for colour, comments and delete." style="position: absolute; left: {{z.l}}px; top: {{z.t}}px; pointer-events: auto; cursor: text; font-family: Mohave, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.06em; color: {{z.c}}; text-shadow: 0 0 3px #05080f, 0 0 3px #05080f; white-space: nowrap; user-select: none">
+<sc-if value="{{z.editing}}" hint-placeholder-val="{{ false }}">
+<input data-sedit="1" type="text" value="{{z.draft}}" onChange="{{z.chg}}" onKeyDown="{{z.kd}}" onBlur="{{z.blur}}" aria-label="Zone name" style="width: 170px; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid {{z.c}}; background: #05080f; color: #F9FAFB; font: inherit">
+</sc-if>
+<sc-if value="{{z.show}}" hint-placeholder-val="{{ true }}">
+<span>{{z.name}}</span>
+</sc-if>
+</div>
+</sc-for>
+<sc-for list="{{markerLabels}}" as="z" hint-placeholder-count="0">
+<div onDoubleClick="{{z.dbl}}" onContextMenu="{{z.ctx}}" data-tip="Marker: double-click to rename, right-click for type, path, coverage and comments." style="position: absolute; left: {{z.l}}px; top: {{z.t}}px; pointer-events: auto; cursor: text; padding: 1px 6px; border-radius: 4px; background: rgba(5,8,15,0.8); font-family: Quantico, sans-serif; font-weight: 700; font-size: 11px; color: {{z.c}}; white-space: nowrap; user-select: none">
+<sc-if value="{{z.editing}}" hint-placeholder-val="{{ false }}">
+<input data-sedit="1" type="text" value="{{z.draft}}" onChange="{{z.chg}}" onKeyDown="{{z.kd}}" onBlur="{{z.blur}}" aria-label="Marker name" style="width: 150px; height: 20px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid {{z.c}}; background: #05080f; color: #F9FAFB; font: inherit">
+</sc-if>
+<sc-if value="{{z.show}}" hint-placeholder-val="{{ true }}">
+<span>{{z.name}}</span>
+</sc-if>
+</div>
+</sc-for>
+<sc-for list="{{annoTexts}}" as="z" hint-placeholder-count="0">
+<div onDoubleClick="{{z.dbl}}" onContextMenu="{{z.ctx}}" data-tip="Note: double-click to edit, right-click to delete." style="position: absolute; left: {{z.l}}px; top: {{z.t}}px; pointer-events: auto; cursor: text; padding: 2px 8px; border-radius: 4px; background: rgba(253,230,138,0.12); border: 1px solid {{z.c}}; font-size: 12px; font-weight: 600; color: {{z.c}}; white-space: nowrap; user-select: none">
+<sc-if value="{{z.editing}}" hint-placeholder-val="{{ false }}">
+<input data-sedit="1" type="text" value="{{z.draft}}" onChange="{{z.chg}}" onKeyDown="{{z.kd}}" onBlur="{{z.blur}}" aria-label="Note text" style="width: 200px; height: 20px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid {{z.c}}; background: #05080f; color: #F9FAFB; font: inherit">
+</sc-if>
+<sc-if value="{{z.show}}" hint-placeholder-val="{{ true }}">
+<span>{{z.name}}</span>
+</sc-if>
+</div>
+</sc-for>
+<sc-for list="{{arcLabels}}" as="a" hint-placeholder-count="0">
+<span style="position: absolute; left: {{a.l}}px; top: {{a.t}}px; padding: 0 4px; border-radius: 3px; background: rgba(5,8,15,0.75); font-family: Quantico, sans-serif; font-size: 9px; color: {{a.c}}; white-space: nowrap">{{a.txt}}</span>
+</sc-for>
+<sc-for list="{{wpNums}}" as="p" hint-placeholder-count="0">
+<span style="position: absolute; left: {{p.l}}px; top: {{p.t}}px; width: 20px; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 20px; color: {{p.tc}}">{{p.n}}</span>
+<span style="position: absolute; left: {{p.l}}px; top: {{p.t}}px; display: {{p.etaD}}; margin: 3px 0 0 24px; padding: 0 4px; border-radius: 3px; background: rgba(5,8,15,0.8); font-family: Oxanium, sans-serif; font-size: 10px; line-height: 14px; color: {{p.ec}}; white-space: nowrap">{{p.eta}}</span>
+</sc-for>
+<div style="display: {{ld}}">
+<sc-for list="{{labels}}" as="b" hint-placeholder-count="14">
+<div data-lbl="{{b.key}}" onPointerDown="{{b.down}}" onPointerEnter="{{b.enter}}" onPointerLeave="{{b.leave}}" onContextMenu="{{b.ctx}}" onDoubleClick="{{b.dbl}}" style="position: absolute; left: {{b.l}}px; top: {{b.t}}px; opacity: {{b.op}}; pointer-events: auto; cursor: {{b.cur}}; box-sizing: border-box; min-width: 92px; padding: 3px 7px; border-radius: 4px; background: rgba(5,8,15,0.86); border: 1px {{b.bstyle}} {{b.border}}; user-select: none">
+<div style="display: flex; align-items: center; gap: 5px; height: 14px">
+<span style="width: 7px; height: 7px; border-radius: 4px; flex: none; background: {{b.st}}"></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; color: #F9FAFB; white-space: nowrap; text-decoration: {{b.deco}}">{{b.handle}}</span>
+<span style="flex: 1; min-width: 6px"></span>
+<span style="font-family: Quantico, sans-serif; font-weight: 700; font-size: 8.5px; color: {{b.bc}}">{{b.badge}}</span>
+</div>
+<sc-if value="{{b.two}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 6px; height: 12px">
+<sc-if value="{{b.editing}}" hint-placeholder-val="{{ false }}">
+<input data-sedit="1" type="text" value="{{b.draft}}" placeholder="Ship nickname" onChange="{{b.chg}}" onKeyDown="{{b.kd}}" onBlur="{{b.blur}}" onPointerDown="{{b.stop}}" aria-label="Ship nickname" style="width: 120px; height: 16px; box-sizing: border-box; padding: 0 4px; border-radius: 3px; border: 1px solid #FBBF24; background: #05080f; color: #F9FAFB; font-family: Quantico, sans-serif; font-size: 10px">
+</sc-if>
+<sc-if value="{{b.show}}" hint-placeholder-val="{{ true }}">
+<span style="font-family: Quantico, sans-serif; font-size: 9.5px; color: #9CA3AF; white-space: nowrap">{{b.sub}}</span>
+</sc-if>
+<span style="flex: 1"></span>
+<span style="font-family: Quantico, sans-serif; font-size: 9px; color: #9CA3AF">{{b.el}}</span>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<sc-for list="{{pinList}}" as="p" hint-placeholder-count="0">
+<button type="button" onClick="{{p.click}}" onPointerDown="{{p.stop}}" aria-label="Open comments" data-tip="Comments: click to read, reply or resolve. Colour shows the most urgent open item." style="position: absolute; left: {{p.l}}px; top: {{p.t}}px; pointer-events: auto; display: flex; align-items: center; gap: 2px; height: 18px; padding: 0 5px; border: 0; border-radius: 9px 9px 9px 2px; cursor: pointer; background: {{p.bg}}; color: #111827; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 10px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>{{p.n}}</button>
+</sc-for>
+<div style="position: absolute; left: {{mo.l}}px; top: {{mo.t}}px; display: {{mo.d}}; width: 84px; height: 20px; box-sizing: border-box; border-radius: 4px; background: rgba(5,8,15,0.92); border: 1px solid #22D3EE; text-align: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; line-height: 18px; color: #22D3EE">{{mo.txt}}</div>
+<div style="position: absolute; left: {{ho.l}}px; top: {{ho.t}}px; display: {{ho.d}}; width: 230px; box-sizing: border-box; padding: 8px 10px; border-radius: 6px; background: rgba(5,8,15,0.96); border: 1px solid {{ho.c}}">
 <div style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 13px; line-height: 16px; color: #F9FAFB">{{ho.h1}}</div>
 <div style="font-size: 11px; line-height: 15px; color: #D1D5DB">{{ho.h2}}</div>
 <div style="font-size: 11px; line-height: 15px; color: #9CA3AF">{{ho.h3}}</div>
-<div style="font-family: Quantico, sans-serif; font-size: 10px; line-height: 14px; color: #9CA3AF; white-space: nowrap; overflow: hidden">{{ho.h4}}</div>
+<div style="font-family: Quantico, sans-serif; font-size: 10px; line-height: 14px; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ho.h4}}</div>
+<div style="font-size: 10px; line-height: 14px; color: #FBBF24; margin-top: 4px">Drag to move · right-click for actions · double-click label for nickname</div>
 </div>
 </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"w":{"editor":"int","default":1440,"min":200,"max":3000},"h":{"editor":"int","default":900,"min":200,"max":3000},"$preview":{"width":1440,"height":900}}'>
+// Orbit scene component. Drawing is built in js/scene-view.js; pointer and edit behaviour lives in js/scene-input.js.
+const SCENE_EMPTY = {
+w: 1440, h: 900, cursor: 'default', gd: 'none', ld: 'none', rd: 'none', pd: 'none',
+shipsBehind: [], shipsFront: [], labels: [], lostMarks: [], rings: [], sqLabels: [], zones: [], zoneHandles: [], zoneLabels: [], routes: [], segs: [], wpts: [], wpNums: [], ghostPaths: [], multiRings: [],
+markers: [], hazards: [], threatPaths: [], threatPts: [], markerLabels: [], coverLines: [], arcCircles: [], arcLabels: [], annoPaths: [], annoCircles: [], annoTexts: [], annoDraft: '', diffGhosts: [], diffLines: [], linkLines: [], pinList: [],
+md: 'none', mx1: 0, my1: 0, mx2: 0, my2: 0, mo: { d: 'none', l: 0, t: 0, txt: '' }, ho: { d: 'none', l: 0, t: 0, c: '#000', h1: '', h2: '', h3: '', h4: '' }, rt: '0 0', rtd: 'none', hld: 'none', hlx: 0, hly: 0,
+zdd: 'none', zdx: 0, zdy: 0, zdw: 0, zdh: 0, mv: () => {}, up: () => {}, bg: () => {}, bgCtx: () => {}, vb: '0 0 1440 900', wheel: () => {}
+};
 class Component extends DCLogic {
 constructor(...args) {
 super(...args);
-this.state = { cur: null, hover: null, zd: null };
+this.state = { cur: null, hover: null, zd: null, wdrag: null, zdrag: null, mdrag: null, edit: null, zsel: null, wsel: null, msel: null, adraw: null, pv: null };
 this.drag = null;
-this.zdraw = null;
 }
-json(v, d) {
-try { return JSON.parse(v || '') || d; } catch (e) { return d; }
+ready() {
+if (window.FleetSceneView && window.FleetSceneInput) {
+if (!this._mixed) { Object.assign(Object.getPrototypeOf(this), window.FleetSceneInput); this._mixed = true; }
+return true;
 }
+if (!this._wait) this._wait = setInterval(() => { if (window.FleetSceneView && window.FleetSceneInput) { clearInterval(this._wait); this.forceUpdate(); } }, 50);
+return false;
+}
+componentWillUnmount() { clearInterval(this._wait); }
 renderVals() {
-const BC = {"Okapi_9": [499.0, 431.0], "Tessel": [697.0, 407.5], "Dovetail": [845.0, 467.5], "Sable_Run": [994.0, 382.0], "Corvid_3": [512.0, 471.5], "Brightwater": [402.0, 546.0], "Nyx_Runner": [546.0, 622.5], "Hollis": [446.0, 616.5], "Lumen_2": [537.0, 431.0], "Pellam": [905.0, 537.5], "Kestrel_7": [669.0, 551.5], "Orrin": [1038.0, 454.0], "Vesper_4": [915.0, 566.0], "Marrow_6": [743.0, 592.0]};
-const BL = {"Kestrel_7": [702.0, 516.0], "Tessel": [722.0, 396.0], "Dovetail": [868.0, 450.0], "Pellam": [872.0, 490.0], "Brightwater": [360.0, 500.0], "Corvid_3": [540.0, 482.0], "Hollis": [330.0, 636.0], "Nyx_Runner": [572.0, 640.0], "Okapi_9": [396.0, 436.0], "Lumen_2": [560.0, 396.0], "Sable_Run": [1020.0, 380.0], "Orrin": [1070.0, 436.0], "Vesper_4": [956.0, 560.0], "Marrow_6": [690.0, 650.0]};
-const P = this.props;
-const names = Object.keys(BL);
-const dim = String(P.dim || '').split(',');
-const offs = this.json(P.offs, {});
-const meta = this.json(P.meta, {});
-const zones = this.json(P.zones, []);
-const wps = this.json(P.wps, []);
-const cur = this.state.cur;
-const off = (n) => (cur && cur.name === n) ? [cur.dx, cur.dy] : (offs[n] || [0, 0]);
-const ctr = (n) => { const o = off(n); return [BC[n][0] + o[0], BC[n][1] + o[1]]; };
-const op = {}, sp = {}, lp = {}, dn = {}, en = {}, lv = {}, mt = {};
-names.forEach((n) => {
-op[n] = dim.indexOf(n) >= 0 ? 0.25 : 1;
-const o = off(n);
-sp[n] = 'translate(' + o[0] + ' ' + o[1] + ')';
-lp[n] = (BL[n][0] + o[0]) + ' ' + (BL[n][1] + o[1]);
-dn[n] = (e) => this.down(e, n, offs);
-en[n] = () => { if (!this.drag) this.setState({ hover: n }); };
-lv[n] = () => this.setState({ hover: null });
-mt[n] = Object.assign({ c: '#9CA3AF', el: '', badge: '', bc: '#FBBF24' }, meta[n] && meta[n].v ? meta[n].v : {});
-});
-const sel = P.sel;
-let rt = '0 0', rtd = 'none';
-if (BC[sel]) { const c = ctr(sel); rt = c[0] + ' ' + c[1]; rtd = 'inline'; }
-const zn = {};
-for (let i = 1; i <= 6; i++) {
-const z = zones[i - 1];
-zn['z' + i] = z ? { d: 'inline', x: z.x, y: z.y, w: z.w, h: z.h, c: z.c, t: z.t, tx: z.x + 8, ty: z.y + 16 } : { d: 'none', x: 0, y: 0, w: 0, h: 0, c: '#FBBF24', t: '', tx: 0, ty: 0 };
-}
-const zd = this.state.zd;
-const wm = {};
-let wpd = '', wplen = 0, wpd2 = 'none';
-if (BC[sel] && wps.length) {
-const st = ctr(sel);
-let px = st[0], py = st[1];
-wpd = 'M' + px + ' ' + py;
-wps.forEach((w) => { wpd += ' L' + w[0] + ' ' + w[1]; wplen += Math.hypot(w[0] - px, w[1] - py); px = w[0]; py = w[1]; });
-wpd2 = 'inline';
-}
-for (let i = 1; i <= 6; i++) {
-const w = BC[sel] ? wps[i - 1] : null;
-wm['w' + i] = w ? { d: 'inline', x: w[0], y: w[1], ty: w[1] + 4, n: String(i) } : { d: 'none', x: 0, y: 0, ty: 0, n: '' };
-}
-const mp = String(P.meas || '').split(',').filter((n) => BC[n]);
-let md = 'none', mx1 = 0, my1 = 0, mx2 = 0, my2 = 0, mlx = 0, mly = 0, mtx = 0, mty = 0, mtxt = '';
-if (mp.length === 2) {
-const a = ctr(mp[0]), b = ctr(mp[1]);
-md = 'inline'; mx1 = a[0]; my1 = a[1]; mx2 = b[0]; my2 = b[1];
-const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
-mlx = mx - 38; mly = my - 10; mtx = mx; mty = my + 4;
-mtxt = (Math.hypot(a[0] - b[0], a[1] - b[1]) * 0.02).toFixed(1) + ' km';
-}
-const hv = this.state.hover;
-let hd = 'none', ht = '0 0', hc = '#9CA3AF', h1 = '', h2 = '', h3 = '', h4 = '';
-if (hv && BC[hv] && !cur) {
-const c = ctr(hv);
-const m = meta[hv] || {};
-const x = Math.max(8, Math.min(1440 - 222, c[0] + 26));
-const y = Math.max(8, Math.min(900 - 86, c[1] - 90));
-hd = 'inline'; ht = x + ' ' + y;
-hc = (m.v && m.v.c) || '#9CA3AF';
-h1 = hv; h2 = m.l2 || ''; h3 = m.l3 || ''; h4 = m.l4 || '';
-}
-const W = P.w ?? 1440, H = P.h ?? 900;
-const sc = Math.max(W / 1440, H / 900);
-const ox = (W - 1440 * sc) / 2, oy = (H - 900 * sc) / 2;
-const LW = {"Kestrel_7": 122, "Tessel": 110, "Dovetail": 110, "Pellam": 122, "Brightwater": 134, "Corvid_3": 96, "Hollis": 96, "Nyx_Runner": 104, "Okapi_9": 98, "Lumen_2": 98, "Sable_Run": 104, "Orrin": 104, "Vesper_4": 104, "Marrow_6": 106};
-const ov = {};
-names.forEach((n) => {
-const o = off(n);
-const lx = BL[n][0] + o[0], ly = BL[n][1] + o[1];
-ov[n] = { tl: (lx + LW[n] - 7) * sc + ox, tt: (ly + 16) * sc + oy, bt: (ly + 5) * sc + oy, o: op[n], el: mt[n].el, badge: mt[n].badge, bc: mt[n].bc };
-});
-const zo = {};
-for (let i = 1; i <= 6; i++) {
-const z = zones[i - 1];
-zo['z' + i] = z ? { d: 'block', l: (z.x + 8) * sc + ox, t: (z.y + 4) * sc + oy, c: z.c, t2: z.t } : { d: 'none', l: 0, t: 0, c: '#FBBF24', t2: '' };
-}
-const wo = {};
-for (let i = 1; i <= 6; i++) {
-const w = BC[sel] ? wps[i - 1] : null;
-wo['w' + i] = w ? { d: 'block', l: w[0] * sc + ox - 9, t: w[1] * sc + oy - 9, n: String(i) } : { d: 'none', l: 0, t: 0, n: '' };
-}
-const mo = md === 'inline' ? { d: 'block', l: mlx * sc + ox, t: mly * sc + oy, txt: mtxt } : { d: 'none', l: 0, t: 0, txt: '' };
-const ho = hd === 'inline' ? { d: 'block', l: Number(ht.split(' ')[0]) * sc + ox, t: Number(ht.split(' ')[1]) * sc + oy, c: hc, h1, h2, h3, h4 } : { d: 'none', l: 0, t: 0, c: '#9CA3AF', h1: '', h2: '', h3: '', h4: '' };
-const NS = [2, 4, 7, 11, 17, 26, 40, 60, 90];
-const arrows = (d, len) => {
-const out = { d, len: Math.max(len, 10) };
-let b = 0, best = 1e9;
-NS.forEach((n, i) => { const dd = Math.abs(n - len / 14); if (dd < best) { best = dd; b = i; } });
-NS.forEach((n, i) => { out['b' + i] = (len >= 20 && i === b) ? 'inline' : 'none'; });
-return out;
-};
-const GH = { Brightwater: [300, 464], Orrin: [1116, 517], Pellam: [962, 612.5] };
-const gb = {};
-['Brightwater', 'Orrin', 'Pellam'].forEach((n, i) => {
-const a = ctr(n), g = GH[n];
-const L = Math.hypot(g[0] - a[0], g[1] - a[1]) || 1;
-const ux = (g[0] - a[0]) / L, uy = (g[1] - a[1]) / L;
-const p0 = [a[0] + ux * 34, a[1] + uy * 34], p1 = [g[0] - ux * 32, g[1] - uy * 32];
-gb['gb' + (i + 1)] = arrows('M' + p0[0].toFixed(1) + ' ' + p0[1].toFixed(1) + ' L' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1), Math.max(L - 66, 0));
-});
-const wb = arrows(wpd, wplen);
-return { ov, zo, wo, mo, ho, wb, gb1: gb.gb1, gb2: gb.gb2, gb3: gb.gb3, w: P.w ?? 1440, h: P.h ?? 900, gd: P.ghosts === 'off' ? 'none' : 'inline', ld: P.labels === 'off' ? 'none' : 'inline', rd: P.rings === 'off' ? 'none' : 'inline', pd: P.paths === 'off' ? 'none' : 'inline', op, sp, lp, dn, en, lv, mt, rt, rtd, zn, wm, wpd, wpd2, wpl: Math.max(wplen, 10), wpa: '->'.repeat(Math.max(2, Math.round(wplen / 16))), md, mx1, my1, mx2, my2, mlx, mly, mtx, mty, mtxt, hd, ht, hc, h1, h2, h3, h4,
-zdd: zd ? 'inline' : 'none', zdx: zd ? Math.min(zd.x0, zd.x1) : 0, zdy: zd ? Math.min(zd.y0, zd.y1) : 0, zdw: zd ? Math.abs(zd.x1 - zd.x0) : 0, zdh: zd ? Math.abs(zd.y1 - zd.y0) : 0,
-mv: (e) => this.move(e), up: (e) => this.release(e), bg: (e) => this.bgDown(e) };
-}
-pt(svg, e) {
-const p = svg.createSVGPoint();
-p.x = e.clientX; p.y = e.clientY;
-return p.matrixTransform(svg.getScreenCTM().inverse());
-}
-bgDown(e) {
-const tool = this.props.tool;
-const svg = e.currentTarget;
-if (!svg || !svg.getScreenCTM) return;
-const s = this.pt(svg, e);
-if (tool === 'zone') {
-try { svg.setPointerCapture(e.pointerId); } catch (err) {}
-this.zdraw = { svg, x0: s.x, y0: s.y };
-this.setState({ zd: { x0: s.x, y0: s.y, x1: s.x, y1: s.y } });
-} else if (tool === 'rally' && this.props.onWp) {
-this.props.onWp(Math.round(s.x), Math.round(s.y));
-}
-}
-down(e, name, offs) {
-e.stopPropagation();
-const svg = e.currentTarget.ownerSVGElement;
-if (!svg) return;
-e.preventDefault();
-const tool = this.props.tool;
-if (this.props.onPick) this.props.onPick(name);
-if (tool === 'zone' || tool === 'measure' || tool === 'rally') return;
-try { svg.setPointerCapture(e.pointerId); } catch (err) {}
-const s = this.pt(svg, e);
-const o = offs[name] || [0, 0];
-this.drag = { name, svg, sx: s.x, sy: s.y, ox: o[0], oy: o[1], cx: e.clientX, cy: e.clientY, moved: false };
-}
-move(e) {
-const z = this.zdraw;
-if (z) {
-const s = this.pt(z.svg, e);
-this.setState({ zd: { x0: z.x0, y0: z.y0, x1: s.x, y1: s.y } });
-return;
-}
-const d = this.drag;
-if (!d) return;
-if (!d.moved && Math.abs(e.clientX - d.cx) + Math.abs(e.clientY - d.cy) < 4) return;
-d.moved = true;
-const s = this.pt(d.svg, e);
-const BC = {"Okapi_9": [499.0, 431.0], "Tessel": [697.0, 407.5], "Dovetail": [845.0, 467.5], "Sable_Run": [994.0, 382.0], "Corvid_3": [512.0, 471.5], "Brightwater": [402.0, 546.0], "Nyx_Runner": [546.0, 622.5], "Hollis": [446.0, 616.5], "Lumen_2": [537.0, 431.0], "Pellam": [905.0, 537.5], "Kestrel_7": [669.0, 551.5], "Orrin": [1038.0, 454.0], "Vesper_4": [915.0, 566.0], "Marrow_6": [743.0, 592.0]};
-const c = BC[d.name];
-const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-const dx = Math.round(clamp(d.ox + s.x - d.sx, 30 - c[0], 1410 - c[0]));
-const dy = Math.round(clamp(d.oy + s.y - d.sy, 30 - c[1], 870 - c[1]));
-d.dx = dx; d.dy = dy;
-this.setState({ cur: { name: d.name, dx, dy }, hover: null });
-}
-release(e) {
-const z = this.zdraw;
-if (z) {
-this.zdraw = null;
-try { z.svg.releasePointerCapture(e.pointerId); } catch (err) {}
-const zd = this.state.zd;
-this.setState({ zd: null });
-if (zd && Math.abs(zd.x1 - zd.x0) > 30 && Math.abs(zd.y1 - zd.y0) > 30 && this.props.onZone) {
-this.props.onZone(Math.round(Math.min(zd.x0, zd.x1)), Math.round(Math.min(zd.y0, zd.y1)), Math.round(Math.abs(zd.x1 - zd.x0)), Math.round(Math.abs(zd.y1 - zd.y0)));
-}
-return;
-}
-const d = this.drag;
-if (!d) return;
-this.drag = null;
-try { d.svg.releasePointerCapture(e.pointerId); } catch (err) {}
-if (d.moved && this.props.onMove) this.props.onMove(d.name, d.dx, d.dy);
-this.setState({ cur: null });
+const v = this.ready() ? window.FleetSceneView.compute(this) : SCENE_EMPTY;
+return Object.assign({}, v, { w: this.props.w ?? 1440, h: this.props.h ?? 900 });
 }
 }
 </script>

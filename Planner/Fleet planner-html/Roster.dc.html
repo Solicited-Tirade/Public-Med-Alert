@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fleet roster</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Mohave:wght@700&family=Oxanium:wght@500;700&family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit}
+</style>
+</helmet>
+<div data-section="roster" style="width: 1440px; height: {{h}}px; box-sizing: border-box; padding: {{dockPad}}; background: #111827; border-top: 1px solid #334155; overflow: hidden; font-family: Inter, sans-serif; color: #E5E7EB">
+<div data-section="roster-bar" style="display: flex; align-items: center; gap: 18px; height: 32px">
+<button type="button" onClick="{{toggleRoster}}" aria-expanded="{{rosterOpen}}" data-tip="Roster: show or hide the squadron columns. Hiding it gives the map more room." style="display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px 0 8px; border-radius: 6px; cursor: pointer; background: transparent; border: 1px solid #374151; color: #F9FAFB">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{chev}}"/></svg>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">{{fleetName}} roster</span>
+</button>
+<span style="font-family: Quantico, sans-serif; font-size: 10px; color: #9CA3AF; letter-spacing: 0.08em">DRAG SHIPS BETWEEN ELEMENTS · DOUBLE-CLICK TO RENAME</span>
+<div style="flex: 1"></div>
+<div style="display: flex; align-items: center; gap: 6px">
+<span data-tip="Phase: each phase keeps its own positions, routes, zones and markers. Click one to switch; ships glide to their new spots." style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Phase</span>
+<sc-for list="{{phases}}" as="p" hint-placeholder-count="5">
+<button type="button" onClick="{{p.pick}}" data-tip="{{p.tip}}" style="height: 22px; padding: 0 10px; border-radius: 11px; font-size: 11px; cursor: pointer; color: {{p.color}}; border: 1px solid {{p.border}}; background: {{p.bg}}">{{p.label}}</button>
+</sc-for>
+</div>
+<span style="width: 1px; height: 20px; background: #374151"></span>
+<div style="display: flex; align-items: center; gap: 10px" data-tip="Fleet totals: status mix, ships ready or active, crew seats filled, and ships against the 50 cap.">
+<div style="display: flex; width: 130px; height: 12px; border-radius: 3px; overflow: hidden; gap: 2px">
+<sc-for list="{{status}}" as="s" hint-placeholder-count="5">
+<div style="width: {{s.pct}}%; background: {{s.color}}"></div>
+</sc-for>
+</div>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px; color: #31C48D">{{readyText}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">Crew {{crewText}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">Ships {{shipCount}} / 50</span>
+</div>
+</div>
+<sc-if value="{{showCols}}" hint-placeholder-val="{{ true }}">
+<div data-section="squadron-columns" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 8px">
+<sc-for list="{{cols}}" as="col" hint-placeholder-count="5">
+<div onDragOver="{{col.over}}" onDrop="{{col.drop}}" style="box-sizing: border-box; border-radius: 6px; padding: 8px; height: 244px; overflow-y: auto; {{col.box}}">
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 8px; height: 8px; flex: none; background: {{col.color}}; box-shadow: 0 0 6px {{col.color}}"></span>
+<sc-if value="{{col.ed.editing}}" hint-placeholder-val="{{ false }}">
+<input data-edit="1" type="text" value="{{col.ed.draft}}" onChange="{{col.ed.chg}}" onKeyDown="{{col.ed.kd}}" onBlur="{{col.ed.blur}}" aria-label="Squadron name" style="flex: 1; min-width: 0; height: 20px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid {{col.color}}; background: #0d1522; color: #F9FAFB; font-size: 12px; font-family: inherit">
+</sc-if>
+<sc-if value="{{col.ed.show}}" hint-placeholder-val="{{ true }}">
+<button type="button" onDoubleClick="{{col.ed.dbl}}" onContextMenu="{{col.ctx}}" data-tip="{{col.tip}}" style="padding: 0; border: 0; background: transparent; cursor: text; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 14px; color: {{col.color}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px">{{col.name}}</button>
+</sc-if>
+<span style="flex: 1"></span>
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #9CA3AF; white-space: nowrap">Crew {{col.seats}}</span>
+</div>
+<button type="button" onContextMenu="{{col.ctx}}" onClick="{{col.leadPick}}" data-tip="Squadron lead: runs this squadron. Right-click to change the lead or deputy." style="display: flex; align-items: center; gap: 6px; width: 100%; height: 17px; padding: 0; border: 0; background: transparent; cursor: pointer; font-size: 11px">
+<span style="width: 46px; text-align: left; font-weight: 600; color: #FBBF24">Lead:</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{col.lead}}</span>
+<span style="flex: 1; min-width: 0; text-align: right; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{col.leadShip}}</span>
+</button>
+<button type="button" onContextMenu="{{col.ctx}}" onClick="{{col.depPick}}" data-tip="Deputy: takes over if the lead drops. Right-click to change." style="display: flex; align-items: center; gap: 6px; width: 100%; height: 17px; padding: 0; border: 0; background: transparent; cursor: pointer; font-size: 11px">
+<span style="width: 46px; text-align: left; font-weight: 600; color: #93C5FD">Deputy:</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{col.deputy}}</span>
+<span style="flex: 1; min-width: 0; text-align: right; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{col.deputyShip}}</span>
+</button>
+<div style="height: 4px; border-radius: 2px; background: #1F2937; overflow: hidden; margin: 2px 0 4px"><div style="width: {{col.pct}}%; height: 100%; background: {{col.color}}"></div></div>
+<sc-for list="{{col.els}}" as="el" hint-placeholder-count="2">
+<div onDragOver="{{el.over}}" onDrop="{{el.drop}}" style="margin-top: 3px; padding: 1px 2px 2px; border-radius: 4px; outline: 1px dashed {{el.outline}}">
+<div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px">
+<sc-if value="{{el.ed.editing}}" hint-placeholder-val="{{ false }}">
+<input data-edit="1" type="text" value="{{el.ed.draft}}" onChange="{{el.ed.chg}}" onKeyDown="{{el.ed.kd}}" onBlur="{{el.ed.blur}}" aria-label="Element name" style="flex: 1; height: 18px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid #F59E0B; background: #0d1522; color: #F9FAFB; font-size: 11px; font-family: inherit">
+</sc-if>
+<sc-if value="{{el.ed.show}}" hint-placeholder-val="{{ true }}">
+<button type="button" onDoubleClick="{{el.ed.dbl}}" onContextMenu="{{el.ctx}}" data-tip="{{el.tip}}" style="flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; cursor: text; text-align: left; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: {{el.color}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{el.label}}</button>
+</sc-if>
+<sc-if value="{{el.briefOn}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{el.brief}}" aria-label="Briefing card" data-tip="Briefing card: a Discord-ready summary of this element." style="height: 16px; padding: 0 5px; border-radius: 3px; font-size: 9px; cursor: pointer; color: #9CA3AF; border: 1px solid #374151; background: transparent">BRIEF</button>
+</sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 3px">
+<sc-for list="{{el.ships}}" as="sh" hint-placeholder-count="2">
+<div style="opacity: {{sh.op}}">
+<sc-if value="{{sh.ed.editing}}" hint-placeholder-val="{{ false }}">
+<input data-edit="1" type="text" value="{{sh.ed.draft}}" placeholder="Nickname" onChange="{{sh.ed.chg}}" onKeyDown="{{sh.ed.kd}}" onBlur="{{sh.ed.blur}}" aria-label="Ship nickname" style="width: 100%; height: 26px; box-sizing: border-box; padding: 0 8px; border-radius: 5px; border: 1px solid #F59E0B; background: #0d1522; color: #F9FAFB; font-size: 12px; font-family: inherit">
+</sc-if>
+<sc-if value="{{sh.ed.show}}" hint-placeholder-val="{{ true }}">
+<button type="button" draggable="true" onDragStart="{{sh.drag}}" onDragEnd="{{sh.dragEnd}}" onClick="{{sh.pick}}" onDoubleClick="{{sh.ed.dbl}}" onContextMenu="{{sh.ctx}}" onMouseEnter="{{sh.enter}}" onMouseLeave="{{sh.leave}}" data-tip="{{sh.tip}}" style="display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; font-family: inherit; cursor: grab; height: 26px; box-sizing: border-box; padding: 0 8px 0 5px; border-radius: 5px; background: {{sh.bg}}; border: 1px {{sh.bstyle}} {{sh.border}}">
+<span onMouseEnter="{{sh.cardOn}}" onMouseLeave="{{sh.cardOff}}" style="display: flex; flex: none"><svg width="26" height="18" aria-hidden="true" style="color: {{col.color}}"><use href="{{sh.href}}" width="26" height="18"/></svg></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; color: #F9FAFB; white-space: nowrap; text-decoration: {{sh.deco}}">{{sh.handle}}</span>
+<span style="flex: 1; min-width: 0; font-size: 11px; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{sh.name}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #D1D5DB">{{sh.crew}}</span>
+<span style="width: 7px; height: 7px; flex: none; border-radius: 4px; background: {{sh.st}}"></span>
+</button>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{col.showNew}}" hint-placeholder-val="{{ false }}">
+<div onDragOver="{{col.over}}" onDrop="{{col.dropNew}}" data-tip="New element: drop a ship here to start a new element in this squadron." style="margin-top: 4px; height: 26px; border-radius: 5px; border: 1px dashed {{col.color}}; display: flex; align-items: center; justify-content: center; font-size: 11px; color: {{col.color}}">+ New element</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"v":{"editor":null},"h":{"editor":"int","default":296},"$preview":{"width":1440,"height":296}}'>
+// Roster dock. A pure view: every value and handler comes from the planner (js/panel-view.js) in the `v` prop.
+const ROSTER_EMPTY = { rosterOpen: 'true', showCols: true, dockPad: '10px 16px', chev: 'M6 9l6 6 6-6', toggleRoster: () => {}, fleetName: 'Fleet One', phases: [], status: [], readyText: '', crewText: '', shipCount: 0, cols: [] };
+class Component extends DCLogic {
+renderVals() {
+return Object.assign({}, ROSTER_EMPTY, this.props.v || {}, { h: this.props.h ?? 296 });
+}
+}
+</script>
+</body>
+</html>

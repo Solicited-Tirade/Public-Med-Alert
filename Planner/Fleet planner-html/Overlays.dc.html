@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Planner overlays</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Mohave:wght@700&family=Oxanium:wght@500;700&family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit}
+</style>
+</helmet>
+<div data-section="overlays" style="position: relative; width: 1440px; height: 900px; pointer-events: none; font-family: Inter, sans-serif; color: #E5E7EB">
+
+<sc-if value="{{presOn}}" hint-placeholder-val="{{ false }}">
+<div data-section="presenter" style="position: absolute; left: 0; bottom: 0; width: 1440px; box-sizing: border-box; padding: 12px 20px; display: flex; gap: 16px; align-items: flex-start; background: linear-gradient(180deg, rgba(5,8,15,0), rgba(5,8,15,0.92) 30%); pointer-events: auto">
+<div style="flex: none; width: 360px">
+<div style="font-family: Quantico, sans-serif; font-size: 11px; letter-spacing: 0.12em; color: #9CA3AF">PHASE {{presStep}}</div>
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 34px; line-height: 1.05; color: #FBBF24">{{presPhase}}</div>
+<div style="font-size: 13px; color: #D1D5DB">{{presDesc}}</div>
+<div style="font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF; margin-top: 2px">{{presWhen}}</div>
+</div>
+<div style="flex: 1; min-width: 0">
+<sc-if value="{{presNotesOn}}" hint-placeholder-val="{{ true }}">
+<textarea value="{{presNotes}}" onChange="{{presNotesChg}}" placeholder="Speaker notes for this phase…" aria-label="Speaker notes" style="width: 100%; height: 74px; box-sizing: border-box; padding: 8px 10px; border-radius: 6px; border: 1px solid #374151; background: rgba(17,24,39,0.92); color: #F9FAFB; font-size: 13px; line-height: 1.4; font-family: inherit; resize: none"></textarea>
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 6px">
+<span style="font-size: 11px; color: #9CA3AF; margin-right: 4px">Spotlight</span>
+<sc-for list="{{presSpots}}" as="c" hint-placeholder-count="6">
+<button type="button" onClick="{{c.act}}" data-tip="{{c.tip}}" style="height: 22px; padding: 0 8px; border-radius: 11px; font-size: 11px; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="flex: none; display: flex; align-items: center; gap: 6px; padding-top: 18px">
+<button type="button" onClick="{{presPrev}}" aria-label="Previous phase" style="width: 40px; height: 40px; border-radius: 20px; cursor: pointer; color: #F9FAFB; background: rgba(17,24,39,0.9); border: 1px solid #4B5563; opacity: {{presPrevOp}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+<button type="button" onClick="{{presNext}}" aria-label="Next phase" style="width: 40px; height: 40px; border-radius: 20px; cursor: pointer; color: #111827; background: #F59E0B; border: 1px solid #F59E0B; opacity: {{presNextOp}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+<button type="button" onClick="{{toggleLaser}}" style="height: 32px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: {{presLaserC}}; background: {{presLaserBg}}; border: 1px solid #F05252">{{presLaser}}</button>
+<button type="button" onClick="{{toggleNotes}}" style="height: 32px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #D1D5DB; background: transparent; border: 1px solid #4B5563">Notes</button>
+<button type="button" onClick="{{presExit}}" style="height: 32px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #D1D5DB; background: transparent; border: 1px solid #4B5563">Exit (Esc)</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{laserOn}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: {{laserX}}px; top: {{laserY}}px; width: 14px; height: 14px; border-radius: 7px; background: #F05252; box-shadow: 0 0 12px 4px rgba(240,82,82,0.7)"></div>
+</sc-if>
+
+<sc-if value="{{layoutsOpen}}" hint-placeholder-val="{{ false }}">
+<div data-pop="1" data-section="layouts" style="position: absolute; left: {{lpX}}px; top: {{lpY}}px; width: 240px; box-sizing: border-box; padding: 6px; border-radius: 8px; background: #0d1522; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: auto">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #9CA3AF; padding: 4px 6px">Saved layouts</div>
+<sc-for list="{{layoutRows}}" as="l" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; height: 30px">
+<sc-if value="{{l.editing}}" hint-placeholder-val="{{ false }}">
+<input data-edit="1" type="text" value="{{l.draft}}" onChange="{{l.chg}}" onKeyDown="{{l.kd}}" onBlur="{{l.blur}}" aria-label="Layout name" style="flex: 1; height: 26px; box-sizing: border-box; padding: 0 8px; border-radius: 4px; border: 1px solid #F59E0B; background: #111827; color: #F9FAFB; font-size: 12px; font-family: inherit">
+</sc-if>
+<sc-if value="{{l.show}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{l.pick}}" onDoubleClick="{{l.dbl}}" data-tip="Layout: click to open, double-click to rename." style="display: flex; align-items: center; gap: 8px; width: 100%; height: 28px; padding: 0 8px; border: 0; border-radius: 4px; cursor: pointer; text-align: left; font-size: 12px; color: {{l.color}}; background: {{l.bg}}"><span style="width: 6px; height: 6px; border-radius: 3px; background: {{l.dot}}"></span>{{l.name}}</button>
+</sc-if>
+</div>
+</sc-for>
+<div style="height: 1px; background: #334155; margin: 6px 0"></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px">
+<button type="button" onClick="{{newLayout}}" data-tip="New layout: an empty plan with default positions." style="height: 26px; border-radius: 4px; font-size: 11px; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">New</button>
+<button type="button" onClick="{{dupLayout}}" data-tip="Duplicate: copy this layout to try a variation." style="height: 26px; border-radius: 4px; font-size: 11px; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Duplicate</button>
+<button type="button" onClick="{{delLayout}}" data-tip="Delete this layout. You'll be asked to confirm." style="height: 26px; border-radius: 4px; font-size: 11px; cursor: pointer; color: #F87171; background: transparent; border: 1px solid rgba(248,113,113,0.5)">Delete</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{clockOn}}" hint-placeholder-val="{{ false }}">
+<div data-clock="1" data-section="op-clock" style="position: absolute; left: {{clockX}}px; top: {{clockY}}px; width: 320px; box-sizing: border-box; padding: 10px; border-radius: 8px; background: #0d1522; border: 1px solid #60A5FA; box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: auto">
+<div style="display: flex; align-items: center; margin-bottom: 8px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #93C5FD">Op clock</span>
+<button type="button" onClick="{{clockClose}}" aria-label="Close" style="width: 22px; height: 22px; padding: 0; border: 0; cursor: pointer; color: #9CA3AF; background: transparent">×</button>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #D1D5DB; margin-bottom: 8px">H-hour (UTC)
+<input type="time" value="{{hh}}" onChange="{{hhChg}}" style="height: 26px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid #374151; background: #111827; color: #F9FAFB; font-family: Oxanium, sans-serif; font-size: 12px">
+</label>
+<sc-for list="{{clockRows}}" as="r" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 12px">
+<span style="width: 62px; color: #E5E7EB">{{r.label}}</span>
+<span style="color: #9CA3AF">H+</span>
+<input type="number" min="0" step="5" value="{{r.mins}}" onChange="{{r.chg}}" disabled="{{r.lock}}" aria-label="Minutes after H-hour" style="width: 54px; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid #374151; background: #111827; color: #F9FAFB; font-family: Oxanium, sans-serif; font-size: 12px">
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #9CA3AF">{{r.time}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{cardOn}}" hint-placeholder-val="{{ false }}">
+<div data-section="ship-card" style="position: absolute; left: {{cardX}}px; top: {{cardY}}px; width: 280px; box-sizing: border-box; padding: 10px; border-radius: 8px; background: #0d1522; border: 1px solid #A78BFA; box-shadow: 0 10px 30px rgba(0,0,0,0.5)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="56" height="34" aria-hidden="true" style="color: #A78BFA"><use href="{{cardHref}}" width="56" height="34"/></svg>
+<div>
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">{{cardName}}</div>
+<div style="font-size: 11px; color: #9CA3AF">{{cardRole}} · starcitizen.tools</div>
+</div>
+</div>
+<sc-for list="{{cardStats}}" as="s" hint-placeholder-count="6">
+<div style="display: flex; justify-content: space-between; min-height: 20px; font-size: 11px; border-bottom: 1px solid #1F2937"><span style="color: #9CA3AF">{{s.k}}</span><span style="font-family: Oxanium, sans-serif; color: #F9FAFB">{{s.v}}</span></div>
+</sc-for>
+<div style="font-size: 10px; letter-spacing: 0.08em; color: #9CA3AF; margin: 6px 0 2px">STOCK WEAPONS</div>
+<sc-for list="{{cardGuns}}" as="g" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; gap: 8px; min-height: 18px; font-size: 11px"><span style="color: #E5E7EB">{{g.t}}</span><span style="font-family: Oxanium, sans-serif; color: #9CA3AF; white-space: nowrap">{{g.r}}</span></div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{cpOn}}" hint-placeholder-val="{{ false }}">
+<div data-cpop="1" data-section="comments" style="position: absolute; left: {{cpX}}px; top: {{cpY}}px; width: 340px; box-sizing: border-box; padding: 10px; border-radius: 8px; background: #0d1522; border: 1px solid #FBBF24; box-shadow: 0 12px 32px rgba(0,0,0,0.55); pointer-events: auto">
+<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #FBBF24; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{cpTitle}}</span>
+<button type="button" onClick="{{cpClose}}" aria-label="Close comments" style="width: 22px; height: 22px; padding: 0; border: 0; cursor: pointer; color: #9CA3AF; background: transparent">×</button>
+</div>
+<sc-if value="{{cpEmpty}}" hint-placeholder-val="{{ true }}">
+<div style="font-size: 11px; color: #9CA3AF; margin-bottom: 8px">Nothing here yet. Notes, tasks and warnings are visible to other staff.</div>
+</sc-if>
+<sc-for list="{{cpList}}" as="c" hint-placeholder-count="0">
+<div style="padding: 6px 0; border-bottom: 1px solid #1F2937">
+<div style="display: flex; align-items: center; gap: 6px; font-size: 11px">
+<span style="height: 16px; padding: 0 5px; border-radius: 3px; background: {{c.tc}}; color: #111827; font-weight: 700; font-size: 9px; line-height: 16px">{{c.type}}</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{c.by}}</span>
+<span style="color: #6B7280">{{c.t}}</span>
+<span style="flex: 1"></span>
+<sc-if value="{{c.isTask}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{c.done}}" style="height: 18px; padding: 0 8px; border-radius: 9px; font-size: 10px; cursor: pointer; color: {{c.doneC}}; border: 1px solid {{c.doneC}}; background: transparent">{{c.doneLabel}}</button>
+</sc-if>
+<button type="button" onClick="{{c.resolve}}" data-tip="Resolve: move this to the history in the Status tab. You can undo." style="height: 18px; padding: 0 8px; border-radius: 9px; font-size: 10px; cursor: pointer; color: #34D399; border: 1px solid rgba(52,211,153,0.6); background: transparent">Resolve</button>
+</div>
+<div style="font-size: 12px; line-height: 1.4; color: #E5E7EB; margin-top: 2px; text-decoration: {{c.deco}}">{{c.text}}</div>
+<div style="font-size: 10px; color: #9CA3AF">{{c.meta}}</div>
+</div>
+</sc-for>
+<div style="display: flex; gap: 4px; margin-top: 8px">
+<sc-for list="{{cpTypes}}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{t.act}}" data-tip="{{t.tip}}" style="height: 22px; padding: 0 10px; border-radius: 11px; font-size: 11px; cursor: pointer; color: {{t.color}}; border: 1px solid {{t.border}}; background: {{t.bg}}">{{t.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{cpIsTask}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top: 6px">
+<div style="font-size: 10px; color: #9CA3AF; margin-bottom: 2px">Assign to</div>
+<div style="display: flex; flex-wrap: wrap; gap: 3px; max-height: 50px; overflow-y: auto">
+<sc-for list="{{cpAssignees}}" as="a" hint-placeholder-count="6">
+<button type="button" onClick="{{a.act}}" style="height: 20px; padding: 0 7px; border-radius: 10px; font-size: 10px; cursor: pointer; color: {{a.color}}; border: 1px solid {{a.border}}; background: {{a.bg}}">{{a.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 10px; color: #9CA3AF; margin: 4px 0 2px">Due</div>
+<div style="display: flex; flex-wrap: wrap; gap: 3px">
+<sc-for list="{{cpDues}}" as="a" hint-placeholder-count="6">
+<button type="button" onClick="{{a.act}}" style="height: 20px; padding: 0 7px; border-radius: 10px; font-size: 10px; cursor: pointer; color: {{a.color}}; border: 1px solid {{a.border}}; background: {{a.bg}}">{{a.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<div style="display: flex; gap: 6px; margin-top: 8px">
+<input data-cinput="1" type="text" value="{{cpDraft}}" onChange="{{cpChg}}" onKeyDown="{{cpKey}}" placeholder="Write it, Enter to post" aria-label="New comment" style="flex: 1; min-width: 0; height: 28px; box-sizing: border-box; padding: 0 8px; border-radius: 4px; border: 1px solid #374151; background: #111827; color: #F9FAFB; font-size: 12px; font-family: inherit">
+<button type="button" onClick="{{cpPost}}" style="height: 28px; padding: 0 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; color: #111827; background: #FBBF24; border: 0">Post</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{menuOn}}" hint-placeholder-val="{{ false }}">
+<div data-menu="1" data-section="menu" role="menu" style="position: absolute; left: {{menuX}}px; top: {{menuY}}px; width: 290px; box-sizing: border-box; padding: 5px; border-radius: 8px; background: #0d1522; border: 1px solid #334155; box-shadow: 0 12px 32px rgba(0,0,0,0.55); pointer-events: auto">
+<sc-for list="{{menuItems}}" as="m" hint-placeholder-count="6">
+<sc-if value="{{m.isHead}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 6px 8px 3px; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; color: {{m.color}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.label}}</div>
+</sc-if>
+<sc-if value="{{m.isSep}}" hint-placeholder-val="{{ false }}">
+<div style="height: 1px; background: #334155; margin: 4px 2px"></div>
+</sc-if>
+<sc-if value="{{m.isItem}}" hint-placeholder-val="{{ true }}">
+<button type="button" role="menuitem" onClick="{{m.act}}" disabled="{{m.dis}}" data-tip="{{m.tip}}" style="display: flex; align-items: center; gap: 8px; width: 100%; height: 28px; padding: 0 8px; border: 0; border-radius: 4px; cursor: pointer; text-align: left; font-size: 12px; color: {{m.color}}; background: transparent; opacity: {{m.op}}">
+<span style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.label}}</span>
+<span style="flex: none; font-size: 10px; color: #6B7280; white-space: nowrap">{{m.hint}}</span>
+</button>
+</sc-if>
+<sc-if value="{{m.isChips}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; gap: 4px; padding: 2px 6px 6px">
+<sc-for list="{{m.chips}}" as="c" hint-placeholder-count="5">
+<button type="button" onClick="{{c.act}}" data-tip="{{c.tip}}" style="height: 22px; padding: 0 8px; border-radius: 11px; font-size: 11px; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{briefOn}}" hint-placeholder-val="{{ false }}">
+<div data-section="briefing" style="position: absolute; left: 0; top: 0; width: 1440px; height: 900px; background: rgba(5,8,15,0.55); pointer-events: auto">
+<div style="position: absolute; left: 400px; top: 90px; width: 640px; box-sizing: border-box; padding: 16px; border-radius: 10px; background: #111827; border: 1px solid #22D3EE; box-shadow: 0 12px 40px rgba(0,0,0,0.5)">
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 18px">{{briefTitle}}</span>
+<button type="button" onClick="{{briefCopy}}" style="height: 30px; padding: 0 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #111827; background: #22D3EE; border: 0">Copy for Discord</button>
+<button type="button" onClick="{{briefClose}}" style="height: 30px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Close</button>
+</div>
+<textarea readonly value="{{briefText}}" aria-label="Briefing text" style="width: 100%; height: 520px; box-sizing: border-box; padding: 12px; border-radius: 6px; border: 1px solid #374151; background: #0d1522; color: #E5E7EB; font-family: Oxanium, monospace; font-size: 12px; line-height: 1.5; resize: none"></textarea>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{summary}}" hint-placeholder-val="{{ false }}">
+<div data-section="commit" style="position: absolute; left: 0; top: 0; width: 1440px; height: 900px; background: rgba(5,8,15,0.55); pointer-events: auto">
+<div style="position: absolute; left: 490px; top: 120px; width: 460px; box-sizing: border-box; padding: 16px; border-radius: 10px; background: #111827; border: 1px solid #F59E0B; box-shadow: 0 12px 40px rgba(0,0,0,0.5)">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 18px">Commit plan</div>
+<div style="font-size: 12px; color: #9CA3AF; margin: 2px 0 10px">The whole operation in {{sumLayout}} goes live together.</div>
+<sc-for list="{{changes}}" as="c" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; gap: 8px; height: 26px; font-size: 12px; color: #E5E7EB; border-bottom: 1px solid #1F2937">
+<span style="width: 8px; height: 8px; background: {{c.color}}"></span>
+<span style="flex: 1">{{c.text}}</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{c.n}}</span>
+</div>
+</sc-for>
+<div style="font-size: 11px; letter-spacing: 0.08em; color: #9CA3AF; margin: 10px 0 4px">BY PHASE</div>
+<sc-for list="{{phaseRows}}" as="p" hint-placeholder-count="5">
+<div style="display: flex; gap: 8px; min-height: 22px; font-size: 12px">
+<span style="width: 64px; font-weight: 600; color: {{p.c}}">{{p.label}}</span>
+<span style="color: #D1D5DB">{{p.txt}}</span>
+</div>
+</sc-for>
+<div style="font-size: 12px; color: {{sumWarnC}}; margin-top: 10px">{{sumWarn}}</div>
+<div style="display: flex; gap: 8px; margin-top: 14px; justify-content: flex-end">
+<button type="button" onClick="{{closeSummary}}" style="height: 32px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Keep planning</button>
+<button type="button" onClick="{{confirmSummary}}" style="height: 32px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #111827; background: #F59E0B; border: 1px solid #F59E0B">Confirm and go live</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{confirmOn}}" hint-placeholder-val="{{ false }}">
+<div data-section="confirm" style="position: absolute; left: 0; top: 0; width: 1440px; height: 900px; background: rgba(5,8,15,0.55); pointer-events: auto">
+<div style="position: absolute; left: 520px; top: 220px; width: 400px; box-sizing: border-box; padding: 16px; border-radius: 10px; background: #111827; border: 1px solid #F87171; box-shadow: 0 12px 40px rgba(0,0,0,0.5)">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 17px">{{confirmTitle}}</div>
+<div style="font-size: 12px; line-height: 1.5; color: #D1D5DB; margin: 6px 0 14px">{{confirmText}}</div>
+<div style="display: flex; gap: 8px; justify-content: flex-end">
+<button type="button" onClick="{{confirmNo}}" style="height: 32px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Cancel</button>
+<sc-if value="{{confirmAltOn}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{confirmAltAct}}" style="height: 32px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #F9FAFB; background: transparent; border: 1px solid #F87171">{{confirmAlt}}</button>
+</sc-if>
+<button type="button" onClick="{{confirmYes}}" style="height: 32px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #111827; background: #F87171; border: 1px solid #F87171">{{confirmOk}}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{helpOn}}" hint-placeholder-val="{{ false }}">
+<div data-section="shortcuts" style="position: absolute; left: 0; top: 0; width: 1440px; height: 900px; background: rgba(5,8,15,0.55); pointer-events: auto">
+<div style="position: absolute; left: 430px; top: 90px; width: 580px; box-sizing: border-box; padding: 16px; border-radius: 10px; background: #111827; border: 1px solid #22D3EE; box-shadow: 0 12px 40px rgba(0,0,0,0.5)">
+<div style="display: flex; align-items: center; margin-bottom: 8px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 18px">Shortcuts</span>
+<button type="button" onClick="{{closeHelp}}" style="height: 28px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Close</button>
+</div>
+<sc-for list="{{shortcuts}}" as="k" hint-placeholder-count="14">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 28px; border-bottom: 1px solid #1F2937">
+<span style="width: 130px; flex: none; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; color: #22D3EE">{{k.k}}</span>
+<span style="font-size: 12px; color: #E5E7EB">{{k.d}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{tipOn}}" hint-placeholder-val="{{ false }}">
+<div data-section="tooltip" style="position: absolute; left: {{tipX}}px; top: {{tipY}}px; max-width: 280px; box-sizing: border-box; padding: 7px 10px; border-radius: 6px; background: #F9FAFB; color: #111827; font-size: 12px; line-height: 1.4; box-shadow: 0 6px 18px rgba(0,0,0,0.45)">
+<span style="font-weight: 700">{{tipTitle}}</span><span>{{tipBody}}</span>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"v":{"editor":null},"$preview":{"width":1440,"height":900}}'>
+// Floating layers: menus, popovers, dialogs, the briefing card, ship cards, tooltips and presenter mode.
+// A pure view: every value and handler comes from the planner (js/overlay-view.js) in the `v` prop.
+const OVERLAY_EMPTY = {
+presOn: false, laserOn: false, layoutsOpen: false, clockOn: false, cardOn: false, cpOn: false, menuOn: false, briefOn: false, summary: false, confirmOn: false, helpOn: false, tipOn: false,
+presSpots: [], layoutRows: [], clockRows: [], cardStats: [], cardGuns: [], cpList: [], cpTypes: [], cpAssignees: [], cpDues: [], menuItems: [], changes: [], phaseRows: [], shortcuts: []
+};
+class Component extends DCLogic {
+renderVals() {
+return Object.assign({}, OVERLAY_EMPTY, this.props.v || {});
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Planner side panel</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Mohave:wght@700&family=Oxanium:wght@500;700&family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit}
+</style>
+</helmet>
+<div data-section="right-panel" style="width: 328px; height: {{h}}px; box-sizing: border-box; display: flex; flex-direction: column; border-radius: 8px; background: rgba(17,24,39,0.96); border: 1px solid #374151; overflow: hidden; font-family: Inter, sans-serif; color: #E5E7EB">
+<div data-section="tabs" style="display: flex; align-items: center; gap: 1px; padding: 5px; border-bottom: 1px solid #374151; background: #0d1522">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" data-tip="{{t.tip}}" style="flex: 1; height: 28px; padding: 0; border-radius: 5px; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; font-size: 11px; cursor: pointer; color: {{t.color}}; border: 1px solid {{t.border}}; background: {{t.bg}}">{{t.label}}</button>
+</sc-for>
+<button type="button" onClick="{{collapse}}" aria-label="Collapse panel" data-tip="Collapse panel ([): hide this panel to give the map more room." style="width: 22px; height: 28px; padding: 0; border: 0; border-radius: 5px; cursor: pointer; color: #9CA3AF; background: transparent; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; padding: 12px">
+
+<sc-if value="{{is_fleet}}" hint-placeholder-val="{{ true }}">
+<div data-section="tab-fleet">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 4px 6px">
+<span style="width: 8px; height: 8px; background: #22D3EE; box-shadow: 0 0 8px #22D3EE"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Fleet structure</span>
+<span style="flex: 1"></span>
+<span data-tip="Fleet size: ships in this fleet against the 50-ship cap." style="font-family: Quantico, sans-serif; font-size: 10px; color: #9CA3AF; letter-spacing: 0.08em">{{shipCount}} / 50 SHIPS</span>
+</div>
+<div style="font-size: 10px; color: #6B7280; padding: 0 4px 6px">Double-click a name to rename · right-click for actions</div>
+<sc-for list="{{tree}}" as="n" hint-placeholder-count="20">
+<div style="display: flex; align-items: center; height: 26px; border-radius: 4px; background: {{n.bg}}; opacity: {{n.op}}">
+<sc-if value="{{n.editing}}" hint-placeholder-val="{{ false }}">
+<input data-edit="1" type="text" value="{{n.draft}}" onChange="{{n.chg}}" onKeyDown="{{n.kd}}" onBlur="{{n.blur}}" aria-label="New name" style="margin-left: {{n.pad}}px; flex: 1; min-width: 0; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid #F59E0B; background: #0d1522; color: #F9FAFB; font-size: 12px; font-family: inherit">
+</sc-if>
+<sc-if value="{{n.show}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{n.pick}}" onDoubleClick="{{n.dbl}}" onContextMenu="{{n.ctx}}" onMouseEnter="{{n.enter}}" onMouseLeave="{{n.leave}}" data-tip="{{n.tip}}" style="display: flex; align-items: center; gap: 8px; width: 100%; height: 26px; box-sizing: border-box; border: 0; border-radius: 4px; text-align: left; cursor: pointer; padding: 0 6px 0 {{n.pad}}px; background: transparent">
+<span style="width: 8px; height: 8px; flex: none; background: {{n.dot}}"></span>
+<span style="flex: 1; min-width: 0; font-size: 12px; font-weight: {{n.weight}}; color: {{n.color}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{n.title}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #9CA3AF; white-space: nowrap">{{n.right}}</span>
+<span style="width: 7px; height: 7px; flex: none; border-radius: 4px; background: {{n.st}}"></span>
+</button>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{is_ship}}" hint-placeholder-val="{{ false }}">
+<div data-section="tab-ship">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; flex: none; background: {{cur.color}}"></span>
+<sc-if value="{{cur.ed.editing}}" hint-placeholder-val="{{ false }}">
+<input data-edit="1" type="text" value="{{cur.ed.draft}}" placeholder="Ship nickname" onChange="{{cur.ed.chg}}" onKeyDown="{{cur.ed.kd}}" onBlur="{{cur.ed.blur}}" aria-label="Ship nickname" style="flex: 1; min-width: 0; height: 26px; box-sizing: border-box; padding: 0 8px; border-radius: 4px; border: 1px solid #F59E0B; background: #0d1522; color: #F9FAFB; font-size: 13px; font-family: inherit">
+</sc-if>
+<sc-if value="{{cur.ed.show}}" hint-placeholder-val="{{ true }}">
+<button type="button" onDoubleClick="{{cur.ed.dbl}}" data-tip="Ship name: double-click to give it a nickname. Nicknames show on the map label and roster." style="padding: 0; border: 0; background: transparent; cursor: text; text-align: left; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 17px; color: #F9FAFB">{{cur.title}}</button>
+</sc-if>
+</div>
+<div style="font-size: 12px; color: #9CA3AF; margin: 2px 0 8px 18px">{{cur.sub}}</div>
+<div style="position: relative; height: 80px; border-radius: 6px; background: #0d1522; border: 1px solid #334155; display: flex; align-items: center; justify-content: center">
+<svg width="120" height="70" role="img" aria-label="Low-poly hull preview" style="color: {{cur.color}}"><use href="{{cur.href}}" width="120" height="70"/></svg>
+<span style="position: absolute; left: 8px; top: 6px; font-family: Quantico, sans-serif; font-size: 9px; letter-spacing: 0.1em; color: #9CA3AF">LOW-POLY PREVIEW</span>
+</div>
+<sc-if value="{{cur.sandboxOn}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top: 8px; padding: 8px; border-radius: 6px; border: 1px dashed #A78BFA">
+<div style="font-size: 11px; color: #C4B5FD; margin-bottom: 6px">Open ship: give it to a member</div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<sc-for list="{{cur.claimChips}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.act}}" data-tip="{{c.tip}}" style="height: 22px; padding: 0 8px; border-radius: 11px; font-size: 11px; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+</div>
+<button type="button" onClick="{{cur.removeOpen}}" style="margin-top: 6px; height: 24px; padding: 0 10px; border-radius: 4px; font-size: 11px; cursor: pointer; color: #F87171; background: transparent; border: 1px solid rgba(248,113,113,0.5)">Remove open ship</button>
+</div>
+</sc-if>
+<div data-section="status" style="display: flex; align-items: center; gap: 4px; margin-top: 10px">
+<span style="font-size: 11px; color: #9CA3AF; width: 44px">Status</span>
+<sc-for list="{{cur.stChips}}" as="c" hint-placeholder-count="5">
+<button type="button" onClick="{{c.act}}" aria-pressed="{{c.on}}" data-tip="{{c.tip}}" style="flex: 1; height: 24px; padding: 0; border-radius: 12px; font-size: 10px; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+</div>
+<div data-section="readiness" style="margin-top: 10px">
+<div style="display: flex; align-items: center; margin-bottom: 5px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #9CA3AF">Readiness</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; color: {{cur.readyColor}}">{{cur.readyTxt}}</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+<sc-for list="{{cur.checks}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.act}}" data-tip="{{c.tip}}" style="height: 26px; padding: 0; border-radius: 5px; font-size: 10px; font-weight: 600; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+<div data-section="facts" style="margin-top: 6px">
+<sc-for list="{{cur.facts}}" as="f" hint-placeholder-count="9">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 26px; border-bottom: 1px solid #1F2937; font-size: 12px">
+<span style="color: #9CA3AF">{{f.k}}</span>
+<span style="text-align: right; font-family: Oxanium, sans-serif; font-weight: 500; font-size: 12px; color: #F9FAFB">{{f.v}}</span>
+</div>
+</sc-for>
+</div>
+<div data-section="weapons" style="margin-top: 12px">
+<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #9CA3AF">Weapons and arcs</span>
+<button type="button" onClick="{{cur.arcsAll}}" data-tip="Show a range ring for every stock gun and missile." style="height: 20px; padding: 0 8px; border-radius: 10px; font-size: 10px; cursor: pointer; color: #D1D5DB; border: 1px solid #4B5563; background: transparent">All</button>
+<button type="button" onClick="{{cur.arcsNone}}" data-tip="Hide every range ring on this ship." style="height: 20px; padding: 0 8px; border-radius: 10px; font-size: 10px; cursor: pointer; color: #D1D5DB; border: 1px solid #4B5563; background: transparent">None</button>
+</div>
+<sc-if value="{{cur.noWeapons}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 11px; color: #9CA3AF">No stock weapons listed.</div>
+</sc-if>
+<sc-for list="{{cur.weapons}}" as="w" hint-placeholder-count="3">
+<button type="button" onClick="{{w.act}}" data-tip="{{w.tip}}" style="display: flex; align-items: center; gap: 8px; width: 100%; min-height: 24px; padding: 0 4px; border: 0; border-radius: 4px; cursor: pointer; background: transparent; text-align: left">
+<span style="flex: 1; font-size: 11px; color: {{w.color}}">{{w.label}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #9CA3AF; white-space: nowrap">{{w.sub}}</span>
+</button>
+</sc-for>
+</div>
+<div data-section="fuel" style="margin-top: 12px">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #9CA3AF; margin-bottom: 5px">Fuel (wiki, editable)</div>
+<sc-for list="{{cur.fuel}}" as="f" hint-placeholder-count="3">
+<label data-tip="{{f.tip}}" style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 12px; color: #9CA3AF">
+<span style="flex: 1">{{f.label}}</span>
+<input type="number" step="0.1" value="{{f.val}}" onChange="{{f.chg}}" style="width: 80px; height: 24px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid #374151; background: #0d1522; color: #F9FAFB; font-family: Oxanium, sans-serif; font-size: 12px; text-align: right">
+</label>
+</sc-for>
+<div style="height: 6px; border-radius: 3px; background: #1F2937; overflow: hidden; margin-top: 4px"><div style="width: {{cur.fuelPct}}%; height: 100%; background: {{cur.fuelColor}}"></div></div>
+<div style="font-size: 11px; color: #9CA3AF; margin-top: 4px">{{cur.fuelAfter}}</div>
+</div>
+<div data-section="leadership" style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #9CA3AF; margin: 12px 0 6px">Leadership</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{cur.leadBtns}}" as="b" hint-placeholder-count="3">
+<button type="button" onClick="{{b.act}}" data-tip="{{b.tip}}" style="height: 30px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: {{b.color}}; background: {{b.bg}}; border: 1px solid {{b.border}}">{{b.label}}</button>
+</sc-for>
+</div>
+<div data-section="position" style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #9CA3AF; margin: 12px 0 6px">Position and route</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{cur.posBtns}}" as="b" hint-placeholder-count="4">
+<button type="button" onClick="{{b.act}}" disabled="{{b.dis}}" data-tip="{{b.tip}}" style="height: 30px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: {{b.color}}; background: transparent; border: 1px solid #4B5563; opacity: {{b.op}}">{{b.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{cur.lossOn}}" hint-placeholder-val="{{ false }}">
+<div data-section="losses">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #FCA5A5; margin: 12px 0 6px">Losses (Live)</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{cur.lossBtns}}" as="b" hint-placeholder-count="3">
+<button type="button" onClick="{{b.act}}" disabled="{{b.dis}}" data-tip="{{b.tip}}" style="height: 30px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: {{b.color}}; background: transparent; border: 1px solid {{b.border}}; opacity: {{b.op}}">{{b.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<button type="button" onClick="{{cur.shipComments}}" data-tip="Comments: notes, tasks and warnings on this ship (shortcut C)." style="width: 100%; height: 30px; margin-top: 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: #FBBF24; background: transparent; border: 1px solid rgba(245,158,11,0.6)">{{cur.commentLabel}}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{is_seats}}" hint-placeholder-val="{{ false }}">
+<div data-section="tab-seats">
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px">
+<span style="width: 8px; height: 8px; background: #60A5FA; box-shadow: 0 0 8px #60A5FA"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Crew by squadron</span>
+<span style="flex: 1"></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px; color: #F9FAFB">{{crewTotal}}</span>
+</div>
+<sc-for list="{{seatBars}}" as="q" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 8px; height: 24px">
+<span style="width: 74px; font-size: 12px; color: #D1D5DB; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{q.name}}</span>
+<div style="flex: 1; height: 8px; border-radius: 2px; background: #1F2937; overflow: hidden"><div style="width: {{q.pct}}%; height: 100%; background: {{q.color}}"></div></div>
+<span style="width: 40px; text-align: right; font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">{{q.val}}</span>
+</div>
+</sc-for>
+<sc-if value="{{hasDisplaced}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top: 12px; padding: 8px 10px; border-radius: 6px; border: 1px solid rgba(240,82,82,0.5); background: rgba(240,82,82,0.06)">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; color: #FCA5A5; margin-bottom: 4px">Need a new seat</div>
+<sc-for list="{{displaced}}" as="d" hint-placeholder-count="2">
+<div style="padding: 4px 0; border-bottom: 1px solid #1F2937">
+<div style="font-size: 12px; color: #F9FAFB"><span style="font-family: Oxanium, sans-serif; font-weight: 700">{{d.h}}</span> <span style="color: #9CA3AF">prefers {{d.prefs}}</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px">
+<sc-for list="{{d.opts}}" as="o" hint-placeholder-count="2">
+<button type="button" onClick="{{o.act}}" data-tip="{{o.tip}}" style="height: 22px; padding: 0 8px; border-radius: 11px; font-size: 10px; cursor: pointer; color: #34D399; border: 1px solid rgba(52,211,153,0.6); background: transparent">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF; margin: 14px 0 6px">Seats by ship</div>
+<sc-for list="{{seatShips}}" as="c" hint-placeholder-count="4">
+<div style="box-sizing: border-box; border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; {{c.box}}">
+<div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px">
+<span style="width: 8px; height: 8px; background: {{c.color}}; align-self: center"></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 13px; color: #F9FAFB">{{c.label}}</span>
+<span style="flex: 1; font-size: 11px; color: #9CA3AF">{{c.title}}</span>
+<span style="font-family: Oxanium, sans-serif; font-size: 12px; color: #D1D5DB">{{c.crew}}</span>
+</div>
+<sc-for list="{{c.seats}}" as="s" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 6px; min-height: 22px; font-size: 11px">
+<span style="width: 92px; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{s.name}}</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: {{s.whoColor}}">{{s.who}}</span>
+<span style="flex: 1"></span>
+<sc-if value="{{s.filled}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{s.clear}}" aria-label="Free this seat" data-tip="Free seat: take this person out of the seat so someone else can fill it." style="width: 18px; height: 18px; padding: 0; border: 0; border-radius: 3px; cursor: pointer; color: #6B7280; background: transparent">×</button>
+</sc-if>
+</div>
+<sc-if value="{{s.isOpen}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; gap: 4px; padding: 0 0 4px 98px">
+<sc-for list="{{s.sugg}}" as="g" hint-placeholder-count="2">
+<button type="button" onClick="{{g.act}}" data-tip="{{g.tip}}" style="height: 20px; padding: 0 7px; border-radius: 10px; font-size: 10px; cursor: pointer; color: #FBBF24; border: 1px solid rgba(245,158,11,0.6); background: transparent">{{g.label}}</button>
+</sc-for>
+<sc-if value="{{s.noSugg}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 10px; color: #6B7280">No free members list this role</span>
+</sc-if>
+</div>
+</sc-if>
+</sc-for>
+<sc-if value="{{c.hasMore}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 10px; color: #9CA3AF; padding-top: 2px">{{c.more}}</div>
+</sc-if>
+</div>
+</sc-for>
+<div data-section="roll-call" style="display: flex; align-items: center; margin: 14px 0 4px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Roll call</span>
+</div>
+<div style="font-size: 11px; color: #9CA3AF; margin-bottom: 6px">{{attSummary}}</div>
+<sc-for list="{{att}}" as="m" hint-placeholder-count="6">
+<div style="padding: 5px 0; border-bottom: 1px solid #1F2937">
+<div style="display: flex; align-items: center; gap: 6px; font-size: 11px">
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 12px; color: #F9FAFB">{{m.h}}</span>
+<span style="flex: 1; color: #6B7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.seat}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 4px; margin-top: 3px">
+<sc-for list="{{m.chips}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.act}}" data-tip="{{c.tip}}" style="height: 20px; padding: 0 8px; border-radius: 10px; font-size: 10px; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+<sc-if value="{{m.isLate}}" hint-placeholder-val="{{ false }}">
+<input type="text" value="{{m.late}}" onChange="{{m.lateChg}}" aria-label="How late" placeholder="+15m" style="width: 56px; height: 20px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid #60A5FA; background: #0d1522; color: #F9FAFB; font-size: 10px">
+</sc-if>
+<span style="flex: 1"></span>
+<span style="font-size: 9px; color: #6B7280">{{m.prefs}}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{is_ready}}" hint-placeholder-val="{{ false }}">
+<div data-section="tab-status">
+<div style="padding: 10px; border-radius: 6px; border: 1px solid {{readyColor}}; background: #0d1522">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; border-radius: 5px; background: {{readyColor}}; box-shadow: 0 0 8px {{readyColor}}"></span>
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px; color: {{readyColor}}">{{readyHead}}</span>
+<span data-tip="Readiness check: ships that are crewed, fuelled, loaded and in position." style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 16px; color: #F9FAFB">{{readyN}}</span>
+</div>
+<sc-for list="{{notReady}}" as="r" hint-placeholder-count="3">
+<button type="button" onClick="{{r.pick}}" data-tip="Open this ship's checklist in the Ship tab." style="display: block; width: 100%; padding: 3px 0 0 18px; border: 0; background: transparent; cursor: pointer; text-align: left; font-size: 11px; color: #D1D5DB">{{r.text}}</button>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; margin: 14px 0 6px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF">Ship status</span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px; color: #31C48D">{{readyText}}</span>
+</div>
+<div style="display: flex; height: 12px; border-radius: 3px; overflow: hidden; gap: 2px">
+<sc-for list="{{status}}" as="s" hint-placeholder-count="5">
+<div style="width: {{s.pct}}%; background: {{s.color}}"></div>
+</sc-for>
+</div>
+<sc-for list="{{status}}" as="s" hint-placeholder-count="5">
+<button type="button" onClick="{{s.pick}}" data-tip="{{s.tip}}" style="display: flex; align-items: center; gap: 8px; width: 100%; height: 26px; padding: 0 4px; border: 0; border-radius: 4px; cursor: pointer; background: {{s.bg}}">
+<span style="width: 8px; height: 8px; background: {{s.color}}"></span>
+<span style="width: 74px; text-align: left; font-size: 12px; color: #D1D5DB">{{s.label}}</span>
+<span style="flex: 1; height: 8px; border-radius: 2px; background: #1F2937; overflow: hidden; display: block"><span style="display: block; width: {{s.bar}}%; height: 100%; background: {{s.color}}"></span></span>
+<span style="width: 22px; text-align: right; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 13px; color: #F9FAFB">{{s.n}}</span>
+</button>
+</sc-for>
+<div style="margin-top: 12px; padding: 10px; border-radius: 6px; border: 1px solid rgba(251,191,36,0.38); background: linear-gradient(180deg, rgba(251,191,36,0.08), rgba(251,191,36,0.02))">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #FBBF24; margin-bottom: 4px">Needs attention</div>
+<sc-for list="{{attention}}" as="a" hint-placeholder-count="4">
+<button type="button" onClick="{{a.pick}}" style="display: flex; align-items: center; gap: 8px; width: 100%; min-height: 24px; padding: 0; border: 0; background: transparent; cursor: pointer; text-align: left; font-size: 12px; color: #E5E7EB">
+<span style="width: 7px; height: 7px; flex: none; border-radius: 4px; background: {{a.dot}}"></span>
+<span>{{a.text}}</span>
+</button>
+</sc-for>
+</div>
+<div data-section="schedule" style="margin-top: 12px; padding: 10px; border-radius: 6px; border: 1px solid rgba(96,165,250,0.38); background: linear-gradient(180deg, rgba(96,165,250,0.08), rgba(96,165,250,0.02))">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #93C5FD; margin-bottom: 4px">Op schedule</div>
+<sc-for list="{{schedule}}" as="p" hint-placeholder-count="5">
+<button type="button" onClick="{{p.pick}}" data-tip="Switch the plan to this phase." style="display: flex; align-items: center; gap: 8px; width: 100%; min-height: 24px; padding: 0; border: 0; background: transparent; cursor: pointer; text-align: left; font-size: 12px">
+<span style="width: 62px; font-weight: 600; color: {{p.color}}">{{p.label}}</span>
+<span style="width: 50px; font-family: Oxanium, sans-serif; color: #9CA3AF">{{p.rel}}</span>
+<span style="font-family: Oxanium, sans-serif; color: #D1D5DB">{{p.time}}</span>
+</button>
+</sc-for>
+</div>
+<div data-section="history" style="margin-top: 12px; padding: 10px; border-radius: 6px; border: 1px solid rgba(63,131,248,0.38); background: linear-gradient(180deg, rgba(63,131,248,0.08), rgba(63,131,248,0.02))">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #93C5FD; margin-bottom: 2px">History</div>
+<div style="font-size: 10px; color: #9CA3AF; margin-bottom: 4px">Click a change to jump back to just before it.</div>
+<sc-if value="{{noHist}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 12px; color: #9CA3AF">No changes yet in this session.</div>
+</sc-if>
+<sc-for list="{{histRows}}" as="h" hint-placeholder-count="5">
+<button type="button" onClick="{{h.act}}" data-tip="{{h.tip}}" style="display: flex; gap: 8px; width: 100%; min-height: 22px; padding: 0; border: 0; background: transparent; cursor: pointer; text-align: left; align-items: center; font-size: 12px; color: #E5E7EB">
+<span style="font-family: Oxanium, sans-serif; font-size: 11px; color: #9CA3AF; flex: none">{{h.t}}</span>
+<span style="flex: 1; min-width: 0">{{h.text}}</span>
+</button>
+</sc-for>
+</div>
+<div data-section="resolved" style="margin-top: 12px; padding: 10px; border-radius: 6px; border: 1px solid #374151">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF; margin-bottom: 4px">Resolved comments</div>
+<sc-if value="{{noResolved}}" hint-placeholder-val="{{ true }}">
+<div style="font-size: 12px; color: #6B7280">Nothing resolved yet.</div>
+</sc-if>
+<sc-for list="{{resolvedRows}}" as="r" hint-placeholder-count="0">
+<div style="padding: 3px 0; border-bottom: 1px solid #1F2937">
+<div style="font-size: 12px; color: #D1D5DB">{{r.text}}</div>
+<div style="font-size: 10px; color: #6B7280">{{r.sub}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{is_triage}}" hint-placeholder-val="{{ false }}">
+<div data-section="tab-triage">
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px">
+<span style="width: 8px; height: 8px; background: #F472B6; box-shadow: 0 0 8px #F472B6"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">{{medName}} triage</span>
+<span style="flex: 1"></span>
+<button type="button" onClick="{{addCas}}" data-tip="Add casualty: switch to the casualty marker, then click where the downed player is." style="height: 24px; padding: 0 10px; border-radius: 12px; font-size: 11px; cursor: pointer; color: #F472B6; border: 1px solid rgba(244,114,182,0.6); background: transparent">+ Casualty</button>
+</div>
+<div style="font-size: 11px; color: #9CA3AF; margin-bottom: 6px">Beds from the wiki. T1 is the most capable bed and treats any tier.</div>
+<sc-for list="{{beds}}" as="b" hint-placeholder-count="4">
+<div style="padding: 6px 0; border-bottom: 1px solid #1F2937">
+<div style="display: flex; align-items: center; gap: 6px; font-size: 12px">
+<span style="width: 8px; height: 8px; background: {{b.color}}"></span>
+<span style="font-family: Oxanium, sans-serif; font-weight: 700; color: #F9FAFB">{{b.label}}</span>
+<span style="flex: 1; color: #9CA3AF">{{b.title}}</span>
+<span style="font-family: Oxanium, sans-serif; color: #D1D5DB">{{b.bedTxt}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; margin-top: 4px">
+<div style="flex: 1; height: 6px; border-radius: 3px; background: #1F2937; overflow: hidden"><div style="width: {{b.pct}}%; height: 100%; background: #F472B6"></div></div>
+<span style="font-size: 10px; color: #9CA3AF">{{b.useTxt}}</span>
+</div>
+</div>
+</sc-for>
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF; margin: 14px 0 6px">Casualties</div>
+<sc-if value="{{noCas}}" hint-placeholder-val="{{ true }}">
+<div style="font-size: 12px; color: #6B7280">No casualties. Place one with + Casualty, or mark a ship destroyed in Live.</div>
+</sc-if>
+<sc-for list="{{casualties}}" as="c" hint-placeholder-count="0">
+<div style="padding: 8px; margin-bottom: 6px; border-radius: 6px; border: 1px solid {{c.tc}}; background: #0d1522">
+<div style="display: flex; align-items: center; gap: 6px">
+<span style="height: 18px; padding: 0 6px; border-radius: 3px; background: {{c.tc}}; color: #111827; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 11px; line-height: 18px">{{c.tier}}</span>
+<span style="flex: 1; font-size: 12px; font-weight: 600; color: #F9FAFB">{{c.t}}</span>
+<button type="button" onClick="{{c.recover}}" data-tip="Recovered: the casualty is aboard; remove the marker." style="height: 20px; padding: 0 8px; border-radius: 10px; font-size: 10px; cursor: pointer; color: #34D399; border: 1px solid rgba(52,211,153,0.6); background: transparent">Recovered</button>
+</div>
+<div style="font-size: 11px; color: {{c.shipC}}; margin-top: 4px">{{c.ship}} <span style="color: #9CA3AF">{{c.eta}}</span></div>
+<sc-if value="{{c.hasWarn}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 11px; color: #F87171; margin-top: 2px">{{c.warn}}</div>
+</sc-if>
+<div style="display: flex; gap: 4px; margin-top: 6px">
+<sc-for list="{{c.tiers}}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{t.act}}" data-tip="{{t.tip}}" style="height: 20px; padding: 0 8px; border-radius: 10px; font-size: 10px; cursor: pointer; color: {{t.color}}; border: 1px solid {{t.border}}; background: {{t.bg}}">{{t.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{is_layers}}" hint-placeholder-val="{{ false }}">
+<div data-section="tab-layers">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="box-sizing: border-box; border-radius: 6px; padding: 8px; {{g.box}}">
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: {{g.color}}; margin-bottom: 6px">{{g.name}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{g.opts}}" as="o" hint-placeholder-count="3">
+<button type="button" onClick="{{o.pick}}" aria-pressed="{{o.on}}" data-tip="{{o.tip}}" style="height: 24px; padding: 0 10px; border-radius: 12px; font-size: 11px; cursor: pointer; color: {{o.color}}; border: 1px solid {{o.border}}; background: {{o.bg}}">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<button type="button" onClick="{{tidy}}" data-tip="Tidy labels (T): push overlapping map labels apart without moving the ships. You can undo." style="width: 100%; height: 30px; margin-top: 10px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: #E5E7EB; background: transparent; border: 1px solid #4B5563">Tidy overlapping labels</button>
+<div data-section="colours" style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF; margin: 14px 0 6px">Squadron colours</div>
+<sc-for list="{{colors}}" as="q" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 6px; min-height: 26px">
+<span style="width: 70px; font-size: 11px; color: {{q.c}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{q.name}}</span>
+<sc-for list="{{q.sw}}" as="s" hint-placeholder-count="12">
+<button type="button" onClick="{{s.act}}" aria-label="Colour" data-tip="{{s.tip}}" style="width: 15px; height: 15px; padding: 0; border-radius: 3px; cursor: pointer; background: {{s.c}}; border: 2px solid {{s.ring}}"></button>
+</sc-for>
+</div>
+</sc-for>
+<div data-section="zones" style="display: flex; align-items: center; gap: 6px; margin: 14px 0 6px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #FBBF24">Zones</span>
+<button type="button" onClick="{{zoneTool}}" data-tip="Draw zone (8): drag on the map to outline a holding area." style="height: 22px; padding: 0 10px; border-radius: 11px; font-size: 11px; cursor: pointer; color: #FBBF24; border: 1px solid rgba(245,158,11,0.6); background: transparent">+ Draw</button>
+</div>
+<sc-if value="{{noZones}}" hint-placeholder-val="{{ true }}">
+<div style="font-size: 11px; color: #9CA3AF">No zones in this phase.</div>
+</sc-if>
+<sc-for list="{{zoneRows}}" as="z" hint-placeholder-count="0">
+<div style="display: flex; align-items: center; gap: 6px; min-height: 28px; border-bottom: 1px solid #1F2937">
+<span style="width: 9px; height: 9px; flex: none; background: {{z.c}}"></span>
+<sc-if value="{{z.editing}}" hint-placeholder-val="{{ false }}">
+<input data-edit="1" type="text" value="{{z.draft}}" onChange="{{z.chg}}" onKeyDown="{{z.kd}}" onBlur="{{z.blur}}" aria-label="Zone name" style="flex: 1; min-width: 0; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 4px; border: 1px solid #F59E0B; background: #0d1522; color: #F9FAFB; font-size: 12px; font-family: inherit">
+</sc-if>
+<sc-if value="{{z.show}}" hint-placeholder-val="{{ true }}">
+<button type="button" onDoubleClick="{{z.dbl}}" onContextMenu="{{z.ctx}}" data-tip="Zone: double-click to rename, right-click for colour and more." style="flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; text-align: left; cursor: text; font-size: 12px; color: #E5E7EB; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{z.name}}</button>
+</sc-if>
+<button type="button" onClick="{{z.del}}" aria-label="Delete zone" data-tip="Delete zone. You can undo." style="width: 22px; height: 22px; padding: 0; border: 0; cursor: pointer; color: #F87171; background: transparent">×</button>
+</div>
+</sc-for>
+<div data-section="markers" style="display: flex; align-items: center; gap: 6px; margin: 14px 0 6px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #F87171">Markers</span>
+<button type="button" onClick="{{markerTool}}" data-tip="Marker (5): place objectives, extraction, threats, hazards and casualties." style="height: 22px; padding: 0 10px; border-radius: 11px; font-size: 11px; cursor: pointer; color: #F87171; border: 1px solid rgba(248,113,113,0.6); background: transparent">+ Place</button>
+</div>
+<sc-if value="{{noMarkers}}" hint-placeholder-val="{{ true }}">
+<div style="font-size: 11px; color: #9CA3AF">No markers in this phase.</div>
+</sc-if>
+<sc-for list="{{markerRows}}" as="m" hint-placeholder-count="0">
+<div onContextMenu="{{m.ctx}}" style="display: flex; align-items: center; gap: 6px; min-height: 28px; border-bottom: 1px solid #1F2937">
+<span style="width: 9px; height: 9px; flex: none; background: {{m.c}}"></span>
+<span style="flex: 1; min-width: 0; font-size: 12px; color: #E5E7EB">{{m.name}} <span style="font-size: 10px; color: #9CA3AF">{{m.type}}</span></span>
+<button type="button" onClick="{{m.del}}" aria-label="Delete marker" style="width: 22px; height: 22px; padding: 0; border: 0; cursor: pointer; color: #F87171; background: transparent">×</button>
+</div>
+</sc-for>
+<div data-section="annotations" style="display: flex; align-items: center; gap: 6px; margin: 14px 0 6px">
+<span style="flex: 1; font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #FDE68A">Annotations</span>
+<button type="button" onClick="{{annoTool}}" data-tip="Annotate (6): arrows, pen, text and highlight circles." style="height: 22px; padding: 0 10px; border-radius: 11px; font-size: 11px; cursor: pointer; color: #FDE68A; border: 1px solid rgba(253,230,138,0.6); background: transparent">+ Draw</button>
+<button type="button" onClick="{{clearAnnos}}" data-tip="Clear all annotations in this phase." style="height: 22px; padding: 0 10px; border-radius: 11px; font-size: 11px; cursor: pointer; color: #D1D5DB; border: 1px solid #4B5563; background: transparent">Clear</button>
+</div>
+<div style="font-size: 11px; color: #9CA3AF">{{annoCount}} in this phase</div>
+<div data-section="compare" style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #22D3EE; margin: 14px 0 6px">Compare with layout</div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<sc-for list="{{diffChips}}" as="c" hint-placeholder-count="3">
+<button type="button" onClick="{{c.act}}" data-tip="{{c.tip}}" style="height: 22px; padding: 0 8px; border-radius: 11px; font-size: 11px; cursor: pointer; color: {{c.color}}; border: 1px solid {{c.border}}; background: {{c.bg}}">{{c.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{diffNone}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 11px; color: #9CA3AF; margin-top: 6px">No differences in this phase.</div>
+</sc-if>
+<sc-for list="{{diffRows}}" as="d" hint-placeholder-count="0">
+<div style="display: flex; align-items: center; gap: 6px; min-height: 22px; font-size: 11px; color: #E5E7EB">
+<span style="width: 7px; height: 7px; flex: none; background: {{d.c}}"></span><span>{{d.text}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{is_notify}}" hint-placeholder-val="{{ false }}">
+<div data-section="tab-notify">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px">
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Notify</span>
+<span style="font-size: 11px; color: #9CA3AF">Direct message on change</span>
+</div>
+<sc-for list="{{rules}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; justify-content: space-between; height: 32px; font-size: 12px; color: #E5E7EB">
+<span>{{r.label}}</span>
+<span role="img" aria-label="{{r.on}}" style="position: relative; width: 30px; height: 16px; border-radius: 8px; background: {{r.track}}"><span style="position: absolute; top: 2px; left: {{r.knob}}px; width: 12px; height: 12px; border-radius: 6px; background: #F9FAFB"></span></span>
+</div>
+</sc-for>
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF; margin: 12px 0 6px">Templates</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{templates}}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="height: 26px; padding: 0 10px; border-radius: 13px; font-size: 11px; cursor: pointer; color: {{t.color}}; border: 1px solid {{t.border}}; background: {{t.bg}}">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 11px; color: #9CA3AF; margin-top: 8px">Limit: one message per person every 10 minutes.</div>
+<div style="margin-top: 12px; border-radius: 8px; background: #313338; border: 1px solid #1e1f22; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; background: #2b2d31; border-bottom: 1px solid #1e1f22">
+<span style="font-size: 14px; color: #949ba4">@</span>
+<span style="font-size: 13px; font-weight: 600; color: #F2F3F5">Kestrel_7</span>
+<span style="flex: 1"></span>
+<span style="font-family: Quantico, sans-serif; font-size: 9px; letter-spacing: 0.1em; color: #949ba4">PREVIEW</span>
+</div>
+<div style="display: flex; gap: 10px; padding: 12px">
+<div style="width: 30px; height: 30px; flex: none; border-radius: 15px; background: #F59E0B; color: #111827; display: flex; align-items: center; justify-content: center; font-family: Oxanium, sans-serif; font-weight: 700; font-size: 14px">M</div>
+<div style="font-size: 12px; line-height: 1.45">
+<div><span style="font-weight: 600; color: #F2F3F5">Marrow_6</span> <span style="font-size: 10px; color: #949ba4">now</span></div>
+<div style="color: #dbdee1">{{dm}}</div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{is_add}}" hint-placeholder-val="{{ false }}">
+<div data-section="tab-add">
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px">
+<span style="width: 8px; height: 8px; background: #A78BFA; box-shadow: 0 0 8px #A78BFA"></span>
+<span style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px">Add open ship</span>
+<span style="flex: 1"></span>
+<span style="font-family: Oxanium, sans-serif; font-size: 12px; color: #9CA3AF">{{count}}</span>
+</div>
+<div style="font-size: 11px; color: #9CA3AF; margin-bottom: 8px">Open ships have no owner yet. They show dashed on the map and count toward the cap. Hover a hull for its wiki stats.</div>
+<label style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; font-size: 11px; color: #9CA3AF">Add to element
+<select aria-label="Target element" value="{{addEl}}" onChange="{{addElChg}}" style="height: 30px; box-sizing: border-box; padding: 0 8px; border-radius: 6px; background: #0d1522; color: #E5E7EB; border: 1px solid #374151; font-size: 12px; font-family: inherit">
+<sc-for list="{{els}}" as="o" hint-placeholder-count="7">
+<option value="{{o.v}}">{{o.label}}</option>
+</sc-for>
+</select>
+</label>
+<sc-for list="{{catalog}}" as="s" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 42px; border-bottom: 1px solid #1F2937">
+<span onMouseEnter="{{s.cardOn}}" onMouseLeave="{{s.cardOff}}" style="display: flex; flex: none"><svg width="34" height="22" aria-hidden="true" style="color: #9CA3AF"><use href="{{s.href}}" width="34" height="22"/></svg></span>
+<div onMouseEnter="{{s.cardOn}}" onMouseLeave="{{s.cardOff}}" style="flex: 1; min-width: 0; line-height: 1.3">
+<div style="font-size: 13px; font-weight: 600; color: #F9FAFB">{{s.name}}</div>
+<div style="font-size: 11px; color: #9CA3AF">{{s.role}} · {{s.seats}}</div>
+</div>
+<button type="button" onClick="{{s.add}}" data-tip="Add an open ship of this hull to the chosen element." style="height: 26px; padding: 0 12px; border-radius: 13px; font-size: 11px; font-weight: 600; cursor: pointer; color: #A78BFA; border: 1px solid rgba(167,139,250,0.6); background: transparent">Add</button>
+</div>
+</sc-for>
+<div style="font-family: Mohave, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: #9CA3AF; margin: 14px 0 6px">Open ships</div>
+<sc-if value="{{noOpen}}" hint-placeholder-val="{{ true }}">
+<div style="font-size: 11px; color: #6B7280">None yet.</div>
+</sc-if>
+<sc-for list="{{openShips}}" as="o" hint-placeholder-count="0">
+<div style="display: flex; align-items: center; gap: 6px; min-height: 28px; border-bottom: 1px solid #1F2937">
+<button type="button" onClick="{{o.pick}}" style="flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; cursor: pointer; text-align: left; font-size: 12px; color: #E5E7EB">{{o.label}} <span style="font-size: 10px; color: #9CA3AF">{{o.hull}}</span></button>
+<button type="button" onClick="{{o.remove}}" aria-label="Remove open ship" style="width: 22px; height: 22px; padding: 0; border: 0; cursor: pointer; color: #F87171; background: transparent">×</button>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"v":{"editor":null},"h":{"editor":"int","default":524},"$preview":{"width":328,"height":524}}'>
+// Right-hand panel. A pure view: every value and handler comes from the planner (js/panel-view.js) in the `v` prop.
+const PANEL_EMPTY = {
+tabs: [], collapse: () => {}, shipCount: 0, tree: [], is_fleet: true,
+cur: { ed: {}, stChips: [], checks: [], facts: [], weapons: [], fuel: [], leadBtns: [], posBtns: [], lossBtns: [], claimChips: [] },
+seatBars: [], seatShips: [], displaced: [], att: [], status: [], notReady: [], attention: [], schedule: [], histRows: [], resolvedRows: [],
+beds: [], casualties: [], groups: [], colors: [], zoneRows: [], markerRows: [], diffChips: [], diffRows: [], rules: [], templates: [], catalog: [], els: [], openShips: []
+};
+class Component extends DCLogic {
+renderVals() {
+return Object.assign({}, PANEL_EMPTY, this.props.v || {}, { h: this.props.h ?? 524 });
+}
+}
+</script>
+</body>
+</html>

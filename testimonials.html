@@ -247,6 +247,88 @@ body.sheet .sheet-h{display:flex;position:sticky;top:0;background:var(--panel);a
 .pst b{font-size:18px}
 }
 .lgl{margin-top:48px}
+.card.cs-pass,.card.cs-edit{height:auto;min-height:250px}
+.card.cs-pass{display:grid;grid-template-columns:minmax(0,1fr) 128px;grid-template-rows:none}
+.cs-pass .pm{padding:18px 20px;border-left:4px solid var(--oc);min-width:0}
+.cs-pass .oc{font-size:13px}
+.cs-pass .pal{display:block;margin:6px 0 10px;font:700 30px/1 var(--font-display);letter-spacing:.03em;text-transform:uppercase;color:var(--fg)}
+.cs-pass .pq{margin:0;font-size:15px;line-height:1.5;color:var(--fg2)}
+.cs-pass .pq,.cs-edit .eq,.cs-shade .qtb{background:color-mix(in srgb,var(--oc) 8%,var(--deep));border:1px solid color-mix(in srgb,var(--oc) 22%,transparent);border-radius:10px;box-shadow:0 1px 2px color-mix(in srgb,var(--c-black) 25%,transparent);padding:10px 12px}
+.cs-pass .pq{margin:16px 0 0}
+.card.cs-shade{height:320px}
+.grid[data-view="grid"] .card:not(.cs-pass):not(.cs-edit){height:auto;grid-template-rows:4px auto 1fr auto auto auto}
+.grid[data-view="grid"] .card:not(.cs-pass):not(.cs-edit) .qt{align-self:center}
+.grid[data-view="grid"] .cs-shade .qtb{align-self:stretch;display:flex;align-items:center}
+.grid[data-view="grid"] .qtw{position:relative;align-self:stretch;display:flex;align-items:center;margin:12px 20px 0;padding:0 34px;min-width:0;isolation:isolate}
+.grid[data-view="grid"] .qtw .qt{margin:0}
+.grid[data-view="grid"] .card :is(.hd,.krow,.ft,.oc,.pal,.pkd,.pkc,.ps,.et,.eb,.ek,.ekc){position:relative;z-index:1}
+.grid[data-view="grid"] .card .open{z-index:2}
+.grid[data-view="grid"] :is(.cs-shade .qtb,.cs-pass .pq,.cs-edit .eq){position:relative;isolation:isolate}
+.grid[data-view="grid"] :is(.qtw,.cs-shade .qtb,.cs-pass .pq,.cs-edit .eq)::before,.grid[data-view="grid"] :is(.qtw,.cs-shade .qtb,.cs-pass .pq,.cs-edit .eq)::after{position:absolute;z-index:-1;font:700 90px/1 var(--font-display);color:var(--oc);pointer-events:none}
+.grid[data-view="grid"] :is(.qtw,.cs-shade .qtb,.cs-pass .pq,.cs-edit .eq)::before{content:"\201C"}
+.grid[data-view="grid"] :is(.qtw,.cs-shade .qtb,.cs-pass .pq,.cs-edit .eq)::after{content:"\201D"}
+.grid[data-view="grid"] .qtw::before{top:-12px;left:-6px;opacity:.3}
+.grid[data-view="grid"] .qtw::after{right:-6px;bottom:-54px;opacity:.3}
+.grid[data-view="grid"] :is(.cs-shade .qtb,.cs-pass .pq,.cs-edit .eq)::before{top:-15px;left:-8px;opacity:.22}
+.grid[data-view="grid"] :is(.cs-shade .qtb,.cs-pass .pq,.cs-edit .eq)::after{right:-8px;top:calc(100% - 14px);opacity:.22}
+.grid[data-view="grid"] .card:not(.cs-pass):not(.cs-edit) .kr1{margin-top:0}
+#grid .card{transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .15s}
+#grid .card::before{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;border:1px solid var(--oc);-webkit-mask:linear-gradient(90deg,#000 0%,#000 6%,transparent 30%);mask:linear-gradient(90deg,#000 0%,#000 6%,transparent 30%);opacity:0;transition:opacity .2s ease;pointer-events:none}
+#grid .card:is(:hover,:has(.open:focus-visible)){transform:translateY(-2px);border-color:var(--bd);background:linear-gradient(90deg,color-mix(in srgb,var(--oc) 12%,transparent),transparent 45%),var(--card);box-shadow:inset 3px 0 0 var(--oc),0 10px 28px color-mix(in srgb,var(--c-black) 35%,transparent)}
+#grid .card.cs-edit:is(:hover,:has(.open:focus-visible)){border-top-color:var(--oc)}
+#grid .card:is(:hover,:has(.open:focus-visible))::before{opacity:1}
+#grid .card :is(.hd .alert,.pa,.ea){position:relative}
+#grid .card :is(.hd .alert,.pa,.ea)::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;border-radius:2px;background:var(--acc);box-shadow:0 0 8px color-mix(in srgb,var(--acc) 60%,transparent);transition:width .8s ease;pointer-events:none}
+#grid .card .ea::after{bottom:-3px;height:1.5px}
+#grid .card:is(:hover,:has(.open:focus-visible)) :is(.hd .alert,.pa,.ea)::after{width:100%}
+#grid .card .ft{position:relative}
+#grid .card .ft>span,#grid .card .ls>span:last-child,#grid .card .ph{transition:opacity .2s ease}
+#grid .card .ft::after,#grid .card .ls::after,#grid .card.cs-edit::after{content:"View full record \2192";position:absolute;font:600 13px var(--font-body);color:var(--oc);opacity:0;transition:opacity .2s ease;pointer-events:none;white-space:nowrap}
+#grid .card .ft::after{right:0;bottom:16px}
+#grid .card .ls{position:relative}
+#grid .card .ls::after{content:"View record \2192";right:20px;bottom:0;font-size:12.5px}
+#grid .card.cs-edit::after{right:20px;bottom:16px;z-index:1}
+#grid .card .ph{position:relative}
+#grid .card .ph::after{content:"View record \2192";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 12px var(--font-body);color:var(--oc);opacity:0;transition:opacity .2s ease;pointer-events:none}
+#grid .card:is(:hover,:has(.open:focus-visible)) :is(.ft>span,.ls>span:last-child){opacity:0}
+#grid .card:is(:hover,:has(.open:focus-visible)) .ph{color:transparent}
+#grid .card:is(:hover,:has(.open:focus-visible)) :is(.ft,.ls,.ph)::after,#grid .card:is(:hover,:has(.open:focus-visible)).cs-edit::after{opacity:1}
+.spot[data-open="false"]{cursor:pointer;transition:border-color .15s}
+.spot[data-open="false"]:hover{border-color:var(--acc)}
+.krow .kt{display:block;font-size:12.5px;line-height:1.4;color:var(--muted);white-space:nowrap}
+.krow .kt b{font-weight:600;color:var(--oc)}
+.krow .kt .kn,.cs-pass .pkd em{font-style:italic;color:var(--none-fg)}
+.cs-pass .pkc,.cs-edit .ekc{display:grid;gap:6px}
+.cs-pass .pkc{margin-top:12px}
+.cs-edit .ekc{margin-top:14px}
+.cs-pass .pkc .chips,.cs-edit .ekc .chips{flex-wrap:wrap}
+.cs-shade .qtb{margin:12px 20px 0;align-self:start;min-width:0}
+.cs-shade .qt{margin:0}
+.cs-edit .eq{margin:12px 0 16px;padding:12px 14px}
+.cs-pass .pq span,.cs-edit .eq span{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.cs-pass .pkd{margin:12px 0 0;font-size:12px;font-weight:500;color:var(--muted)}
+.cs-pass .pkd b{color:var(--oc);font-weight:600}
+.cs-pass .pkd em{font-style:italic}
+.cs-pass .pc{margin-top:4px}
+.cs-pass .ps{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;padding:18px 10px;text-align:center;background:var(--deep);border-left:2px dashed var(--bd2)}
+.cs-pass .ps::before,.cs-pass .ps::after{content:"";position:absolute;left:-11px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--bd)}
+.cs-pass .ps::before{top:-11px}
+.cs-pass .ps::after{bottom:-11px}
+.cs-pass .ps b{display:block;font:700 15px var(--font-num);color:var(--fg)}
+.cs-pass .ps .pr{font-size:40px;line-height:1;color:var(--star)}
+.cs-pass .ps span{font:600 10px var(--font-num);letter-spacing:.16em;color:var(--muted)}
+.cs-pass .ph{font-size:12px;font-weight:600;color:var(--fg);word-break:break-all}
+.card.cs-edit{display:block;padding:26px 24px 20px;border-top:2px solid var(--oc)}
+.card.cs-edit:hover{border-top-color:var(--oc)}
+.cs-edit .et{font:600 11px var(--font-num);letter-spacing:.2em;text-transform:uppercase;color:var(--oc)}
+.cs-edit .eq{font-size:21px;font-weight:500;line-height:1.38;letter-spacing:-.01em;color:var(--fg)}
+.cs-edit .eb{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:13px;color:var(--muted)}
+.cs-edit .eb b{color:var(--fg)}
+.cs-edit .el{width:26px;height:2px;background:var(--oc)}
+.cs-edit .eb .stars{margin-left:auto;font-size:13px}
+.cs-edit .ek{margin:14px 0 0;font-size:12px;line-height:1.6;color:var(--muted)}
+.results>div:last-child{flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:760px){#cstyle{order:-2;width:100%;display:grid;grid-template-columns:1fr 1fr}#kpill{order:-1;width:100%}#kpill button{flex:1}#cstyle button,#kpill button{justify-content:center}.card.cs-pass{grid-template-columns:minmax(0,1fr) 104px}.cs-pass .pal{font-size:26px}.cs-edit .eq{font-size:19px}}
 #spotFig .sl{transition:transform .2s ease}
 .spot-open{transition:background .2s ease,box-shadow .2s ease}
 .spot-open::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid var(--oc);-webkit-mask:linear-gradient(90deg,#000 0%,#000 6%,transparent 30%);mask:linear-gradient(90deg,#000 0%,#000 6%,transparent 30%);opacity:0;transition:opacity .2s ease;pointer-events:none}
@@ -327,7 +409,7 @@ body.sheet .filters .groups{display:flex}
 <div class="frow">
 <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></g></svg><span class="sr">Search records</span><input id="q" type="search" placeholder="Search by alert name or handle" autocomplete="off"></label>
 <label class="sel">Sort<select id="sort"><option value="new">Newest first</option><option value="rate">Highest rated</option></select></label>
-<button type="button" class="ghost ftog" id="ftog" aria-expanded="false" aria-controls="fgroups"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Filters</span><b class="fcount" id="fcount" hidden></b><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+<button type="button" class="ghost ftog" id="ftog" aria-expanded="false" aria-controls="fgroups"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Filters</span><b class="fcount" id="ftcount" hidden></b><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
 </div>
 <div class="groups" id="fgroups">
 <fieldset class="grp" id="gType"><legend>MISSION</legend></fieldset>
@@ -342,6 +424,8 @@ body.sheet .filters .groups{display:flex}
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px"><p>Showing <b id="count">0</b> <span id="cw">records</span></p><button type="button" class="chip" id="hfil" aria-pressed="true" hidden><span>From <b id="hfilName"></b></span><svg viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span class="sr">Remove this filter</span></button></div>
 <div style="display:flex;gap:10px;align-items:center">
 <button type="button" class="ghost fbtn" id="fbtn" aria-controls="filters" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" style="transform:none"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Filters <span id="fcount"></span></button>
+<div class="seg" role="group" aria-label="Kudos display" id="kpill"><button type="button" data-kp="1" aria-pressed="true">Pills</button><button type="button" data-kp="0" aria-pressed="false">No pills</button></div>
+<div class="seg" role="group" aria-label="Card style" id="cstyle"><button type="button" data-cs="classic" aria-pressed="true">Classic</button><button type="button" data-cs="shade" aria-pressed="false">Classic + Shading</button><button type="button" data-cs="pass" aria-pressed="false">Boarding pass</button><button type="button" data-cs="edit" aria-pressed="false">Editorial</button></div>
 <div class="seg" role="group" aria-label="Layout">
 <button type="button" id="vGrid" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></g></svg>Grid</button>
 <button type="button" id="vList" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>List</button>
@@ -413,7 +497,7 @@ const day=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',
 const stars=n=>'<span class="on">★</span>'.repeat(n)+'<span class="off">★</span>'.repeat(5-n);
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-');
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-const S={handle:'',type:'All',out:'All',min:0,kudos:[],q:'',sort:'new',view:'grid',shown:9,spot:0,spotOpen:false,open:-1};
+const S={handle:'',type:'All',out:'All',min:0,kudos:[],q:'',sort:'new',view:'grid',pills:store.get('mr-pills')!=='0',cstyle:(['classic','shade','pass','edit'].includes(store.get('mr-cstyle'))?store.get('mr-cstyle'):'classic'),shown:9,spot:0,spotOpen:false,open:-1};
 let list=[],lastFocus=null;
 
 const others=r=>R.filter(x=>x.handle===r.handle&&x!==r).sort((x,y)=>y.date.localeCompare(x.date));
@@ -464,17 +548,39 @@ function renderStats(){
  const c=TYPES.map(t=>[t,a.filter(r=>r.type===t).length]),mx=Math.max(1,...c.map(x=>x[1]));
  $('#sBars').innerHTML=c.map(([t,n])=>'<div class="bar"><span>'+t+'</span><span class="tr"><span class="fl" style="width:'+Math.round(n/mx*100)+'%"></span></span><b>'+n+'</b></div>').join('');
 }
+function kText(arr,cls,max){if(!arr.length)return '<em class="kn">No Kudos Given</em>';const vis=max?arr.slice(0,max):arr;let h=vis.map((k,i)=>cls==='cl'&&i===0?'<b>★ '+esc(k)+'</b>':esc(k)).join(' · ');if(max&&arr.length>max)h+=' · +'+(arr.length-max);return h}
+function kz(arr,cls,max){return S.pills?kudosRow(arr,cls,max):kText(arr,cls,max)}
+function kc(){return S.pills?'chips':'chips kt'}
+function kudoText(r){return r.kudos.length?'<b>★ '+esc(r.kudos[0])+'</b>'+(r.kudos.length>1?' · '+r.kudos.slice(1).map(esc).join(' · '):''):'<em>No Kudos Given</em>'}
+function openBtn(r,i){return '<button type="button" class="open" data-i="'+i+'"><span class="sr">Open record '+esc(r.alert)+'</span></button>'}
+function cardPass(r,i){
+ return '<article class="card cs-pass" style="--oc:var(--'+r.outcome+')"><div class="pm"><span class="oc">'+r.outcome+'</span><b class="pal"><span class="pa">'+esc(r.alert)+'</span></b><p class="pq"><span>'+esc(r.quote)+'</span></p>'+(S.pills?'<div class="pkc"><div class="chips">'+kudosRow(r.kudos,'cl',3)+'</div>'+(r.crewK.length?'<div class="chips">'+kudosRow(r.crewK,'ck',3)+'</div>':'')+'</div>':'<p class="pkd">Kudos: '+kudoText(r)+'</p>'+(r.crewK.length?'<p class="pkd pc">Crew → client: '+r.crewK.map(esc).join(' · ')+'</p>':''))+'</div>'+
+ '<div class="ps"><div><b class="pr">'+r.rating+'.0</b><span>RATING</span></div><div><b>'+fmt(r.resp)+'</b><span>RESPONSE</span></div><div><b>'+r.type.toUpperCase()+'</b><span>MISSION</span></div><div class="ph">@'+esc(r.handle)+'</div></div>'+openBtn(r,i)+'</article>';
+}
+function cardEdit(r,i){
+ return '<article class="card cs-edit" style="--oc:var(--'+r.outcome+')"><div class="et">'+r.outcome+' · <span class="ea">'+esc(r.alert)+'</span></div><p class="eq"><span>'+esc(r.quote)+'</span></p>'+
+ '<div class="eb"><span class="el" aria-hidden="true"></span><b>@'+esc(r.handle)+'</b><span>'+r.type+' · <span class="ox">'+fmt(r.resp)+'</span></span><span class="stars" aria-label="'+r.rating+' out of 5 stars">'+stars(r.rating)+'</span></div>'+
+ (S.pills?'<div class="ekc"><div class="chips">'+kudosRow(r.kudos,'cl',3)+'</div>'+(r.crewK.length?'<div class="chips">'+kudosRow(r.crewK,'ck',3)+'</div>':'')+'</div>':'<p class="ek">'+(r.kudos.length?r.kudos.map(esc).join(' · '):'No Kudos Given')+(r.crewK.length?'<br>Crew → client: '+r.crewK.map(esc).join(' · '):'')+'</p>')+openBtn(r,i)+'</article>';
+}
 function card(r,i){
- return '<article class="card" style="--oc:var(--'+r.outcome+')"><div class="stripe" aria-hidden="true"></div>'+
+ if(S.view==='grid'&&S.cstyle==='pass')return cardPass(r,i);
+ if(S.view==='grid'&&S.cstyle==='edit')return cardEdit(r,i);
+ const sh=S.view==='grid'&&S.cstyle==='shade',cw=S.view==='grid'&&S.cstyle==='classic';
+ return '<article class="card'+(sh?' cs-shade':'')+'" style="--oc:var(--'+r.outcome+')"><div class="stripe" aria-hidden="true"></div>'+
  '<div class="hd"><div class="ocrow"><span class="oc">'+r.outcome+'</span><b class="alert">'+esc(r.alert)+'</b></div><span class="stars" aria-label="'+r.rating+' out of 5 stars">'+stars(r.rating)+'</span></div>'+
- '<p class="qt">“'+esc(r.quote)+'”</p>'+
- '<div class="krow kr1"><span class="lab">CLIENT → CREW</span><div class="chips">'+kudosRow(r.kudos,'cl',3)+'</div></div>'+
- '<div class="krow kr2"><span class="lab">CREW → CLIENT</span><div class="chips">'+kudosRow(r.crewK,'ck',3)+'</div></div>'+
+ (sh?'<div class="qtb">':cw?'<div class="qtw">':'')+'<p class="qt">'+esc(r.quote)+'</p>'+(sh||cw?'</div>':'')+
+ '<div class="krow kr1"><span class="lab">CLIENT → CREW</span><div class="'+kc()+'">'+kz(r.kudos,'cl',3)+'</div></div>'+
+ '<div class="krow kr2"><span class="lab">CREW → CLIENT</span><div class="'+kc()+'">'+kz(r.crewK,'ck',3)+'</div></div>'+
  '<div class="ls"><span class="stars" aria-label="'+r.rating+' out of 5 stars">'+stars(r.rating)+'</span><span>'+r.type+' · <span class="ox">'+fmt(r.resp)+'</span></span></div>'+
  '<div class="ft"><b>@'+esc(r.handle)+(others(r).length?' <span class="mm">+'+others(r).length+' more</span>':'')+'</b><span>'+r.type+' · <span class="ox">'+fmt(r.resp)+'</span></span></div>'+
  '<button type="button" class="open" data-i="'+i+'"><span class="sr">Open record '+esc(r.alert)+'</span></button></article>';
 }
+function fitQuotes(){
+ document.querySelectorAll('#grid .qt').forEach(q=>{q.style.fontSize='';if(S.view!=='grid'||!['classic','shade'].includes(S.cstyle))return;q.classList.remove('fade');const sizes=q.textContent.trim().length<=24?[26,24,22]:[22,21,20,19,18];for(const fs of sizes){q.style.fontSize=fs+'px';if(q.scrollHeight<=q.clientHeight+1)return}q.style.fontSize=''});
+}
+let fitT=0;addEventListener('resize',()=>{clearTimeout(fitT);fitT=setTimeout(()=>{fitQuotes();markFades()},150)});
 function markFades(){
+ fitQuotes();
  document.querySelectorAll('#grid .qt').forEach(p=>{p.classList.toggle('fade',p.scrollHeight>p.clientHeight+2)});
  document.querySelectorAll('#grid .krow .chips').forEach(c=>{c.classList.toggle('fade1',c.scrollWidth>c.clientWidth+1)});
 }
@@ -567,7 +673,7 @@ function closePanel(){
 }
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
 function clearAll(){S.handle='';S.type='All';S.out='All';S.min=0;S.kudos=[];S.q='';$('#q').value='';update()}
-function setFcount(){const n=(S.type!=='All')+(S.out!=='All')+(S.min>0)+S.kudos.length;const f=$('#fcount');f.hidden=!n;f.textContent=n;$('#fclear').disabled=!(n||S.q||S.handle)}
+function setFcount(){const n=(S.type!=='All')+(S.out!=='All')+(S.min>0)+S.kudos.length;const f=$('#ftcount');f.hidden=!n;f.textContent=n;$('#fclear').disabled=!(n||S.q||S.handle)}
 $('#fclear').onclick=()=>clearAll();
 $('#ftog').onclick=()=>{const o=$('#filters').dataset.open!=='true';$('#filters').dataset.open=o;$('#ftog').setAttribute('aria-expanded',o)};
 function update(){setFcount();S.shown=9;list=filtered();$('#count').textContent=list.length;$('#cw').textContent=list.length===1?'record':'records';const hf=$('#hfil');hf.hidden=!S.handle;$('#hfilName').textContent='@'+S.handle;renderFilters();renderStats();renderGrid()}
@@ -582,17 +688,22 @@ function setTheme(t){
  $('#theme').setAttribute('aria-label','Theme: '+cur.name+'. Switch to '+nxt.name);
  store.set('mr-theme',t);requestAnimationFrame(markFades);
 }
-function setView(v){S.view=v;$('#vGrid').setAttribute('aria-pressed',v==='grid');$('#vList').setAttribute('aria-pressed',v==='list');$('#grid').dataset.view=v;requestAnimationFrame(markFades)}
+function setView(v){S.view=v;$('#vGrid').setAttribute('aria-pressed',v==='grid');$('#vList').setAttribute('aria-pressed',v==='list');$('#cstyle').hidden=v!=='grid';renderGrid();requestAnimationFrame(markFades)}
+function setPills(v){S.pills=v;store.set('mr-pills',v?'1':'0');document.querySelectorAll('#kpill button').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.kp==='1')===v));renderGrid();requestAnimationFrame(markFades)}
+function setCStyle(v){S.cstyle=v;store.set('mr-cstyle',v);document.querySelectorAll('#cstyle button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cs===v));if(S.view!=='grid')setView('grid');else{renderGrid();requestAnimationFrame(markFades)}}
 function setSheet(o){document.body.classList.toggle('sheet',o);$('#fbtn').setAttribute('aria-expanded',o);$('#scrim').classList.toggle('on',o);if(o)setTimeout(()=>$('#q').focus(),30);else $('#fbtn').focus()}
 
 document.querySelectorAll('.tx2').forEach(b=>b.onclick=()=>{const o=b.getAttribute('aria-expanded')!=='true';document.querySelectorAll('.tx2').forEach(t=>t.setAttribute('aria-expanded',o))});
 $('#theme').onclick=()=>setTheme(document.documentElement.dataset.theme==='red'?'dark':'red');
 $('#spotTog').onclick=()=>setSpotOpen(!S.spotOpen);
+$('#spot').addEventListener('click',e=>{if(!S.spotOpen&&!e.target.closest('button,a'))setSpotOpen(true)});
 $('#spotPrev').onclick=()=>goSpot(S.spot-1);
 $('#spotNext').onclick=()=>goSpot(S.spot+1);
 $('#cdBar').addEventListener('animationend',()=>goSpot(S.spot+1));
 $('#q').oninput=e=>{S.q=e.target.value;update()};
 $('#sort').onchange=e=>{S.sort=e.target.value;update()};
+document.querySelectorAll('#kpill button').forEach(b=>{b.setAttribute('aria-pressed',(b.dataset.kp==='1')===S.pills);b.onclick=()=>setPills(b.dataset.kp==='1')});
+document.querySelectorAll('#cstyle button').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.cs===S.cstyle);b.onclick=()=>setCStyle(b.dataset.cs)});
 $('#vGrid').onclick=()=>setView('grid');$('#vList').onclick=()=>setView('list');
 $('#fbtn').onclick=()=>setSheet(true);$('#sheetDone').onclick=()=>setSheet(false);
 $('#scrim').onclick=()=>{if(!$('#pk').hidden)closePick();else if(document.body.classList.contains('sheet'))setSheet(false);else closePanel()};

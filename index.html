@@ -15,27 +15,31 @@ a{color:inherit}
 .ecg{position:fixed;left:0;right:0;top:50%;height:120px;margin-top:-60px;width:100%;opacity:.08;color:var(--c-green-400);pointer-events:none}
 .ecg polyline{stroke-dasharray:1400;stroke-dashoffset:1400;animation:trace 5s linear infinite}
 @keyframes trace{to{stroke-dashoffset:0}}
-@media(prefers-reduced-motion:reduce){.ecg polyline{animation:none;stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){
+.ecg polyline{animation:none;stroke-dashoffset:0}
+}
 /* ---------- Start menu ---------- */
 .mn{position:relative;min-height:100vh;z-index:1;display:flex;align-items:center;justify-content:center;padding:24px 16px;
  background:radial-gradient(1000px 650px at 25% 15%,var(--c-line-750) 0%,transparent 60%),radial-gradient(900px 600px at 80% 95%,var(--c-amber-950) 0%,transparent 60%),transparent;transition:opacity .25s ease,visibility .25s}
-.mn.off{opacity:0;visibility:hidden;pointer-events:none}
-.mn-in{width:min(100%,1000px);text-align:center;transform:none;transition:transform .3s ease}
-.mn.off .mn-in{transform:translateY(12px) scale(.98)}
+.mn-in{width:min(100%,1240px);text-align:center;transform:none;transition:transform .3s ease}
 .mn-logo{width:176px;height:47px;margin:0 auto;color:var(--c-white)}
 .mn-k{margin-top:22px;font:600 12px/1 var(--font-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--c-gray-400)}
 .mn-h{margin:10px 0 0;font:700 clamp(30px,5vw,46px)/1.05 var(--font-display);text-transform:uppercase;letter-spacing:.02em;color:var(--c-white)}
-.mn-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:34px}
+.mn-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;margin-top:34px}
 .mn-b{--c:var(--c-green-400);--cr:49 196 141;position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:28px 18px 24px;border-radius:14px;
  border:1px solid rgb(var(--cr)/.35);background:linear-gradient(180deg,rgb(var(--cr)/.10),rgb(var(--cr)/.02));color:var(--c-white);text-decoration:none;cursor:pointer;
  transition:transform .2s ease,opacity .2s ease,border-color .2s ease,box-shadow .2s ease,background .2s ease;outline:none}
 .mn-b[data-k=play]{--c:var(--c-amber-500);--cr:245 158 11}
 .mn-b[data-k=cta]{--c:var(--c-red-500);--cr:240 82 82}
 .mn-b[data-k=role]{--c:var(--c-blue-500);--cr:63 131 248}
+.mn-b[data-k=wall]{--c:var(--c-violet-400);--cr:167 139 250}
 .mn-note{display:flex;gap:12px;align-items:flex-start;max-width:720px;margin:6px auto 0;padding:14px 18px;border-radius:12px;border:1px dashed var(--c-line-700);background:color-mix(in srgb,var(--c-white) 3%,transparent);text-align:left;font-size:13.5px;line-height:1.55;color:var(--c-gray-400)}
 .mn-note svg{flex:none;width:18px;height:18px;margin-top:2px;color:var(--c-gray-400)}
 .mn-note b{color:var(--c-gray-200)}
-@media(max-width:900px) and (min-width:561px){.mn-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px) and (min-width:561px){
+.mn-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mn-row>.mn-b[data-k=wall]{grid-column:1/-1}
+}
 .mn-b svg.ic{width:44px;height:44px;color:var(--c);transition:transform .25s ease}
 .mn-b b{font:700 30px/1 var(--font-display);text-transform:uppercase;letter-spacing:.04em}
 .mn-b small{font:600 11px/1.3 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--cr)/.9)}
@@ -48,10 +52,18 @@ a{color:inherit}
 .mn-bl p.on{opacity:1;transform:none}
 .mn-bl p b{color:var(--c-white)}
 .mn-bl .hint{color:var(--c-gray-500);font-size:13px}
-.mn-ft{margin-top:6px;font-size:12px;color:var(--c-gray-500)}
-@media(max-width:560px){.mn-row{grid-template-columns:minmax(0,1fr)}.mn-b{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:14px;row-gap:4px;align-items:center;padding:16px 18px;text-align:left}.mn-b svg.ic{grid-row:1/3;width:34px;height:34px}.mn-b b,.mn-b small{white-space:nowrap}.mn-b b{font-size:24px}.mn-b kbd{display:none}.mn-bl{min-height:164px}}
-@media(prefers-reduced-motion:reduce){.mn,.mn-in,.mn-b,.mn-bl p{transition:none}}
-
+@media(max-width:560px){
+.mn-row{grid-template-columns:minmax(0,1fr)}
+.mn-b{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:14px;row-gap:4px;align-items:center;padding:16px 18px;text-align:left}
+.mn-b svg.ic{grid-row:1/3;width:34px;height:34px}
+.mn-b b,.mn-b small{white-space:nowrap}
+.mn-b b{font-size:24px}
+.mn-b kbd{display:none}
+.mn-bl{min-height:164px}
+}
+@media(prefers-reduced-motion:reduce){
+.mn,.mn-in,.mn-b,.mn-bl p{transition:none}
+}
 .v1{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 10px 7px 12px;border-radius:2px;border:1px solid var(--c-line-600);background:var(--c-ink-950);color:var(--c-gray-400);text-decoration:none;font:600 11px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;transition:color .2s,border-color .2s,background .2s}
 .v1 svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
 .v1:hover,.v1:focus-visible{color:var(--c-amber-500);border-color:var(--c-amber-500);background:color-mix(in srgb,var(--c-amber-500) 8%,transparent);outline:none}
@@ -61,7 +73,9 @@ a{color:inherit}
 .mn-pw>.v1{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);margin:0;z-index:2;white-space:nowrap;background:color-mix(in srgb,var(--c-black) 35%,transparent);border-color:color-mix(in srgb,var(--c-amber-500) 35%,transparent);color:var(--c-gray-300)}
 .mn-pw>.v1:hover,.mn-pw>.v1:focus-visible{background:color-mix(in srgb,var(--c-amber-500) 14%,transparent)}
 .mn-row.hov .mn-pw:has(.mn-b:not(.on))>.v1{opacity:.45}
-@media(max-width:560px){.mn-b .v2t{left:auto!important;right:12px!important;top:10px!important}}
+@media(max-width:560px){
+.mn-b .v2t{left:auto!important;right:12px!important;top:10px!important}
+}
 .mn-b .v2t{position:absolute;top:10px;left:12px;font:700 10px/1 var(--font-mono);letter-spacing:.14em;color:var(--c-ink-925);background:var(--c);padding:3px 6px;border-radius:2px}
 </style>
 </head>
@@ -90,12 +104,15 @@ a{color:inherit}
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg>
 <b>Call to action</b><small>Proposal · step 1</small></a><a class="mn-b" data-k="role" href="choose-role.html" aria-describedby="mn-b-role"><kbd>4</kbd>
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-<b>Available roles</b><small>Recruitment · showcase</small></a></div>
+<b>Available roles</b><small>Recruitment · showcase</small></a><a class="mn-b" data-k="wall" href="testimonials.html" aria-describedby="mn-b-wall"><kbd>5</kbd>
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 6.8l1.1 2.2 2.4.35-1.75 1.7.42 2.4L12 12.3l-2.17 1.15.42-2.4L8.5 9.35l2.4-.35z"/></svg>
+<b>Testimonials</b><small>Public · verified</small></a></div>
 <div class="mn-bl" aria-live="polite">
-<p class="hint on" id="mn-b-none">Hover over a choice to see what's inside. Use ← → or 1–4 to pick, Enter to open.</p>
+<p class="hint on" id="mn-b-none">Hover over a choice to see what's inside. Use ← → or 1–5 to pick, Enter to open.</p>
 <p id="mn-b-deck"><b>The pitch.</b> A short walkthrough for Medrunner leadership and the dev team: the problem, the six steps from discharge to public record, the privacy safeguards, and what it would take to build. Includes short clips of the playground in action.</p>
 <p id="mn-b-play"><b>The hands-on mockup.</b> Follow one alert from the client’s thank-you card to a published record. Take the guided tour as the client, team lead and crew, try the card options, and view the page as any role. Everything is simulated; nothing is sent anywhere.</p>
 <p id="mn-b-role"><b>The recruitment showcase.</b> Look what you can do with Medrunner: the roles on a rescue, what each is like and who it suits, plus a short FAQ for anyone thinking of joining. Not part of the rescue flow.</p>
+<p id="mn-b-wall"><b>The public wall.</b> Verified mission testimonials published by clients after their rescue. Filter by mission, outcome, rating and kudos, browse this week’s spotlight, and open any record with its redacted transcript.</p>
 <p id="mn-b-cta"><b>The call to action.</b> A proposal to potentially replace step 1 in the playground: a pop-up at the end of an alert where the client rates the crew, gives kudos, and goes public or just says thanks.</p>
 </div>
 <p class="mn-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.5"/></svg><span><b>Nothing here is final.</b> These are showcase ideas for feedback. The playground runs the whole rescue flow, starting with the call to action card.</span></p>
@@ -111,7 +128,7 @@ bs.forEach((b,i)=>{b.addEventListener('mouseenter',()=>hl(i));b.addEventListener
 row.addEventListener('mouseleave',()=>{const a=bs.indexOf(document.activeElement);hl(a)});
 document.addEventListener('keydown',e=>{
  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();const n=cur<0?0:(cur+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+bs.length)%bs.length;bs[n].focus()}
- else if(['1','2','3','4'].includes(e.key)){e.preventDefault();bs[+e.key-1].focus()}});
+ else if(['1','2','3','4','5'].includes(e.key)){e.preventDefault();bs[+e.key-1].focus()}});
 addEventListener('pageshow',()=>hl(bs.indexOf(document.activeElement)));
 })();
 </script>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mission Testimonials · Medrunner</title>
+<meta name="description" content="Verified mission testimonials published by Medrunner clients after their rescue.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mohave:wght@500;600;700&family=Oxanium:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/site.css">
+<style>
+main{padding:44px 0 40px}
+.intro{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-end;justify-content:space-between}
+.intro .tx{flex:1 1 440px;min-width:0}
+.eyebrow{margin:0;font:600 16px/1.2 var(--font-display);letter-spacing:.12em;color:var(--eyebrow)}
+h1{margin:6px 0 0;font:700 clamp(40px,6vw,64px)/1 var(--font-display);letter-spacing:.04em}
+.lede{margin:12px 0 0;max-width:560px;color:var(--muted);font-size:17px}
+.stats{flex:1 1 520px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tile{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);min-width:0}
+.tile h2{margin:0;font:500 15px/1.2 var(--font-display);letter-spacing:.08em;color:var(--muted)}
+.tile .big{margin:6px 0 0;font:700 34px/1.1 var(--font-num)}
+.tile .stars{margin:2px 0 0;letter-spacing:2px}
+.tx2{position:relative;text-align:left;color:var(--fg);font:inherit;cursor:pointer;transition:border-color .15s}
+.tx2:hover{border-color:var(--acc)}
+.tile h2 .win{display:block;margin-top:2px;font:500 11px/1.2 var(--font-body);letter-spacing:.04em;color:var(--muted);text-transform:none}
+.tx2 .chev{position:absolute;top:12px;right:12px;width:18px;height:18px;color:var(--muted);transition:transform .2s}
+.tx2 .chev svg{width:18px;height:18px}
+.tx2[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.tx2 .xp{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);flex-direction:column;gap:6px}
+.tx2[aria-expanded="true"] .xp{display:flex}
+.xr{display:grid;grid-template-columns:58px 1fr;align-items:baseline;column-gap:8px;font-size:13px}
+.xr em{grid-column:2}
+.xr b{white-space:nowrap}
+.xr span{color:var(--muted)}
+.xr b{font:700 16px var(--font-num)}
+.xr em{font-style:normal;font-size:11px;color:var(--muted)}
+.none7{font-size:12px;color:var(--muted);letter-spacing:0}
+.stats{align-items:stretch}
+.tile svg.spark{display:block;width:100%;height:26px;margin-top:2px}
+.bars{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.bar{display:grid;grid-template-columns:66px 1fr 18px;align-items:center;gap:8px;font-size:12px;color:var(--fg2)}
+.bar .tr{height:8px;background:var(--deep);border-radius:4px;overflow:hidden;border:1px solid transparent}
+:root[data-theme="red"] .bar .tr{border-color:var(--c-red-200)}
+.bar .fl{display:block;height:100%;background:var(--bar);border-radius:3px;transition:width .3s}
+.bar b{font:600 12px var(--font-num);text-align:right}
+.spot{margin-top:32px;background:var(--spot);border:1px solid var(--bd);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+:root[data-theme="red"] .spot{border:2px solid var(--c-white)}
+.spot{position:relative}
+#spotFig{transition:opacity .5s ease;display:grid}
+#spotFig .sl{grid-area:1/1;position:relative;visibility:hidden;min-width:0}
+#spotFig .sl.on{visibility:visible}
+#spotFig.out{opacity:0}
+.spot-open{position:absolute;inset:-8px;width:calc(100% + 16px);height:calc(100% + 16px);border:0;background:transparent;border-radius:var(--r-sm);cursor:pointer}
+.cd{position:absolute;left:0;right:0;bottom:0;height:3px;background:color-mix(in srgb,var(--c-white) 7%,transparent)}
+.spot[data-open="false"] .cd{display:none}
+.cd span{display:block;height:100%;width:100%;background:var(--acc);transform:scaleX(0);transform-origin:left center}
+.cd span.run{animation:cd 8s linear forwards}
+.spot:hover .cd span,.spot:has(:focus-visible) .cd span{animation-play-state:paused}
+.spot:hover .cd span{opacity:.55}
+@keyframes cd{to{transform:scaleX(1)}}
+.spot-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px}
+.spot-h p{margin:0;display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.spot-h .mo{font-weight:600;font-size:16px;color:var(--eyebrow);letter-spacing:.14em;flex:none;white-space:nowrap}
+.spot-peek{color:var(--fg2);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.spot[data-open="true"] .spot-peek{display:none}
+.spot[data-open="false"] .ghost svg{transform:rotate(180deg)}
+.spot-b{padding:4px 20px 22px;display:grid;grid-template-columns:52px minmax(0,1fr) 52px;gap:20px;align-items:center}
+.spot[data-open="false"] .spot-b{display:none}
+.rnd{width:52px;height:52px;border-radius:50%;border:1px solid var(--bd2);background:var(--panel);color:var(--fg);display:inline-flex;align-items:center;justify-content:center}
+:root[data-theme="red"] .rnd{background:var(--c-red-800);border:2px solid var(--c-red-200)}
+.rnd svg{width:20px;height:20px}
+.spot q{display:block;font:600 clamp(26px,3.4vw,40px)/1.15 var(--font-display);quotes:"“" "”";color:var(--fg)}
+.spot-oc{margin-bottom:10px}
+.spot-oc .alert{font-size:22px}
+.spot .meta{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;color:var(--muted);font-size:14px}
+.spot .meta b.h{color:var(--fg);font-size:16px}
+.spot .chips{margin-top:12px}
+.dots{grid-column:1/-1;display:flex;justify-content:center;gap:4px}
+.dots button{width:44px;height:24px;border:0;background:transparent;display:inline-flex;align-items:center;justify-content:center}
+.dots span{display:block;height:4px;width:14px;border-radius:2px;background:var(--star-off);transition:width .2s}
+.dots button[aria-current="true"] span{width:32px;background:var(--acc)}
+.filters{margin-top:28px;background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.frow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.groups{display:flex;flex-wrap:wrap;gap:16px 32px}
+.grp{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border:0;margin:0;padding:0}
+.grp legend,.grp .lab{float:left;margin-right:6px;font:500 15px/36px var(--font-display);letter-spacing:.08em;color:var(--muted);padding:0}
+.fbtn{display:none}
+.sheet-h{display:none}
+.results{margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.results p{margin:0;color:var(--muted);font-size:14px}
+.results p b{color:var(--fg);font-family:var(--font-num)}
+.grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.card{position:relative;height:296px;background:var(--card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;display:grid;grid-template-rows:4px auto 1fr auto auto auto;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+:root[data-theme="red"] .card{border:2px solid var(--c-red-200)}
+.card:hover{transform:translateY(-2px);border-color:var(--acc)}
+.card>.stripe{background:var(--oc)}
+.card .hd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px 0;min-width:0}
+.card .hd .stars{font-size:13px;letter-spacing:2px;flex:none}
+.card .qt{margin:12px 20px 0;font-size:17px;line-height:1.45;color:var(--fg2);overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;max-height:4.35em;align-self:start}
+.fade{-webkit-mask:linear-gradient(var(--c-black),var(--c-black)) top/100% calc(100% - 1.45em) no-repeat,linear-gradient(to right,var(--c-black) 45%,color-mix(in srgb,var(--c-black) 8%,transparent)) bottom/100% 1.45em no-repeat;mask:linear-gradient(var(--c-black),var(--c-black)) top/100% calc(100% - 1.45em) no-repeat,linear-gradient(to right,var(--c-black) 45%,color-mix(in srgb,var(--c-black) 8%,transparent)) bottom/100% 1.45em no-repeat}
+.fade1{-webkit-mask:linear-gradient(to right,var(--c-black) 60%,color-mix(in srgb,var(--c-black) 8%,transparent));mask:linear-gradient(to right,var(--c-black) 60%,color-mix(in srgb,var(--c-black) 8%,transparent))}
+.krow{padding:16px 20px;margin:-6px 0 -16px;display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden;min-width:0}
+.krow .lab{flex:none;font:500 12px/1 var(--font-display);letter-spacing:.1em;color:var(--muted);margin-right:2px}
+.krow .chips{display:flex;gap:6px;flex-wrap:nowrap;overflow:hidden;min-width:0;padding:16px;margin:-16px}
+.card .ft{margin:14px 20px 0;padding:12px 0 16px;border-top:1px solid var(--bd);display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);min-width:0}
+:root[data-theme="red"] .card .ft{border-top-color:color-mix(in srgb,var(--c-red-200) 50%,transparent)}
+.card .ft b{color:var(--fg);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .ft span{flex:none}
+.card .open{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;border-radius:inherit}
+.grid[data-view="list"]{grid-template-columns:1fr;gap:10px}
+.grid[data-view="list"] .card{height:auto;min-height:84px;grid-template-rows:auto;grid-template-columns:4px minmax(150px,220px) minmax(0,1fr) auto auto;align-items:center}
+.grid[data-view="list"] .card>.stripe{height:100%}
+.grid[data-view="list"] .card .hd{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:4px}
+.grid[data-view="list"] .card .hd .stars{display:none}
+.grid[data-view="list"] .card .qt{align-self:center;margin:0 16px 0 0;-webkit-line-clamp:1;line-clamp:1;max-height:1.45em;font-size:15px}
+.grid[data-view="list"] .card .qt.fade{-webkit-mask:linear-gradient(to right,var(--c-black) 60%,color-mix(in srgb,var(--c-black) 8%,transparent));mask:linear-gradient(to right,var(--c-black) 60%,color-mix(in srgb,var(--c-black) 8%,transparent))}
+.grid[data-view="list"] .card .kr2,.grid[data-view="list"] .card .krow .lab{display:none}
+.grid[data-view="list"] .card .krow{margin:-16px 0 -16px -16px;padding:16px;max-width:296px}
+.grid[data-view="list"] .card .ls{display:flex}
+.card .ls{display:none;flex-direction:column;align-items:flex-end;padding-right:20px;font-size:13px;color:var(--muted);white-space:nowrap}
+.card .ls .stars{letter-spacing:2px}
+.grid[data-view="list"] .card .ft{display:none}
+.mm{display:inline-block;margin-left:6px;padding:0 7px;border-radius:var(--pill);border:1px solid var(--bd2);font:500 11px/18px var(--font-body);color:var(--muted);vertical-align:1px}
+.othb{width:100%;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;background:var(--deep);border:1px solid var(--bd);border-left:4px solid var(--oc);border-radius:var(--r-sm);padding:10px 12px;color:var(--fg)}
+:root[data-theme="red"] .othb{background:var(--c-red-800)}
+.othb:hover{border-color:var(--acc);border-left-color:var(--oc)}
+.morex{margin-top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.seeall{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border-radius:var(--pill);border:1px solid var(--acc);background:var(--acc-soft);color:var(--acc-fg);font-size:12px;font-weight:600}
+.seeall svg{width:14px;height:14px}
+.morex .othb{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border-radius:var(--pill);border:1px solid var(--bd2);background:transparent;color:var(--fg2);font:600 12px var(--font-body);width:auto}
+.morex .othb:hover{border-color:var(--oc)}
+.morex .othb .d{width:7px;height:7px;border-radius:2px;background:var(--oc);box-shadow:0 0 5px var(--oc)}
+.pn-b .othb .alert{font-size:17px}
+.othb .stars{font-size:12px;letter-spacing:1px}
+#hfil[hidden]{display:none}
+.feed{margin:28px 0 0;text-align:center;color:var(--muted);font-size:14px;min-height:24px}
+.empty{grid-column:1/-1;background:var(--panel);border:1px dashed var(--bd2);border-radius:var(--r);padding:40px 20px;text-align:center}
+.empty p{margin:0 0 12px;color:var(--muted)}
+.cta{margin-top:40px;background:var(--cta-bg);color:var(--cta-fg);border:1px solid var(--cta-bd);border-radius:var(--r);padding:24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;box-shadow:var(--shadow)}
+.cta h2{margin:0;font:700 26px/1.1 var(--font-display);letter-spacing:.06em}
+:root[data-theme="red"] .cta h2{color:var(--c-red-700)}
+.cta p{margin:4px 0 0;color:var(--cta-muted)}
+.cta-t{flex:1 1 420px;min-width:0}
+.cta-t p{max-width:620px}
+.cta-l{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--cta-muted)}
+.cta-l li{display:flex;align-items:center;gap:7px}
+.cta-l li::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--cta-btn)}
+.cta-a{display:flex;flex-direction:column;align-items:center;gap:6px;flex:none}
+.cta a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:var(--r-sm);background:var(--cta-btn);color:var(--cta-btn-fg);font-weight:700;text-decoration:none}
+.pn-b{flex:1;overflow-y:auto;padding:22px 24px 28px;display:flex;flex-direction:column;gap:22px}
+.pn-b .alert{font-size:30px}
+.pn-b q{display:block;font-size:20px;line-height:1.45;color:var(--fg2);quotes:"“" "”"}
+.pn-meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px}
+.pn-meta b{color:var(--fg)}
+.pst{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pst div{background:var(--deep);border:1px solid var(--bd);border-radius:var(--r-sm);padding:12px}
+:root[data-theme="red"] .pst div{background:var(--c-red-800)}
+.pst b{display:block;font:700 22px/1.1 var(--font-num)}
+.pst span{font:500 15px var(--font-display);letter-spacing:.06em;color:var(--muted)}
+.sec h3{margin:0 0 8px;font:600 15px/1.2 var(--font-display);letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.tx{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.tx li{background:var(--deep);border:1px solid var(--bd);border-radius:var(--r-sm);padding:10px 12px}
+:root[data-theme="red"] .tx li{background:var(--c-red-800)}
+.tx .who{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-bottom:2px}
+.tx .who b{color:var(--fg);font-weight:600}
+.share{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.share input{flex:1 1 240px;min-width:0;min-height:44px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--bd2);background:var(--deep);color:var(--fg)}
+.pk{position:fixed;left:50%;top:50%;transform:translate(-50%,-48%);width:min(560px,calc(100% - 32px));max-height:min(720px,calc(100vh - 48px));display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);box-shadow:0 24px 60px color-mix(in srgb,var(--c-black) 55%,transparent);z-index:55;opacity:0;transition:opacity .2s,transform .2s}
+:root[data-theme="red"] .pk{border:2px solid var(--c-white)}
+.pk.on{opacity:1;transform:translate(-50%,-50%)}
+.pk-h{display:flex;justify-content:space-between;gap:12px;padding:18px 20px 12px;border-bottom:1px solid var(--bd)}
+.pk-h h2{margin:0;font:700 24px/1.1 var(--font-display);letter-spacing:.06em}
+.pk-h p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.pk-h p b{color:var(--fg)}
+.pk{overflow-y:auto}
+.pk-h,.pk-f{position:sticky;background:var(--panel);z-index:1}
+.pk-h{top:0}
+.pk-f{bottom:0}
+.pk-l{border:0;margin:0;padding:12px 20px;flex:none;display:flex;flex-direction:column;gap:8px}
+.pk-i{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--oc);border-radius:var(--r-sm);background:var(--deep);cursor:pointer}
+:root[data-theme="red"] .pk-i{background:var(--c-red-800)}
+.pk-i:hover{border-color:var(--acc);border-left-color:var(--oc)}
+.pk-i:has(input:checked){border-color:var(--acc);border-left-color:var(--oc);box-shadow:0 0 0 1px var(--acc)}
+.pk-i input{width:18px;height:18px;margin:0;accent-color:var(--acc);grid-row:1/3}
+.pk-i .ocrow{min-width:0}
+.pk-i .alert{font-size:19px}
+.pk-i .dt{font-size:13px;color:var(--muted);text-align:right;white-space:nowrap}
+.pk-i .sub{grid-column:2/4;font-size:13px;color:var(--muted)}
+.pk-own{cursor:default;grid-template-columns:minmax(0,1fr) auto auto}
+.pk-own .sub{grid-column:1/3}
+.pk-m{grid-row:1/3;grid-column:3;align-self:center;min-height:36px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--bd2);background:transparent;color:var(--acc-fg);font-weight:600;font-size:13px}
+:root[data-theme="red"] .pk-m{color:var(--c-white)}
+.pk-m:hover{border-color:var(--acc)}
+.pk-e{margin:4px 0;color:var(--muted);font-size:14px}
+.pk-n{flex:none;margin:0;padding:0 20px 4px;font-size:13px;color:var(--muted)}
+.pk-pub{border-top:1px dashed var(--bd);margin:4px 20px 0;padding:6px 0 8px;flex:none}
+.pk-pt{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:36px;padding:0 4px;border:0;background:transparent;color:var(--muted);font-size:13px}
+.pk-pt b{color:var(--fg);font-weight:600}
+.pk-pt .r{display:inline-flex;align-items:center;gap:6px;color:var(--acc-fg);font-weight:600}
+:root[data-theme="red"] .pk-pt .r{color:var(--c-white)}
+.pk-pt svg{width:14px;height:14px;transition:transform .2s}
+.pk-pt[aria-expanded="true"] svg{transform:rotate(180deg)}
+.pk-pl{display:none;flex-direction:column;gap:4px;margin-top:4px}
+.pk-pt[aria-expanded="true"]+.pk-pl{display:flex}
+.pk-r{display:grid;grid-template-columns:8px minmax(0,1fr) auto auto;align-items:center;gap:10px;min-height:34px;padding:0 6px 0 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;color:var(--muted)}
+.pk-r i{width:8px;height:8px;border-radius:2px;background:var(--oc);box-shadow:0 0 5px var(--oc)}
+.pk-r b{color:var(--fg);font:600 15px var(--font-display);letter-spacing:.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pk-r em{font-style:normal;font-size:12px;white-space:nowrap}
+.pk-r button{color:var(--acc-fg);font-weight:600;font-size:12px;padding:2px 8px;line-height:20px;border-radius:5px;border:1px solid var(--bd2);background:transparent}
+:root[data-theme="red"] .pk-r button{color:var(--c-white)}
+.pk-r button:hover{border-color:var(--acc)}
+.own{border:1px solid color-mix(in srgb,var(--c-red-500) 38%,transparent);border-radius:var(--r-sm);padding:12px 14px;background:color-mix(in srgb,var(--c-red-500) 6%,transparent)}
+:root[data-theme="red"] .own{border:2px dashed var(--c-red-500);background:var(--c-coal-900)}
+.own.flash{animation:ownf 1.2s ease 1}
+@keyframes ownf{0%,100%{box-shadow:none}30%{box-shadow:0 0 0 3px color-mix(in srgb,var(--c-red-500) 45%,transparent)}}
+.own p{margin:0 0 10px;font-size:14px;color:var(--fg2)}
+.own-a{display:flex;flex-wrap:wrap;gap:8px}
+.own .ghost{min-height:40px}
+.pk-f{display:flex;justify-content:flex-end;gap:8px;padding:12px 20px 18px;border-top:1px solid var(--bd)}
+.pk-f .pbtn:disabled{opacity:.45;cursor:default}
+@media (max-width:760px){
+.spot-h .mo{font-size:14px}
+.spot-h{padding:12px 14px}
+.spot-b{padding:4px 16px 18px}
+.stats{grid-template-columns:1fr 1fr}
+.stats .tile:last-child{grid-column:1/-1}
+.spot-b{grid-template-columns:1fr;gap:14px}
+.spot-b .rnd{display:none}
+.spot q{font-size:26px}
+.filters{display:none}
+.fbtn{display:inline-flex}
+body.sheet .filters{display:flex;position:fixed;left:0;right:0;bottom:0;max-height:85vh;overflow-y:auto;margin:0;border-radius:16px 16px 0 0;z-index:50;padding:0 16px 20px;box-shadow:0 -12px 40px color-mix(in srgb,var(--c-black) 50%,transparent)}
+:root[data-theme="red"] body.sheet .filters{border-radius:0;border:2px solid var(--c-white)}
+body.sheet .sheet-h{display:flex;position:sticky;top:0;background:var(--panel);align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--bd);margin-bottom:4px;z-index:1}
+.sheet-h h2{margin:0;font:700 22px var(--font-display);letter-spacing:.08em}
+.groups{flex-direction:column}
+.grid{grid-template-columns:1fr}
+.grid[data-view="list"] .card{grid-template-columns:4px minmax(0,1fr) auto;grid-template-rows:auto auto auto}
+.grid[data-view="list"] .card>.stripe{grid-row:1/4}
+.grid[data-view="list"] .card .hd{grid-column:2;grid-row:1;padding:12px 12px 0}
+.grid[data-view="list"] .card .ls{grid-column:3;grid-row:1;padding:12px 12px 0}
+.grid[data-view="list"] .card .qt{grid-column:2/4;grid-row:2;margin:6px 12px 0}
+.grid[data-view="list"] .card .krow{grid-column:2/4;grid-row:3;margin:-8px 0 -4px;padding:16px 12px;max-width:none}
+.pst b{font-size:18px}
+}
+.lgl{margin-top:48px}
+#spotFig .sl{transition:transform .2s ease}
+.spot-open{transition:background .2s ease,box-shadow .2s ease}
+.spot-open::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid var(--oc);-webkit-mask:linear-gradient(90deg,#000 0%,#000 6%,transparent 30%);mask:linear-gradient(90deg,#000 0%,#000 6%,transparent 30%);opacity:0;transition:opacity .2s ease;pointer-events:none}
+#spotFig .sl::after{content:"View full record →";position:absolute;right:8px;bottom:0;font:600 13px var(--font-body);color:var(--oc);opacity:0;transition:opacity .2s ease;pointer-events:none}
+.spot-oc .alert{position:relative}
+.spot-oc .alert::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;border-radius:2px;background:var(--acc);box-shadow:0 0 8px color-mix(in srgb,var(--acc) 60%,transparent);transition:width .8s ease}
+#spotFig .sl:has(.spot-open:hover),#spotFig .sl:has(.spot-open:focus-visible){transform:translateY(-2px)}
+.sl:has(.spot-open:hover) .spot-open,.sl:has(.spot-open:focus-visible) .spot-open{background:linear-gradient(90deg,color-mix(in srgb,var(--oc) 12%,transparent),transparent 45%);box-shadow:inset 3px 0 0 var(--oc),0 10px 28px color-mix(in srgb,var(--c-black) 35%,transparent)}
+.sl:has(.spot-open:hover) .spot-open::before,.sl:has(.spot-open:focus-visible) .spot-open::before,#spotFig .sl:has(.spot-open:hover)::after,#spotFig .sl:has(.spot-open:focus-visible)::after{opacity:1}
+.sl:has(.spot-open:hover) .spot-oc .alert::after,.sl:has(.spot-open:focus-visible) .spot-oc .alert::after{width:100%}
+.filters[data-open="false"] .groups{display:none}
+.ftog .fcount{min-width:20px;height:20px;padding:0 6px;border-radius:var(--pill);background:var(--acc-soft);color:var(--acc-fg);font:600 12px/20px var(--font-num);text-align:center}
+.ftog .chev{transition:transform .2s}
+.ffoot{display:flex;justify-content:flex-end;margin-top:-4px}
+.ffoot .ghost{min-height:36px}
+.ffoot .ghost:disabled{opacity:.4;cursor:default}
+.ffoot .ghost:not(:disabled):hover{border-color:var(--acc)}
+.filters[data-open="true"] .ftog .chev{transform:rotate(180deg)}
+@media (max-width:760px){
+.ftog{display:none}
+body.sheet .filters .groups{display:flex}
+}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="wrap">
+<a class="brand" href="#main"><img src="media/img/logo.webp" alt="" width="42" height="42"><span>MEDRUNNER</span></a>
+<div class="hact">
+<button type="button" class="tbtn" id="theme" aria-pressed="false" aria-label="Theme: Dark. Switch to Red and white" aria-describedby="themeTip"><span class="ti" id="themeIcon"></span><span class="tl" id="themeName">Dark</span><span class="tip" id="themeTip" role="tooltip"></span></button>
+<a class="pubb" href="review-cta.html" data-pick title="Make a previous rescue public"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></g></svg><span>Publish a rescue</span></a>
+<a class="emerg" href="#main">Report an emergency</a>
+<div class="um" id="um">
+<button type="button" class="um-b" id="umBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="umMenu"><span class="av"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10.5" r="5.5" fill="currentColor"/><path d="M6 25a10 10 0 0 1 20 0z" fill="currentColor"/></svg></span><span class="um-n">ItchyMastadon</span><svg class="um-c" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<div class="um-m" id="umMenu" role="menu" aria-label="Account" hidden>
+<div class="um-h"><span class="av lg"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10.5" r="5.5" fill="currentColor"/><path d="M6 25a10 10 0 0 1 20 0z" fill="currentColor"/></svg></span><span><b>@ItchyMastadon</b><span>Signed in</span></span></div>
+<button type="button" role="menuitem" class="um-i on" id="umMine"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></g></svg>My rescues</button>
+<button type="button" role="menuitem" aria-disabled="true" class="um-i" data-tip="Demo purposes only"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></g></svg>Settings</button>
+<button type="button" role="menuitem" aria-disabled="true" class="um-i" data-tip="Demo purposes only"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></g></svg>Sign out</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<main id="main">
+<div class="wrap">
+
+<section class="intro" aria-labelledby="ttl">
+<div class="tx">
+<p class="eyebrow">VERIFIED RECORDS</p>
+<h1 id="ttl">MISSION TESTIMONIALS</h1>
+<p class="lede">Every record here was published by the client after their rescue, reviewed by the team lead, and stripped of anything that could identify the crew.</p>
+</div>
+<div class="stats" aria-live="polite">
+<button type="button" class="tile tx2" aria-expanded="false" aria-controls="xAvg"><h2>Average rating <span class="win">Last 7 days</span></h2><p class="big" id="sAvg">–</p><p class="stars" id="sAvgStars"></p><span class="xp" id="xAvg"></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+<button type="button" class="tile tx2" aria-expanded="false" aria-controls="xMed"><h2>Median response <span class="win">Last 7 days</span></h2><p class="big" id="sMed">–</p><svg class="spark" id="sSpark" viewBox="0 0 120 26" preserveAspectRatio="none" role="img" aria-label="Response times over the last 30 days, oldest to newest"><polyline fill="none" style="stroke:var(--c-green-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points=""/></svg><span class="xp" id="xMed"></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+<div class="tile"><h2>By mission type</h2><div class="bars" id="sBars"></div></div>
+</div>
+</section>
+
+<section class="spot" id="spot" data-open="false" aria-label="Spotlight">
+<div class="spot-h">
+<p><span class="mo">Spotlight · this week</span><span class="spot-peek" id="spotPeek"></span></p>
+<button type="button" class="ghost" id="spotTog" aria-expanded="false" aria-controls="spotBody"><span>Show</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</div>
+<div class="spot-b" id="spotBody">
+<button type="button" class="rnd" id="spotPrev" aria-label="Previous spotlight record"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<figure style="margin:0;min-width:0;position:relative" id="spotFig"></figure>
+<button type="button" class="rnd" id="spotNext" aria-label="Next spotlight record"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<div class="dots" id="spotDots"></div>
+</div>
+<div class="cd" aria-hidden="true"><span id="cdBar"></span></div>
+</section>
+
+<section class="filters" id="filters" aria-label="Filters" data-open="false">
+<div class="sheet-h"><h2>FILTERS</h2><button type="button" class="pbtn" id="sheetDone">Show results</button></div>
+<div class="frow">
+<label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></g></svg><span class="sr">Search records</span><input id="q" type="search" placeholder="Search by alert name or handle" autocomplete="off"></label>
+<label class="sel">Sort<select id="sort"><option value="new">Newest first</option><option value="rate">Highest rated</option></select></label>
+<button type="button" class="ghost ftog" id="ftog" aria-expanded="false" aria-controls="fgroups"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Filters</span><b class="fcount" id="fcount" hidden></b><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>
+<div class="groups" id="fgroups">
+<fieldset class="grp" id="gType"><legend>MISSION</legend></fieldset>
+<fieldset class="grp" id="gOut"><legend>OUTCOME</legend></fieldset>
+<fieldset class="grp" id="gStar"><legend>RATING</legend></fieldset>
+<fieldset class="grp" id="gKudo"><legend>CLIENT → CREW KUDOS</legend></fieldset>
+</div>
+<div class="ffoot"><button type="button" class="ghost" id="fclear" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Clear filters</span></button></div>
+</section>
+
+<div class="results">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px"><p>Showing <b id="count">0</b> <span id="cw">records</span></p><button type="button" class="chip" id="hfil" aria-pressed="true" hidden><span>From <b id="hfilName"></b></span><svg viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span class="sr">Remove this filter</span></button></div>
+<div style="display:flex;gap:10px;align-items:center">
+<button type="button" class="ghost fbtn" id="fbtn" aria-controls="filters" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" style="transform:none"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Filters <span id="fcount"></span></button>
+<div class="seg" role="group" aria-label="Layout">
+<button type="button" id="vGrid" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></g></svg>Grid</button>
+<button type="button" id="vList" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>List</button>
+</div>
+</div>
+</div>
+
+<section class="grid" id="grid" data-view="grid" aria-label="Records"></section>
+<p class="feed" id="feed" aria-live="polite"></p>
+<div id="sentinel" style="height:1px"></div>
+
+<section class="cta" aria-labelledby="ctaH">
+<div class="cta-t"><h2 id="ctaH">RESCUED BY MEDRUNNER?</h2><p>Your rescue can be on this page too. Publish it from the discharge summary after your mission, or go back to a previous rescue and make it public now.</p>
+<ul class="cta-l"><li>Rate the crew and give kudos</li><li>Add a few words of your own</li><li>Your team lead reviews it before it goes live</li></ul></div>
+<div class="cta-a"><a href="review-cta.html" data-pick>Make a previous rescue public</a></div>
+</section>
+
+<footer class="lgl" aria-label="Legal notices"><span class="mb" role="img" aria-label="Made by the Community"></span><div class="lgt"><p><strong>Star Citizen®, Roberts Space Industries® and Cloud Imperium® are registered trademarks of Cloud Imperium Rights LLC.</strong> <button type="button" class="lgb" id="lgb" aria-expanded="false" aria-controls="lgf">Full legal notice</button></p><p id="lgf" class="lgf" hidden>This site is not endorsed by or affiliated with the Cloud Imperium or Roberts Space Industries group of companies. All game content and materials are copyright Cloud Imperium Rights LLC and Cloud Imperium Rights Ltd. Star Citizen®, Squadron 42®, Roberts Space Industries®, and Cloud Imperium® are registered trademarks of Cloud Imperium Rights LLC. All rights reserved.</p></div></footer>
+
+</div>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pnTitle" hidden>
+<div class="pn-h">
+<div class="nav"><button type="button" class="ib" id="pnPrev" aria-label="Previous record"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span id="pnPos"></span><button type="button" class="ib" id="pnNext" aria-label="Next record"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+<button type="button" class="ib" id="pnClose" aria-label="Close record"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>
+<div class="pn-b" id="pnBody"></div>
+</aside>
+<div class="pk" id="pk" role="dialog" aria-modal="true" aria-labelledby="pkH" hidden>
+<div class="pk-h"><div><h2 id="pkH">MAKE A RESCUE PUBLIC</h2><p>Signed in as <b>@ItchyMastadon</b>. <span id="pkSub">Pick the rescue you want to publish.</span></p></div><button type="button" class="ib" id="pkClose" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+<fieldset class="pk-l" id="pkList"><legend class="sr">Your unpublished rescues</legend></fieldset>
+<p class="pk-n" id="pkNote"></p>
+<div class="pk-pub" id="pkPub"><button type="button" class="pk-pt" id="pkPubT" aria-expanded="false" aria-controls="pkPubL"><b id="pkPubN"></b><span class="r" id="pkPubR">Manage<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></button><div class="pk-pl" id="pkPubL"></div></div>
+<div class="pk-f"><button type="button" class="ghost" id="pkCancel">Cancel</button><button type="button" class="pbtn" id="pkGo" disabled>Continue</button></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17l-5.6 3 1.1-6.2L2.9 9.4l6.3-.9z" style="fill:var(--c-amber-400);stroke:var(--c-amber-600)" stroke-width="1"/></svg>';
+const TYPES=['Bunker','Surface','Space','Wreck site'];
+const OUTS=['Rescued','Revived','Extracted','Cancelled','Failed'];
+const KUDOS=['Great medic','Great comms','Smooth landing','Calm team lead','Solid security','Fast response'];
+const R=[
+{alert:'Agile Snail',handle:'ItchyMastadon',outcome:'Rescued',type:'Bunker',treat:'Revived',resp:402,care:1024,rating:5,date:'2026-11-12',quote:'Fast, calm and professional. They had me back on my feet in minutes.',kudos:['Great medic','Smooth landing','Calm team lead'],crewK:['Followed the plan','Great comms']},
+{alert:'Quiet Heron',handle:'NovaDrift',outcome:'Rescued',type:'Surface',treat:'Stabilized',resp:495,care:1310,rating:5,date:'2026-11-11',quote:'Crashed hard and could not move. The team lead talked me through it the whole way in, and stayed on comms until the medic reached me.',kudos:['Great comms','Calm team lead'],crewK:['Stayed calm']},
+{alert:'Rusty Comet',handle:'SableWren',outcome:'Revived',type:'Space',treat:'Revived',resp:570,care:1490,rating:5,date:'2026-11-10',quote:'Out of oxygen with seconds left. Never been so glad to see a ship turn up.',kudos:['Smooth landing','Fast response'],crewK:['Clear updates']},
+{alert:'Brave Otter',handle:'Kestrel_77',outcome:'Extracted',type:'Bunker',treat:'Stabilized',resp:663,care:1702,rating:4,date:'2026-11-09',quote:'Pinned down with no way out. Security cleared a path and the medic did the rest.',kudos:['Solid security','Great medic'],crewK:[]},
+{alert:'Lucky Pike',handle:'Dr4kon',outcome:'Rescued',type:'Wreck site',treat:'Treated on site',resp:468,care:980,rating:5,date:'2026-11-08',quote:'Polite, quick, and they checked my gear before they left.',kudos:['Calm team lead'],crewK:['Followed the plan']},
+{alert:'Silent Moth',handle:'VelaRunner',outcome:'Revived',type:'Bunker',treat:'Revived',resp:740,care:1855,rating:4,date:'2026-11-06',quote:'Second time I have called them. Second time they got me home.',kudos:[],crewK:['Stayed calm','Great comms']},
+{alert:'Amber Fox',handle:'Tycho_Lane',outcome:'Rescued',type:'Surface',treat:'Stabilized',resp:357,care:1120,rating:5,date:'2026-11-04',quote:'Clear instructions from the first message. I felt like I was in good hands from the moment the alert was accepted, and they explained every step of the treatment while they worked.',kudos:['Great comms','Great medic','Fast response','Calm team lead'],crewK:['Great comms']},
+{alert:'Copper Lynx',handle:'MirrorKite',outcome:'Extracted',type:'Space',treat:'Stabilized',resp:611,care:1640,rating:5,date:'2026-11-02',quote:'They found me in the dark, patched me up and had me back in my seat.',kudos:['Great medic','Smooth landing'],crewK:['Stayed calm']},
+{alert:'Hollow Wren',handle:'OrinStacks',outcome:'Revived',type:'Wreck site',treat:'Revived',resp:542,care:1433,rating:5,date:'2026-10-31',quote:'I thought I had lost everything. They got me and my cargo out.',kudos:['Solid security'],crewK:[]},
+{alert:'Gentle Badger',handle:'Pell_Arkin',outcome:'Rescued',type:'Surface',treat:'Treated on site',resp:420,care:860,rating:4,date:'2026-10-29',quote:'Simple fix, but they treated it like it mattered. Appreciated that.',kudos:['Great medic'],crewK:['Clear updates']},
+{alert:'Swift Gecko',handle:'Ynara',outcome:'Extracted',type:'Bunker',treat:'Stabilized',resp:705,care:1920,rating:5,date:'2026-10-27',quote:'Took a while to get in, but once they were there it was over in no time.',kudos:['Solid security','Calm team lead'],crewK:['Followed the plan']},
+{alert:'Polar Finch',handle:'ItchyMastadon',outcome:'Revived',type:'Space',treat:'Revived',resp:598,care:1500,rating:5,date:'2026-10-25',quote:'Woke up in a med bed with a crew asking if I was okay. Ten out of ten.',kudos:['Great medic','Fast response'],crewK:['Stayed calm']},
+{alert:'Iron Marten',handle:'Jessa_Q',outcome:'Rescued',type:'Wreck site',treat:'Stabilized',resp:515,care:1210,rating:3,date:'2026-10-23',quote:'Got me out safe. Comms were a bit quiet, but I never felt alone.',kudos:[],crewK:[]},
+{alert:'Lone Kestrel',handle:'Brix_Halloway',outcome:'Cancelled',type:'Surface',treat:'Not needed',resp:290,care:610,rating:5,date:'2026-11-07',quote:'Got myself patched up before they landed and cancelled, but the team stayed on comms until I was sure I was okay.',kudos:['Great comms','Fast response'],crewK:['Clear updates']},
+{alert:'Ashen Wolf',handle:'Teo_Varn',outcome:'Failed',type:'Bunker',treat:'Not survived',resp:615,care:1180,rating:4,date:'2026-11-03',quote:'Did not make it this time, but they got to me fast and fought for it. I will be calling them again.',kudos:['Fast response'],crewK:['Stayed calm']},
+{alert:'Velvet Crane',handle:'ItchyMastadon',outcome:'Rescued',type:'Bunker',treat:'Treated on site',resp:388,care:940,rating:5,date:'2026-10-21',quote:'Quick in, quick out. They knew exactly what they were doing.',kudos:['Fast response','Great medic'],crewK:['Great comms']},
+{alert:'Crimson Ibis',handle:'NovaDrift',outcome:'Extracted',type:'Surface',treat:'Stabilized',resp:640,care:1580,rating:4,date:'2026-10-19',quote:'Storm rolling in and no ride home. They got me out before it hit.',kudos:['Smooth landing'],crewK:['Followed the plan']},
+{alert:'Dusty Heron',handle:'Mako_Strand',outcome:'Revived',type:'Space',treat:'Revived',resp:560,care:1375,rating:5,date:'2026-10-17',quote:'Calm voices, steady hands. Exactly what you want when things go wrong.',kudos:['Calm team lead','Great comms'],crewK:['Stayed calm']}
+];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const fmt=t=>Math.floor(t/60)+'m '+String(t%60).padStart(2,'0')+'s';
+const day=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
+const stars=n=>'<span class="on">★</span>'.repeat(n)+'<span class="off">★</span>'.repeat(5-n);
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const S={handle:'',type:'All',out:'All',min:0,kudos:[],q:'',sort:'new',view:'grid',shown:9,spot:0,spotOpen:false,open:-1};
+let list=[],lastFocus=null;
+
+const others=r=>R.filter(x=>x.handle===r.handle&&x!==r).sort((x,y)=>y.date.localeCompare(x.date));
+function kudosRow(arr,cls,max,label){
+ let h='';
+ if(!arr.length)h='<span class="k none">No Kudos Given</span>';
+ else{
+  const vis=max?arr.slice(0,max):arr;
+  h=vis.map((k,i)=>cls==='cl'&&i===0?'<span class="k top" title="Top kudo">'+STAR+esc(k)+'<span class="sr"> (top kudo)</span></span>':'<span class="k'+(cls==='ck'?' ck':'')+'">'+esc(k)+'</span>').join('');
+  if(max&&arr.length>max)h+='<span class="k more">+'+(arr.length-max)+'</span>';
+ }
+ return h;
+}
+function filtered(){
+ const q=S.q.trim().toLowerCase();
+ let a=R.filter(r=>(!S.handle||r.handle===S.handle)&&(S.type==='All'||r.type===S.type)&&(S.out==='All'||r.outcome===S.out)&&r.rating>=S.min&&S.kudos.every(k=>r.kudos.includes(k))&&(!q||r.alert.toLowerCase().includes(q)||r.handle.toLowerCase().includes(q)));
+ a=a.slice().sort(S.sort==='rate'?(x,y)=>y.rating-x.rating||y.date.localeCompare(x.date):(x,y)=>y.date.localeCompare(x.date));
+ return a;
+}
+function chip(label,on,fn,oc){
+ const b=document.createElement('button');b.type='button';b.className='chip';b.setAttribute('aria-pressed',on);
+ if(oc){b.style.setProperty('--oc',oc);b.innerHTML='<span class="dot" aria-hidden="true"></span>'+esc(label)}else b.textContent=label;
+ b.onclick=fn;return b;
+}
+function renderFilters(){
+ const g=(id,items)=>{const f=$(id);[...f.querySelectorAll('.chip')].forEach(c=>c.remove());items.forEach(i=>f.appendChild(i))};
+ g('#gType',['All',...TYPES].map(t=>chip(t,S.type===t,()=>{S.type=t;update()})));
+ g('#gOut',['All',...OUTS].map(o=>chip(o,S.out===o,()=>{S.out=o;update()},o==='All'?null:'var(--'+o+')')));
+ g('#gStar',[[0,'Any'],[4,'4★ and up'],[5,'5★ only']].map(([m,l])=>chip(l,S.min===m,()=>{S.min=m;update()})));
+ g('#gKudo',KUDOS.map(k=>chip(k,S.kudos.includes(k),()=>{S.kudos=S.kudos.includes(k)?S.kudos.filter(x=>x!==k):[...S.kudos,k];update()})));
+ const n=(S.handle?1:0)+(S.type!=='All')+(S.out!=='All')+(S.min>0)+S.kudos.length+(S.q?1:0);
+ $('#fcount').textContent=n?'('+n+')':'';
+}
+function win(a,d){const ref=R.reduce((m,r)=>r.date>m?r.date:m,'0'),cut=new Date(new Date(ref+'T12:00:00Z')-d*864e5).toISOString().slice(0,10);return a.filter(r=>r.date>cut)}
+function med(a){const rs=a.map(r=>r.resp).sort((x,y)=>x-y);return rs.length%2?rs[(rs.length-1)/2]:Math.round((rs[rs.length/2-1]+rs[rs.length/2])/2)}
+function avgOf(a){return a.reduce((s,r)=>s+r.rating,0)/a.length}
+function renderStats(){
+ const a=list,w7=win(a,7),w30=win(a,30);
+ const nr=n=>n+' record'+(n===1?'':'s');
+ if(!w7.length){$('#sAvg').textContent='–';$('#sAvgStars').innerHTML='<span class="none7">No records this week</span>';$('#sMed').textContent='–'}
+ else{const v=avgOf(w7);$('#sAvg').textContent=v.toFixed(1);$('#sAvgStars').innerHTML=stars(Math.round(v));$('#sMed').textContent=fmt(med(w7))}
+ const row=(l,v,n)=>'<span class="xr"><span>'+l+'</span><b>'+v+'</b><em>'+n+'</em></span>';
+ $('#xAvg').innerHTML=row('7 days',w7.length?avgOf(w7).toFixed(1)+' ★':'–',nr(w7.length))+row('30 days',w30.length?avgOf(w30).toFixed(1)+' ★':'–',nr(w30.length));
+ $('#xMed').innerHTML=row('7 days',w7.length?fmt(med(w7)):'–',nr(w7.length))+row('30 days',w30.length?fmt(med(w30)):'–',nr(w30.length));
+ const ch=w30.slice().sort((x,y)=>x.date.localeCompare(y.date)).map(r=>r.resp);
+ if(!ch.length)$('#sSpark polyline').setAttribute('points','');
+ else{const lo=Math.min(...ch),hi=Math.max(...ch);const pts=ch.length===1?['0,13','120,13']:ch.map((v,i)=>(i*120/(ch.length-1)).toFixed(1)+','+(hi===lo?13:(3+(v-lo)/(hi-lo)*20)).toFixed(1));$('#sSpark polyline').setAttribute('points',pts.join(' '))}
+ const c=TYPES.map(t=>[t,a.filter(r=>r.type===t).length]),mx=Math.max(1,...c.map(x=>x[1]));
+ $('#sBars').innerHTML=c.map(([t,n])=>'<div class="bar"><span>'+t+'</span><span class="tr"><span class="fl" style="width:'+Math.round(n/mx*100)+'%"></span></span><b>'+n+'</b></div>').join('');
+}
+function card(r,i){
+ return '<article class="card" style="--oc:var(--'+r.outcome+')"><div class="stripe" aria-hidden="true"></div>'+
+ '<div class="hd"><div class="ocrow"><span class="oc">'+r.outcome+'</span><b class="alert">'+esc(r.alert)+'</b></div><span class="stars" aria-label="'+r.rating+' out of 5 stars">'+stars(r.rating)+'</span></div>'+
+ '<p class="qt">“'+esc(r.quote)+'”</p>'+
+ '<div class="krow kr1"><span class="lab">CLIENT → CREW</span><div class="chips">'+kudosRow(r.kudos,'cl',3)+'</div></div>'+
+ '<div class="krow kr2"><span class="lab">CREW → CLIENT</span><div class="chips">'+kudosRow(r.crewK,'ck',3)+'</div></div>'+
+ '<div class="ls"><span class="stars" aria-label="'+r.rating+' out of 5 stars">'+stars(r.rating)+'</span><span>'+r.type+' · <span class="ox">'+fmt(r.resp)+'</span></span></div>'+
+ '<div class="ft"><b>@'+esc(r.handle)+(others(r).length?' <span class="mm">+'+others(r).length+' more</span>':'')+'</b><span>'+r.type+' · <span class="ox">'+fmt(r.resp)+'</span></span></div>'+
+ '<button type="button" class="open" data-i="'+i+'"><span class="sr">Open record '+esc(r.alert)+'</span></button></article>';
+}
+function markFades(){
+ document.querySelectorAll('#grid .qt').forEach(p=>{p.classList.toggle('fade',p.scrollHeight>p.clientHeight+2)});
+ document.querySelectorAll('#grid .krow .chips').forEach(c=>{c.classList.toggle('fade1',c.scrollWidth>c.clientWidth+1)});
+}
+function renderGrid(){
+ const g=$('#grid');g.dataset.view=S.view;
+ if(!list.length){g.innerHTML='<div class="empty"><p>No records match these filters.</p><button type="button" class="pbtn" id="clr">Clear filters</button></div>';$('#clr').onclick=clearAll;$('#feed').textContent='';return}
+ g.innerHTML=list.slice(0,S.shown).map(card).join('');
+ g.querySelectorAll('.open').forEach(b=>b.onclick=()=>openPanel(+b.dataset.i,b));
+ $('#feed').textContent=S.shown>=list.length?(list.length===1?'1 record shown':'All '+list.length+' records shown'):'Loading more as you scroll';
+ requestAnimationFrame(markFades);
+}
+function spotList(){
+ const ref=R.reduce((m,r)=>r.date>m?r.date:m,'0'),cut=new Date(new Date(ref+'T12:00:00Z')-7*864e5).toISOString().slice(0,10);
+ return R.filter(r=>r.date>cut).sort((x,y)=>y.rating-x.rating||y.date.localeCompare(x.date)).slice(0,3);
+}
+function renderSpot(){
+ const L=spotList();if(!L.length){$('#spot').hidden=true;return}
+ S.spot=(S.spot+L.length)%L.length;const r=L[S.spot];
+ $('#spotFig').innerHTML=L.map((x,i)=>'<div class="sl'+(i===S.spot?' on':'')+'" style="--oc:var(--'+x.outcome+')"'+(i===S.spot?'':' aria-hidden="true"')+'><div class="ocrow spot-oc" style="--oc:var(--'+x.outcome+')"><span class="oc">'+x.outcome+'</span><b class="alert">'+esc(x.alert)+'</b></div><blockquote style="margin:0"><q>'+esc(x.quote)+'</q></blockquote><figcaption class="meta" style="--oc:var(--'+x.outcome+')"><b class="h">@'+esc(x.handle)+'</b><span class="stars" aria-label="'+x.rating+' out of 5 stars">'+stars(x.rating)+'</span><span>'+x.type+' · Response <span class="ox" style="color:var(--fg)">'+fmt(x.resp)+'</span></span></figcaption><div class="chips">'+kudosRow(x.kudos,'cl',0)+'</div><button type="button" class="spot-open" data-i="'+i+'"'+(i===S.spot?'':' tabindex="-1"')+'><span class="sr">Open record '+esc(x.alert)+'</span></button></div>').join('');
+ $('#spotFig').querySelectorAll('.spot-open').forEach(b=>b.onclick=e=>openRecord(L[+b.dataset.i],e.currentTarget));
+ $('#spotPeek').textContent='“'+r.quote+'” · @'+r.handle;
+ $('#spotDots').innerHTML=L.map((x,i)=>'<button type="button" aria-label="Show spotlight record '+(i+1)+'" aria-current="'+(i===S.spot)+'" data-i="'+i+'"><span></span></button>').join('');
+ $('#spotDots').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(+b.dataset.i!==S.spot)goSpot(+b.dataset.i)});
+}
+function restartSpot(){
+ const b=$('#cdBar');b.classList.remove('run');
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches||!S.spotOpen)return;
+ void b.offsetWidth;b.classList.add('run');
+}
+let spotBusy=false;
+function goSpot(i){
+ if(spotBusy)return;spotBusy=true;$('#cdBar').classList.remove('run');
+ const f=$('#spotFig');f.classList.add('out');
+ setTimeout(()=>{S.spot=i;renderSpot();f.classList.remove('out');spotBusy=false;restartSpot()},500);
+}
+function openRecord(r,from){
+ let i=list.indexOf(r);
+ if(i<0){clearAll();i=list.indexOf(r)}
+ if(i>=S.shown){S.shown=i+1;renderGrid()}
+ openPanel(i,from);
+}
+function setSpotOpen(o){
+ S.spotOpen=o;$('#spot').dataset.open=o;$('#spotTog').setAttribute('aria-expanded',o);$('#spotTog span').textContent=o?'Hide':'Show';store.set('mr-spot',o?'1':'0');restartSpot();
+}
+const ts=t=>String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+function tx(r){
+ const C='@'+r.handle;
+ const T={Bunker:'Stuck inside, hostiles still around. I am down and cannot get up.',Surface:'Went down hard. Ship is wrecked and I cannot move.',Space:'Suit is failing and I am drifting. Please hurry.','Wreck site':'Pinned under wreckage, bleeding out slowly.'};
+ return [
+ [C,'00:00',T[r.type]+' I am near <span class="rd">[Location]</span>.'],
+ ['[Team Lead]','00:21','Alert accepted. A team is on the way. Stay where you are and keep comms open.'],
+ [C,'00:48','Copy. Still here.'],
+ ['[Team Lead]',ts(r.resp),'We have eyes on you. Arriving now in <span class="rd">[Ship name / registration]</span>.'],
+ [r.treat==='Not needed'?'[Team Lead]':'[Medic]',ts(r.resp+180),r.treat==='Not needed'?'Alert cancelled by the client. Glad you are safe. Staying on comms for a minute.':r.treat==='Not survived'?'We could not bring you back this time. We are sorry. Respawn safe and call if you need us.':r.treat==='Revived'?'You are revived and stable. Moving you out now.':r.treat==='Treated on site'?'Treated on site. You are good to go.':'You are stable. Extracting you now.'],
+ [C,ts(r.care),'Thank you, all of you.']
+ ];
+}
+function renderPanel(){
+ const r=list[S.open];if(!r)return;
+ const url='https://medrunner.space/verify/'+slug(r.alert);
+ $('#pnPos').textContent=(S.open+1)+' of '+list.length;
+ $('#pnPrev').disabled=S.open===0;$('#pnNext').disabled=S.open>=list.length-1;
+ $('#pnBody').innerHTML=
+ '<div style="--oc:var(--'+r.outcome+')"><div class="ocrow"><span class="oc">'+r.outcome+'</span><b class="alert" id="pnTitle" style="font-size:30px">'+esc(r.alert)+'</b></div>'+
+ '<div class="pn-meta"><b>@'+esc(r.handle)+'</b><span class="stars" aria-label="'+r.rating+' out of 5 stars">'+stars(r.rating)+'</span><span>'+r.type+'</span><span>'+day(r.date)+'</span></div>'+
+ (others(r).length?'<div class="morex"><button type="button" class="seeall" id="seeAll"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 12h11M4 17h7M17 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>See '+others(r).length+' other testimonial'+(others(r).length>1?'s':'')+' from this person</button>'+others(r).map(o=>'<button type="button" class="othb" data-a="'+esc(o.alert)+'" style="--oc:var(--'+o.outcome+')"><span class="d" aria-hidden="true"></span>'+esc(o.alert)+'<span class="sr"> ('+o.outcome+')</span></button>').join('')+'</div>':'')+
+ '</div>'+
+ '<q>'+esc(r.quote)+'</q>'+
+ '<div class="pst"><div><b>'+fmt(r.resp)+'</b><span>Response</span></div><div><b style="font-size:18px">'+r.treat+'</b><span>Treatment</span></div><div><b>'+fmt(r.care)+'</b><span>Total care</span></div></div>'+
+ '<div class="sec"><h3>Client → Crew kudos</h3><div class="chips">'+kudosRow(r.kudos,'cl',0)+'</div></div>'+
+ '<div class="sec"><h3>Crew → Client kudos</h3><div class="chips">'+kudosRow(r.crewK,'ck',0)+'</div></div>'+
+ '<div class="sec"><h3>Transcript</h3><ol class="tx">'+tx(r).map(([w,t,m])=>'<li><div class="who">'+(w[0]==='['?'<span class="rd role">'+w+'</span>':'<b>'+esc(w)+'</b>')+'<span class="ox">'+t+'</span></div>'+m+'</li>').join('')+'</ol></div>'+
+ (r.handle===ME?'<div class="sec own" id="own"><h3>Your rescue</h3><p>This record is yours. You can take it off the public page at any time.</p><div class="own-a" id="ownA"><button type="button" class="danger" id="unpub"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10 10 0 0 1 2.1 12a17 17 0 0 1 4-5M9.9 4.2A9 9 0 0 1 12 4c5 0 9 4 10 8a17 17 0 0 1-2.2 3.2M14.1 14.1a3 3 0 0 1-4.2-4.2M2 2l20 20"/></g></svg>Unpublish</button></div><div class="own-c" id="ownC" hidden><p>Unpublish <b>'+esc(r.alert)+'</b>? It comes off this page and its verify link stops working. You can publish it again later.</p><div class="own-a"><button type="button" class="danger solid" id="unpubY">Unpublish</button><button type="button" class="ghost" id="unpubN">Keep it public</button></div></div></div>':'')+
+ '<div class="sec"><h3>Share this record</h3><div class="share"><label class="sr" for="shareUrl">Record link</label><input id="shareUrl" readonly value="'+esc(url)+'"><button type="button" class="pbtn" id="copy">Copy link</button></div></div>';
+ $('#copy').onclick=()=>{const v=$('#shareUrl').value;const ok=()=>toast('Link copied');if(navigator.clipboard)navigator.clipboard.writeText(v).then(ok,()=>{$('#shareUrl').select();toast('Press Ctrl+C to copy')});else{$('#shareUrl').select();toast('Press Ctrl+C to copy')}};
+ const up=$('#unpub');if(up){up.onclick=()=>{$('#ownA').hidden=true;$('#ownC').hidden=false;$('#unpubN').focus()};$('#unpubN').onclick=()=>{$('#ownC').hidden=true;$('#ownA').hidden=false;$('#unpub').focus()};$('#unpubY').onclick=()=>unpublish(r)}
+ const sa=$('#seeAll');if(sa)sa.onclick=()=>{const h=r.handle;closePanel();clearAll();S.handle=h;update();$('.results').scrollIntoView({behavior:'smooth',block:'start'})};
+ $('#pnBody').querySelectorAll('.othb').forEach(b=>b.onclick=()=>{const h=r.handle,a=b.dataset.a;S.handle=h;S.type='All';S.out='All';S.min=0;S.kudos=[];S.q='';$('#q').value='';update();const i=list.findIndex(x=>x.alert===a);if(i>-1){if(i>=S.shown){S.shown=i+1;renderGrid()}S.open=i;renderPanel()}});
+ $('#pnBody').scrollTop=0;
+}
+function openPanel(i,from){
+ lastFocus=from||document.activeElement;S.open=i;renderPanel();
+ const p=$('#panel');p.hidden=false;requestAnimationFrame(()=>{p.classList.add('on');$('#scrim').classList.add('on')});
+ document.body.style.overflow='hidden';setTimeout(()=>$('#pnClose').focus(),30);
+}
+function closePanel(){
+ const p=$('#panel');if(p.hidden)return;
+ p.classList.remove('on');$('#scrim').classList.remove('on');document.body.style.overflow='';
+ setTimeout(()=>{p.hidden=true},260);S.open=-1;if(lastFocus)lastFocus.focus();
+}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
+function clearAll(){S.handle='';S.type='All';S.out='All';S.min=0;S.kudos=[];S.q='';$('#q').value='';update()}
+function setFcount(){const n=(S.type!=='All')+(S.out!=='All')+(S.min>0)+S.kudos.length;const f=$('#fcount');f.hidden=!n;f.textContent=n;$('#fclear').disabled=!(n||S.q||S.handle)}
+$('#fclear').onclick=()=>clearAll();
+$('#ftog').onclick=()=>{const o=$('#filters').dataset.open!=='true';$('#filters').dataset.open=o;$('#ftog').setAttribute('aria-expanded',o)};
+function update(){setFcount();S.shown=9;list=filtered();$('#count').textContent=list.length;$('#cw').textContent=list.length===1?'record':'records';const hf=$('#hfil');hf.hidden=!S.handle;$('#hfilName').textContent='@'+S.handle;renderFilters();renderStats();renderGrid()}
+const ICON={moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'};
+const THEMES={dark:{icon:'moon',name:'Dark',sw:[['Page','ink-900'],['Panel','ink-800'],['Accent','amber-500'],['Header','ink-925'],['Text','gray-50']]},red:{icon:'sun',name:'Red and white',sw:[['Page','red-700'],['Panel','red-850'],['Accent','white'],['Card','red-800'],['Text','red-200']]}};
+const tokc=n=>getComputedStyle(document.documentElement).getPropertyValue('--c-'+n).trim();
+function setTheme(t){
+ if(t==='red')document.documentElement.dataset.theme='red';else delete document.documentElement.dataset.theme;
+ const red=t==='red';$('#theme').setAttribute('aria-pressed',red);const cur=THEMES[red?'red':'dark'],nxt=THEMES[red?'dark':'red'];
+ $('#themeName').textContent=cur.name;$('#themeIcon').innerHTML=ICON[cur.icon];
+ $('#themeTip').innerHTML='<span class="tip-h"><span class="tip-i">'+ICON[nxt.icon]+'</span>Switch to <b>'+nxt.name+'</b></span><span class="tip-sw">'+nxt.sw.map(c=>'<span><i style="background:var(--c-'+c[1]+')"></i><em>'+c[0]+'</em><code>'+tokc(c[1])+'</code></span>').join('')+'</span>';
+ $('#theme').setAttribute('aria-label','Theme: '+cur.name+'. Switch to '+nxt.name);
+ store.set('mr-theme',t);requestAnimationFrame(markFades);
+}
+function setView(v){S.view=v;$('#vGrid').setAttribute('aria-pressed',v==='grid');$('#vList').setAttribute('aria-pressed',v==='list');$('#grid').dataset.view=v;requestAnimationFrame(markFades)}
+function setSheet(o){document.body.classList.toggle('sheet',o);$('#fbtn').setAttribute('aria-expanded',o);$('#scrim').classList.toggle('on',o);if(o)setTimeout(()=>$('#q').focus(),30);else $('#fbtn').focus()}
+
+document.querySelectorAll('.tx2').forEach(b=>b.onclick=()=>{const o=b.getAttribute('aria-expanded')!=='true';document.querySelectorAll('.tx2').forEach(t=>t.setAttribute('aria-expanded',o))});
+$('#theme').onclick=()=>setTheme(document.documentElement.dataset.theme==='red'?'dark':'red');
+$('#spotTog').onclick=()=>setSpotOpen(!S.spotOpen);
+$('#spotPrev').onclick=()=>goSpot(S.spot-1);
+$('#spotNext').onclick=()=>goSpot(S.spot+1);
+$('#cdBar').addEventListener('animationend',()=>goSpot(S.spot+1));
+$('#q').oninput=e=>{S.q=e.target.value;update()};
+$('#sort').onchange=e=>{S.sort=e.target.value;update()};
+$('#vGrid').onclick=()=>setView('grid');$('#vList').onclick=()=>setView('list');
+$('#fbtn').onclick=()=>setSheet(true);$('#sheetDone').onclick=()=>setSheet(false);
+$('#scrim').onclick=()=>{if(!$('#pk').hidden)closePick();else if(document.body.classList.contains('sheet'))setSheet(false);else closePanel()};
+const ME='ItchyMastadon';
+function unpublish(r){
+ const i=R.indexOf(r);if(i<0)return;R.splice(i,1);
+ MINE.unshift({alert:r.alert,outcome:r.outcome,type:r.type,date:r.date,resp:r.resp});
+ closePanel();update();renderSpot();restartSpot();toast(r.alert+' unpublished');
+}
+const MINE=[
+{alert:'Mossy Lark',outcome:'Rescued',type:'Surface',date:'2026-11-10',resp:371},
+{alert:'Tin Falcon',outcome:'Revived',type:'Space',date:'2026-10-28',resp:544},
+{alert:'Grey Otter',outcome:'Cancelled',type:'Bunker',date:'2026-10-15',resp:233},
+{alert:'Night Heron',outcome:'Failed',type:'Wreck site',date:'2026-09-30',resp:702}
+];
+let pkFrom=null;
+function manageRec(r){const from=pkFrom;closePick();openRecord(r,from);setTimeout(()=>{const o=$('#own');if(o){o.scrollIntoView({block:'center',behavior:'smooth'});o.classList.add('flash')}},320)}
+function goPublish(a){location.href='review-cta.html?alert='+slug(a)}
+function bigRow(r,mine){
+ const head='<span class="ocrow"><span class="oc">'+r.outcome+'</span><b class="alert">'+esc(r.alert)+'</b></span><span class="dt">'+day(r.date)+'</span><span class="sub">'+r.type+' · Response <span class="ox">'+fmt(r.resp)+'</span></span>';
+ return mine?'<div class="pk-i pk-own" style="--oc:var(--'+r.outcome+')">'+head+'<button type="button" class="pk-m" data-a="'+esc(r.alert)+'">Manage</button></div>'
+  :'<label class="pk-i" style="--oc:var(--'+r.outcome+')"><input type="radio" name="pk" value="'+esc(r.alert)+'">'+head+'</label>';
+}
+function thinRow(r,label,pub){return '<div class="pk-r" style="--oc:var(--'+r.outcome+')"><i aria-hidden="true"></i><b>'+esc(r.alert)+'</b><em>'+(pub?'Public · ':'Not public · ')+day(r.date)+'</em><button type="button" data-a="'+esc(r.alert)+'" aria-label="'+label+' '+esc(r.alert)+'">'+label+'</button></div>'}
+function openPick(from,mode){
+ pkFrom=from;mode=mode||'publish';const mine=mode==='mine';$('#pk').dataset.mode=mode;
+ const pub=R.filter(r=>r.handle===ME).sort((x,y)=>y.date.localeCompare(x.date));
+ const main=mine?pub:MINE,side=mine?MINE:pub;
+ $('#pkH').textContent=mine?'MY RESCUES':'MAKE A RESCUE PUBLIC';
+ $('#pkSub').textContent=mine?'Your public records, and the rescues you haven’t published yet.':'Pick the rescue you want to publish.';
+ $('#pkList').querySelectorAll('.pk-i,.pk-e').forEach(x=>x.remove());
+ $('#pkList').querySelector('legend').textContent=mine?'Your public rescues':'Your unpublished rescues';
+ $('#pkList').insertAdjacentHTML('beforeend',main.length?main.map(r=>bigRow(r,mine)).join(''):'<p class="pk-e">'+(mine?'None of your rescues are public yet.':'Every rescue of yours is already public.')+'</p>');
+ $('#pkNote').textContent=main.length+(mine?' public rescue':' unpublished rescue')+(main.length===1?'':'s');
+ $('#pkPub').hidden=!side.length;
+ $('#pkPubN').textContent=side.length+(mine?' not public yet':' already public');
+ $('#pkPubR').firstChild.textContent=mine?'View unpublished':'Manage';
+ $('#pkPubT').setAttribute('aria-expanded','false');
+ $('#pkPubL').innerHTML=side.map(r=>thinRow(r,mine?'Publish':'Manage',!mine)).join('');
+ $('#pkPubL').querySelectorAll('button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;if(mine)goPublish(a);else manageRec(R.find(x=>x.alert===a))});
+ $('#pkList').querySelectorAll('.pk-m').forEach(b=>b.onclick=()=>manageRec(R.find(x=>x.alert===b.dataset.a)));
+ $('#pkGo').hidden=mine;$('#pkCancel').textContent=mine?'Close':'Cancel';
+ $('#pkGo').disabled=true;
+ $('#pkList').onchange=()=>{$('#pkGo').disabled=!$('#pkList input:checked')};
+ const d=$('#pk');d.hidden=false;$('#scrim').classList.add('on');document.body.style.overflow='hidden';
+ requestAnimationFrame(()=>d.classList.add('on'));setTimeout(()=>{const f=$('#pkList input,#pkList .pk-m,#pkPubT');f&&f.focus()},40);
+}
+function closePick(){
+ const d=$('#pk');if(d.hidden)return;d.classList.remove('on');$('#scrim').classList.remove('on');document.body.style.overflow='';
+ setTimeout(()=>{d.hidden=true},200);if(pkFrom)pkFrom.focus();
+}
+document.querySelectorAll('[data-pick]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();openPick(a)}));
+$('#pkPubT').onclick=e=>{const b=e.currentTarget;b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')!=='true')};
+$('#pkClose').onclick=closePick;$('#pkCancel').onclick=closePick;
+$('#pkGo').onclick=()=>{const c=$('#pkList input:checked');if(c)goPublish(c.value)};
+$('#pnClose').onclick=closePanel;
+$('#hfil').onclick=()=>{S.handle='';update()};
+$('#pnPrev').onclick=()=>{if(S.open>0){S.open--;if(S.open>=S.shown)S.shown=S.open+1;renderPanel()}};
+$('#pnNext').onclick=()=>{if(S.open<list.length-1){S.open++;if(S.open>=S.shown){S.shown=S.open+1;renderGrid()}renderPanel()}};
+$('#lgb').onclick=e=>{const f=$('#lgf'),o=f.hidden;f.hidden=!o;e.target.setAttribute('aria-expanded',o)};
+const umB=$('#umBtn'),umM=$('#umMenu');
+function umSet(o){umM.hidden=!o;umB.setAttribute('aria-expanded',o);if(o){const f=umM.querySelector('.um-i');f&&f.focus()}}
+umB.onclick=e=>{e.stopPropagation();umSet(umM.hidden)};
+umM.querySelectorAll('.um-i:not(.on)').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation()});
+$('#umMine').onclick=e=>{e.stopPropagation();umSet(false);openPick(umB,'mine')};
+umM.addEventListener('keydown',e=>{const it=[...umM.querySelectorAll('.um-i')],i=it.indexOf(document.activeElement);if(e.key==='ArrowDown'){e.preventDefault();it[(i+1)%it.length].focus()}if(e.key==='ArrowUp'){e.preventDefault();it[(i-1+it.length)%it.length].focus()}if(e.key==='Escape'){e.stopPropagation();umSet(false);umB.focus()}if(e.key==='Tab')umSet(false)});
+document.addEventListener('click',e=>{if(!umM.hidden&&!$('#um').contains(e.target))umSet(false)});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){if(!$('#pk').hidden)closePick();else if(!$('#panel').hidden)closePanel();else if(document.body.classList.contains('sheet'))setSheet(false)}
+ if(e.key==='Tab'&&!$('#panel').hidden){const f=[...$('#panel').querySelectorAll('button:not([disabled]),input')];if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+});
+new IntersectionObserver(es=>{if(es[0].isIntersecting&&S.shown<list.length){S.shown+=6;renderGrid()}},{rootMargin:'300px'}).observe($('#sentinel'));
+addEventListener('resize',()=>requestAnimationFrame(markFades));
+setTheme(store.get('mr-theme')==='red'?'red':'dark');
+setSpotOpen(store.get('mr-spot')==='1');
+renderSpot();update();
+</script>
+<script>
+document.addEventListener('click',function(e){
+  var f=e.target.closest&&e.target.closest('footer.lgl');
+  if(!f||e.target.closest('.lgb,a,input,select,textarea')||e.target.closest('button'))return;
+  var s=window.getSelection&&String(window.getSelection());
+  if(s&&f.contains(window.getSelection().anchorNode))return;
+  var b=f.querySelector('.lgb');if(b)b.click();
+});
+</script>
+</body>
+</html>

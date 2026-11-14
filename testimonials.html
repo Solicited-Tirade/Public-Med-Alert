@@ -298,9 +298,24 @@ body.sheet .sheet-h{display:flex;position:sticky;top:0;background:var(--panel);a
 .lede-q{margin-top:8px;color:var(--fg)}
 .shx{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:16px;padding:0 18px;border-radius:var(--r-sm);background:var(--cta-btn);color:var(--cta-btn-fg);font:600 15px var(--font-body);text-decoration:none;white-space:nowrap;transition:filter .15s}
 .shx{transition:filter .15s,box-shadow .2s}
-.shx:is(:hover,:focus-visible){filter:brightness(1.08);box-shadow:0 0 0 3px color-mix(in srgb,var(--star) 35%,transparent),0 8px 20px color-mix(in srgb,var(--star) 18%,transparent)}
+.pubb,.cta-a a{position:relative;transition:filter .15s,box-shadow .2s,background .15s}
+:is(.shx,.pubb,.cta-a a):is(:hover,:focus-visible){filter:brightness(1.08);box-shadow:0 0 0 3px color-mix(in srgb,var(--star) 35%,transparent),0 8px 20px color-mix(in srgb,var(--star) 18%,transparent)}
 .shs{position:absolute;left:var(--x);top:var(--y);font-size:var(--s);line-height:1;color:var(--star);pointer-events:none;animation:shs .9s ease-in-out forwards}
 @keyframes shs{0%{transform:translate(-50%,-50%) scale(0) rotate(0);opacity:0}40%{transform:translate(-50%,-50%) scale(1) rotate(45deg);opacity:1}100%{transform:translate(-50%,-50%) scale(0) rotate(90deg);opacity:0}}
+.emerg{position:relative;gap:8px;transition:filter .15s}
+.emerg .bell{width:30px;height:20px;margin-left:-4px;margin-right:-2px;overflow:visible}
+.emerg .bg{transform-box:fill-box;transform-origin:50% 8%}
+.emerg .al,.emerg .ar{opacity:0}
+.emerg::before,.emerg::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--emerg);opacity:0;pointer-events:none}
+.emerg:is(:hover,:focus-visible) .bg{animation:ebell .5s ease-in-out infinite}
+.emerg:is(:hover,:focus-visible)::before{animation:ering 1.2s ease-out infinite}
+.emerg:is(:hover,:focus-visible)::after{animation:ering 1.2s ease-out .6s infinite}
+@keyframes ebell{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(18deg)}}
+@keyframes ering{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.35,1.9);opacity:0}}
+@media (max-width:760px){.emerg .bell{display:none}}
+@media (prefers-reduced-motion:reduce){.emerg .bg,.emerg::before,.emerg::after{animation:none!important}}
+:root[data-theme="red"] .shs{color:var(--c-amber-400);filter:drop-shadow(0 0 1px var(--c-amber-700))}
+:root[data-theme="red"] :is(.shx,.pubb,.cta-a a):is(:hover,:focus-visible){box-shadow:0 0 0 3px color-mix(in srgb,var(--c-amber-400) 70%,transparent),0 8px 20px color-mix(in srgb,var(--c-amber-400) 35%,transparent)}
 @media (prefers-reduced-motion:reduce){.shs{display:none}}
 .intro .shx{width:max-content}
 :root[data-theme="red"] .shx{background:var(--c-white);color:var(--c-red-700)}
@@ -371,7 +386,7 @@ body.sheet .filters .groups{display:flex}
 <div class="hact">
 <button type="button" class="tbtn" id="theme" aria-pressed="false" aria-label="Theme: Dark. Switch to Red and white" aria-describedby="themeTip"><span class="ti" id="themeIcon"></span><span class="tl" id="themeName">Dark</span><span class="tip" id="themeTip" role="tooltip"></span></button>
 <a class="pubb" href="review-cta.html" data-pick title="Make a previous rescue public"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></g></svg><span>Publish a rescue</span></a>
-<a class="emerg" href="#main">Report an emergency</a>
+<a class="emerg" href="#main"><svg class="bell" viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="al"><path d="M7 8.5c-1.4 1.2-1.4 4.2 0 5.4"/><path d="M3.5 6c-2.6 2.4-2.6 8.2 0 10.6"/></g><g class="ar"><path d="M29 8.5c1.4 1.2 1.4 4.2 0 5.4"/><path d="M32.5 6c2.6 2.4 2.6 8.2 0 10.6"/></g><g class="bg"><path d="M24 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M19.7 21a2 2 0 0 1-3.4 0"/></g></svg><span>Report an emergency</span></a>
 <div class="um" id="um">
 <button type="button" class="um-b" id="umBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="umMenu"><span class="av"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10.5" r="5.5" fill="currentColor"/><path d="M6 25a10 10 0 0 1 20 0z" fill="currentColor"/></svg></span><span class="um-n">ItchyMastadon</span><svg class="um-c" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <div class="um-m" id="umMenu" role="menu" aria-label="Account" hidden>
@@ -805,22 +820,42 @@ document.addEventListener('click',function(e){
 </script>
 <script>
 (function(){
-var b=document.querySelector('.shx'),t=null,n=0;
-if(!b||!window.matchMedia)return;
+if(!window.matchMedia)return;
+document.querySelectorAll('.shx,.pubb,.cta-a a').forEach(function(b){
+var t=null,live=[],quiet=false;
+function pt(w,h){
+ var r=Math.random()*(2*w+2*h);
+ if(r<w)return[r,-6];
+ r-=w;if(r<w)return[r,h+6];
+ r-=w;if(r<h)return[-3,r];
+ return[w+3,r-h];
+}
 function spark(){
- var e=Math.floor(Math.random()*4),p=Math.random()*100,x,y;
- if(e===0){x=p;y=-6}else if(e===1){x=p;y=106}else if(e===2){x=-3;y=Math.random()*100}else{x=103;y=Math.random()*100}
+ var w=b.offsetWidth,h=b.offsetHeight,now=Date.now(),best=null,bd=-1,i,j;
+ live=live.filter(function(p){return now-p.t<1000});
+ for(i=0;i<14;i++){
+  var c=pt(w,h),m=1e9;
+  for(j=0;j<live.length;j++){m=Math.min(m,Math.hypot(c[0]-live[j].x,c[1]-live[j].y))}
+  if(m>bd){bd=m;best=c}
+ }
+ live.push({x:best[0],y:best[1],t:now});
  var s=document.createElement('i');s.className='shs';s.setAttribute('aria-hidden','true');s.textContent='\u2726';
- s.style.setProperty('--x',x+'%');s.style.setProperty('--y',y+'%');s.style.setProperty('--s',(10+Math.random()*8)+'px');
+ s.style.setProperty('--x',best[0]+'px');s.style.setProperty('--y',best[1]+'px');s.style.setProperty('--s',(10+Math.random()*8)+'px');
  b.appendChild(s);setTimeout(function(){s.remove()},1000);
 }
 function start(){
- if(t||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ if(t||quiet||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  spark();t=setInterval(spark,200);
 }
-function stop(){clearInterval(t);t=null}
-b.addEventListener('mouseenter',start);b.addEventListener('focus',start);
-b.addEventListener('mouseleave',stop);b.addEventListener('blur',stop);
+function stop(){clearInterval(t);t=null;live=[]}
+b.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'){quiet=false;start()}});
+b.addEventListener('focus',function(){if(b.matches(':focus-visible'))start()});
+b.addEventListener('pointerleave',stop);
+b.addEventListener('blur',stop);
+b.addEventListener('click',function(){stop();quiet=true});
+document.addEventListener('keydown',function(e){if(e.key==='Tab')quiet=false});
+document.addEventListener('visibilitychange',stop);
+});
 })();
 </script>
 </body>

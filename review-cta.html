@@ -23,7 +23,9 @@ button{background:none;border:0;cursor:pointer;padding:0}
 .pg-top{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .pg-top i{width:30px;height:30px;background:var(--logo) center/contain no-repeat}
 .pg-top b{font:700 15px var(--fh);letter-spacing:.08em;text-transform:uppercase}
-.pg-top span{margin-left:auto;font:500 12px var(--fl);color:var(--c-gray-400)}
+.pg-top a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 40%,transparent);margin-left:auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 12px var(--fl);color:var(--c-gray-400)}
+.pvh-u a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.pg-top span{margin-left:auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 12px var(--fl);color:var(--c-gray-400)}
 .pg-hero{height:200px;border-radius:14px;background:linear-gradient(0deg,var(--c-ink-950) 0%,transparent 60%),var(--hero) center 40%/cover}
 .pg-row{margin-top:-28px;position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;border-radius:12px;background:color-mix(in srgb,var(--tc) 16%,transparent);border:1px solid color-mix(in srgb,var(--tc) 45%,transparent)}
 .pg-row b{font:600 22px var(--fh);letter-spacing:.04em;color:var(--tc);text-transform:uppercase}
@@ -226,6 +228,8 @@ textarea:focus{background:color-mix(in srgb,var(--c-white) 14%,transparent);box-
 .pvp.rev .pvh{position:relative;margin:6px 0 14px;padding:14px 14px 12px;border-radius:12px;border:1.5px dashed var(--c-amber-500);background:color-mix(in srgb,var(--c-amber-500) 6%,transparent)}
 .pvp.rev .pvh .sm{margin:4px 0 0}
 .pvp .rv{display:none}
+.pv-ex2{margin-left:8px;font:600 11px var(--fl);letter-spacing:.14em;text-transform:uppercase;color:var(--c-gray-400)}
+.pv-ex{display:inline-block;margin:0 0 8px;padding:3px 10px;border-radius:5px;font:700 11px var(--fl);letter-spacing:.18em;text-transform:uppercase;color:#1f1300;background:#fbbf24;box-shadow:0 3px 10px rgba(0,0,0,.4);transform:rotate(-3deg)}
 .pvp.rev .rv{position:absolute;top:-10px;left:12px;display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:999px;background:var(--c-ink-900);box-shadow:inset 0 0 0 1.5px var(--c-amber-500);font:700 10.5px var(--fq);letter-spacing:.14em;text-transform:uppercase;color:var(--c-amber-400)}
 .pvp.rev .rv i{width:7px;height:7px;border-radius:50%;background:var(--c-amber-500);box-shadow:0 0 8px var(--c-amber-500);animation:dot 1.4s ease-in-out infinite}
 @keyframes dot{0%,100%{opacity:.35}50%{opacity:1}}
@@ -369,10 +373,12 @@ h2{font-size:clamp(28px,9vw,34px)}
 .cpy[data-hover="0"] .cpy-b{transition:transform .25s ease-out,box-shadow .3s}
 .dc{display:none;text-align:left;font-family:"gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;animation:dcin .45s cubic-bezier(.2,1.2,.4,1)}
 .dc.show{display:block}
+.x-discord #c-discord.show.force{display:block!important}
 @keyframes dcin{from{opacity:0;transform:translateY(-8px) scale(.98)}}
 .dc-cap{display:flex;align-items:center;gap:6px;margin:0 0 6px;font:600 11px var(--fl);letter-spacing:.14em;text-transform:uppercase;color:var(--c-red-200)}
 .dc-cap svg{width:14px;height:14px;fill:currentColor}
-.dc-win{border-radius:10px;background:#313338;padding:12px 14px 14px;box-shadow:0 10px 30px color-mix(in srgb,var(--c-black) 45%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--c-white) 6%,transparent)}
+.dc-ex{position:absolute;top:-9px;left:10px;z-index:3;padding:3px 10px;border-radius:5px;font:700 11px var(--fl);letter-spacing:.18em;text-transform:uppercase;color:#1f1300;background:#fbbf24;box-shadow:0 3px 10px rgba(0,0,0,.4);transform:rotate(-3deg)}
+.dc-win{position:relative;border-radius:10px;background:#313338;padding:12px 14px 14px;box-shadow:0 10px 30px color-mix(in srgb,var(--c-black) 45%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--c-white) 6%,transparent)}
 .dc-msg{display:grid;grid-template-columns:40px 1fr;gap:12px}
 .dc-av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#5865f2,#3b46c4);color:var(--c-white);font:700 16px/1 "Noto Sans",sans-serif}
 .dc-meta{display:flex;align-items:baseline;gap:8px}
@@ -845,13 +851,13 @@ a,button,select,summary,label,input,textarea,[role=button]{touch-action:manipula
 @media (prefers-reduced-motion:reduce){
 .ms-fill{animation-duration:.01ms!important}
 }
-.pvp .pvh-u{font:600 11px var(--fl);letter-spacing:.16em;text-transform:uppercase;color:var(--c-gray-400)}
+.pvp .pvh-u{overflow-wrap:anywhere;text-transform:none;font:600 11px var(--fl);letter-spacing:.16em;text-transform:uppercase;color:var(--c-gray-400)}
 </style>
 </head>
 <body data-tone="ok">
 <h1 class="sr">Review call to action</h1>
 <main class="pg" aria-hidden="true">
-<div class="pg-top"><i></i><b translate="no">Medrunner</b><span>medrunner.space/verify/agile-snail</span></div>
+<div class="pg-top"><i></i><b translate="no">Medrunner</b><a href="https://solicited-tirade.github.io/Public-Med-Alert/verify/agile-snail.html?example" target="_blank" rel="noopener" title="Open the example page">solicited-tirade.github.io/Public-Med-Alert/verify/agile-snail.html</a></div>
 <div class="pg-hero"></div>
 <div class="pg-row"><b data-o="title">Rescued, stable</b><span data-o="sub">Discharged Oct 4, 21:31 UTC</span></div>
 <div class="pg-grid">
@@ -1088,15 +1094,15 @@ m.addEventListener('scroll',hidePop);
 cons.onchange=()=>{if(cons.checked){$('#cerr').textContent='';$('#consl').classList.remove('bad')}};
 function rateHTML(){return sys==='stars'?(srate?'★'.repeat(srate)+'☆'.repeat(5-srate)+` ${srate}/5`:'<span class="mu">No rating</span>'):(trate?(trate==='up'?'Thumbs up':'Thumbs down'):'<span class="mu">No rating</span>')}
 function preview(rev){
-  hidePop();const o=OUT[tone];const ks=top?[top,...sel.filter(k=>k!==top)]:sel;
+  hidePop();const o=OUT[tone];const ks=o.kudos.slice(0,3),top=ks[0],mode='pos',EXR=`<span class="rb rbf" style="--rc:${RC[4]}"><i></i>★★★★★ 5/5 <small>${WORD[4]}</small></span>`,EXT='Clear instructions from the first message. I felt like I was in good hands from the moment the alert was accepted.';
   $('#pvp').classList.toggle('rev',!!rev);
-  $('#pvp').innerHTML=`<div class="pvh"><span class="rv"><i></i>Under review</span><div class="pvh-u">${rev?'medrunner.space/verify/agile-snail':'Preview public page'}</div><h3>See what others will see</h3><p class="sm">${rev?'Only you can see this until it’s approved. Your team lead may still swap names for roles or redact details.':'This is what anyone with the link sees: roles instead of names, redactions shown as categories, plus kudos and the testimonial.'}</p></div>
+  $('#pvp').innerHTML=`<div class="pvh"><span class="pv-ex">Example</span><span class="pv-ex2">${T.transcript?'With transcript':'No transcript'}</span><span class="rv"><i></i>Under review</span><div class="pvh-u">${rev?'<a href="https://solicited-tirade.github.io/Public-Med-Alert/verify/agile-snail.html?example" target="_blank" rel="noopener" title="Open the example page">solicited-tirade.github.io/Public-Med-Alert/verify/agile-snail.html</a>':'Preview public page'}</div><h3>See what others will see</h3><p class="sm">${rev?'Only you can see this until it’s approved. Your team lead may still swap names for roles or redact details.':'This is what anyone with the link sees: roles instead of names, redactions shown as categories, plus kudos and the testimonial.'}</p></div>
 <div class="orow"><b>${o.title}</b><span>${o.sub}</span></div>
-<dl><dt>Client</dt><dd>${(cons.checked||!T.consent)?'ItchyMastadon':'<span class="mu">Shown once you confirm your handle</span>'}</dd>
-<dt>Rating</dt><dd>${rbHTML()||'<span class="mu">No rating</span>'}</dd>
+<dl><dt>Client</dt><dd>ItchyMastadon</dd>
+<dt>Rating</dt><dd>${EXR}</dd>
 ${mode==='neg'?`<dt>What went wrong</dt><dd>${ks.length?ks.map(k=>`<span class="kc ng">${K[k].i}${esc(k)}</span>`).join(''):'<span class="mu">None</span>'}<span class="fb">Private. Only the team sees this.</span></dd>`:`<dt>Kudos</dt><dd>${ks.length?ks.map(k=>`<span class="kc${k===top?' tp':''}">${K[k].i}${esc(k)}</span>`).join(''):'<span class="mu">None</span>'}</dd>`}
-<dt>Testimonial</dt><dd>${ta.value.trim()?`<i>"${esc(ta.value.trim())}"</i>`:'<span class="mu">None</span>'}</dd>
-<dt class="pmrow">Your messages</dt><dd class="pmrow">${msgs.map(x=>`<div class="pm"><time>${x.t}</time>${x.h?`<span class="hd">Hidden by client: ${esc(x.h.join(', '))}</span>`:esc(x.m)}</div>`).join('')}</dd></dl>
+<dt>Testimonial</dt><dd><i>"${EXT}"</i></dd>
+<dt class="pmrow">Transcript</dt><dd class="pmrow">${MSG[tone].map(([t,mm])=>`<div class="pm"><time>${t}</time>${esc(mm)}</div>`).join('')}</dd></dl>
 <div class="bar"><button class="ib" data-pvx>${rev?'Close':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back to editing</span>'}</button>${rev?'':`<button class="sbm pvs" data-pvsub><span>Submit</span><span class="thm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span></button>`}</div>`;
   $('#pv').classList.add('on');$('[data-pvx]').onclick=()=>$('#pv').classList.remove('on');
   const ps=$('[data-pvsub]');if(ps)ps.onclick=()=>{if((!T.rating||rated())&&(!T.consent||cons.checked)){launch(ps,()=>$('#pv').classList.remove('on'))}else{$('#pv').classList.remove('on');submit()}};
@@ -1255,7 +1261,7 @@ function save(){const h='#'+enc();try{history.replaceState(null,'',h)}catch(_){}
 const loaded=new Set(['Mohave','Oxanium','Inter','Quantico']);
 function loadFont(o){if(loaded.has(o[0]))return;loaded.add(o[0]);const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family='+o[1]+'&display=swap';document.head.appendChild(l)}
 
-const URL0='medrunner.space/verify/agile-snail',ALERT='Agile Snail';
+const URL0='solicited-tirade.github.io/Public-Med-Alert/verify/agile-snail.html',ALERT='Agile Snail';
 const EC={ok:tokc('green-400'),died:tokc('red-500'),cancel:tokc('gray-400')};
 const SVG=(d,extra='')=>`<svg viewBox="0 0 24 24" aria-hidden="true"${extra}>${d}</svg>`;
 const LINK=SVG('<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>');
@@ -1268,13 +1274,13 @@ const HOLD=el('','hold');HOLD.hidden=true;document.body.appendChild(HOLD);
 
 const dc=el('dc','c-discord');HOLD.appendChild(dc);
 function shareDesc(){return 'A real client\u2019s public mission record. Open it to read the full timeline and team kudos.'}
-function showDiscord(host,text){
-  if(!T.discord)return;const o=OUT[tone],ec=EC[tone],title=`${ALERT} · Verified Medrunner Alert`,desc=shareDesc(),words=(ta.value||'').trim(),quote=words||'Your testimonial appears here, in your own words.',stars=rated()&&sys==='stars'?srate:0,picked=[...(top?[top]:[]),...sel.filter(k=>k!==top)].slice(0,3),chipsH=(picked.length?picked:o.kudos.filter(k=>k.length<16).slice(0,3)).map(k=>`<span class="${picked.length?(k===top?'st':''):'gh'}">${k===top?'★ ':''}${esc(k)}</span>`).join(''),alt=`${ALERT}, ${o.title}${stars?`, ${stars} out of 5 stars`:''}: ${words||'Verified mission record'}`.slice(0,200);
-  const tags=`<meta name="theme-color" content="${ec}">\n<meta property="og:type" content="article">\n<meta property="og:site_name" content="Medrunner">\n<meta property="og:title" content="${title}">\n<meta property="og:description" content="${desc}">\n<meta property="og:url" content="https://${URL0}">\n<meta property="og:image" content="https://${URL0.split('/')[0]}/media/og/record-agile-snail.png">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta property="og:image:alt" content="${esc(alt)}">\n<meta name="twitter:card" content="summary_large_image">`;
+function showDiscord(host,text,force){
+  if(!T.discord&&!force)return;const o=OUT[tone],ec=EC[tone],title=`${ALERT} · Verified Medrunner Alert`,desc=shareDesc(),words='Clear instructions from the first message. I felt like I was in good hands from the moment the alert was accepted.',quote=words,stars=5,picked=['Great comms','Great medic','Fast response'],top='Great comms',chipsH=picked.map(k=>`<span class="${k===top?'st':''}">${k===top?'★ ':''}${esc(k)}</span>`).join(''),alt=`${ALERT}, ${o.title}${stars?`, ${stars} out of 5 stars`:''}: ${words||'Verified mission record'}`.slice(0,200);
+  const tags=`<meta name="theme-color" content="${ec}">\n<meta property="og:type" content="article">\n<meta property="og:site_name" content="Medrunner">\n<meta property="og:title" content="${title}">\n<meta property="og:description" content="${desc}">\n<meta property="og:url" content="https://${URL0}">\n<meta property="og:image" content="https://solicited-tirade.github.io/Public-Med-Alert/media/og/record-agile-snail.png">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta property="og:image:alt" content="${esc(alt)}">\n<meta name="twitter:card" content="summary_large_image">`;
   const tx=esc(text).replace(/https?:\/\/\S+/g,u=>`<span class="dc-a">${u}</span>`);
-  dc.innerHTML=`<p class="dc-cap">${DSC}How it looks in Discord</p><div class="dc-win"><div class="dc-msg"><div class="dc-av">I</div><div><div class="dc-meta"><b>ItchyMastadon</b><span>Today at 21:40</span></div><div class="dc-tx">${tx}</div><div class="dc-em" style="--ec:${ec}"><div class="dc-pr">Medrunner</div><span class="dc-ti">${esc(title)}</span><div class="dc-de">${esc(desc)}</div><div class="dc-rc" role="img" aria-label="${esc(alt)}"><div class="rc-in"><div class="rc-h"><span class="rc-s"><i></i>${esc(o.title.split(',')[0])}</span><b>${esc(ALERT)}</b><span class="rc-st">${stars?'★'.repeat(stars)+'<u>'+'★'.repeat(5-stars)+'</u>':''}</span></div><p class="rc-q">${esc(quote.length>150?quote.slice(0,147)+'…':quote)}</p><p class="rc-a">@ItchyMastadon · Surface</p><div class="rc-f"><div class="rc-c">${chipsH}</div><em></em></div></div></div></div></div></div></div><details class="dc-og"><summary>Page tags behind this preview</summary><pre>${esc(tags)}</pre></details>`;
+  dc.innerHTML=`<p class="dc-cap">${DSC}How it looks in Discord</p><div class="dc-win"><span class="dc-ex">Example</span><div class="dc-msg"><div class="dc-av">I</div><div><div class="dc-meta"><b>ItchyMastadon</b><span>Today at 21:40</span></div><div class="dc-tx">${tx}</div><div class="dc-em" style="--ec:${ec}"><div class="dc-pr">Medrunner</div><span class="dc-ti">${esc(title)}</span><div class="dc-de">${esc(desc)}</div><div class="dc-rc" role="img" aria-label="${esc(alt)}"><div class="rc-in"><div class="rc-h"><span class="rc-s"><i></i>${esc(o.title.split(',')[0])}</span><b>${esc(ALERT)}</b><span class="rc-st">${stars?'★'.repeat(stars)+'<u>'+'★'.repeat(5-stars)+'</u>':''}</span></div><p class="rc-q">${esc(quote.length>150?quote.slice(0,147)+'…':quote)}</p><p class="rc-a">@ItchyMastadon · Surface</p><div class="rc-f"><div class="rc-c">${chipsH}</div><em></em></div></div></div></div></div></div></div><details class="dc-og"><summary>Page tags behind this preview</summary><pre>${esc(tags)}</pre></details>`;
   dc._host=host;if(host.classList.contains('tell'))host.appendChild(dc);else host.after(dc);
-  dc.classList.remove('show');void dc.offsetWidth;dc.classList.add('show');
+  dc.classList.toggle('force',!!force);dc.classList.remove('show');void dc.offsetWidth;dc.classList.add('show');
 }
 
 function mkCopy(id,where){
@@ -1286,7 +1292,7 @@ function mkCopy(id,where){
     b.animate([{scale:1},{scale:.94},{scale:1.04},{scale:1}],{duration:450,easing:'cubic-bezier(.3,1.5,.5,1)'});
     const r=b.getBoundingClientRect();if(T.confetti)celebrate({x:r.left+r.width/2,y:r.top+r.height/2,mini:1});
     showDiscord(d,'https://'+URL0)};
-  u.onclick=()=>{if(where==='done'){if(T.underreview)preview(true)}else if(T.preview)preview(false)};
+  u.title='Open the example page';u.onclick=()=>{window.open('https://'+URL0+'?example','_blank','noopener')};
   return d;
 }
 const cpyBack=mkCopy('c-copy-back','back'),cpyDone=mkCopy('c-copy-done','done');
@@ -1300,9 +1306,9 @@ const tmsg=tell.querySelector('.tell-msg');
 function tellMsg(){const w=WHO.find(x=>x[0]===who);tmsg.value=SHARE[tone]+(w?w[2]:'')+'\nhttps://'+URL0}
 function tellReset(){who=null;$$('.tell-ch button',tell).forEach(b=>b.classList.remove('on'));tell.querySelector('.tell-care').innerHTML=CARE[Math.random()*CARE.length|0];tellMsg()}
 $$('.tell-ch button',tell).forEach(b=>b.onclick=()=>{who=who===b.dataset.w?null:b.dataset.w;$$('.tell-ch button',tell).forEach(x=>x.classList.toggle('on',x.dataset.w===who));tellMsg();b.animate([{scale:1},{scale:1.12},{scale:1}],{duration:300})});
-function tellCopy(btn,msg){copyText(tmsg.value);toast(msg);const r=btn.getBoundingClientRect();if(T.confetti)celebrate({x:r.left+r.width/2,y:r.top+r.height/2,mini:1});showDiscord(tell,tmsg.value)}
+function tellCopy(btn,msg,force){copyText(tmsg.value);toast(msg);const r=btn.getBoundingClientRect();if(T.confetti)celebrate({x:r.left+r.width/2,y:r.top+r.height/2,mini:1});showDiscord(tell,tmsg.value,force)}
 tell.querySelector('[data-tc]').onclick=e=>tellCopy(e.currentTarget,'Message copied');
-tell.querySelector('[data-td]').onclick=e=>tellCopy(e.currentTarget,'Copied. Paste it in Discord.');
+tell.querySelector('[data-td]').onclick=e=>tellCopy(e.currentTarget,'Copied. Paste it in Discord.',true);
 
 const REEL=[["Be the reason", "someone makes it home."], ["Be the one", "who answers the call."], ["Someone’s still waiting on a rescue.", "Be the team that comes."], ["Every rescue starts", "with someone who clicked “Accept.”"], ["Turn someone’s bad day in the ’verse", "into their best story."], ["Fly toward the trouble", "everyone else flies away from."], ["When someone goes down,", "be the one who shows up."], ["Somewhere out there,", "someone’s counting on you."], ["One alert. One team.", "One more life saved."], ["The next record", "could be yours to write."], ["Be someone’s", "second chance."], ["Behind every rescue", "is a team that chose to respond."], ["No one gets left behind,", "not on our watch."], ["Downed, alone, out of meds.", "Then someone like you showed up."], ["Out here, help doesn’t come by chance.", "It comes by choice."], ["A stranger in trouble.", "A team on the way."], ["From “I’m downed”", "to “I’m home.”"], ["Hold the line.", "Heal the fallen."], ["Every alert is a person.", "Every person is worth the risk."], ["Someone is bleeding out in Pyro.", "Who’s flying?"], ["Gear up.", "Someone’s waiting."], ["The fastest ship in the ’verse", "is the one that shows up."], ["They’ve never been so happy", "to hear “on our way.”"], ["No bounty. No cargo.", "Just someone who needed help."], ["Patch them up.", "Bring them home."], ["Medpens are cheap.", "Their lives are priceless."], ["We don’t ask who you are.", "Just where you are."], ["Operatives wanted.", "Heroes welcome."], ["Their ship is gone.", "Their hope doesn’t have to be."], ["To us, you’re family.", "To them, you’re a hero."], ["Not every hero carries a medpen.", "Some carry a rifle, too."], ["Their last hope", "could be your first mission."], ["Answer an alert.", "Change a night."], ["It’s not about the ship you fly.", "It’s who you fly it for."], ["Nobody plans to get downed.", "We plan to be there."], ["Rescue isn’t a job.", "It’s a promise."], ["Be the story", "they tell their friends."], ["Change “OMG, WTF?”", "to “OMW, ETA.”"], ["Downed is temporary.", "Forgotten isn’t. Be there."], ["Hit the alert.", "We’ll hit the throttle."], ["Cross the galaxy just to", "stab someone with a red pen."], ["They didn’t need a hero.", "Just someone who’d come. Be both."], ["Find them.", "Fix them."], ["Fewer respawns.", "More reunions."], ["30 dead NineTails.", "1 very alive client."]],still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let rc=Math.random()*REEL.length|0,rbusy=false;

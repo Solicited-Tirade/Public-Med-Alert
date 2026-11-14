@@ -289,12 +289,23 @@ body.sheet .sheet-h{display:flex;position:sticky;top:0;background:var(--panel);a
 #grid .card .ls::after{content:"View record \2192";right:20px;bottom:0;font-size:12.5px}
 #grid .card.cs-edit::after{right:20px;bottom:16px;z-index:1}
 #grid .card .ph{position:relative}
-#grid .card .ph::after{content:"View record \2192";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 12px var(--font-body);color:var(--oc);opacity:0;transition:opacity .2s ease;pointer-events:none}
+#grid .card .ph::after{content:"View record \2192";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;word-break:normal;font:600 12px var(--font-body);color:var(--oc);opacity:0;transition:opacity .2s ease;pointer-events:none}
 #grid .card:is(:hover,:has(.open:focus-visible)) :is(.ft>span,.ls>span:last-child){opacity:0}
 #grid .card:is(:hover,:has(.open:focus-visible)) .ph{color:transparent}
 #grid .card:is(:hover,:has(.open:focus-visible)) :is(.ft,.ls,.ph)::after,#grid .card:is(:hover,:has(.open:focus-visible)).cs-edit::after{opacity:1}
 .spot[data-open="false"]{cursor:pointer;transition:border-color .15s}
 .spot[data-open="false"]:hover{border-color:var(--acc)}
+.lede-q{margin-top:8px;color:var(--fg)}
+.shx{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:16px;padding:0 18px;border-radius:var(--r-sm);background:var(--cta-btn);color:var(--cta-btn-fg);font:600 15px var(--font-body);text-decoration:none;white-space:nowrap;transition:filter .15s}
+.shx{transition:filter .15s,box-shadow .2s}
+.shx:is(:hover,:focus-visible){filter:brightness(1.08);box-shadow:0 0 0 3px color-mix(in srgb,var(--star) 35%,transparent),0 8px 20px color-mix(in srgb,var(--star) 18%,transparent)}
+.shs{position:absolute;left:var(--x);top:var(--y);font-size:var(--s);line-height:1;color:var(--star);pointer-events:none;animation:shs .9s ease-in-out forwards}
+@keyframes shs{0%{transform:translate(-50%,-50%) scale(0) rotate(0);opacity:0}40%{transform:translate(-50%,-50%) scale(1) rotate(45deg);opacity:1}100%{transform:translate(-50%,-50%) scale(0) rotate(90deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.shs{display:none}}
+.intro .shx{width:max-content}
+:root[data-theme="red"] .shx{background:var(--c-white);color:var(--c-red-700)}
+@media (max-width:760px){.intro .shx{width:100%;justify-content:center}}
+.shx:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 .krow .kt{display:block;font-size:12.5px;line-height:1.4;color:var(--muted);white-space:nowrap}
 .krow .kt b{font-weight:600;color:var(--oc)}
 .krow .kt .kn,.cs-pass .pkd em{font-style:italic;color:var(--none-fg)}
@@ -381,7 +392,9 @@ body.sheet .filters .groups{display:flex}
 <div class="tx">
 <p class="eyebrow">VERIFIED RECORDS</p>
 <h1 id="ttl">MISSION TESTIMONIALS</h1>
-<p class="lede">Every record here was published by the client after their rescue, reviewed by the team lead, and stripped of anything that could identify the crew.</p>
+<p class="lede">We answer alerts around the clock. Each testimonial shown here is a real mission, in the words of the client who was there.</p>
+<p class="lede lede-q">Did one of our crews answer your alert?</p>
+<a class="shx" href="review-cta.html" data-pick>Share your experience <span aria-hidden="true">→</span></a>
 </div>
 <div class="stats" aria-live="polite">
 <button type="button" class="tile tx2" aria-expanded="false" aria-controls="xAvg"><h2>Average rating <span class="win">Last 7 days</span></h2><p class="big" id="sAvg">–</p><p class="stars" id="sAvgStars"></p><span class="xp" id="xAvg"></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
@@ -789,6 +802,26 @@ document.addEventListener('click',function(e){
   if(s&&f.contains(window.getSelection().anchorNode))return;
   var b=f.querySelector('.lgb');if(b)b.click();
 });
+</script>
+<script>
+(function(){
+var b=document.querySelector('.shx'),t=null,n=0;
+if(!b||!window.matchMedia)return;
+function spark(){
+ var e=Math.floor(Math.random()*4),p=Math.random()*100,x,y;
+ if(e===0){x=p;y=-6}else if(e===1){x=p;y=106}else if(e===2){x=-3;y=Math.random()*100}else{x=103;y=Math.random()*100}
+ var s=document.createElement('i');s.className='shs';s.setAttribute('aria-hidden','true');s.textContent='\u2726';
+ s.style.setProperty('--x',x+'%');s.style.setProperty('--y',y+'%');s.style.setProperty('--s',(10+Math.random()*8)+'px');
+ b.appendChild(s);setTimeout(function(){s.remove()},1000);
+}
+function start(){
+ if(t||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ spark();t=setInterval(spark,200);
+}
+function stop(){clearInterval(t);t=null}
+b.addEventListener('mouseenter',start);b.addEventListener('focus',start);
+b.addEventListener('mouseleave',stop);b.addEventListener('blur',stop);
+})();
 </script>
 </body>
 </html>

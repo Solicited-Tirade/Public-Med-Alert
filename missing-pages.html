@@ -73,10 +73,10 @@ h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase
 .stars{display:flex;gap:4px;font-size:22px}
 .quote{margin:14px 0 0;font:600 clamp(19px,1.8vw,24px)/1.35 var(--fh);letter-spacing:.02em;color:var(--c-white)}
 .quote::before{content:"“";display:block;height:20px;font:700 44px/1 var(--fh);color:var(--red)}
-.crew{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0;padding:0;list-style:none}
-.crew li{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px;border-radius:12px;background:color-mix(in srgb,var(--c-black) 25%,transparent);box-shadow:inset 0 0 0 1px var(--ln);font:700 13px var(--fh);letter-spacing:.08em;text-transform:uppercase;text-align:center}
-.crew li svg{width:22px;height:22px;fill:var(--red-hi);stroke:none}
-.crew li small{font:600 10px var(--fl);letter-spacing:.14em;color:var(--c-gray-500)}
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0;padding:0;list-style:none}
+.team li{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px;border-radius:12px;background:color-mix(in srgb,var(--c-black) 25%,transparent);box-shadow:inset 0 0 0 1px var(--ln);font:700 13px var(--fh);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.team li svg{width:22px;height:22px;fill:var(--red-hi);stroke:none}
+.team li small{font:600 10px var(--fl);letter-spacing:.14em;color:var(--c-gray-500)}
 .red{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,var(--c-black) 30%,transparent);border:1px dashed color-mix(in srgb,var(--c-white) 16%,transparent);font-size:13.5px;line-height:1.5;color:var(--c-gray-300)}
 .red b{color:var(--c-white)}
 .about{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
@@ -197,7 +197,7 @@ h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase
 .kd-hero .btn{grid-column:1/-1;justify-self:start}
 }
 @media (max-width:560px){
-.crew{grid-template-columns:1fr 1fr}
+.team{grid-template-columns:1fr 1fr}
 .stats{grid-template-columns:1fr}
 .steps{grid-template-columns:1fr}
 .bar .lk{display:none}
@@ -238,7 +238,7 @@ h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase
 <button role="tab" data-p="rec" aria-selected="true"><b>1</b>Public record</button>
 <button role="tab" data-p="fu" aria-selected="false"><b>2</b>Client follow-up</button>
 <button role="tab" data-p="fb" aria-selected="false"><b>3</b>Private feedback</button>
-<button role="tab" data-p="kd" aria-selected="false"><b>4</b>Crew kudos</button>
+<button role="tab" data-p="kd" aria-selected="false"><b>4</b>Team kudos</button>
 <button role="tab" data-p="jn" aria-selected="false"><b>5</b>How joining works</button>
 </nav>
 
@@ -249,23 +249,23 @@ h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase
 <div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> medrunner.space/verify/<b>agile-snail</b></span></div>
 <div class="rec-hero"><div class="tint"></div>
 <div class="rec-top"><span class="ver" id="ver"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg><span>Verified by the attending team lead</span></span><div class="rec-logo" role="img" aria-label="Medrunner"></div></div>
-<div class="rec-t"><span class="oc" id="octx">Rescued, stable</span><h2>Agile Snail</h2><p id="ocd">A Medrunner crew answered this alert · October 2026</p></div></div>
+<div class="rec-t"><span class="oc" id="octx">Rescued, stable</span><h2>Agile Snail</h2><p id="ocd">A Medrunner team answered this alert · October 2026</p></div></div>
 <div class="rv-band"><b>Under review.</b> Only the client can see this page right now. The team lead who attended still needs to check it before it goes public.</div>
 <div class="rec-grid">
 <div style="display:grid;gap:18px">
 <div class="card"><h3 class="h3">From the client</h3><div class="stars" aria-label="Rated 5 out of 5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><p class="quote" id="quote">Didn’t think anyone would come. They were calm, quick and got me back on my feet like it was nothing.</p>
 <p class="by"><span class="byn">— ItchyMastadon</span><span class="byt"><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg>RSI handle verified</span><span class="sm">The rescued client</span></p>
 <ul class="chips" style="margin-top:16px"><li class="k">Fast response</li><li class="k">Professional</li><li class="k">Patched me up</li><li class="k">Would call again</li></ul></div>
-<div class="card"><h3 class="h3">The crew</h3><ul class="crew"><li><svg><use href="#i-lead"/></svg>Team lead<small>LEAD</small></li><li><svg><use href="#i-pilot"/></svg>Pilot<small>PIL</small></li><li><svg><use href="#i-sec"/></svg>Security<small>SEC</small></li><li><svg><use href="#i-med"/></svg>Medic<small>MED</small></li></ul>
+<div class="card"><h3 class="h3">The team</h3><ul class="team"><li><svg><use href="#i-lead"/></svg>Team lead<small>LEAD</small></li><li><svg><use href="#i-pilot"/></svg>Pilot<small>PIL</small></li><li><svg><use href="#i-sec"/></svg>Security<small>SEC</small></li><li><svg><use href="#i-med"/></svg>Medic<small>MED</small></li></ul>
 <p class="red"><svg class="ic" viewBox="0 0 24 24" style="color:var(--c-gray-400)"><use href="#i-info"/></svg><span><b>Shown by role, not name.</b> 2 details were hidden for privacy: <b>a player name</b> and <b>a location</b>.</span></p></div>
 </div>
 <div style="display:grid;gap:18px;align-content:start">
-<div class="card about"><div class="rec-logo" role="img" aria-label="Medrunner"></div><div><h3 class="h3" style="margin:0">What is Medrunner?</h3><p>A volunteer emergency response crew in Star Citizen. Get downed, send an alert, and a squad comes to bring you back.</p></div></div>
-<div class="card"><h3 class="h3">Need a rescue?</h3><p class="muted" style="margin:0;font-size:14px;line-height:1.55">Downed and out of options? Send an alert and a crew will respond.</p>
+<div class="card about"><div class="rec-logo" role="img" aria-label="Medrunner"></div><div><h3 class="h3" style="margin:0">What is Medrunner?</h3><p>A volunteer emergency response team in Star Citizen. Get downed, send an alert, and a squad comes to bring you back.</p></div></div>
+<div class="card"><h3 class="h3">Need a rescue?</h3><p class="muted" style="margin:0;font-size:14px;line-height:1.55">Downed and out of options? Send an alert and a team will respond.</p>
 <div class="ctas"><a class="btn pri" href="#">Call Medrunner<svg><use href="#i-arw"/></svg></a><a class="btn sec" href="#jn">Join Medrunner</a></div></div>
 <div class="card"><h3 class="h3">Share this rescue</h3><div class="share"><button class="btn sec" type="button">Copy link</button><button class="btn sec" type="button">Discord</button></div></div>
 </div></div>
-<div class="rec-ft"><span>Published with the client’s consent. Their handle is shown so anyone can check it; crew appear by role only.</span><span><a href="#">How public records work</a> · <a href="#">Report this page</a></span></div>
+<div class="rec-ft"><span>Published with the client’s consent. Their handle is shown so anyone can check it; team members appear by role only.</span><span><a href="#">How public records work</a> · <a href="#">Report this page</a></span></div>
 </div>
 </section>
 
@@ -282,7 +282,7 @@ h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase
 
 <div class="row"><div><b>Edit your testimonial</b><span>Changes go back to the team lead for a quick check.</span></div><button class="btn sec" type="button"><svg><use href="#i-edit"/></svg>Edit</button></div>
 <div class="row"><div><b>Request removal</b><span>Records stay up unless removed. Our Moderation team handles takedowns.</span></div><button class="btn dan" type="button" id="rmb">Request</button></div>
-<div class="conf" id="conf" role="alertdialog" aria-label="Confirm removal">Ask Moderation to take down the public record for Agile Snail? Once removed, the link stops working. Your rating and kudos still reach the crew.<div><button class="btn dan" type="button" id="rmy">Send request</button><button class="ghost" type="button" id="rmn">Keep it</button></div></div>
+<div class="conf" id="conf" role="alertdialog" aria-label="Confirm removal">Ask Moderation to take down the public record for Agile Snail? Once removed, the link stops working. Your rating and kudos still reach the team.<div><button class="btn dan" type="button" id="rmy">Send request</button><button class="ghost" type="button" id="rmn">Keep it</button></div></div>
 </div></div>
 </div></div></div>
 </section>
@@ -296,13 +296,13 @@ h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase
 </div></div>
 </section>
 
-<section class="pg" id="p-kd" aria-label="Crew kudos">
+<section class="pg" id="p-kd" aria-label="Team kudos">
 <p class="why"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg><span><b>Who sees this:</b> each operator, privately. Kudos go to the whole team on a rescue, and everyone who was on it gets credit. Counts are sample data.</span></p>
 <div class="frame"><div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> staff.medrunner.space/<b>me/kudos</b></span></div>
 <div class="kd-hero"><div class="av" role="img" aria-label="Your avatar"></div><div><span class="code">Operator</span><h2>Your kudos</h2><p>Every thank-you from rescues you were part of.</p></div></div>
 <div class="stats"><div class="stat"><b>48</b><span>Team kudos you shared</span></div><div class="stat"><b>21</b><span>Rescues with kudos</span></div><div class="stat"><b>4.8</b><span>Average rating</span></div></div>
 <div class="kd-grid">
-<div class="card"><h3 class="h3">Most given</h3><div class="bars"><div><span>Professional</span><i style="--w:92%"></i><em>14</em></div><div><span>Fast response</span><i style="--w:72%"></i><em>11</em></div><div><span>Patched me up</span><i style="--w:58%"></i><em>9</em></div><div><span>Friendly crew</span><i style="--w:38%"></i><em>6</em></div><div><span>Didn’t give up</span><i style="--w:26%"></i><em>4</em></div></div>
+<div class="card"><h3 class="h3">Most given</h3><div class="bars"><div><span>Professional</span><i style="--w:92%"></i><em>14</em></div><div><span>Fast response</span><i style="--w:72%"></i><em>11</em></div><div><span>Patched me up</span><i style="--w:58%"></i><em>9</em></div><div><span>Friendly team</span><i style="--w:38%"></i><em>6</em></div><div><span>Didn’t give up</span><i style="--w:26%"></i><em>4</em></div></div>
 <h3 class="h3" style="margin-top:22px">By role</h3><ul class="chips"><li class="k">Medic<em>27</em></li><li class="k">Security<em>13</em></li><li class="k">Team lead<em>8</em></li></ul></div>
 <div class="card"><h3 class="h3">Recent thank-yous</h3><ul class="ty"><li>“Calm the whole time. Made a bad night a great story.”<span>A client · Rescued · 3 days ago</span></li><li>“Didn’t think anyone would come. They did, fast.”<span>A client · Rescued · last week</span></li><li>“Couldn’t save me, but they tried everything. Respect.”<span>A client · Did not survive · 2 weeks ago</span></li></ul></div>
 </div></div>
@@ -312,7 +312,7 @@ h1{margin:0;font:700 clamp(36px,5.4vw,58px)/1 var(--fh);text-transform:uppercase
 <p class="why"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg><span><b>Who sees this:</b> anyone who clicks Join, from the review pop-up, a public record or Available roles. Kept deliberately general to stay within the ERG.</span></p>
 <div class="frame"><div class="bar"><i></i><i></i><i></i><span><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span> medrunner.space/<b>join</b></span></div>
 <div class="jn-hero"><span class="code">Join Medrunner</span><h2>From “I’m in” to your first rescue</h2><p>No ship and no experience needed. Just a good attitude and a love of helping people out of a jam.</p><div class="ctas"><a class="btn pri" href="#">Apply on RSI<svg><use href="#i-arw"/></svg></a><a class="btn sec" href="choose-role.html">See available roles</a></div></div>
-<ol class="steps"><li><span class="n">01</span><b>Apply on RSI</b><p>Send an application through the Medrunner organization page.</p></li><li><span class="n">02</span><b>We review it</b><p>Our HR team looks it over and gets back to you.</p></li><li><span class="n">03</span><b>Welcome aboard</b><p>Join us on Discord, say hi and meet the crew.</p></li><li><span class="n">04</span><b>Your first rescue</b><p>Jump in with a squad and see what clicks.</p></li></ol>
+<ol class="steps"><li><span class="n">01</span><b>Apply on RSI</b><p>Send an application through the Medrunner organization page.</p></li><li><span class="n">02</span><b>We review it</b><p>Our HR team looks it over and gets back to you.</p></li><li><span class="n">03</span><b>Welcome aboard</b><p>Join us on Discord, say hi and meet the team.</p></li><li><span class="n">04</span><b>Your first rescue</b><p>Jump in with a squad and see what clicks.</p></li></ol>
 <div class="jn-grid">
 <div class="card"><h3 class="h3">What you’ll need</h3><ul class="need"><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>To be 18 or older</div></li><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>A Star Citizen account<span>Any package works.</span></div></li><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>Discord<span>That’s where squads team up.</span></div></li><li><svg class="ic" viewBox="0 0 24 24"><use href="#i-check"/></svg><div>A good attitude<span>We’ll help with the rest.</span></div></li></ul></div>
 <div class="card"><h3 class="h3">Not sure yet?</h3><p class="muted" style="margin:0;font-size:14.5px;line-height:1.6">See the roles you could step into, or read the questions people usually ask before they apply.</p><div class="ctas"><a class="btn sec" href="choose-role.html">Available roles</a><a class="btn sec" href="choose-role.html#faq">Read the FAQ</a></div></div>
@@ -326,7 +326,7 @@ const seg=(el,fn)=>$$('button',el).forEach(b=>b.onclick=()=>{$$('button',el).for
 function go(p){$$('#nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.p===p));$$('.pg').forEach(s=>s.classList.toggle('on',s.id==='p-'+p));try{history.replaceState(null,'','#'+p);localStorage.setItem('mr-gaps',p)}catch(_){}}
 $$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.p));
 $('#nav').addEventListener('keydown',e=>{const bs=$$('#nav button'),i=bs.findIndex(b=>b.getAttribute('aria-selected')==='true'),d={ArrowRight:1,ArrowLeft:-1}[e.key];if(!d)return;const n=bs[(i+d+bs.length)%bs.length];n.focus();go(n.dataset.p)});
-const OC={ok:['var(--ok)','Rescued, stable','A Medrunner crew answered this alert · October 2026','Didn’t think anyone would come. They were calm, quick and got me back on my feet like it was nothing.'],died:['var(--died)','Did not survive','A Medrunner crew answered this alert · October 2026','Couldn’t save me, but they never stopped trying. That counts for a lot.'],cancel:['var(--cancel)','Cancelled by client','A Medrunner crew was on the way · October 2026','Respawned before they arrived, but they checked in anyway. I’ll call again.']};
+const OC={ok:['var(--ok)','Rescued, stable','A Medrunner team answered this alert · October 2026','Didn’t think anyone would come. They were calm, quick and got me back on my feet like it was nothing.'],died:['var(--died)','Did not survive','A Medrunner team answered this alert · October 2026','Couldn’t save me, but they never stopped trying. That counts for a lot.'],cancel:['var(--cancel)','Cancelled by client','A Medrunner team was on the way · October 2026','Respawned before they arrived, but they checked in anyway. I’ll call again.']};
 seg($('#recoc'),v=>{const o=OC[v],f=$('#recf');f.style.setProperty('--oc',o[0]);$('#octx').textContent=o[1];$('#ocd').textContent=o[2];$('#quote').textContent=o[3]});
 seg($('#recst'),v=>{const f=$('#recf'),r=v==='rv';f.classList.toggle('st-rv',r);const ver=$('#ver');ver.classList.toggle('rv',r);ver.querySelector('use').setAttribute('href',r?'#i-clock':'#i-shield');ver.querySelector('span').textContent=r?'Under review · only you can see this':'Verified by the attending team lead'});
 const I=(id)=>`<svg viewBox="0 0 24 24"><use href="#${id}"/></svg>`;
@@ -334,7 +334,7 @@ const FU={
 rv:{steps:[['done','Submitted','You chose to make this rescue public.'],['now','Team lead review','The team lead who attended is checking it. This usually takes a little while.'],['todo','Published','Anyone with the link can see it.']],msg:`<div class="msg wa">${I('i-clock')}<div><b>In review.</b> We’ll let you know when it’s live. Until then, only you can see the page.</div></div>`},
 ok:{steps:[['done','Submitted','You chose to make this rescue public.'],['done','Team lead review','Approved as you sent it.'],['done','Published','Live for anyone with the link.']],msg:`<div class="msg ok">${I('i-check')}<div><b>It’s live.</b> Share your link whenever you like.<div style="margin-top:10px"><a class="btn pri" href="#" style="padding:9px 14px">View public page</a></div></div></div>`},
 ed:{steps:[['done','Submitted','You chose to make this rescue public.'],['done','Team lead review','Approved with a couple of privacy edits.'],['done','Published','Live for anyone with the link.']],msg:`<div class="msg ok">${I('i-check')}<div><b>Live, with small edits.</b> The team lead tidied two things before publishing:<ul class="diff"><li><s>a player name</s><ins>Security</ins></li><li><s>a location in your message</s><ins>[location hidden]</ins></li></ul></div></div>`},
-no:{steps:[['done','Submitted','You chose to make this rescue public.'],['now warn','Team lead review','Not published this time.'],['todo','Published','—']],msg:`<div class="msg no">${I('i-x')}<div><b>Not published.</b> The team lead felt this one shouldn’t go public. Your rating and kudos still reached the crew, and you can always say thanks privately.</div></div>`}};
+no:{steps:[['done','Submitted','You chose to make this rescue public.'],['now warn','Team lead review','Not published this time.'],['todo','Published','—']],msg:`<div class="msg no">${I('i-x')}<div><b>Not published.</b> The team lead felt this one shouldn’t go public. Your rating and kudos still reached the team, and you can always say thanks privately.</div></div>`}};
 function fu(v){const d=FU[v];$('#trk').innerHTML=d.steps.map(([c,t,p])=>`<li class="${c}"><span class="dot">${I(c.startsWith('done')?'i-check':c.startsWith('now')?(c.includes('warn')?'i-x':'i-clock'):'i-shield')}</span><div><b>${t}</b><p>${p}</p></div></li>`).join('');$('#fumsg').innerHTML=d.msg}
 seg($('#fust'),fu);fu('rv');
 $$('.tg').forEach(t=>t.onclick=()=>t.setAttribute('aria-checked',t.getAttribute('aria-checked')!=='true'));
@@ -352,7 +352,7 @@ function fbRender(){$('#fbl').innerHTML=FB.map((f,i)=>`<li><button class="fb-it"
  <div class="fb-meta"><span>Outcome <b>${f.o}</b></span><span>Rating <b>${f.r}</b></span><span>Received <b>${f.when}</b></span></div>
  <div><h3 class="h3">Flagged by the client</h3><ul class="chips neg">${f.neg.map(n=>`<li>${n}</li>`).join('')}</ul></div>
  <div><h3 class="h3">In their words</h3><p class="note">${f.note}</p></div>
- <div><h3 class="h3">Who can see this</h3><div class="who"><span>Staff</span><span class="no">The attending team lead</span><span class="no">The rest of the crew</span><span class="no">The public</span></div></div>
+ <div><h3 class="h3">Who can see this</h3><div class="who"><span>Staff</span><span class="no">The attending team lead</span><span class="no">The rest of the team</span><span class="no">The public</span></div></div>
  <div><h3 class="h3">Internal note</h3><textarea class="inote" placeholder="Add a note for staff. The client never sees this."></textarea></div>
  <div class="acts"><button class="btn sec" type="button" data-s="ack">Acknowledge</button><button class="btn sec" type="button" data-s="done">Mark resolved</button><button class="ghost" type="button">Escalate to Moderation</button></div>
  <ul class="log"><li><b>Received</b> · ${f.when}</li>${f.st!=='new'?'<li><b>Acknowledged</b> by staff</li>':''}${f.st==='done'?'<li><b>Resolved</b> · discussed in team debrief</li>':''}</ul>`;

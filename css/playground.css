@@ -136,7 +136,7 @@ button[disabled]{opacity:.4;cursor:not-allowed}
 /* ---------- sections: shared ---------- */
 #client{--ac:var(--c-green-400);--acr:49 196 141}
 #notify{--ac:var(--c-blue-500);--acr:63 131 248}
-#crew{--ac:var(--c-amber-500);--acr:245 158 11}
+#team{--ac:var(--c-amber-500);--acr:245 158 11}
 #review{--ac:var(--c-violet-400);--acr:167 139 250}
 #staff{--ac:var(--c-red-500);--acr:240 82 82}
 #export{--ac:var(--c-cyan-400);--acr:34 211 238}
@@ -367,7 +367,7 @@ section.sf-on .sh-hit,html[data-role]:not([data-role=all]) section[data-vis]:not
 /* everything around it is playground context: faded until you point at it */
 .noise,#export>.sec-intro,#export .sh-row>.rounded{opacity:.4;transition:opacity .25s ease}
 .noise:hover,.noise:focus-within,#export>.sec-intro:hover,#export>.sec-intro:focus-within,#export .sh-row>.rounded:hover{opacity:1}
-/* milestones title line also carries the crew kudos */
+/* milestones title line also carries the team kudos */
 .ms-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
 .ms-acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-left:auto}
 @media(max-width:640px){
@@ -698,19 +698,19 @@ section[data-vis]:not(#export)>.sec-wrap>.sec-body{padding:12px}
 .kghost{position:absolute;z-index:60;margin:0;pointer-events:none;transform-origin:50% 50%;will-change:transform,opacity}
 .ksp{position:absolute;z-index:61;pointer-events:none;font-weight:800;line-height:1;will-change:transform,opacity}
 .rchip,.pubview .kchip{transition:box-shadow .2s,opacity .2s}
-.pubview[data-hl] .rchip,.pubview[data-hl] .fb-row .kchip,.pubview[data-hl] .pv-crewk .kchip{opacity:.45}
+.pubview[data-hl] .rchip,.pubview[data-hl] .fb-row .kchip,.pubview[data-hl] .pv-teamk .kchip{opacity:.45}
 .pubview[data-hl^="k-"] .kchip:hover,.pubview[data-hl^="r-"] .rchip:hover{opacity:1}
 .pubview[data-hl=k-all] .rchip,.pubview[data-hl=k-medic] .rchip[data-r=medic],.pubview[data-hl=k-pilot] .rchip[data-r=pilot],.pubview[data-hl=k-sec] .rchip[data-r=sec],.pubview[data-hl=k-tl] .rchip[data-r=tl]{opacity:1;box-shadow:0 0 0 2px color-mix(in srgb,var(--c-amber-500) 60%,transparent),0 0 14px color-mix(in srgb,var(--c-amber-500) 45%,transparent)}
 .pubview[data-hl^="r-"] .fb-row .kchip[data-r=all],.pubview[data-hl=r-medic] .fb-row .kchip[data-r=medic],.pubview[data-hl=r-pilot] .fb-row .kchip[data-r=pilot],.pubview[data-hl=r-sec] .fb-row .kchip[data-r=sec],.pubview[data-hl=r-tl] .fb-row .kchip[data-r=tl]{opacity:1;box-shadow:0 0 0 2px color-mix(in srgb,var(--c-green-400) 60%,transparent),0 0 14px color-mix(in srgb,var(--c-green-400) 45%,transparent)}
-.pv-crewk{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:10px}
+.pv-teamk{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:10px}
 .pv-ckl{position:relative;color:var(--c-amber-500);font:600 10.5px/1.2 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;cursor:help;outline:none;border-bottom:1px dotted color-mix(in srgb,var(--c-amber-500) 60%,transparent)}
 .pv-ckl .ktip{border-color:color-mix(in srgb,var(--c-amber-500) 60%,transparent);color:var(--c-amber-200);text-transform:none;letter-spacing:0;font-family:var(--font-body)}
 .pv-ckl .ktip b{color:var(--c-amber-400)}
 .pv-ckl .ktip::after{border-color:color-mix(in srgb,var(--c-amber-500) 60%,transparent)}
 .pv-ckl:hover .ktip,.pv-ckl:focus-visible .ktip{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .15s}
-.kchip.kcrew{background:transparent;border:1px solid var(--c-amber-600);color:var(--c-amber-400)}
-.kchip.kcrew .ktip{border-color:color-mix(in srgb,var(--c-amber-500) 60%,transparent);color:var(--c-amber-200)}
-.kchip.kcrew .ktip::after{border-color:color-mix(in srgb,var(--c-amber-500) 60%,transparent)}
+.kchip.kteam{background:transparent;border:1px solid var(--c-amber-600);color:var(--c-amber-400)}
+.kchip.kteam .ktip{border-color:color-mix(in srgb,var(--c-amber-500) 60%,transparent);color:var(--c-amber-200)}
+.kchip.kteam .ktip::after{border-color:color-mix(in srgb,var(--c-amber-500) 60%,transparent)}
 .kcp{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--c-amber-700);border-radius:.5rem;background:none;color:var(--c-amber-400);font:500 13px/1.4 var(--font-body);cursor:pointer}
 .kcp svg{width:14px;height:14px}
 .kcp:hover{border-color:var(--c-amber-500)}

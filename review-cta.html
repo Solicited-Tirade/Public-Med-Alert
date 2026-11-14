@@ -228,6 +228,8 @@ textarea:focus{background:color-mix(in srgb,var(--c-white) 14%,transparent);box-
 .pvp.rev .pvh{position:relative;margin:6px 0 14px;padding:14px 14px 12px;border-radius:12px;border:1.5px dashed var(--c-amber-500);background:color-mix(in srgb,var(--c-amber-500) 6%,transparent)}
 .pvp.rev .pvh .sm{margin:4px 0 0}
 .pvp .rv{display:none}
+.pv-c{display:inline-block;padding:0 8px;border-radius:4px;border:1px solid var(--c-gray-500);font:italic 500 12px var(--fb);color:var(--c-gray-400)}
+.pv-c svg{width:11px;height:11px;margin:-2px 4px 0 0;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .pv-ex2{margin-left:8px;font:600 11px var(--fl);letter-spacing:.14em;text-transform:uppercase;color:var(--c-gray-400)}
 .pv-ex{display:inline-block;margin:0 0 8px;padding:3px 10px;border-radius:5px;font:700 11px var(--fl);letter-spacing:.18em;text-transform:uppercase;color:#1f1300;background:#fbbf24;box-shadow:0 3px 10px rgba(0,0,0,.4);transform:rotate(-3deg)}
 .pvp.rev .rv{position:absolute;top:-10px;left:12px;display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:999px;background:var(--c-ink-900);box-shadow:inset 0 0 0 1.5px var(--c-amber-500);font:700 10.5px var(--fq);letter-spacing:.14em;text-transform:uppercase;color:var(--c-amber-400)}
@@ -330,6 +332,7 @@ h2{font-size:clamp(28px,9vw,34px)}
 .below{width:min(500px,100%);margin:16px auto auto;display:grid;gap:12px}
 .below:empty{display:none}
 .slot{display:grid;gap:12px;margin-top:14px;text-align:left}
+.slot>*{min-width:0}
 .slot:empty{display:none}
 .pp .slot{margin:12px 0 0}
 .done .slot{margin:16px 0 4px}
@@ -424,7 +427,7 @@ h2{font-size:clamp(28px,9vw,34px)}
 .tell-ch{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .tell-ch button{padding:5px 11px;border-radius:999px;background:color-mix(in srgb,var(--c-white) 10%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-white) 35%,transparent);font:600 12px var(--fl);color:var(--c-white);transition:background .2s,color .2s}
 .tell-ch button.on{background:var(--c-white);color:var(--c-red-700)}
-.tell-msg{display:block;width:100%;margin-top:10px;min-height:76px;resize:vertical;border:0;border-radius:12px;padding:10px 12px;background:color-mix(in srgb,var(--c-white) 10%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-white) 30%,transparent);color:var(--c-white);font:400 13.5px/1.45 var(--fb);outline:none}
+.tell-msg{field-sizing:content;overflow:hidden;display:block;width:100%;margin-top:10px;min-height:76px;resize:vertical;border:0;border-radius:12px;padding:10px 12px;background:color-mix(in srgb,var(--c-white) 10%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-white) 30%,transparent);color:var(--c-white);font:400 13.5px/1.45 var(--fb);outline:none}
 .tell-act{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .tell-act button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 10px;border-radius:11px;font:700 12.5px var(--fq);letter-spacing:.05em;text-transform:uppercase}
 .tell-act svg{width:17px;height:17px;flex:none}
@@ -442,6 +445,7 @@ h2{font-size:clamp(28px,9vw,34px)}
 .rec-i{display:flex;flex-direction:column;justify-content:center;height:2.3em}
 .rec-i span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .join{display:grid;grid-template-columns:auto 1fr;gap:12px 14px;align-items:center;padding:14px 16px;border-radius:16px;background:linear-gradient(90deg,color-mix(in srgb,var(--c-red-600) 20%,transparent),color-mix(in srgb,var(--c-red-950) 60%,transparent));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-red-500) 50%,transparent),inset 4px 0 0 var(--c-red-600);color:var(--c-white);text-align:left}
+.join>div{min-width:0}
 .join-h{margin:0;font:700 22px/1.05 var(--fh);text-transform:uppercase;letter-spacing:.02em}
 .join-p{margin:4px 0 0;font:400 13px/1.45 var(--fb);color:var(--c-red-200)}
 .join-cta{grid-column:1/-1;display:grid;border-radius:12px;background:var(--c-red-600);color:var(--c-white);text-decoration:none;font:700 14px var(--fq);letter-spacing:.06em;text-transform:uppercase;box-shadow:0 10px 24px color-mix(in srgb,var(--c-red-600) 35%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--c-white) 25%,transparent);transition:background .2s}
@@ -499,6 +503,10 @@ h2{font-size:clamp(28px,9vw,34px)}
 .pz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
 .pz-g{--gc:var(--c-red-400);padding:8px 10px 10px;border-radius:12px;background:linear-gradient(180deg,color-mix(in srgb,var(--gc) 11%,var(--c-ink-900)),var(--c-ink-900) 65%);border:1px solid color-mix(in srgb,var(--gc) 40%,var(--c-ink-800));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--gc) 30%,transparent)}
 .pz-g h5{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gc)}
+.pz-all{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font:600 10px var(--fl);letter-spacing:.08em}
+.pz-al{color:var(--c-gray-400);margin-right:2px;font-weight:500}
+.pz-all button{padding:2px 8px;border-radius:999px;border:0;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:uppercase;color:var(--gc);background:color-mix(in srgb,var(--gc) 14%,transparent)}
+.pz-all button:hover,.pz-all button:focus-visible{background:color-mix(in srgb,var(--gc) 30%,transparent);outline:none}
 .pz-g h5::before{content:"";flex:none;width:8px;height:8px;border-radius:2px;background:var(--gc);box-shadow:0 0 8px color-mix(in srgb,var(--gc) 70%,transparent)}
 .pz-g[data-g=intro]{--gc:var(--c-amber-400)}
 .pz-g[data-g=front]{--gc:var(--c-red-400)}
@@ -900,7 +908,7 @@ a,button,select,summary,label,input,textarea,[role=button]{touch-action:manipula
 <div class="pph"><button class="bk" data-back><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>Back</button><b>Make This Rescue Public?</b></div>
 <div class="prt"><span>Your rating</span><span id="prb"></span></div>
 <div class="info"><b><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1-8.5 15a12 12 0 0 1-8.5-15a12 12 0 0 0 8.5-3"/><circle cx="12" cy="11" r="1"/><path d="M12 12v2.5"/></g></svg>Before anything is published</b><p>Team member names become <span class="rtag">[Role]</span>, and anything that breaks opsec is <span class="ctag">[Redacted]</span>.</p><p>Your team lead reviews it with input from the team. If approved, others will see this. Either way, we’ll let you know.</p></div>
-<div class="mh"><b><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></svg>Your messages</b><p>Use the eye to hide any of your own messages. You'll be asked why, so the reviewer understands.</p></div>
+<div class="mh"><b><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></svg>Your messages</b><p>Use the eye to hide any of your own messages. You'll be asked why, so the reviewer understands. Locked redactions are applied by the team and stay in place either way.</p></div>
 <div id="msgs"></div>
 <label class="cons" id="consl"><input type="checkbox" id="cons" name="consent"><span>I understand my RSI handle, <b>ItchyMastadon</b>, will be shown publicly on this record.</span></label>
 <p class="cerr" id="cerr"></p>
@@ -1075,7 +1083,7 @@ const EYE='<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="cu
 const pp=$('#pp'),pop=$('#pop'),cons=$('#cons');
 let msgs=[],pubOn=false;
 function rMsgs(){
-  $('#msgs').innerHTML=msgs.map((x,i)=>`<div class="msg${x.h?' hid':''}"><button class="eye" data-i="${i}" aria-label="${x.h?'Show again':'Hide from public'}" title="${x.h?'Show again':'Hide from public'}">${x.h?EYEOFF:EYE}</button><time>${x.t}</time><div><span class="tx">${esc(x.m)}</span>${x.h?`<span class="why">Hidden · ${esc(x.h.join(', '))}</span>`:''}</div></div>`).join('');
+  $('#msgs').innerHTML=msgs.map((x,i)=>`<div class="msg${x.h?' hid':''}"><button class="eye" data-i="${i}" aria-label="${x.h?'Show again':'Hide from public'}" title="${x.h?'Show again':'Hide from public'}">${x.h?EYEOFF:EYE}</button><time>${x.t}</time><div><span class="tx">${exRed(x.m)}</span>${x.h?`<span class="why">Hidden · ${esc(x.h.join(', '))}</span>`:''}</div></div>`).join('');
   $$('#msgs .eye').forEach(b=>b.onclick=e=>{e.stopPropagation();const x=msgs[+b.dataset.i];if(x.h){x.h=null;x.n='';rMsgs();return}askHide(b,x)});
 }
 function askHide(b,x){
@@ -1093,6 +1101,8 @@ document.addEventListener('mousedown',e=>{if(pop.classList.contains('on')&&!pop.
 m.addEventListener('scroll',hidePop);
 cons.onchange=()=>{if(cons.checked){$('#cerr').textContent='';$('#consl').classList.remove('bad')}};
 function rateHTML(){return sys==='stars'?(srate?'★'.repeat(srate)+'☆'.repeat(5-srate)+` ${srate}/5`:'<span class="mu">No rating</span>'):(trate?(trate==='up'?'Thumbs up':'Thumbs down'):'<span class="mu">No rating</span>')}
+function pvc(l){return `<span class="pv-c" title="Redacted by the team. Your choices don’t change this."><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>[${l}]<span class="sr"> redacted by the team</span></span>`}
+function exRed(m){return esc(m).replace(/xX_Reaper_Xx/g,pvc('Third-party player')).replace(/https?:\/\/\S+/g,pvc('Clip / recording links'))}
 function preview(rev){
   hidePop();const o=OUT[tone];const ks=o.kudos.slice(0,3),top=ks[0],mode='pos',EXR=`<span class="rb rbf" style="--rc:${RC[4]}"><i></i>★★★★★ 5/5 <small>${WORD[4]}</small></span>`,EXT='Clear instructions from the first message. I felt like I was in good hands from the moment the alert was accepted.';
   $('#pvp').classList.toggle('rev',!!rev);
@@ -1102,7 +1112,7 @@ function preview(rev){
 <dt>Rating</dt><dd>${EXR}</dd>
 ${mode==='neg'?`<dt>What went wrong</dt><dd>${ks.length?ks.map(k=>`<span class="kc ng">${K[k].i}${esc(k)}</span>`).join(''):'<span class="mu">None</span>'}<span class="fb">Private. Only the team sees this.</span></dd>`:`<dt>Kudos</dt><dd>${ks.length?ks.map(k=>`<span class="kc${k===top?' tp':''}">${K[k].i}${esc(k)}</span>`).join(''):'<span class="mu">None</span>'}</dd>`}
 <dt>Testimonial</dt><dd><i>"${EXT}"</i></dd>
-<dt class="pmrow">Transcript</dt><dd class="pmrow">${MSG[tone].map(([t,mm])=>`<div class="pm"><time>${t}</time>${esc(mm)}</div>`).join('')}</dd></dl>
+<dt class="pmrow">Transcript</dt><dd class="pmrow">${MSG[tone].map(([t,mm])=>`<div class="pm"><time>${t}</time>${exRed(mm)}</div>`).join('')}</dd></dl>
 <div class="bar"><button class="ib" data-pvx>${rev?'Close':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back to editing</span>'}</button>${rev?'':`<button class="sbm pvs" data-pvsub><span>Submit</span><span class="thm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span></button>`}</div>`;
   $('#pv').classList.add('on');$('[data-pvx]').onclick=()=>$('#pv').classList.remove('on');
   const ps=$('[data-pvsub]');if(ps)ps.onclick=()=>{if((!T.rating||rated())&&(!T.consent||cons.checked)){launch(ps,()=>$('#pv').classList.remove('on'))}else{$('#pv').classList.remove('on');submit()}};
@@ -1211,7 +1221,7 @@ $('#thx').onclick=()=>{if(!need())finish('thx')};
 
 const TOG=[
 ['pill','Status pill','front',1],['heading','Heading','front',1],['lead','Lead line','front',1],['rating','Rating','front',1],['ratepill','Rating pill','front',1],['switcher','Rating style arrows','front',1],['kudos','Kudos / What went wrong?','front',1],['topkudo','Top kudo star','front',1],['testimonial','Testimonial','front',1],['public','Make This Rescue Public?','front',1],['thanks','Just say thanks!','front',1],['notnow','Not now','front',1],
-['prate','Your rating','back',1],['info','Before anything is published','back',1],['transcript','Transcript (your messages)','back',0],['redact','Player redactions (eye)','back',0],['consent','Handle checkbox','back',1],['preview','Preview public page','back',1],['copyback','Copy link','back',1],['foot','Review time and takedown note','back',1],['emerg','Emergency link','back',1],
+['prate','Your rating','back',1],['info','Before anything is published','back',1],['transcript','Transcript (your messages)','back',1],['redact','Player redactions (eye)','back',1],['consent','Handle checkbox','back',1],['preview','Preview public page','back',1],['copyback','Copy link','back',1],['foot','Review time and takedown note','back',1],['emerg','Emergency link','back',1],
 ['summary','Summary','done',1],['permalink','Permalink and copy link','done',1],['underreview','Under review preview','done',1],['confetti','Confetti','done',1],
 ['discord','Discord preview','add',0],['sharecare','Why sharing is caring','add',1],['team','Team thanks back','add',0],['proof','Team milestones','add',0],['cert','Rescue certificate','add',0],['badge','Discord badge','add',0],['pay','Pay it forward','add',0],['joinsub','Join Medrunner subtext','add',0],['tint','Shade photo by outcome','front',0],['pillin','Status on photo','front',1],['parallax','Parallax motion','intro',1]];
 const TOGN=Object.fromEntries(TOG.map(x=>[x[0],x[1]]));
@@ -1303,7 +1313,9 @@ const CARE=['Every shared rescue shows a new player that help is one call away.'
 let who=null;
 const tell=el('tell','c-tell',`<div class="tell-h">${SVG('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/>')}Tell a friend</div><p class="tell-care"></p><div class="tell-who">Who would you send this to?</div><div class="tell-ch">${WHO.map(w=>`<button type="button" data-w="${w[0]}">${w[1]}</button>`).join('')}</div><textarea class="tell-msg" rows="3" aria-label="Message to share"></textarea><div class="tell-act"><button type="button" class="tc" data-tc>${SVG('<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>')}<span>Copy message</span></button><button type="button" class="td" data-td>${DSC}<span>Share on Discord</span></button></div>`);
 const tmsg=tell.querySelector('.tell-msg');
-function tellMsg(){const w=WHO.find(x=>x[0]===who);tmsg.value=SHARE[tone]+(w?w[2]:'')+'\nhttps://'+URL0}
+const tfit=()=>{if(!tmsg.offsetWidth)return;tmsg.style.height='auto';tmsg.style.height=(tmsg.scrollHeight+2)+'px'};
+tmsg.addEventListener('input',tfit);try{new ResizeObserver(()=>{if(tmsg.offsetWidth&&Math.abs(tmsg.scrollHeight+2-tmsg.offsetHeight)>2)tfit()}).observe(tmsg)}catch(_){}
+function tellMsg(){const w=WHO.find(x=>x[0]===who);tmsg.value=SHARE[tone]+(w?w[2]:'')+'\nhttps://'+URL0;tfit()}
 function tellReset(){who=null;$$('.tell-ch button',tell).forEach(b=>b.classList.remove('on'));tell.querySelector('.tell-care').innerHTML=CARE[Math.random()*CARE.length|0];tellMsg()}
 $$('.tell-ch button',tell).forEach(b=>b.onclick=()=>{who=who===b.dataset.w?null:b.dataset.w;$$('.tell-ch button',tell).forEach(x=>x.classList.toggle('on',x.dataset.w===who));tellMsg();b.animate([{scale:1},{scale:1.12},{scale:1}],{duration:300})});
 function tellCopy(btn,msg,force){copyText(tmsg.value);toast(msg);const r=btn.getBoundingClientRect();if(T.confetti)celebrate({x:r.left+r.width/2,y:r.top+r.height/2,mini:1});showDiscord(tell,tmsg.value,force)}
@@ -1426,6 +1438,9 @@ document.body.appendChild(pz);
   $('[data-tog=tint]',g).insertAdjacentHTML('afterend','<label class="pz-rng" data-dep="tint"><span>Shade strength</span><input type="range" name="shade" min="5" max="100" step="5" data-rng="ts"><b></b></label>');
   $$('[data-rng]',g).forEach(r=>r.oninput=()=>{S[r.dataset.rng]=+r.value;tintVar();r.nextElementSibling.textContent=r.value+'%';save()});
   $$('[data-tog]',g).forEach(b=>b.onclick=()=>{const k=b.dataset.tog;S.tog[k]=!S.tog[k];applyAll()});
+  $$('.pz-g',g).forEach(gr=>{const sw=$$('[data-tog]',gr);if(!sw.length)return;const w=document.createElement('span');w.className='pz-all';w.setAttribute('role','group');w.setAttribute('aria-label','Select in '+gr.querySelector('h5').textContent);
+    w.innerHTML='<span class="pz-al">Select:</span><button type="button" data-all="1">All</button><button type="button" data-all="0">None</button>';gr.querySelector('h5').appendChild(w);
+    w.onclick=e=>{const b=e.target.closest('button[data-all]');if(!b)return;e.stopPropagation();const on=b.dataset.all==='1';sw.forEach(x=>S.tog[x.dataset.tog]=on);applyAll()}});
   $$('[data-pl]',g).forEach(s=>s.onchange=()=>{S.pl[s.dataset.pl]=s.value;applyAll()});
   $$('[data-font]',g).forEach(s=>s.onchange=()=>{S.f[s.dataset.font]=+s.value;applyAll()});
   $$('[data-fx]',g).forEach(s=>s.onchange=()=>{S[s.dataset.fx]=+s.value;applyAll();if(!['hv','ph','iv'].includes(s.dataset.fx)&&m.classList.contains('on'))celebrate()});

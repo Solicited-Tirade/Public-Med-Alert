@@ -21,36 +21,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mohave:wght@500;600;700&family=Oxanium:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/components.css">
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 var(--font-body)}
-header{background:var(--hdr);border-bottom:1px solid var(--hdr-bd);padding:12px 16px}
-.bar{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:12px}
-.bar a{display:flex;align-items:center;gap:12px;color:var(--hdr-fg);text-decoration:none;font:700 24px var(--font-display);letter-spacing:.14em;text-transform:uppercase}
-.bar img{width:36px;height:36px}
-main{max-width:760px;margin:0 auto;padding:40px 16px 64px}
-.back{color:var(--muted);text-decoration:none;font-size:14px}
-.back:hover{color:var(--fg)}
-.rec{margin-top:16px;background:var(--card);border:1px solid var(--bd);border-top:4px solid var(--oc);border-radius:var(--r);padding:28px;--oc:var(--Extracted)}
-.hd{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.ocrow{display:flex;align-items:center;gap:12px}
-.alert{font:600 30px var(--font-display);letter-spacing:.06em;text-transform:uppercase}
-.q{margin:24px 0 20px;font-size:26px;line-height:1.3}
-.meta{color:var(--muted);font-size:14px;display:flex;gap:14px;flex-wrap:wrap}
-.meta b{color:var(--fg)}
-.ks{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-</style>
+<link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/record.css">
 </head>
-<body>
-<header><div class="bar"><a href="../testimonials.html"><img src="../media/img/logo.webp" alt="">Medrunner</a></div></header>
-<main>
-<a class="back" href="../testimonials.html">← All mission testimonials</a>
-<article class="rec" aria-labelledby="t" style="--oc:var(--Extracted)">
-<div class="hd"><div class="ocrow" style="--oc:var(--Extracted)"><span class="oc">Extracted</span><b class="alert" id="t">Swift Gecko</b></div><span class="stars" aria-label="5 out of 5 stars"><span class="on">★</span><span class="on">★</span><span class="on">★</span><span class="on">★</span><span class="on">★</span></span></div>
-<p class="q">Took a while to get in, but once they were there it was over in no time.</p>
-<div class="meta"><b>@Ynara</b><span>Bunker</span><span>Oct 27, 2026</span></div>
-<div class="ks"><span class="k top">★ Solid security</span><span class="k">Calm team lead</span><span class="k ck">Followed the plan</span></div>
+<body data-slug="swift-gecko">
+<header class="rp-h"><div class="rp-bar"><a class="rp-brand" href="../testimonials.html"><img src="../media/img/logo.webp" alt="">Medrunner</a><div id="rpShare"></div></div></header>
+<main class="rp-main">
+<nav class="rp-nav" aria-label="Alerts"><a href="../testimonials.html">← All mission testimonials</a><span class="rp-pn"><a rel="prev" href="gentle-badger.html">← Gentle Badger</a><a rel="next" href="polar-finch.html">Polar Finch →</a></span></nav>
+<article class="pn-b rp-rec" id="rec" aria-labelledby="t">
+<div style="--oc:var(--Extracted)"><div class="ocrow"><span class="oc">Extracted</span><b class="alert" id="t" style="font-size:30px">Swift Gecko</b></div><div class="pn-meta"><b>@Ynara</b><span>Bunker</span><span>Oct 27, 2026</span></div></div>
+<q>Took a while to get in, but once they were there it was over in no time.</q>
 </article>
 </main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../js/data.js"></script>
+<script src="../js/record.js"></script>
+<script>
+(function(){
+var s=document.body.dataset.slug,r=R.find(function(x){return slug(x.alert)===s});
+if(!r)return;
+try{if(localStorage.getItem('mr-theme')==='red')document.documentElement.dataset.theme='red'}catch(e){}
+$('#rec').innerHTML=recordHTML(r,{id:'t'});
+$('#rpShare').innerHTML=shareHTML(r,'shM');shareBind($('#rpShare .shw'),r);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&shCur){var w=shCur;shareSet(w,false);w.querySelector('.shb').focus()}});
+})();
+</script>
 </body>
 </html>

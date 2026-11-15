@@ -14,7 +14,7 @@ window.MRGuide=function(cfg){
  const steps=cfg.steps.concat([{h:'Your pick helps us decide',p:cfg.fb,last:true}]);
  const N=steps.length,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
  const pts=cfg.points.map(p=>`<li><i><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[p[0]]}</svg></i><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span></div></li>`).join('');
- const root=document.createElement('div');root.className='tr';root.id='g-root';
+ const root=document.createElement('div');root.className='t-root';root.id='g-root';
  root.innerHTML=`<div class="t-wrap" id="g-wel" role="dialog" aria-modal="true" aria-labelledby="g-wel-h" hidden><div class="t-w">
 <p class="t-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Welcome</p>
 <p class="t-nt">${NOTE}</p><h2 id="g-wel-h">${cfg.headline}</h2><p>${cfg.pitch}</p><ul class="t-ul">${pts}</ul>

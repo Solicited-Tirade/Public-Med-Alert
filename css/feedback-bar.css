@@ -2,21 +2,32 @@
 .fb{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:90;width:clamp(300px,33.333vw,560px);display:flex;align-items:center;gap:12px;padding:12px 10px 12px 16px;border-radius:14px;background:color-mix(in srgb,var(--c-ink-900) 94%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--c-ink-800);box-shadow:0 14px 40px color-mix(in srgb,var(--c-black) 60%,transparent);font-family:var(--font-body);box-sizing:border-box}
 .fb *{box-sizing:border-box}
 .fb-ic{position:relative;display:block;flex:0 0 28px;width:28px;height:28px}
-.fb-ic svg{display:block;width:28px;height:28px;fill:#7C86FF;transform-origin:50% 60%;animation:fb-flip 4.2s ease-in-out infinite}
-.fb-ic::after{content:"";position:absolute;left:-2px;right:-2px;bottom:-4px;height:32px;border-radius:50%;border:2px solid #7C86FF;opacity:0;pointer-events:none;animation:fb-ring 4.2s ease-out infinite}
-/* hop, hop, flip, ring on land, rest. The flip ends at 360deg and snaps to 0deg at the same pose, so nothing spins back. */
-@keyframes fb-flip{
-0%,2%,100%{transform:translateY(0) rotate(0deg) scale(1,1)}
-7%{transform:translateY(-8px) rotate(0deg) scale(1,1)}
-11%{transform:translateY(0) rotate(0deg) scale(1,1)}
-19%{transform:translateY(-8px) rotate(0deg) scale(1,1)}
-23%{transform:translateY(0) rotate(0deg) scale(1,1)}
-38%{transform:translateY(-22px) rotate(-180deg) scale(1,1)}
-50%{transform:translateY(0) rotate(-360deg) scale(1,1)}
-50.01%{transform:translateY(0) rotate(0deg) scale(1,1)}
-53%{transform:translateY(0) rotate(0deg) scale(1.1,.88)}
-58%{transform:translateY(0) rotate(0deg) scale(1,1)}}
-@keyframes fb-ring{0%,49%{transform:scale(.5);opacity:0}51%{opacity:.6}78%,100%{transform:scale(2.2);opacity:0}}
+.fb-ic svg{display:block;width:28px;height:28px;fill:#7C86FF;transform-origin:50% 55%;will-change:translate,rotate,scale;backface-visibility:hidden;animation:fb-y 4.8s linear infinite,fb-r 4.8s linear infinite,fb-s 4.8s linear infinite}
+.fb-ic::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:1.5px solid #7C86FF;opacity:0;pointer-events:none;will-change:transform,opacity;animation:fb-ring 4.8s linear infinite}
+/* Hop, hop, flip, ring on land, rest. Height, spin and squash are separate tracks so each eases on its own:
+   rises ease out, falls ease in, the spin turns smoothly through the whole flight without stalling mid-air. */
+@keyframes fb-y{
+0%{translate:0 0;animation-timing-function:cubic-bezier(.2,.7,.4,1)}
+4%{translate:0 -7px;animation-timing-function:cubic-bezier(.6,0,.8,.4)}
+8%{translate:0 0}
+10%{translate:0 0;animation-timing-function:cubic-bezier(.2,.7,.4,1)}
+14%{translate:0 -7px;animation-timing-function:cubic-bezier(.6,0,.8,.4)}
+18%{translate:0 0}
+20%{translate:0 0;animation-timing-function:cubic-bezier(.2,.7,.4,1)}
+32%{translate:0 -22px;animation-timing-function:cubic-bezier(.6,0,.8,.4)}
+44%,100%{translate:0 0}}
+@keyframes fb-r{
+0%,20%{rotate:0deg;animation-timing-function:cubic-bezier(.4,0,.3,1)}
+44%{rotate:-360deg}
+44.01%,100%{rotate:0deg}}
+@keyframes fb-s{
+0%,43%{scale:1 1;animation-timing-function:ease-out}
+46%{scale:1.12 .86;animation-timing-function:ease-in-out}
+52%,100%{scale:1 1}}
+@keyframes fb-ring{
+0%,44%{transform:scale(.7);opacity:0}
+46%{transform:scale(.85);opacity:.55;animation-timing-function:ease-out}
+72%,100%{transform:scale(2);opacity:0}}
 .fb-t{min-width:0;flex:1}
 .fb-t b{display:block;font-size:14px;line-height:1.2;color:var(--c-white)}
 .fb-t span{display:block;margin-top:2px;font-size:12.5px;line-height:1.35;color:var(--c-gray-400)}

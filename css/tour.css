@@ -1,6 +1,6 @@
-.tr{position:fixed;inset:0;z-index:600;pointer-events:none;font-family:var(--font-body)}
-.tr[hidden],.tr [hidden]{display:none!important}
-.tr *{box-sizing:border-box}
+.t-root{position:fixed;inset:0;z-index:600;pointer-events:none;font-family:var(--font-body)}
+.t-root[hidden],.t-root [hidden]{display:none!important}
+.t-root *{box-sizing:border-box}
 .t-hole{position:fixed;border-radius:12px;box-shadow:0 0 0 200vmax color-mix(in srgb,var(--c-black) 74%,transparent);border:2px solid var(--tourc,var(--c-amber-400));transition:left .45s cubic-bezier(.3,.9,.3,1),top .45s cubic-bezier(.3,.9,.3,1),width .45s cubic-bezier(.3,.9,.3,1),height .45s cubic-bezier(.3,.9,.3,1),border-color .25s;animation:t-ring 1.8s ease-out infinite}
 .t-hole.ok{border-color:var(--c-green-400);animation:none}
 .t-do.quiet{color:var(--c-gray-400);font-weight:500}

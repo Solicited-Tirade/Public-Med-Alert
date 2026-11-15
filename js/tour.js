@@ -6,7 +6,7 @@ const KEY='mr-cta-tour',isOpen=()=>pz.classList.contains('open');
 const seen=()=>{try{return sessionStorage.getItem(KEY)==='1'}catch(_){return false}};
 const mark=()=>{try{sessionStorage.setItem(KEY,'1')}catch(_){}};
 const ARW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-const root=document.createElement('div');root.className='tr';root.id='tour-root';root.hidden=true;
+const root=document.createElement('div');root.className='t-root';root.id='tour-root';root.hidden=true;
 root.innerHTML=`<div class="t-wrap" id="tour-tw" role="dialog" aria-modal="true" aria-labelledby="tour-tw-h" hidden><div class="t-w">
 <p class="t-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Welcome</p>
 <p class="t-nt"><b>Internal feedback only.</b> This builder and tour are here for now. They will not appear if/when the page goes live.</p>

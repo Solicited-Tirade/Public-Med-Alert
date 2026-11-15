@@ -380,8 +380,13 @@ body.sheet .sheet-h{display:flex;position:sticky;top:0;background:var(--panel);a
 body.sheet .filters .groups{display:flex}
 }
 </style>
+<link rel="stylesheet" href="css/backlink.css">
+<link rel="stylesheet" href="css/tour.css">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/feedback-bar.css">
 </head>
 <body>
+<nav class="go-index" aria-label="Site"><a href="index.html"><span class="gi-a" aria-hidden="true">←</span> Go back to the main index</a></nav>
 
 <header class="top">
 <div class="wrap">
@@ -801,5 +806,8 @@ document.addEventListener('visibilitychange',stop);
 });
 })();
 </script>
+<script src="js/feedback-bar.js"></script>
+<script src="js/guide.js"></script>
+<script src="js/guide-testimonials.js"></script>
 </body>
 </html>

@@ -63,3 +63,4 @@
 .t-hole.lite{box-shadow:0 0 0 200vmax color-mix(in srgb,var(--c-black) 40%,transparent)}
 #card.t-live{outline:3px solid var(--tourc,var(--c-amber-400));outline-offset:6px;border-radius:18px;transition:outline-color .3s}
 @media(min-width:1180px){body.tour-live .m{padding-right:760px!important;transition:padding .45s cubic-bezier(.3,.9,.3,1)}}
+a.t-b{display:inline-block;text-decoration:none}

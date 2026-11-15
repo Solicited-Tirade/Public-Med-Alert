@@ -1,0 +1,42 @@
+/* Anchored Discord feedback request, same spot on every page. Always dark. */
+.fb{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:90;width:clamp(300px,33.333vw,560px);display:flex;align-items:center;gap:12px;padding:12px 10px 12px 16px;border-radius:14px;background:color-mix(in srgb,var(--c-ink-900) 94%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--c-ink-800);box-shadow:0 14px 40px color-mix(in srgb,var(--c-black) 60%,transparent);font-family:var(--font-body);box-sizing:border-box}
+.fb *{box-sizing:border-box}
+.fb-ic{position:relative;display:block;flex:0 0 28px;width:28px;height:28px}
+.fb-ic svg{display:block;width:28px;height:28px;fill:#7C86FF;transform-origin:50% 60%;animation:fb-flip 4.2s ease-in-out infinite}
+.fb-ic::after{content:"";position:absolute;left:-2px;right:-2px;bottom:-4px;height:32px;border-radius:50%;border:2px solid #7C86FF;opacity:0;pointer-events:none;animation:fb-ring 4.2s ease-out infinite}
+/* hop, hop, flip, ring on land, rest. The flip ends at 360deg and snaps to 0deg at the same pose, so nothing spins back. */
+@keyframes fb-flip{
+0%,2%,100%{transform:translateY(0) rotate(0deg) scale(1,1)}
+7%{transform:translateY(-8px) rotate(0deg) scale(1,1)}
+11%{transform:translateY(0) rotate(0deg) scale(1,1)}
+19%{transform:translateY(-8px) rotate(0deg) scale(1,1)}
+23%{transform:translateY(0) rotate(0deg) scale(1,1)}
+38%{transform:translateY(-22px) rotate(-180deg) scale(1,1)}
+50%{transform:translateY(0) rotate(-360deg) scale(1,1)}
+50.01%{transform:translateY(0) rotate(0deg) scale(1,1)}
+53%{transform:translateY(0) rotate(0deg) scale(1.1,.88)}
+58%{transform:translateY(0) rotate(0deg) scale(1,1)}}
+@keyframes fb-ring{0%,49%{transform:scale(.5);opacity:0}51%{opacity:.6}78%,100%{transform:scale(2.2);opacity:0}}
+.fb-t{min-width:0;flex:1}
+.fb-t b{display:block;font-size:14px;line-height:1.2;color:var(--c-white)}
+.fb-t span{display:block;margin-top:2px;font-size:12.5px;line-height:1.35;color:var(--c-gray-400)}
+.fb-go{flex:0 0 auto;padding:10px 14px;border-radius:9px;background:#5865F2;color:#fff;font:700 13px/1 var(--font-body);text-decoration:none;white-space:nowrap}
+.fb-go:hover{background:#6b77ff}
+.fb-go:focus-visible,.fb-m:focus-visible{outline:2px solid var(--c-amber-400);outline-offset:2px}
+.fb-m{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;border-radius:8px;background:none;color:var(--c-gray-400);cursor:pointer}
+.fb-m:hover{color:var(--c-white)}
+.fb-m svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.fb-l{display:none;font:700 13px/1 var(--font-body);color:var(--c-white)}
+.fb.min{width:auto;padding:8px 8px 8px 12px;border-radius:999px;cursor:pointer}
+.fb.min .fb-t,.fb.min .fb-go{display:none}
+.fb.min .fb-l{display:block}
+.fb.min .fb-ic{flex-basis:22px;width:22px;height:22px}
+.fb.min .fb-ic svg{width:22px;height:22px}
+.fb.min .fb-m svg{transform:rotate(180deg)}
+body{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+@media(max-width:640px){
+.fb:not(.min){width:calc(100vw - 20px);padding:10px 8px 10px 12px;gap:8px}
+.fb:not(.min) .fb-ic{display:none}
+.t-pill{bottom:108px}
+body{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}}
+@media(prefers-reduced-motion:reduce){.fb-ic svg,.fb-ic::after{animation:none}}

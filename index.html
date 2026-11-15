@@ -6,6 +6,9 @@
 <title>Public Med Alert</title>
 <meta name="description" content="Public mission exports for Medrunner: the pitch deck and the interactive playground.">
 <link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/tour.css">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/feedback-bar.css">
 <style>
 @import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mohave:wght@500;600;700&display=swap";
 *,*::before,*::after{box-sizing:border-box}
@@ -19,7 +22,8 @@ a{color:inherit}
 .ecg polyline{animation:none;stroke-dashoffset:0}
 }
 /* ---------- Start menu ---------- */
-.mn{position:relative;min-height:100vh;z-index:1;display:flex;align-items:center;justify-content:center;padding:24px 16px;
+body{padding-bottom:0}
+.mn{box-sizing:border-box;position:relative;min-height:100vh;z-index:1;display:flex;align-items:center;justify-content:center;padding:24px 16px 116px;
  background:radial-gradient(1000px 650px at 25% 15%,var(--c-line-750) 0%,transparent 60%),radial-gradient(900px 600px at 80% 95%,var(--c-amber-950) 0%,transparent 60%),transparent;transition:opacity .25s ease,visibility .25s}
 .mn-in{width:min(100%,1240px);text-align:center;transform:none;transition:transform .3s ease}
 .mn-logo{width:176px;height:47px;margin:0 auto;color:var(--c-white)}
@@ -169,5 +173,8 @@ go.addEventListener('click',()=>{
  bs=live();const a=nr.querySelector('.mn-b');a.focus();});
 })();
 </script>
+<script src="js/feedback-bar.js"></script>
+<script src="js/guide.js"></script>
+<script src="js/guide-index.js"></script>
 </body>
 </html>

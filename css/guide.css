@@ -1,0 +1,26 @@
+/* Shared welcome + guided tour (index, testimonials, roles). Builds on css/tour.css. Always dark. */
+.g-dim{position:fixed;inset:0;background:color-mix(in srgb,var(--c-black) 74%,transparent);pointer-events:none}
+.g-ring{position:fixed;border-radius:12px;border:2px solid var(--c-amber-400);pointer-events:none;animation:t-ring 1.8s ease-out infinite}
+.g-ring.ok{border-color:var(--c-green-400);animation:none}
+.t-card .t-row{flex-wrap:wrap;row-gap:10px}
+.t-card .t-dots{flex:1 0 100%}
+.t-card .t-row .t-b.g:first-of-type{margin-right:auto;padding-left:0}
+.t-card p i{font-style:italic;color:var(--c-white)}
+.t-card p u{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--c-amber-400)}
+.g-tip{margin-top:8px!important;font-size:12px!important;opacity:.75}
+a.t-b{display:inline-block;text-decoration:none}
+.t-b{border:0}
+.t-b.g{background:none}
+.t-pill{font-family:var(--font-body)}
+.t-pill.inv{border-color:var(--c-amber-400);color:var(--c-amber-400);animation:g-inv 2s ease-in-out infinite}
+@keyframes g-inv{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c-amber-400) 55%,transparent)}50%{box-shadow:0 0 0 9px color-mix(in srgb,var(--c-amber-400) 0%,transparent),0 0 18px color-mix(in srgb,var(--c-amber-400) 40%,transparent)}}
+html.g-lock{overflow:hidden;scrollbar-gutter:stable}
+.t-blk{inset:0}
+@media(hover:none){.g-tip{display:none}}
+@media(max-width:640px){
+.t-pill{left:10px;bottom:10px;padding:8px 12px;font-size:12px}
+.t-card{padding:14px 15px}
+.t-card h3{font-size:23px}
+.t-w{padding:20px 18px}
+}
+@media(prefers-reduced-motion:reduce){.g-ring,.t-pill.inv{animation:none}}

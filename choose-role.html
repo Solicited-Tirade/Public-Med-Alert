@@ -476,8 +476,13 @@ h1{margin:0;font:700 clamp(40px,6vw,64px)/1 var(--fh);text-transform:uppercase;l
 .dt-grid>div+div{border-left:0;padding-left:0;border-top:1px solid color-mix(in srgb,var(--c-white) 16%,transparent);padding-top:22px}
 }
 </style>
+<link rel="stylesheet" href="css/backlink.css">
+<link rel="stylesheet" href="css/tour.css">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/feedback-bar.css">
 </head>
 <body>
+<nav class="go-index" aria-label="Site"><a href="index.html"><span class="gi-a" aria-hidden="true">←</span> Go back to the main index</a></nav>
 <main class="wrap">
 <header class="hd">
 <p class="ey">Join Medrunner</p>
@@ -658,5 +663,8 @@ if(q.get('s')&&q.get('d'))subs[q.get('d')]=q.get('s');
 show(q.get('d')||sv||'squad');
 })();
 </script>
+<script src="js/feedback-bar.js"></script>
+<script src="js/guide.js"></script>
+<script src="js/guide-roles.js"></script>
 </body>
 </html>

@@ -163,6 +163,7 @@ textarea:focus{background:color-mix(in srgb,var(--c-white) 14%,transparent);box-
 .body{transition:opacity .3s}
 .done{display:none;padding:4px 4px 6px}
 .card.sent .body{display:none}
+.done h2{white-space:normal;text-wrap:balance;overflow-wrap:anywhere}
 .card.sent .done{display:block;animation:rise .5s cubic-bezier(.2,1.2,.4,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}}
 .done .sumry p{margin:6px auto 0;max-width:300px;font:400 14px/1.45 var(--fb);color:var(--c-red-200)}
@@ -861,8 +862,12 @@ a,button,select,summary,label,input,textarea,[role=button]{touch-action:manipula
 }
 .pvp .pvh-u{overflow-wrap:anywhere;text-transform:none;font:600 11px var(--fl);letter-spacing:.16em;text-transform:uppercase;color:var(--c-gray-400)}
 </style>
+<link rel="stylesheet" href="css/backlink.css">
+<link rel="stylesheet" href="css/feedback-bar.css">
+<style>@media(max-width:640px){.pz{bottom:98px!important;max-height:calc(100vh - 118px)!important}.t-pill{bottom:198px}}</style>
 </head>
 <body data-tone="ok">
+<nav class="go-index" aria-label="Site"><a href="index.html"><span class="gi-a" aria-hidden="true">←</span> Go back to the main index</a></nav>
 <h1 class="sr">Review call to action</h1>
 <main class="pg" aria-hidden="true">
 <div class="pg-top"><i></i><b translate="no">Medrunner</b><a href="https://solicited-tirade.github.io/Public-Med-Alert/verify/agile-snail.html?example" target="_blank" rel="noopener" title="Open the example page">solicited-tirade.github.io/Public-Med-Alert/verify/agile-snail.html</a></div>
@@ -1709,6 +1714,7 @@ document.addEventListener('click',function(e){
   var b=f.querySelector('.lgb');if(b)b.click();
 });
 </script>
+<script src="js/feedback-bar.js"></script>
 <script src="js/tour.js"></script>
 </body>
 </html>

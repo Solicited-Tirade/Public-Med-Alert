@@ -1,0 +1,8 @@
+/* "Go back to the main index" bar, shared by every page except the index */
+.go-index{display:flex;align-items:center;justify-content:flex-start;padding:8px max(16px,env(safe-area-inset-left,0px));text-align:left;position:relative;z-index:50}
+.go-index a{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 9px;border-radius:999px;color:inherit;text-decoration:none;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.01em;background:color-mix(in srgb,currentColor 9%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 22%,transparent);opacity:.82;transition:opacity .15s,background .15s,transform .15s}
+.go-index a:hover,.go-index a:focus-visible{opacity:1;background:color-mix(in srgb,currentColor 17%,transparent);outline:none}
+.go-index a:focus-visible{box-shadow:0 0 0 2px currentColor}
+.go-index a:hover .gi-a,.go-index a:focus-visible .gi-a{transform:translateX(-3px)}
+.gi-a{display:inline-block;transition:transform .15s}
+@media (prefers-reduced-motion:reduce){.go-index a,.gi-a{transition:none}}

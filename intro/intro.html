@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Medrunner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mohave:wght@500;600;700&family=Oxanium:wght@500;600;700&family=Quantico:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="intro.css">
+</head>
+<body>
+<header class="bar">
+<a class="back" href="../index.html"><span aria-hidden="true">←</span> Back</a>
+<img class="mark" src="../media/img/logo.webp" alt="Medrunner" width="34" height="34">
+
+<a class="callnow" href="#">Raise an alert</a>
+</header>
+
+<template id="copy-t">
+<div class="beat" data-b="0"><h2><span class="er">Nobody</span> gets <span class="ea">left behind</span>.</h2></div>
+<div class="beat" data-b="1"><h2><span class="er">Help</span> is inbound.</h2></div>
+<div class="beat" data-b="2"><h2><span class="er">Need us</span>, or <span class="ea">want in</span>?</h2><div class="ctas"><a class="cta need" href="#"><b>Need help?</b><span>Raise an alert</span></a><a class="cta join" href="#"><b>Want to help?</b><span>Join Medrunner</span></a></div></div>
+</template>
+
+<main>
+<section class="show on" id="s-signal" data-kind="signal">
+<div class="stage">
+<canvas class="sig" aria-hidden="true"></canvas>
+<div class="copy"></div>
+<ol class="dots"><li></li><li></li><li></li></ol>
+</div>
+</section>
+
+</main>
+<div class="prog" role="slider" aria-label="Animation progress" aria-valuemin="0" aria-valuemax="100" tabindex="0"><i></i><b style="left:30%"></b><b style="left:70%"></b></div>
+
+<button class="skipbtn" type="button">Skip to end →</button>
+<script src="intro.js"></script>
+</body>
+</html>

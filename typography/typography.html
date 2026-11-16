@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Medrunner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mohave:wght@500;600;700&family=Oxanium:wght@500;600;700&family=Quantico:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="typography.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ring" x="-5%" y="-15%" width="110%" height="130%"><feMorphology in="SourceAlpha" operator="dilate" radius="3" result="d"/><feMorphology in="SourceAlpha" operator="erode" radius="1" result="e"/><feComposite in="d" in2="e" operator="out" result="r"/><feFlood flood-color="#F05252"/><feComposite in2="r" operator="in"/></filter></svg>
+<header class="bar">
+<a class="back" href="../index.html"><span aria-hidden="true">←</span> Back</a>
+<img class="mark" src="../media/img/logo.webp" alt="Medrunner" width="34" height="34">
+<a class="callnow" href="#">Raise an alert</a>
+</header>
+<main class="stage" id="stage">
+<div class="bgs" id="bgs"></div>
+<div class="vig"></div>
+<div class="beats" id="beats"></div>
+</main>
+<div class="cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+<nav class="dots" aria-label="Sections"></nav>
+<button class="skipbtn" type="button">Skip to end →</button>
+<div class="prog" role="slider" tabindex="0" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+<script src="typography.js"></script>
+</body>
+</html>

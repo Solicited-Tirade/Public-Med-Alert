@@ -37,6 +37,11 @@ body{padding-bottom:0}
 .mn-b[data-k=cta]{--c:var(--c-red-500);--cr:240 82 82}
 .mn-b[data-k=role]{--c:var(--c-blue-500);--cr:63 131 248}
 .mn-b[data-k=wall]{--c:var(--c-violet-400);--cr:167 139 250}
+.mn-b[data-k=intro]{--c:var(--c-cyan-400);--cr:34 211 238}
+.mn-b[data-k=type]{--c:var(--c-green-400);--cr:49 196 141}
+.mn-b[data-k=v2]{--c:var(--c-amber-500);--cr:245 158 11}
+.mn-sub{grid-column:1/-1;margin:14px 0 -6px;font:600 12px/1 var(--font-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--c-gray-400);display:flex;align-items:center;gap:14px}
+.mn-sub::before,.mn-sub::after{content:"";flex:1;height:1px;background:var(--c-line-700)}
 .mn-note{display:flex;gap:12px;align-items:flex-start;max-width:720px;margin:6px auto 0;padding:14px 18px;border-radius:12px;border:1px dashed var(--c-line-700);background:color-mix(in srgb,var(--c-white) 3%,transparent);text-align:left;font-size:13.5px;line-height:1.55;color:var(--c-gray-400)}
 .mn-note svg{flex:none;width:18px;height:18px;margin-top:2px;color:var(--c-gray-400)}
 .mn-note b{color:var(--c-gray-200)}
@@ -52,7 +57,7 @@ body{padding-bottom:0}
 .mn-row.hov .mn-b{opacity:.45;transform:scale(.97)}
 .mn-row.hov .mn-b.on{opacity:1;transform:translateY(-4px) scale(1.04);border-color:var(--c);background:linear-gradient(180deg,rgb(var(--cr)/.20),rgb(var(--cr)/.05));box-shadow:0 18px 50px color-mix(in srgb,var(--c-black) 45%,transparent),0 0 0 3px rgb(var(--cr)/.25),0 0 40px rgb(var(--cr)/.25)}
 .mn-row.hov .mn-b.on svg.ic{transform:scale(1.12)}
-.mn-bl{position:relative;min-height:92px;margin:24px auto 0;max-width:600px}
+.mn-bl{position:relative;min-height:132px;margin:24px auto 0;max-width:600px}
 .mn-bl p{position:absolute;inset:0;margin:0;font-size:15px;line-height:1.6;color:var(--c-gray-300);opacity:0;transform:translateY(6px);transition:opacity .22s ease,transform .22s ease}
 .mn-bl p.on{opacity:1;transform:none}
 .mn-bl p b{color:var(--c-white)}
@@ -69,7 +74,7 @@ body{padding-bottom:0}
 .mn-b b,.mn-b small{white-space:nowrap}
 .mn-b b{font-size:24px}
 .mn-b kbd{display:none}
-.mn-bl{min-height:164px}
+.mn-bl{min-height:250px}
 }
 .nr{grid-column:1/-1;display:flex;justify-content:center}
 .nr-in{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;width:calc((100% - 36px)/3*2 + 18px)}
@@ -140,13 +145,22 @@ body{padding-bottom:0}
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
 <b>Available roles</b><small>Recruitment · showcase</small></a><a class="mn-b" data-k="wall" href="testimonials.html" aria-describedby="mn-b-wall"><kbd>5</kbd>
 <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 6.8l1.1 2.2 2.4.35-1.75 1.7.42 2.4L12 12.3l-2.17 1.15.42-2.4L8.5 9.35l2.4-.35z"/></svg>
-<b>Testimonials</b><small>Public · verified</small></a></div>
+<b>Testimonials</b><small>Public · verified</small></a><p class="mn-sub">Front page redesign</p><a class="mn-b" data-k="intro" href="intro/intro.html" aria-describedby="mn-b-intro"><kbd>6</kbd>
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5l2-6 4 12 2-6h7"/></svg>
+<b>Signal intro</b><small>Front page · animated opener</small></a><a class="mn-b" data-k="type" href="typography/typography.html" aria-describedby="mn-b-type"><kbd>7</kbd>
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M12 5v14M9 19h6"/></svg>
+<b>Typography</b><small>Front page · scene by scene</small></a><a class="mn-b" data-k="v2" href="Typography-V2/index.html" aria-describedby="mn-b-v2"><kbd>8</kbd>
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8M8 17h5"/></svg>
+<b>Typography V2</b><small>Front page · full redesign</small></a></div>
 <div class="mn-bl" aria-live="polite">
-<p class="hint on" id="mn-b-none">Hover over a choice to see what's inside. Use ← → or 1–5 to pick, Enter to open.</p>
+<p class="hint on" id="mn-b-none">Hover over a choice to see what's inside. Use ← → or 1–8 to pick, Enter to open.</p>
 <p id="mn-b-deck"><b>The pitch.</b> A short walkthrough for Medrunner leadership and the dev team: the problem, the six steps from discharge to public record, the privacy safeguards, and what it would take to build. Includes short clips of the playground in action.</p>
 <p id="mn-b-play"><b>The hands-on mockup.</b> Follow one alert from the client’s thank-you card to a published record. Take the guided tour as the client, team lead and team member, try the card options, and view the page as any role. Everything is simulated; nothing is sent anywhere.</p>
 <p id="mn-b-role"><b>The recruitment showcase.</b> Look what you can do with Medrunner: the roles on a rescue, what each is like and who it suits, plus a short FAQ for anyone thinking of joining. Not part of the rescue flow.</p>
 <p id="mn-b-wall"><b>The public wall.</b> Verified mission testimonials published by clients after their rescue. Filter by mission, outcome, rating and kudos, browse this week’s spotlight, and open any record with its redacted transcript.</p>
+<p id="mn-b-intro"><b>The opening.</b> A demonstrative animation of a deploy, sweep, clear and revival, with a few words.</p>
+<p id="mn-b-type"><b>Big words, one scene at a time.</b> Full-screen scenes of oversized type: “Nobody gets left behind,” “Help is inbound,” “We come to you, anywhere in the verse,” then the name. Move with scroll, arrow keys or swipe. <b>Purpose:</b> to test whether confident wording alone carries the message before any explanation, and to end on the same two paths.</p>
+<p id="mn-b-v2"><b>The whole front page, rebuilt.</b> Every section of the current page as a full-screen scene: the rescue promise, how it works, the numbers, client words, FAQ, joining and press. <b>Purpose:</b> to show the existing content with the new typography so it can be judged as a replacement for the current front page.</p>
 <p id="mn-b-cta"><b>The call to action.</b> A proposal to potentially replace step 1 in the playground: a pop-up at the end of an alert where the client rates the team, gives kudos, and goes public or just says thanks.</p>
 </div>
 <p class="mn-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.5"/></svg><span><b>Nothing here is final.</b> These are showcase ideas for feedback. The playground runs the whole rescue flow, starting with the call to action card.</span></p>
@@ -162,7 +176,7 @@ all.forEach(b=>{b.addEventListener('mouseenter',()=>hl(bs.indexOf(b)));b.addEven
 row.addEventListener('mouseleave',()=>{const a=bs.indexOf(document.activeElement);hl(a)});
 document.addEventListener('keydown',e=>{
  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();const n=cur<0?0:(cur+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+bs.length)%bs.length;bs[n].focus()}
- else if(['1','2','3','4','5'].includes(e.key)){e.preventDefault();const t=all[+e.key-1];if(bs.includes(t))t.focus()}});
+ else if(['1','2','3','4','5','6','7','8'].includes(e.key)){e.preventDefault();const t=all[+e.key-1];if(bs.includes(t))t.focus()}});
 addEventListener('pageshow',()=>hl(bs.indexOf(document.activeElement)));
 const nr=document.getElementById('nr-in'),go=document.getElementById('nr-go'),tt=document.getElementById('nr-tt');
 const tri=tt.querySelector('svg').outerHTML;
